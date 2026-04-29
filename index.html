@@ -1265,6 +1265,22 @@ function renderArena(){
 
 function makeCard(p,val,isLeft){
   const textColor=p.tc||"#fff";
+  let clubBreakdown='';
+  if(isLeft && category==='career_goals' && p.club_goals && p.club_goals.length){
+    clubBreakdown=`
+    <div style="margin-top:10px;border-top:1px solid #222;padding-top:10px;">
+      <div style="font-size:0.55rem;color:#555;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;text-align:center;">Goals by Club</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">
+        ${p.club_goals.map(c=>`
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <div style="width:34px;height:34px;border-radius:7px;background:${c.col};display:flex;align-items:center;justify-content:center;padding:2px;">
+              <span style="color:#fff;font-size:0.42rem;font-weight:800;text-align:center;line-height:1.2;">${c.c}</span>
+            </div>
+            <div style="font-size:0.88rem;font-weight:900;color:#fff;line-height:1;">${c.n}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }
   return`
   <div class="pcard" id="${isLeft?"leftCard":"rightCard"}">
     <div class="avatar" style="background:${p.color};color:${textColor};">${p.initials}</div>
@@ -1278,6 +1294,7 @@ function makeCard(p,val,isLeft){
       }
       <div class="stat-lbl">${catLabels[category]}</div>
     </div>
+    ${clubBreakdown}
     ${!isLeft?`
     <div class="btns">
       <button class="btn btn-higher" id="btnHigher" onclick="guess('higher')">▲ Higher</button>
@@ -1527,11 +1544,11 @@ async function syncFromSheet() {
     PLAYERS.forEach(p => {
       const live = map[p.name];
       if (!live) return;
-      p.career_goals = live.career_goals;
-      p.career_appearances = live.career_appearances;
-      p.assists = live.assists;
-      p.intl_caps = live.intl_caps;
-      p.intl_goals = live.intl_goals;
+      if (live.career_goals) p.career_goals = live.career_goals;
+      if (live.career_appearances) p.career_appearances = live.career_appearances;
+      if (live.assists) p.assists = live.assists;
+      if (live.intl_caps) p.intl_caps = live.intl_caps;
+      if (live.intl_goals) p.intl_goals = live.intl_goals;
       if (live.club_goals.length) p.club_goals = live.club_goals;
       if (live.trophies_list.length) p.trophies_list = live.trophies_list;
     });
