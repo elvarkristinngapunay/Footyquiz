@@ -88,6 +88,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
 }
 .card-label{font-size:1.05rem;font-weight:800;color:#fff;margin-bottom:3px;}
 .card-desc{font-size:0.72rem;color:var(--text3);line-height:1.4;}
+.card-best{font-size:0.65rem;color:var(--gold);font-weight:700;margin-top:6px;letter-spacing:0.5px;min-height:1em;}
 .card-arrow{
   position:absolute;bottom:14px;right:14px;
   color:var(--gold);font-size:0.9rem;opacity:0;
@@ -319,6 +320,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
       <div class="card-tag" style="background:#0d1f0d;color:#4ade80;border:1px solid #1a3a1a;">Attacking</div>
       <div class="card-label">Career Goals</div>
       <div class="card-desc">Total goals scored across entire club career</div>
+      <div class="card-best" id="best-career_goals"></div>
       <div class="card-arrow">→</div>
     </div>
     <div class="card" onclick="startGame('career_appearances')">
@@ -326,6 +328,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
       <div class="card-tag" style="background:#0d0d1f;color:#60a5fa;border:1px solid #1a1a3a;">Endurance</div>
       <div class="card-label">Appearances</div>
       <div class="card-desc">Total competitive games played in career</div>
+      <div class="card-best" id="best-career_appearances"></div>
       <div class="card-arrow">→</div>
     </div>
     <div class="card" onclick="startGame('assists')">
@@ -333,6 +336,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
       <div class="card-tag" style="background:#1f0d1f;color:#e879f9;border:1px solid #3a1a3a;">Creative</div>
       <div class="card-label">Assists</div>
       <div class="card-desc">Career goal assists at club level</div>
+      <div class="card-best" id="best-assists"></div>
       <div class="card-arrow">→</div>
     </div>
     <div class="card" onclick="startGame('intl_caps')">
@@ -340,6 +344,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
       <div class="card-tag" style="background:#1f0d0d;color:#fb923c;border:1px solid #3a1a0d;">International</div>
       <div class="card-label">Intl Caps</div>
       <div class="card-desc">Games played for their country</div>
+      <div class="card-best" id="best-intl_caps"></div>
       <div class="card-arrow">→</div>
     </div>
     <div class="card" onclick="startGame('intl_goals')">
@@ -347,6 +352,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
       <div class="card-tag" style="background:#1f0d0d;color:#fb923c;border:1px solid #3a1a0d;">International</div>
       <div class="card-label">Intl Goals</div>
       <div class="card-desc">Goals scored for their country</div>
+      <div class="card-best" id="best-intl_goals"></div>
       <div class="card-arrow">→</div>
     </div>
     <div class="card" onclick="startGame('trophies')">
@@ -354,6 +360,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
       <div class="card-tag" style="background:#1f1a0d;color:#fbbf24;border:1px solid #3a2e0d;">Honours</div>
       <div class="card-label">Trophies</div>
       <div class="card-desc">Total career trophies won</div>
+      <div class="card-best" id="best-trophies"></div>
       <div class="card-arrow">→</div>
     </div>
   </div>
@@ -1153,6 +1160,25 @@ function trophyIcon(t){
 }
 
 // ── GAME STATE ────────────────────────────────────────────────────────────────
+const catBests=JSON.parse(localStorage.getItem('fq_catBests')||'{}');
+
+function saveCatBest(cat,s){
+  if(!catBests[cat]||s>catBests[cat]){
+    catBests[cat]=s;
+    localStorage.setItem('fq_catBests',JSON.stringify(catBests));
+  }
+}
+
+function renderCatBests(){
+  const labels={career_goals:'Career Goals',career_appearances:'Appearances',assists:'Assists',intl_caps:'Intl Caps',intl_goals:'Intl Goals',trophies:'Trophies'};
+  for(const cat of Object.keys(labels)){
+    const el=document.getElementById('best-'+cat);
+    if(el) el.textContent=catBests[cat]?'Best: '+catBests[cat]:'';
+  }
+}
+
+renderCatBests();
+
 let score=0,best=0,lives=2,category=null;
 let deck=[],deckIdx=0,leftPlayer=null,rightPlayer=null;
 let awaitingNext=false;
@@ -1183,6 +1209,7 @@ function goMenu(){
   // Only show streak banner if player has played at least once
   const banner = document.getElementById("menuStreak");
   if(banner && best > 0) banner.style.display="block";
+  renderCatBests();
 }
 
 function startGame(cat){
@@ -1288,6 +1315,7 @@ function guess(dir){
     rightNumEl.classList.add("correct-num");
     score++;
     if(score>best)best=score;
+    saveCatBest(category,score);
     document.getElementById("scoreEl").textContent=score;
     document.getElementById("bestEl").textContent=best;
   } else {
