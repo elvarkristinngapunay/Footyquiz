@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "footyquiz",
+      "runtimeExecutable": "ruby",
+      "runtimeArgs": ["-e", "require 'webrick'; s=WEBrick::HTTPServer.new(Port:3000,DocumentRoot:'/tmp/fq'); trap('INT'){s.shutdown}; s.start"],
+      "port": 3000
+    }
+  ]
+}

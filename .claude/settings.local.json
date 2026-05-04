@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh auth *)",
+      "Bash(git --version)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git remote *)",
+      "Bash(git branch *)",
+      "Bash(git push *)",
+      "Read(//Users/ekg/**)",
+      "Bash(ssh -T git@github.com)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npx --version)",
+      "Bash(ruby --version)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(open /Users/ekg/Desktop/Footyquiz/index.html)",
+      "Bash(sort -u grep -o \"'\\\\''[^'\\\\'']*'\\\\'':\" /Users/ekg/Desktop/Footyquiz/index.html)",
+      "Bash(python3 -c ' *)",
+      "WebSearch"
+    ]
+  }
+}
