@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FootyQuiz — Higher or Lower</title>
+<title>Football Royal</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap');
 
@@ -15,7 +15,37 @@
   --blue:#60a5fa;--blue-dim:#1a2a3a;--blue-border:#2d4a6b;
   --text:#fff;--text2:#aaa;--text3:#555;
 }
-html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;}
+html,body{
+  min-height:100vh;color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;
+  background:
+    /* floodlight beams — sharp rays from top corners and centre */
+    radial-gradient(ellipse 18% 55% at 12% 0%, rgba(140,200,255,0.28) 0%, transparent 100%),
+    radial-gradient(ellipse 14% 50% at 28% 0%, rgba(160,215,255,0.18) 0%, transparent 100%),
+    radial-gradient(ellipse 20% 60% at 50% 0%, rgba(170,220,255,0.32) 0%, transparent 100%),
+    radial-gradient(ellipse 14% 50% at 72% 0%, rgba(160,215,255,0.18) 0%, transparent 100%),
+    radial-gradient(ellipse 18% 55% at 88% 0%, rgba(140,200,255,0.28) 0%, transparent 100%),
+    /* glow halos at the floodlight positions */
+    radial-gradient(ellipse 8% 6% at 12% 1%, rgba(200,230,255,0.55) 0%, transparent 100%),
+    radial-gradient(ellipse 8% 6% at 88% 1%, rgba(200,230,255,0.55) 0%, transparent 100%),
+    radial-gradient(ellipse 10% 6% at 50% 1%, rgba(210,235,255,0.6) 0%, transparent 100%),
+    /* pitch green glow rising from bottom */
+    radial-gradient(ellipse 80% 25% at 50% 100%, rgba(10,80,10,0.9) 0%, transparent 100%),
+    linear-gradient(180deg, transparent 55%, #021503 75%, #041f05 100%),
+    /* night sky gradient */
+    linear-gradient(180deg, #040d1c 0%, #061222 30%, #080808 60%, #080808 100%);
+  background-attachment: fixed;
+}
+/* stadium structure hint — stands at top via pseudo-element */
+body::before{
+  content:'';
+  position:fixed;top:0;left:0;right:0;
+  height:18px;
+  background:linear-gradient(90deg,
+    #0a1a2a 0%,#0d2035 8%,#091828 16%,#0d2035 24%,#091828 32%,
+    #0d2035 40%,#091828 48%,#0d2035 56%,#091828 64%,
+    #0d2035 72%,#091828 80%,#0d2035 88%,#0a1a2a 100%);
+  opacity:0.7;z-index:0;pointer-events:none;
+}
 
 /* ── HEADER ── */
 .header{
@@ -25,8 +55,9 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
   display:flex;align-items:center;justify-content:space-between;
   padding:0 20px;height:52px;
 }
-.logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;color:var(--gold);}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;color:var(--gold);display:flex;align-items:center;gap:6px;}
 .logo span{color:#fff;}
+.logo-crown{font-size:1.3rem;line-height:1;}
 .header-badge{
   background:var(--green-dim);color:var(--green);
   font-size:0.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
@@ -36,8 +67,8 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
 /* ── HERO ── */
 .hero{
   text-align:center;padding:32px 20px 24px;
-  background:linear-gradient(180deg,#111 0%,var(--bg) 100%);
-  border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.2) 100%);
+  border-bottom:1px solid rgba(255,255,255,0.06);
 }
 .hero-eyebrow{
   display:inline-block;
@@ -65,32 +96,35 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .card{
   position:relative;overflow:hidden;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:16px;padding:18px 16px 16px;
-  cursor:pointer;transition:all 0.2s ease;
+  background:rgba(10,10,10,0.82);border:1px solid #222;
+  backdrop-filter:blur(4px);
+  border-radius:16px;padding:0;
+  cursor:pointer;transition:all 0.22s ease;
+  min-height:120px;
 }
-.card::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,215,0,0.03) 0%,transparent 60%);
-  opacity:0;transition:opacity 0.2s;
-}
-.card:hover{border-color:rgba(255,215,0,0.4);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.4);}
-.card:hover::before{opacity:1;}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.6);}
 .card-bg-icon{
-  position:absolute;right:-6px;top:-6px;
-  font-size:4rem;opacity:0.04;pointer-events:none;
-  transition:opacity 0.2s,transform 0.2s;
+  position:absolute;right:-8px;bottom:-8px;
+  font-size:5.5rem;opacity:0.13;pointer-events:none;
+  transition:opacity 0.2s,transform 0.2s;z-index:1;
 }
-.card:hover .card-bg-icon{opacity:0.07;transform:scale(1.1);}
+.card:hover .card-bg-icon{opacity:0.22;transform:scale(1.1);}
+.card-content{
+  position:relative;z-index:2;
+  padding:16px 14px 14px;
+  background:linear-gradient(to right,#111 55%,transparent 100%);
+  min-height:120px;
+  display:flex;flex-direction:column;justify-content:center;
+}
 .card-tag{
-  display:inline-block;font-size:0.58rem;font-weight:700;letter-spacing:1.5px;
-  text-transform:uppercase;padding:2px 8px;border-radius:6px;margin-bottom:8px;
+  display:inline-block;font-size:0.52rem;font-weight:800;letter-spacing:1.8px;
+  text-transform:uppercase;margin-bottom:5px;
 }
-.card-label{font-size:1.05rem;font-weight:800;color:#fff;margin-bottom:3px;}
-.card-desc{font-size:0.72rem;color:var(--text3);line-height:1.4;}
-.card-best{font-size:0.65rem;color:var(--gold);font-weight:700;margin-top:6px;letter-spacing:0.5px;min-height:1em;}
+.card-label{font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:3px;line-height:1.2;}
+.card-desc{display:none;}
+.card-best{font-size:0.63rem;color:var(--gold);font-weight:700;margin-top:7px;letter-spacing:0.5px;min-height:1em;}
 .card-arrow{
-  position:absolute;bottom:14px;right:14px;
+  position:absolute;bottom:12px;right:12px;z-index:3;
   color:var(--gold);font-size:0.9rem;opacity:0;
   transform:translateX(-8px);transition:all 0.2s;
 }
@@ -100,40 +134,54 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
 #gameScreen{display:none;flex-direction:column;align-items:center;padding:0 12px 24px;}
 
 .topbar{
-  display:flex;gap:8px;align-items:center;
-  padding:10px 0 12px;flex-wrap:wrap;justify-content:center;
+  display:flex;gap:10px;align-items:center;
+  padding:12px 0 16px;flex-wrap:wrap;justify-content:center;
   max-width:640px;width:100%;
 }
 .pill{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:20px;padding:5px 13px;
-  font-size:0.78rem;font-weight:600;color:var(--text2);
+  background:#1c1c1c;border:1px solid #333;
+  border-radius:20px;padding:7px 16px;
+  font-size:0.88rem;font-weight:600;color:#ccc;
 }
-.pill strong{color:var(--gold);}
+.pill strong{color:var(--gold);font-size:1rem;}
+.pill-record{
+  background:linear-gradient(135deg,#1a1200,#2a1f00);
+  border:1px solid #a07800;
+  color:#FFD700;
+  font-weight:700;
+  box-shadow:0 0 10px rgba(255,215,0,0.15);
+  letter-spacing:0.5px;
+}
+.pill-record strong{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.2rem;
+  color:#FFD700;
+  text-shadow:0 0 8px rgba(255,215,0,0.6);
+}
 .back-btn{
-  background:transparent;border:1px solid var(--border2);
-  color:var(--text3);padding:5px 12px;border-radius:20px;
-  cursor:pointer;font-size:0.72rem;font-family:inherit;
-  transition:all 0.2s;
+  background:#1c1c1c;border:1px solid #444;
+  color:#aaa;padding:7px 14px;border-radius:20px;
+  cursor:pointer;font-size:0.82rem;font-family:inherit;
+  transition:all 0.2s;font-weight:600;
 }
-.back-btn:hover{border-color:var(--text2);color:var(--text2);}
+.back-btn:hover{border-color:#888;color:#fff;}
 .mode-badge{
   background:var(--green-dim);color:var(--green);
-  font-size:0.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  padding:4px 11px;border-radius:20px;border:1px solid var(--green-border);
+  font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  padding:7px 14px;border-radius:20px;border:1px solid var(--green-border);
 }
-.lives{display:flex;gap:4px;align-items:center;}
-.heart{font-size:1rem;transition:transform 0.3s;}
+.lives{display:flex;gap:5px;align-items:center;}
+.heart{font-size:1.2rem;transition:transform 0.3s;}
 .heart.lost{filter:grayscale(1);opacity:0.25;}
 
 /* ── CARDS AREA ── */
 .arena{
   display:flex;align-items:flex-start;justify-content:center;
-  gap:12px;flex-wrap:wrap;width:100%;max-width:580px;
+  gap:14px;flex-wrap:wrap;width:100%;max-width:640px;
 }
 .pcard{
   background:var(--surface);border:2px solid var(--border);
-  border-radius:20px;padding:20px 16px;width:210px;
+  border-radius:20px;padding:24px 20px;width:232px;
   text-align:center;transition:border-color 0.4s,box-shadow 0.4s;
   flex-shrink:0;
 }
@@ -141,20 +189,20 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
 .pcard.flash-wrong{border-color:var(--red);box-shadow:0 0 24px rgba(248,113,113,0.15);}
 
 .avatar{
-  width:64px;height:64px;border-radius:50%;
+  width:76px;height:76px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:1px;
-  margin:0 auto 10px;border:2px solid rgba(255,255,255,0.06);
+  font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1px;
+  margin:0 auto 12px;border:2px solid rgba(255,255,255,0.08);
   font-weight:400;
 }
-.pname{font-size:0.95rem;font-weight:800;color:#fff;margin-bottom:1px;line-height:1.2;}
-.ppos{color:var(--text3);font-size:0.68rem;margin-bottom:1px;}
-.pnat{color:#444;font-size:0.65rem;margin-bottom:10px;}
+.pname{font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:2px;line-height:1.2;}
+.ppos{color:var(--text3);font-size:0.75rem;margin-bottom:2px;}
+.pnat{color:#555;font-size:0.7rem;margin-bottom:12px;}
 
 .stat-block{margin:8px 0;}
 .stat-num{
   font-family:'Bebas Neue',sans-serif;
-  font-size:3rem;line-height:1;letter-spacing:1px;
+  font-size:3.5rem;line-height:1;letter-spacing:1px;
   color:var(--gold);
 }
 .stat-num.hidden-num{color:#1e1e1e;}
@@ -162,8 +210,8 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
 .stat-num.correct-num{color:var(--green);}
 .stat-num.wrong-num{color:var(--red);}
 .stat-lbl{
-  font-size:0.6rem;color:var(--text3);
-  text-transform:uppercase;letter-spacing:2px;margin-top:2px;
+  font-size:0.7rem;color:var(--text3);
+  text-transform:uppercase;letter-spacing:2px;margin-top:4px;
 }
 
 .question-marks{
@@ -173,7 +221,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
 
 .btns{display:flex;flex-direction:column;gap:7px;margin-top:12px;}
 .btn{
-  padding:10px 18px;font-size:0.88rem;font-weight:700;
+  padding:12px 20px;font-size:0.95rem;font-weight:700;
   border:none;border-radius:10px;cursor:pointer;
   font-family:inherit;letter-spacing:0.5px;
   transition:transform 0.15s,opacity 0.15s;
@@ -185,8 +233,8 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
 
 .vs{
   font-family:'Bebas Neue',sans-serif;
-  font-size:1rem;color:#2a2a2a;letter-spacing:3px;
-  padding-top:80px;align-self:flex-start;
+  font-size:1.2rem;color:#555;letter-spacing:3px;
+  padding-top:90px;align-self:flex-start;
 }
 
 /* ── RESULT PANEL ── */
@@ -287,91 +335,93 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
 <body>
 
 <div class="header">
-  <div class="logo">Footy<span>Quiz</span></div>
+  <div class="logo"><span class="logo-crown">👑</span>Football <span>Royal</span></div>
   <div class="header-badge">Higher or Lower</div>
 </div>
 
 <div class="hero">
   <div class="hero-eyebrow">⚽ Can you guess who has more?</div>
   <div class="hero-title">Higher or <span class="accent">Lower</span></div>
-  <div class="hero-sub">39 legends · 6 categories · how far can you go?</div>
+  <div class="hero-sub">6 categories · how far can you go?</div>
 </div>
 
 <!-- MENU -->
 <div id="menuScreen">
-  <div id="menuStreak" style="display:none;text-align:center;margin-bottom:16px;">
-  <div style="display:inline-flex;align-items:center;gap:10px;background:#1a1a0a;border:1px solid #4a3800;border-radius:14px;padding:10px 20px;">
-    <span style="font-size:1.4rem;">🔥</span>
-    <div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:#FFD700;line-height:1;" id="menuStreakNum">0</div>
-      <div style="font-size:0.6rem;color:#555;text-transform:uppercase;letter-spacing:2px;">Current Streak</div>
-    </div>
-    <div style="width:1px;height:32px;background:#333;"></div>
-    <div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:#aaa;line-height:1;" id="menuBestNum">0</div>
-      <div style="font-size:0.6rem;color:#555;text-transform:uppercase;letter-spacing:2px;">Best</div>
-    </div>
-  </div>
-</div>
+  <div id="menuStreak" style="display:none;" id="menuStreakNum"></div>
+  <div style="display:none;" id="menuBestNum"></div>
+  <div style="display:none;" id="menuRecordEl"></div>
 <div class="section-label">Choose your category</div>
   <div class="grid">
-    <div class="card" onclick="startGame('career_goals')">
+    <div class="card" onmouseenter="playTick()" onclick="startGame('career_goals')" style="border-color:#1a3a1a;">
       <div class="card-bg-icon">⚽</div>
-      <div class="card-tag" style="background:#0d1f0d;color:#4ade80;border:1px solid #1a3a1a;">Attacking</div>
-      <div class="card-label">Career Goals</div>
-      <div class="card-desc">Total goals scored across entire club career</div>
-      <div class="card-best" id="best-career_goals"></div>
+      <div class="card-content">
+        <div class="card-tag" style="color:#4ade80;">Attacking</div>
+        <div class="card-label">Career Goals</div>
+        <div class="card-desc">Total goals across club career</div>
+        <div class="card-best" id="best-career_goals"></div>
+      </div>
       <div class="card-arrow">→</div>
     </div>
-    <div class="card" onclick="startGame('career_appearances')">
-      <div class="card-bg-icon">👟</div>
-      <div class="card-tag" style="background:#0d0d1f;color:#60a5fa;border:1px solid #1a1a3a;">Endurance</div>
-      <div class="card-label">Appearances</div>
-      <div class="card-desc">Total competitive games played in career</div>
-      <div class="card-best" id="best-career_appearances"></div>
-      <div class="card-arrow">→</div>
-    </div>
-    <div class="card" onclick="startGame('assists')">
+    <div class="card" onmouseenter="playTick()" onclick="startGame('assists')" style="border-color:#3a1a3a;">
       <div class="card-bg-icon">🎯</div>
-      <div class="card-tag" style="background:#1f0d1f;color:#e879f9;border:1px solid #3a1a3a;">Creative</div>
-      <div class="card-label">Assists</div>
-      <div class="card-desc">Career goal assists at club level</div>
-      <div class="card-best" id="best-assists"></div>
+      <div class="card-content">
+        <div class="card-tag" style="color:#e879f9;">Creative</div>
+        <div class="card-label">Assists</div>
+        <div class="card-desc">Career goal assists at club level</div>
+        <div class="card-best" id="best-assists"></div>
+      </div>
       <div class="card-arrow">→</div>
     </div>
-    <div class="card" onclick="startGame('intl_caps')">
+    <div class="card" onmouseenter="playTick()" onclick="startGame('trophies')" style="border-color:#3a2e0d;">
+      <img src="world cup.jpg" style="position:absolute;right:-10%;top:-10%;height:120%;width:80%;object-fit:cover;object-position:40% center;opacity:0.92;pointer-events:none;z-index:1;mask-image:radial-gradient(ellipse 65% 85% at 65% 50%,black 40%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 65% 85% at 65% 50%,black 40%,transparent 100%);filter:brightness(1.4) contrast(1.1) saturate(1.3) hue-rotate(15deg);" >
+      <div style="position:absolute;right:-10%;top:-10%;height:120%;width:80%;z-index:2;pointer-events:none;background:linear-gradient(to left,rgba(20,5,0,0.85) 0%,rgba(10,3,0,0.4) 40%,transparent 70%);mask-image:radial-gradient(ellipse 65% 85% at 65% 50%,black 40%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 65% 85% at 65% 50%,black 40%,transparent 100%);"></div>
+      <div class="card-content">
+        <div class="card-tag" style="color:#fbbf24;">Honours</div>
+        <div class="card-label">Major Trophies</div>
+        <div class="card-desc">Total major trophies won</div>
+        <div class="card-best" id="best-trophies"></div>
+      </div>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onmouseenter="playTick()" onclick="startGame('career_appearances')" style="border-color:#1a1a3a;">
+      <div class="card-bg-icon">👟</div>
+      <div class="card-content">
+        <div class="card-tag" style="color:#60a5fa;">Endurance</div>
+        <div class="card-label">Appearances</div>
+        <div class="card-desc">Competitive games played in career</div>
+        <div class="card-best" id="best-career_appearances"></div>
+      </div>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onmouseenter="playTick()" onclick="startGame('intl_goals')" style="border-color:#3a1a0d;">
       <div class="card-bg-icon">🌍</div>
-      <div class="card-tag" style="background:#1f0d0d;color:#fb923c;border:1px solid #3a1a0d;">International</div>
-      <div class="card-label">Intl Caps</div>
-      <div class="card-desc">Games played for their country</div>
-      <div class="card-best" id="best-intl_caps"></div>
+      <div class="card-content">
+        <div class="card-tag" style="color:#fb923c;">International</div>
+        <div class="card-label">International Goals</div>
+        <div class="card-desc">Goals scored for their country</div>
+        <div class="card-best" id="best-intl_goals"></div>
+      </div>
       <div class="card-arrow">→</div>
     </div>
-    <div class="card" onclick="startGame('intl_goals')">
-      <div class="card-bg-icon">🏳️</div>
-      <div class="card-tag" style="background:#1f0d0d;color:#fb923c;border:1px solid #3a1a0d;">International</div>
-      <div class="card-label">Intl Goals</div>
-      <div class="card-desc">Goals scored for their country</div>
-      <div class="card-best" id="best-intl_goals"></div>
-      <div class="card-arrow">→</div>
-    </div>
-    <div class="card" onclick="startGame('trophies')">
-      <div class="card-bg-icon">🏆</div>
-      <div class="card-tag" style="background:#1f1a0d;color:#fbbf24;border:1px solid #3a2e0d;">Honours</div>
-      <div class="card-label">Major Trophies</div>
-      <div class="card-desc">Total major trophies won</div>
-      <div class="card-best" id="best-trophies"></div>
+    <div class="card" onmouseenter="playTick()" onclick="startGame('intl_caps')" style="border-color:#3a1a0d;">
+      <div class="card-bg-icon">🏅</div>
+      <div class="card-content">
+        <div class="card-tag" style="color:#fb923c;">International</div>
+        <div class="card-label">International Caps</div>
+        <div class="card-desc">Games played for their country</div>
+        <div class="card-best" id="best-intl_caps"></div>
+      </div>
       <div class="card-arrow">→</div>
     </div>
   </div>
 </div>
 
 <!-- GAME -->
-<div id="gameScreen"><button id="cornerMenu" onclick="goMenu()" style="position:fixed;top:62px;left:14px;z-index:200;background:transparent;border:1px solid #333;color:#555;padding:6px 11px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;letter-spacing:0.5px;transition:all 0.2s;display:none;">← Menu</button>
+<div id="gameScreen"><button id="cornerMenu" onclick="goMenu()" style="position:fixed;top:62px;left:14px;z-index:200;background:#1c1c1c;border:1px solid #555;color:#ccc;padding:8px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.82rem;font-weight:600;letter-spacing:0.5px;transition:all 0.2s;display:none;">← Menu</button>
   <div class="topbar">
     
     <div class="pill">Score <strong id="scoreEl">0</strong></div>
-    <div class="pill">Best <strong id="bestEl">0</strong></div>
+    <div class="pill pill-record">🏆 Record <strong id="bestEl">0</strong></div>
     <div class="lives" id="livesEl"></div>
     <div class="mode-badge" id="modeEl"></div>
   </div>
@@ -379,9 +429,95 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
   <div id="resultEl"></div>
 </div>
 
-<div class="footer">FootyQuiz · Stats sourced from Transfermarkt & Wikipedia</div>
+<div class="footer">Football Royal · Stats sourced from Transfermarkt & Wikipedia</div>
 
 <script>
+// ── SOUND ENGINE ──────────────────────────────────────────────────────────────
+let _ac = null;
+function ac(){ if(!_ac) _ac = new (window.AudioContext||window.webkitAudioContext)(); return _ac; }
+
+function playTick(){
+  const c=ac(), o=c.createOscillator(), g=c.createGain();
+  o.connect(g); g.connect(c.destination);
+  o.frequency.value=1400; o.type='sine';
+  g.gain.setValueAtTime(0.04,c.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.04);
+  o.start(c.currentTime); o.stop(c.currentTime+0.04);
+}
+
+function playClick(){
+  const c=ac(), o=c.createOscillator(), g=c.createGain();
+  o.connect(g); g.connect(c.destination);
+  o.type='sine';
+  o.frequency.setValueAtTime(900,c.currentTime);
+  o.frequency.exponentialRampToValueAtTime(400,c.currentTime+0.08);
+  g.gain.setValueAtTime(0.18,c.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.08);
+  o.start(c.currentTime); o.stop(c.currentTime+0.08);
+}
+
+function playWhoosh(){
+  const c=ac();
+  const buf=c.createBuffer(1,c.sampleRate*0.35,c.sampleRate);
+  const d=buf.getChannelData(0);
+  for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1);
+  const src=c.createBufferSource(); src.buffer=buf;
+  const filt=c.createBiquadFilter(); filt.type='bandpass';
+  filt.frequency.setValueAtTime(300,c.currentTime);
+  filt.frequency.exponentialRampToValueAtTime(3000,c.currentTime+0.3);
+  filt.Q.value=1.2;
+  const g=c.createGain();
+  g.gain.setValueAtTime(0.25,c.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.35);
+  src.connect(filt); filt.connect(g); g.connect(c.destination);
+  src.start(c.currentTime); src.stop(c.currentTime+0.35);
+  const o=c.createOscillator(), og=c.createGain();
+  o.connect(og); og.connect(c.destination);
+  o.type='sine';
+  o.frequency.setValueAtTime(350,c.currentTime);
+  o.frequency.exponentialRampToValueAtTime(900,c.currentTime+0.25);
+  og.gain.setValueAtTime(0.1,c.currentTime);
+  og.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.28);
+  o.start(c.currentTime); o.stop(c.currentTime+0.28);
+}
+
+function playWrong(){
+  const c=ac(), o=c.createOscillator(), g=c.createGain();
+  o.connect(g); g.connect(c.destination);
+  o.type='sawtooth';
+  o.frequency.setValueAtTime(200,c.currentTime);
+  o.frequency.exponentialRampToValueAtTime(80,c.currentTime+0.25);
+  g.gain.setValueAtTime(0.12,c.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.25);
+  o.start(c.currentTime); o.stop(c.currentTime+0.25);
+}
+
+function playCrowd(){
+  const c=ac();
+  // Fun ascending arpeggio — like a game show "let's go!"
+  const notes=[261,329,392,523,659];
+  notes.forEach((freq,i)=>{
+    const o=c.createOscillator(), g=c.createGain();
+    o.connect(g); g.connect(c.destination);
+    o.type='triangle';
+    const t=c.currentTime+i*0.09;
+    o.frequency.setValueAtTime(freq,t);
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(0.18,t+0.03);
+    g.gain.exponentialRampToValueAtTime(0.001,t+0.18);
+    o.start(t); o.stop(t+0.2);
+  });
+  // Final sparkle on top
+  const o2=c.createOscillator(), g2=c.createGain();
+  o2.connect(g2); g2.connect(c.destination);
+  o2.type='sine';
+  const t2=c.currentTime+0.45;
+  o2.frequency.setValueAtTime(1047,t2);
+  o2.frequency.exponentialRampToValueAtTime(1400,t2+0.12);
+  g2.gain.setValueAtTime(0.12,t2);
+  g2.gain.exponentialRampToValueAtTime(0.001,t2+0.25);
+  o2.start(t2); o2.stop(t2+0.25);
+}
 // ── DATA ──────────────────────────────────────────────────────────────────────
 
 const PLAYERS = [
@@ -1178,8 +1314,10 @@ function renderCatBests(){
 }
 
 renderCatBests();
+const _savedBest=parseInt(localStorage.getItem('footballroyal_best')||'0');
+document.getElementById("menuRecordEl").textContent=_savedBest||0;
 
-let score=0,best=0,lives=2,category=null;
+let score=0,best=_savedBest||0,lives=2,category=null;
 let deck=[],deckIdx=0,leftPlayer=null,rightPlayer=null;
 let awaitingNext=false;
 
@@ -1201,18 +1339,13 @@ function goMenu(){
   document.getElementById("menuScreen").style.display="block";
   document.getElementById("gameScreen").style.display="none";
   document.getElementById("cornerMenu").style.display="none";
-  // Update streak display on menu
-  const streakEl = document.getElementById("menuStreakNum");
-  const bestEl2 = document.getElementById("menuBestNum");
-  if(streakEl) streakEl.textContent = score;
-  if(bestEl2) bestEl2.textContent = best;
-  // Only show streak banner if player has played at least once
-  const banner = document.getElementById("menuStreak");
-  if(banner && best > 0) banner.style.display="block";
+  const rec=document.getElementById("menuRecordEl");
+  if(rec) rec.textContent=best;
   renderCatBests();
 }
 
 function startGame(cat){
+  playCrowd();
   category=cat;score=0;lives=2;
   document.getElementById("scoreEl").textContent=0;
   document.getElementById("bestEl").textContent=best;
@@ -1411,16 +1544,17 @@ function makeCard(p,val,isLeft){
   const textColor=p.tc||"#fff";
   let clubBreakdown='';
   if(isLeft && category==='career_goals' && p.club_goals && p.club_goals.length){
+    const clubsHTML=p.club_goals.map(c=>`
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+        ${clubBadgeHTML(c)}
+        <div style="font-size:0.88rem;font-weight:900;color:#fff;line-height:1;">${c.n}</div>
+        <div style="font-size:0.42rem;color:#aaa;text-align:center;max-width:44px;line-height:1.2;word-break:break-word;">${c.c}</div>
+      </div>`).join('');
     clubBreakdown=`
-    <div style="margin-top:10px;border-top:1px solid #222;padding-top:10px;">
-      <div style="font-size:0.55rem;color:#555;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;text-align:center;">Goals by Club</div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">
-        ${p.club_goals.map(c=>`
-          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-            ${clubBadgeHTML(c)}
-            <div style="font-size:0.88rem;font-weight:900;color:#fff;line-height:1;">${c.n}</div>
-            <div style="font-size:0.42rem;color:#aaa;text-align:center;max-width:44px;line-height:1.2;word-break:break-word;">${c.c}</div>
-          </div>`).join('')}
+    <div style="margin-top:10px;border-top:1px solid #222;padding-top:8px;text-align:center;">
+      <button onclick="this.style.display='none';this.nextElementSibling.style.display='flex';" style="background:none;border:1px solid #333;color:#888;font-size:0.65rem;padding:4px 12px;border-radius:20px;cursor:pointer;font-family:inherit;letter-spacing:1px;text-transform:uppercase;">See more</button>
+      <div style="display:none;flex-wrap:wrap;gap:6px;justify-content:center;">
+        ${clubsHTML}
       </div>
     </div>`;
   }
@@ -1440,8 +1574,8 @@ function makeCard(p,val,isLeft){
     ${clubBreakdown}
     ${!isLeft?`
     <div class="btns">
-      <button class="btn btn-higher" id="btnHigher" onclick="guess('higher')">▲ Higher</button>
-      <button class="btn btn-lower" id="btnLower" onclick="guess('lower')">▼ Lower</button>
+      <button class="btn btn-higher" id="btnHigher" onclick="playClick();guess('higher')">▲ Higher</button>
+      <button class="btn btn-lower" id="btnLower" onclick="playClick();guess('lower')">▼ Lower</button>
     </div>`:""}
   </div>`;
 }
@@ -1471,14 +1605,16 @@ function guess(dir){
   const lc=document.getElementById("leftCard");
   const rc=document.getElementById("rightCard");
   if(correct){
+    playWhoosh();
     lc.classList.add("flash-correct");rc.classList.add("flash-correct");
     rightNumEl.classList.add("correct-num");
     score++;
-    if(score>best)best=score;
+    if(score>best){best=score;localStorage.setItem('footballroyal_best',best);}
     saveCatBest(category,score);
     document.getElementById("scoreEl").textContent=score;
     document.getElementById("bestEl").textContent=best;
   } else {
+    playWrong();
     lc.classList.add("flash-wrong");rc.classList.add("flash-wrong");
     rightNumEl.classList.add("wrong-num");
     lives--;

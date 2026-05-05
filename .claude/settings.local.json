@@ -18,7 +18,8 @@
       "Bash(open /Users/ekg/Desktop/Footyquiz/index.html)",
       "Bash(sort -u grep -o \"'\\\\''[^'\\\\'']*'\\\\'':\" /Users/ekg/Desktop/Footyquiz/index.html)",
       "Bash(python3 -c ' *)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:www.pexels.com)"
     ]
   }
 }
