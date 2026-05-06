@@ -539,6 +539,8 @@ body::before{display:none;}
   animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
 }
 @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
+@keyframes chipBuzz{0%,100%{transform:scale(1);opacity:1;}20%{transform:scale(1.45);}40%{transform:scale(0.92);}60%{transform:scale(1.35);}80%{transform:scale(0.97);}}
+.eg-named-chip.buzz{animation:chipBuzz 0.55s ease;outline:3px solid #fff;box-shadow:0 0 16px rgba(255,255,255,0.5);}
 
 /* ── FOOTER ── */
 .trophy-img{width:52px;height:52px;object-fit:contain;flex-shrink:0;}
@@ -563,7 +565,7 @@ body::before{display:none;}
   </nav>
   <!-- Center: logo -->
   <div style="display:flex;align-items:center;justify-content:center;">
-    <img src="Football Royal logo.png" alt="Football Royal" onclick="showLanding()" style="height:100px;width:auto;object-fit:contain;display:block;cursor:pointer;">
+    <img src="new logo.png" alt="Football Royal" onclick="showLanding()" style="height:100px;width:auto;object-fit:contain;display:block;cursor:pointer;">
   </div>
   <!-- Right nav -->
   <nav style="display:flex;align-items:center;gap:4px;justify-content:flex-start;">
@@ -749,6 +751,14 @@ body::before{display:none;}
     </div>
     <div class="eg-cat-arrow">›</div>
   </div>
+  <div class="eg-category-card" onclick="startElGrande('wc_countries')">
+    <div class="eg-cat-icon">🌍</div>
+    <div>
+      <div class="eg-cat-label">Countries at the World Cup</div>
+      <div class="eg-cat-desc">Every nation to appear at a FIFA World Cup</div>
+    </div>
+    <div class="eg-cat-arrow">›</div>
+  </div>
   <button onclick="showLanding()" style="margin-top:20px;background:none;border:1px solid #333;color:#666;padding:10px 24px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.8rem;">← Back</button>
 </div>
 
@@ -921,6 +931,97 @@ const EG_DATASETS = {
       {name:'Khvicha Kvaratskhelia', aliases:['kvara','kvaratskhelia']},
       {name:'Senny Mayulu', aliases:['mayulu']},
     ]
+  },
+  wc_countries: {
+    title: 'Countries at the World Cup',
+    players: [
+      // South America
+      {name:'Brazil', aliases:['brasil']},
+      {name:'Argentina', aliases:[]},
+      {name:'Uruguay', aliases:[]},
+      {name:'Chile', aliases:[]},
+      {name:'Colombia', aliases:[]},
+      {name:'Ecuador', aliases:[]},
+      {name:'Peru', aliases:[]},
+      {name:'Paraguay', aliases:[]},
+      {name:'Bolivia', aliases:[]},
+      // Europe
+      {name:'Germany', aliases:['west germany','west-germany','deutschland']},
+      {name:'Italy', aliases:['italia']},
+      {name:'France', aliases:[]},
+      {name:'England', aliases:[]},
+      {name:'Spain', aliases:['espana','españa']},
+      {name:'Netherlands', aliases:['holland']},
+      {name:'Belgium', aliases:[]},
+      {name:'Portugal', aliases:[]},
+      {name:'Croatia', aliases:[]},
+      {name:'Denmark', aliases:[]},
+      {name:'Sweden', aliases:[]},
+      {name:'Switzerland', aliases:[]},
+      {name:'Czech Republic', aliases:['czechoslovakia','czechia','czech']},
+      {name:'Hungary', aliases:[]},
+      {name:'Serbia', aliases:['yugoslavia','serbia and montenegro']},
+      {name:'Poland', aliases:[]},
+      {name:'Romania', aliases:[]},
+      {name:'Austria', aliases:[]},
+      {name:'Scotland', aliases:[]},
+      {name:'Wales', aliases:[]},
+      {name:'Northern Ireland', aliases:[]},
+      {name:'Republic of Ireland', aliases:['ireland']},
+      {name:'Turkey', aliases:[]},
+      {name:'Greece', aliases:[]},
+      {name:'Slovenia', aliases:[]},
+      {name:'Slovakia', aliases:[]},
+      {name:'Ukraine', aliases:[]},
+      {name:'Bulgaria', aliases:[]},
+      {name:'Russia', aliases:['soviet union','ussr']},
+      {name:'Norway', aliases:[]},
+      {name:'Iceland', aliases:[]},
+      {name:'Bosnia and Herzegovina', aliases:['bosnia','herzegovina','bih']},
+      {name:'Israel', aliases:[]},
+      {name:'East Germany', aliases:['ddr']},
+      // North/Central America & Caribbean
+      {name:'Mexico', aliases:[]},
+      {name:'USA', aliases:['united states','united states of america','us']},
+      {name:'Costa Rica', aliases:[]},
+      {name:'Honduras', aliases:[]},
+      {name:'El Salvador', aliases:[]},
+      {name:'Trinidad and Tobago', aliases:['trinidad','tobago']},
+      {name:'Jamaica', aliases:[]},
+      {name:'Panama', aliases:[]},
+      {name:'Canada', aliases:[]},
+      {name:'Cuba', aliases:[]},
+      {name:'Haiti', aliases:[]},
+      // Africa
+      {name:'Morocco', aliases:[]},
+      {name:'Senegal', aliases:[]},
+      {name:'Nigeria', aliases:[]},
+      {name:'Cameroon', aliases:[]},
+      {name:'Ghana', aliases:[]},
+      {name:'Algeria', aliases:[]},
+      {name:'Tunisia', aliases:[]},
+      {name:'Egypt', aliases:[]},
+      {name:'Ivory Coast', aliases:["cote d'ivoire",'cote divoire','côte d\'ivoire']},
+      {name:'South Africa', aliases:[]},
+      {name:'Angola', aliases:[]},
+      {name:'Togo', aliases:[]},
+      {name:'DR Congo', aliases:['zaire','democratic republic of congo','congo dr','drc']},
+      // Asia
+      {name:'Japan', aliases:[]},
+      {name:'South Korea', aliases:['korea republic','korea']},
+      {name:'Iran', aliases:[]},
+      {name:'Saudi Arabia', aliases:[]},
+      {name:'Australia', aliases:['socceroos']},
+      {name:'China', aliases:["china pr",'peoples republic of china']},
+      {name:'North Korea', aliases:['dprk']},
+      {name:'Iraq', aliases:[]},
+      {name:'UAE', aliases:['united arab emirates']},
+      {name:'Qatar', aliases:[]},
+      {name:'Kuwait', aliases:[]},
+      {name:'Indonesia', aliases:['dutch east indies']},
+      // Oceania
+      {name:'New Zealand', aliases:['all whites']},
+    ]
   }
 };
 
@@ -931,6 +1032,7 @@ const CIRCUMFERENCE = 226; // 2 * pi * 36
 
 function startElGrande(key){
   egDataset = EG_DATASETS[key];
+  egDataset._key = key;
   egNamed = [];
   egCurrentPlayer = 1;
   egScores = [0, 0];
@@ -1022,6 +1124,7 @@ function egSubmit(){
     wrap.classList.add('wrong');
     setTimeout(()=>wrap.classList.remove('wrong'),400);
     playWrong();
+    egBuzzDuplicate(player);
     return;
   }
   // Correct!
@@ -1033,6 +1136,24 @@ function egSubmit(){
   updateEgScoreUI();
   addEgChip(player.name, egCurrentPlayer);
   document.getElementById('egInput').value='';
+  // Check if all answers have been named
+  if(egNamed.length >= egDataset.players.length){
+    clearInterval(egTimer);
+    egRunning = false;
+    playCrowd();
+    const go = document.getElementById('egGameover');
+    go.style.display = 'block';
+    document.getElementById('egInputWrap').style.display = 'none';
+    go.innerHTML = `
+      <div style="font-size:2.5rem;margin-bottom:8px;">🎉</div>
+      <div style="font-family:'Anton',sans-serif;font-size:1.8rem;color:#FFD700;margin-bottom:8px;">INCREDIBLE!</div>
+      <div style="color:#fff;font-size:0.95rem;margin-bottom:6px;">You named all ${egDataset.players.length} answers!</div>
+      <div style="color:#aaa;font-size:0.8rem;margin-bottom:20px;">Player 1: ${egScores[0]} · Player 2: ${egScores[1]}</div>
+      <button onclick="startElGrande(egDataset._key)" style="background:#FFD700;color:#000;border:none;padding:12px 28px;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;margin-right:10px;">Play Again</button>
+      <button onclick="showElGrandeMenu()" style="background:none;border:1px solid #333;color:#aaa;padding:12px 28px;border-radius:10px;font-size:0.9rem;cursor:pointer;">Categories</button>
+    `;
+    return;
+  }
   // If in sudden death, this player scored → they win
   if(egSuddenDeath){ clearInterval(egTimer); egShowResult('win', egCurrentPlayer); return; }
   // Switch player, reset timer
@@ -1045,9 +1166,21 @@ function addEgChip(name, player){
   const list = document.getElementById(`egNamedList${player}`);
   const chip = document.createElement('div');
   chip.className = `eg-named-chip p${player}`;
+  chip.dataset.canonical = name.toLowerCase();
   chip.textContent = name;
   list.appendChild(chip);
   list.scrollTop = list.scrollHeight;
+}
+
+function egBuzzDuplicate(player){
+  const canonical = player.name.toLowerCase();
+  const chip = document.querySelector(`.eg-named-chip[data-canonical="${canonical}"]`);
+  if(!chip) return;
+  chip.classList.remove('buzz');
+  void chip.offsetWidth; // force reflow to restart animation
+  chip.classList.add('buzz');
+  chip.scrollIntoView({behavior:'smooth', block:'nearest'});
+  setTimeout(()=>chip.classList.remove('buzz'), 600);
 }
 
 function egShowResult(type, winner){
@@ -1056,7 +1189,7 @@ function egShowResult(type, winner){
   go.style.display='block';
   document.getElementById('egInputWrap').style.display='none';
   const scores = `<div style="display:flex;gap:16px;justify-content:center;color:#666;font-size:0.8rem;margin-bottom:20px;"><span>Player 1: ${egScores[0]}</span><span>Player 2: ${egScores[1]}</span></div>`;
-  const btns = `<button onclick="startElGrande('cl_scorers')" style="background:#4ade80;color:#000;border:none;padding:12px 28px;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;margin-right:10px;">Play Again</button><button onclick="showElGrandeMenu()" style="background:none;border:1px solid #333;color:#aaa;padding:12px 28px;border-radius:10px;font-size:0.9rem;cursor:pointer;">Categories</button>`;
+  const btns = `<button onclick="startElGrande('${egDataset._key}')" style="background:#4ade80;color:#000;border:none;padding:12px 28px;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;margin-right:10px;">Play Again</button><button onclick="showElGrandeMenu()" style="background:none;border:1px solid #333;color:#aaa;padding:12px 28px;border-radius:10px;font-size:0.9rem;cursor:pointer;">Categories</button>`;
   if(type==='draw'){
     go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🤝</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#fbbf24;margin-bottom:8px;">IT'S A DRAW!</div><div style="color:#aaa;font-size:0.9rem;margin-bottom:16px;">Neither player could break the tie</div>${scores}${btns}`;
   } else {
