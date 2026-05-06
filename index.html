@@ -771,6 +771,14 @@ body::before{display:none;}
     </div>
     <div class="eg-cat-arrow">›</div>
   </div>
+  <div class="eg-category-card" onclick="startElGrande('wc_semifinalists')">
+    <div class="eg-cat-icon">🏅</div>
+    <div>
+      <div class="eg-cat-label">World Cup Semi-Finalists</div>
+      <div class="eg-cat-desc">Every country to reach a World Cup top 4 · 25 nations</div>
+    </div>
+    <div class="eg-cat-arrow">›</div>
+  </div>
   <div class="eg-category-card" onclick="startElGrande('wc_final_scorers')">
     <div class="eg-cat-icon">🥇</div>
     <div>
@@ -1042,6 +1050,42 @@ const EG_DATASETS = {
       {name:'Indonesia', aliases:['dutch east indies']},
       // Oceania
       {name:'New Zealand', aliases:['all whites']},
+    ]
+  },
+
+  wc_semifinalists: {
+    title: 'World Cup Semi-Finalists',
+    players: [
+      // South America
+      {name:'Brazil',         aliases:['brasil']},
+      {name:'Argentina',      aliases:[]},
+      {name:'Uruguay',        aliases:[]},
+      {name:'Chile',          aliases:[]},
+      // Europe
+      {name:'Germany',        aliases:['west germany','west-germany','deutschland']},
+      {name:'Italy',          aliases:['italia']},
+      {name:'France',         aliases:[]},
+      {name:'England',        aliases:[]},
+      {name:'Netherlands',    aliases:['holland','dutch']},
+      {name:'Spain',          aliases:['espana','españa']},
+      {name:'Croatia',        aliases:[]},
+      {name:'Belgium',        aliases:[]},
+      {name:'Portugal',       aliases:[]},
+      {name:'Sweden',         aliases:[]},
+      {name:'Hungary',        aliases:[]},
+      {name:'Czechoslovakia', aliases:['czech republic','czech','czechia']},
+      {name:'Yugoslavia',     aliases:['yugoslav']},
+      {name:'Poland',         aliases:[]},
+      {name:'Austria',        aliases:[]},
+      {name:'Soviet Union',   aliases:['russia','ussr']},
+      {name:'Bulgaria',       aliases:[]},
+      {name:'Turkey',         aliases:[]},
+      // North America
+      {name:'USA',            aliases:['united states','united states of america','us','america']},
+      // Asia
+      {name:'South Korea',    aliases:['korea','korea republic']},
+      // Africa
+      {name:'Morocco',        aliases:[]},
     ]
   },
 
