@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Football Royal</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Teko:wght@400;500;600;700&family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -16,119 +16,196 @@
   --text:#fff;--text2:#aaa;--text3:#555;
 }
 html,body{
-  min-height:100vh;color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;
+  min-height:100vh;color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden;
   background:
-    /* floodlight beams — sharp rays from top corners and centre */
-    radial-gradient(ellipse 18% 55% at 12% 0%, rgba(140,200,255,0.28) 0%, transparent 100%),
-    radial-gradient(ellipse 14% 50% at 28% 0%, rgba(160,215,255,0.18) 0%, transparent 100%),
-    radial-gradient(ellipse 20% 60% at 50% 0%, rgba(170,220,255,0.32) 0%, transparent 100%),
-    radial-gradient(ellipse 14% 50% at 72% 0%, rgba(160,215,255,0.18) 0%, transparent 100%),
-    radial-gradient(ellipse 18% 55% at 88% 0%, rgba(140,200,255,0.28) 0%, transparent 100%),
-    /* glow halos at the floodlight positions */
-    radial-gradient(ellipse 8% 6% at 12% 1%, rgba(200,230,255,0.55) 0%, transparent 100%),
-    radial-gradient(ellipse 8% 6% at 88% 1%, rgba(200,230,255,0.55) 0%, transparent 100%),
-    radial-gradient(ellipse 10% 6% at 50% 1%, rgba(210,235,255,0.6) 0%, transparent 100%),
-    /* pitch green glow rising from bottom */
-    radial-gradient(ellipse 80% 25% at 50% 100%, rgba(10,80,10,0.9) 0%, transparent 100%),
-    linear-gradient(180deg, transparent 55%, #021503 75%, #041f05 100%),
-    /* night sky gradient */
-    linear-gradient(180deg, #040d1c 0%, #061222 30%, #080808 60%, #080808 100%);
-  background-attachment: fixed;
+    linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 55%, rgba(0,0,0,0.95) 100%),
+    url('Backround picture general.png') center top / cover fixed;
+  background-attachment:fixed;
 }
-/* stadium structure hint — stands at top via pseudo-element */
-body::before{
-  content:'';
-  position:fixed;top:0;left:0;right:0;
-  height:18px;
-  background:linear-gradient(90deg,
-    #0a1a2a 0%,#0d2035 8%,#091828 16%,#0d2035 24%,#091828 32%,
-    #0d2035 40%,#091828 48%,#0d2035 56%,#091828 64%,
-    #0d2035 72%,#091828 80%,#0d2035 88%,#0a1a2a 100%);
-  opacity:0.7;z-index:0;pointer-events:none;
+body::before{display:none;}
+#hol-bg-overlay{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 55%, rgba(0,0,0,0.95) 100%),
+    url('backround image for for higher and lower.png') center top / cover;
+  opacity:0;
 }
+#landingScreen,#higherOrLowerSection,#elGrandeMenu,#elGrandeGame,#gameScreen{position:relative;z-index:2;}
 
 /* ── HEADER ── */
 .header{
   position:sticky;top:0;z-index:100;
-  background:rgba(8,8,8,0.95);backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 20px;height:52px;
+  background:rgba(5,5,5,0.96);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:0 24px;height:110px;
 }
-.logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;color:var(--gold);display:flex;align-items:center;gap:6px;}
-.logo span{color:#fff;}
-.logo-crown{font-size:1.3rem;line-height:1;}
+.fr-badge{
+  width:36px;height:36px;border-radius:8px;
+  background:linear-gradient(135deg,#1a3a1a,#0d1f0d);
+  border:1px solid #2d6b3e;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:0.9rem;color:#4ade80;
+  letter-spacing:1px;margin-right:10px;flex-shrink:0;
+}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:#fff;display:flex;align-items:center;gap:0;}
+.logo strong{color:#4ade80;}
+.logo-crown{font-size:1.1rem;line-height:1;margin-right:8px;}
+.header-right{display:flex;align-items:center;gap:12px;}
+.header-streak{
+  display:flex;align-items:center;gap:6px;
+  font-size:0.72rem;font-weight:700;color:#aaa;letter-spacing:1px;text-transform:uppercase;
+}
+.header-streak-num{
+  font-family:'Anton',sans-serif;font-size:1.4rem;color:#FFD700;line-height:1;
+}
 .header-badge{
   background:var(--green-dim);color:var(--green);
   font-size:0.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
   padding:3px 10px;border-radius:20px;border:1px solid var(--green-border);
 }
+.header-nav{display:flex;align-items:center;gap:4px;}
+.nav-link{
+  color:#555;font-size:0.7rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  text-decoration:none;padding:6px 12px;border-radius:6px;
+  transition:color 0.2s;
+}
+.nav-link:hover{color:#aaa;}
+.nav-link.active{color:#4ade80;border-bottom:2px solid #4ade80;padding-bottom:4px;}
 
 /* ── HERO ── */
 .hero{
-  text-align:center;padding:32px 20px 24px;
-  background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.2) 100%);
-  border-bottom:1px solid rgba(255,255,255,0.06);
+  text-align:center;padding:16px 20px 12px;
+  position:relative;
 }
-.hero-eyebrow{
-  display:inline-block;
-  background:linear-gradient(90deg,#1a3a2a,#1a2a3a);
-  color:var(--gold);font-size:0.62rem;font-weight:700;letter-spacing:3px;
-  text-transform:uppercase;padding:4px 14px;border-radius:20px;
-  border:1px solid #333;margin-bottom:12px;
-}
+.hero-eyebrow{display:none;}
 .hero-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2.8rem,8vw,5rem);
-  line-height:0.9;letter-spacing:2px;
-  color:#fff;margin-bottom:8px;
+  font-family:'Anton',sans-serif;
+  font-size:clamp(3.5rem,9vw,6.5rem);
+  line-height:0.9;letter-spacing:3px;
+  color:#fff;margin-bottom:12px;
+  text-shadow:0 0 60px rgba(0,0,0,0.8);
 }
+.hero-title .green{color:#4ade80;}
+.hero-title .red{color:#ef4444;}
 .hero-title .accent{color:var(--gold);}
-.hero-sub{color:var(--text3);font-size:0.85rem;letter-spacing:1px;}
+.hero-sub{color:#888;font-size:0.88rem;letter-spacing:0.5px;margin-bottom:20px;}
+.hero-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.hero-pill{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);
+  border-radius:24px;padding:7px 16px;
+  font-size:0.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#aaa;
+}
 
 /* ── MENU ── */
-#menuScreen{max-width:640px;margin:0 auto;padding:28px 16px;}
+#menuScreen{max-width:1000px;margin:0 auto;padding:24px 20px 32px;}
 .section-label{
-  color:var(--text3);font-size:0.65rem;font-weight:700;
+  color:#555;font-size:0.62rem;font-weight:700;
   letter-spacing:3px;text-transform:uppercase;
   margin-bottom:14px;text-align:center;
 }
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
 .card{
   position:relative;overflow:hidden;
-  background:rgba(10,10,10,0.82);border:1px solid #222;
-  backdrop-filter:blur(4px);
-  border-radius:16px;padding:0;
+  background:#0d0d0d;border:1px solid #1e1e1e;
+  border-radius:14px;padding:0;
   cursor:pointer;transition:all 0.22s ease;
-  min-height:120px;
+  min-height:190px;
 }
-.card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.6);}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.7);}
+.card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(0,0,0,0.95) 0%,rgba(0,0,0,0.85) 35%,rgba(0,0,0,0.3) 65%,rgba(0,0,0,0.1) 100%);
+  z-index:1;pointer-events:none;
+}
+.card-photo{
+  position:absolute;right:0;top:0;width:60%;height:100%;
+  object-fit:cover;object-position:center;
+  z-index:0;pointer-events:none;
+  opacity:0.85;
+}
 .card-bg-icon{
-  position:absolute;right:-8px;bottom:-8px;
-  font-size:5.5rem;opacity:0.13;pointer-events:none;
-  transition:opacity 0.2s,transform 0.2s;z-index:1;
+  position:absolute;right:-5px;bottom:-5px;
+  font-size:7rem;opacity:0.15;pointer-events:none;
+  z-index:0;filter:blur(0.5px);
+  transition:opacity 0.2s,transform 0.2s;
 }
-.card:hover .card-bg-icon{opacity:0.22;transform:scale(1.1);}
+.card:hover .card-bg-icon{opacity:0.25;transform:scale(1.06);}
 .card-content{
   position:relative;z-index:2;
-  padding:16px 14px 14px;
-  background:linear-gradient(to right,#111 55%,transparent 100%);
-  min-height:120px;
-  display:flex;flex-direction:column;justify-content:center;
+  padding:18px 16px 14px;
+  min-height:190px;
+  display:flex;flex-direction:column;justify-content:space-between;
 }
+.card-top{}
 .card-tag{
-  display:inline-block;font-size:0.52rem;font-weight:800;letter-spacing:1.8px;
-  text-transform:uppercase;margin-bottom:5px;
+  display:inline-block;font-size:0.52rem;font-weight:800;letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:6px;
 }
-.card-label{font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:3px;line-height:1.2;}
-.card-desc{display:none;}
-.card-best{font-size:0.63rem;color:var(--gold);font-weight:700;margin-top:7px;letter-spacing:0.5px;min-height:1em;}
+.card-label{font-family:'Teko',sans-serif;font-size:1.6rem;font-weight:600;color:#fff;margin-bottom:5px;line-height:1.1;}
+.card-desc{font-size:0.68rem;color:#777;line-height:1.4;max-width:140px;}
+.card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
+.card-best{font-size:0.72rem;color:#ef4444;font-weight:700;letter-spacing:0.5px;display:flex;align-items:center;gap:4px;}
+.card-arrow-btn{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.3);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1rem;font-weight:700;
+  transition:all 0.2s;flex-shrink:0;
+}
+.card:hover .card-arrow-btn{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.4);}
+.card-full-photo::after{display:none;}
 .card-arrow{
   position:absolute;bottom:12px;right:12px;z-index:3;
   color:var(--gold);font-size:0.9rem;opacity:0;
   transform:translateX(-8px);transition:all 0.2s;
 }
 .card:hover .card-arrow{opacity:1;transform:translateX(0);}
+
+/* ── CHALLENGE BANNER ── */
+.challenge-banner{
+  display:flex;align-items:center;gap:16px;
+  background:rgba(10,30,10,0.7);border:1px solid #1a3a1a;
+  border-radius:14px;padding:16px 20px;margin:16px 0;
+  cursor:pointer;transition:all 0.2s;
+}
+.challenge-banner:hover{border-color:#2d6b3e;background:rgba(15,40,15,0.8);}
+.challenge-icon{font-size:2rem;flex-shrink:0;}
+.challenge-text{flex:1;}
+.challenge-title{font-size:0.8rem;font-weight:800;color:#4ade80;letter-spacing:2px;text-transform:uppercase;margin-bottom:2px;}
+.challenge-sub{font-size:0.72rem;color:#555;}
+.challenge-chevron{color:#4ade80;font-size:1.2rem;font-weight:700;}
+
+/* ── STREAK MILESTONE BAR ── */
+.streak-section{
+  background:rgba(10,10,10,0.7);border:1px solid #1e1e1e;
+  border-radius:14px;padding:20px 24px;
+  display:flex;align-items:center;gap:32px;
+}
+.streak-current{flex-shrink:0;min-width:100px;}
+.streak-label-txt{font-size:0.6rem;font-weight:700;color:#555;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+.streak-big{font-family:'Anton',sans-serif;font-size:3rem;color:#4ade80;line-height:1;display:flex;align-items:center;gap:6px;}
+.streak-lightning{font-size:1.4rem;}
+.milestone-track{flex:1;display:flex;align-items:center;gap:0;position:relative;}
+.milestone-line{flex:1;height:2px;background:#222;}
+.milestone-line.done{background:#4ade80;}
+.milestone-dot{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  flex-shrink:0;
+}
+.milestone-circle{
+  width:38px;height:38px;border-radius:50%;
+  background:#1a1a1a;border:2px solid #333;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Anton',sans-serif;font-size:1rem;color:#555;
+  transition:all 0.3s;
+}
+.milestone-dot.done .milestone-circle{border-color:#4ade80;color:#4ade80;background:rgba(74,222,128,0.1);}
+.milestone-dot.gold .milestone-circle{border-color:#FFD700;color:#FFD700;background:rgba(255,215,0,0.1);}
+.milestone-name{font-size:0.5rem;font-weight:700;color:#444;letter-spacing:1px;text-transform:uppercase;text-align:center;}
+.milestone-dot.done .milestone-name{color:#4ade80;}
+.milestone-dot.gold .milestone-name{color:#FFD700;}
 
 /* ── GAME SCREEN ── */
 #gameScreen{display:none;flex-direction:column;align-items:center;padding:0 12px 24px;}
@@ -320,6 +397,149 @@ body::before{
   0%{transform:scale(1);}50%{transform:scale(1.3);}100%{transform:scale(1);}
 }
 
+/* ── LANDING SCREEN ── */
+#landingScreen{
+  max-width:820px;margin:0 auto;padding:60px 24px 40px;
+  display:flex;flex-direction:column;align-items:center;
+}
+.landing-title{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(2.5rem,7vw,5rem);
+  color:#fff;text-align:center;letter-spacing:2px;
+  margin-bottom:8px;
+}
+.landing-sub{color:#666;font-size:0.9rem;margin-bottom:50px;text-align:center;letter-spacing:0.5px;}
+.game-pick-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;}
+.game-pick-card{
+  position:relative;overflow:hidden;
+  border-radius:18px;border:1px solid #2a2a2a;
+  min-height:260px;cursor:pointer;
+  transition:transform 0.22s ease,box-shadow 0.22s ease;
+  background:#0d0d0d;
+}
+.game-pick-card:hover{transform:translateY(-4px);box-shadow:0 16px 50px rgba(0,0,0,0.8);}
+.game-pick-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.92) 0%,rgba(0,0,0,0.5) 50%,rgba(0,0,0,0.1) 100%);
+  z-index:1;pointer-events:none;
+}
+.game-pick-bg{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;z-index:0;
+}
+.game-pick-content{
+  position:relative;z-index:2;
+  padding:24px 22px;height:100%;
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.game-pick-badge{
+  display:inline-block;font-size:0.6rem;font-weight:800;letter-spacing:2px;
+  text-transform:uppercase;padding:4px 10px;border-radius:20px;
+  margin-bottom:10px;align-self:flex-start;
+}
+.game-pick-name{
+  font-family:'Anton',sans-serif;font-size:2rem;
+  color:#fff;line-height:1.1;margin-bottom:6px;
+}
+.game-pick-desc{font-size:0.75rem;color:#aaa;line-height:1.4;margin-bottom:16px;}
+.game-pick-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:10px;border:none;
+  font-family:'Inter',sans-serif;font-size:0.8rem;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  transition:opacity 0.2s;align-self:flex-start;
+}
+.game-pick-btn:hover{opacity:0.85;}
+
+/* ── EL GRANDE ── */
+#elGrandeMenu{display:none;max-width:700px;margin:0 auto;padding:40px 24px;}
+#elGrandeGame{display:none;flex-direction:column;align-items:center;padding:20px 16px 40px;max-width:700px;margin:0 auto;}
+.eg-title{font-family:'Anton',sans-serif;font-size:2.5rem;color:#fff;text-align:center;margin-bottom:6px;}
+.eg-sub{color:#666;font-size:0.8rem;text-align:center;margin-bottom:30px;}
+.eg-category-card{
+  background:rgba(255,255,255,0.04);border:1px solid #2a2a2a;
+  border-radius:14px;padding:20px 24px;margin-bottom:14px;
+  cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:16px;
+}
+.eg-category-card:hover{border-color:#e8b923;background:rgba(232,185,35,0.06);}
+.eg-cat-icon{font-size:2rem;flex-shrink:0;}
+.eg-cat-label{font-family:'Teko',sans-serif;font-size:1.6rem;color:#fff;line-height:1.1;}
+.eg-cat-desc{font-size:0.72rem;color:#666;margin-top:2px;}
+.eg-cat-arrow{margin-left:auto;color:#e8b923;font-size:1.4rem;font-weight:700;}
+
+/* El Grande gameplay */
+.eg-game-header{width:100%;display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.eg-turn-badge{
+  font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;
+  padding:8px 18px;border-radius:10px;
+  background:rgba(255,255,255,0.08);border:1px solid #333;color:#fff;
+}
+.eg-turn-badge.p1{border-color:#FFD700;color:#FFD700;background:rgba(255,215,0,0.08);}
+.eg-turn-badge.p2{border-color:#60a5fa;color:#60a5fa;background:rgba(96,165,250,0.08);}
+.eg-timer-ring{
+  width:90px;height:90px;position:relative;flex-shrink:0;
+}
+.eg-timer-svg{width:90px;height:90px;transform:rotate(-90deg);}
+.eg-timer-track{fill:none;stroke:#222;stroke-width:6;}
+.eg-timer-fill{fill:none;stroke:#4ade80;stroke-width:6;stroke-linecap:round;
+  stroke-dasharray:226;stroke-dashoffset:0;transition:stroke 0.5s;}
+.eg-timer-fill.warning{stroke:#fbbf24;}
+.eg-timer-fill.danger{stroke:#ef4444;}
+.eg-timer-num{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;
+}
+.eg-input-wrap{
+  width:100%;background:rgba(255,255,255,0.05);border:2px solid #333;
+  border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:12px;
+  margin-bottom:20px;transition:border-color 0.2s;
+}
+.eg-input-wrap:focus-within{border-color:#4ade80;}
+.eg-input-wrap.wrong{border-color:#ef4444;animation:shake 0.3s;}
+.eg-input-wrap.correct{border-color:#4ade80;}
+.eg-input{
+  flex:1;background:none;border:none;outline:none;
+  font-family:'Teko',sans-serif;font-size:1.6rem;color:#fff;
+  letter-spacing:1px;
+}
+.eg-input::placeholder{color:#444;}
+.eg-submit-btn{
+  background:#4ade80;color:#000;border:none;
+  padding:10px 20px;border-radius:10px;
+  font-family:'Inter',sans-serif;font-weight:800;font-size:0.8rem;
+  cursor:pointer;flex-shrink:0;transition:opacity 0.2s;
+}
+.eg-submit-btn:hover{opacity:0.85;}
+.eg-named-cols{
+  width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;
+}
+.eg-named-col{
+  display:flex;flex-direction:column;gap:5px;
+  max-height:200px;overflow-y:auto;
+}
+.eg-named-chip{
+  background:rgba(255,255,255,0.04);border:1px solid #2a2a2a;
+  border-radius:8px;padding:5px 10px;
+  font-size:0.72rem;color:#aaa;text-align:center;
+}
+.eg-named-chip.p1{border-color:rgba(255,215,0,0.4);color:#FFD700;background:rgba(255,215,0,0.06);}
+.eg-named-chip.p2{border-color:rgba(96,165,250,0.4);color:#60a5fa;background:rgba(96,165,250,0.06);}
+.eg-score-row{display:flex;gap:16px;width:100%;margin-bottom:20px;}
+.eg-score-box{
+  flex:1;background:rgba(255,255,255,0.04);border:1px solid #222;
+  border-radius:12px;padding:14px;text-align:center;
+}
+.eg-score-box.active-player{border-color:#FFD700;}
+.eg-score-box.active-player.p2{border-color:#60a5fa;}
+.eg-score-name{font-size:0.65rem;font-weight:700;color:#555;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+.eg-score-num{font-family:'Anton',sans-serif;font-size:2rem;color:#fff;}
+.eg-gameover{
+  width:100%;background:#0a0a1a;border:1px solid #2d4a6b;
+  border-radius:18px;padding:28px 24px;text-align:center;
+  animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
+
 /* ── FOOTER ── */
 .trophy-img{width:52px;height:52px;object-fit:contain;flex-shrink:0;}
 .compare-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;}
@@ -334,90 +554,242 @@ body::before{
 </head>
 <body>
 
+<div id="hol-bg-overlay"></div>
 <div class="header">
-  <div class="logo"><span class="logo-crown">👑</span>Football <span>Royal</span></div>
-  <div class="header-badge">Higher or Lower</div>
+  <!-- Left nav -->
+  <nav style="display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+    <a class="nav-link active" href="#">Home</a>
+    <a class="nav-link" href="#">Leaderboard</a>
+  </nav>
+  <!-- Center: logo -->
+  <div style="display:flex;align-items:center;justify-content:center;">
+    <img src="Football Royal logo.png" alt="Football Royal" onclick="showLanding()" style="height:100px;width:auto;object-fit:contain;display:block;cursor:pointer;">
+  </div>
+  <!-- Right nav -->
+  <nav style="display:flex;align-items:center;gap:4px;justify-content:flex-start;">
+    <a class="nav-link" href="#">Achievements</a>
+    <a class="nav-link" href="#">Stats</a>
+  </nav>
 </div>
 
-<div class="hero">
-  <div class="hero-eyebrow">⚽ Can you guess who has more?</div>
-  <div class="hero-title">Higher or <span class="accent">Lower</span></div>
-  <div class="hero-sub">6 categories · how far can you go?</div>
-</div>
-
-<!-- MENU -->
-<div id="menuScreen">
-  <div id="menuStreak" style="display:none;" id="menuStreakNum"></div>
-  <div style="display:none;" id="menuBestNum"></div>
-  <div style="display:none;" id="menuRecordEl"></div>
-<div class="section-label">Choose your category</div>
-  <div class="grid">
-    <div class="card" onmouseenter="playTick()" onclick="startGame('career_goals')" style="border-color:#1a3a1a;">
-      <div class="card-bg-icon">⚽</div>
-      <div class="card-content">
-        <div class="card-tag" style="color:#4ade80;">Attacking</div>
-        <div class="card-label">Career Goals</div>
-        <div class="card-desc">Total goals across club career</div>
-        <div class="card-best" id="best-career_goals"></div>
+<!-- LANDING SCREEN -->
+<div id="landingScreen">
+  <div class="landing-title">Choose Your Game</div>
+  <div class="landing-sub">Football Royal — pick a mode and prove your knowledge</div>
+  <div class="game-pick-grid">
+    <div class="game-pick-card" onclick="showHigherOrLower()">
+      <img class="game-pick-bg" src="career goals image.png" alt="">
+      <div class="game-pick-content">
+        <div class="game-pick-badge" style="background:rgba(74,222,128,0.12);border:1px solid #2d6b3e;color:#4ade80;">Higher or Lower</div>
+        <div class="game-pick-name">Higher or<br>Lower</div>
+        <div class="game-pick-desc">Guess if the next player's stat is higher or lower. 6 categories. Beat your streak.</div>
+        <button class="game-pick-btn" style="background:#4ade80;color:#000;">Play Now ›</button>
       </div>
-      <div class="card-arrow">→</div>
     </div>
-    <div class="card" onmouseenter="playTick()" onclick="startGame('assists')" style="border-color:#3a1a3a;">
-      <div class="card-bg-icon">🎯</div>
-      <div class="card-content">
-        <div class="card-tag" style="color:#e879f9;">Creative</div>
-        <div class="card-label">Assists</div>
-        <div class="card-desc">Career goal assists at club level</div>
-        <div class="card-best" id="best-assists"></div>
+    <div class="game-pick-card" onclick="showElGrande()">
+      <img class="game-pick-bg" src="International caps image.png" alt="">
+      <div class="game-pick-content">
+        <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">El Grande</div>
+        <div class="game-pick-name">El<br>Grande</div>
+        <div class="game-pick-desc">Name as many players as you can before the clock runs out. Hot-seat. 30 seconds.</div>
+        <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
       </div>
-      <div class="card-arrow">→</div>
-    </div>
-    <div class="card" onmouseenter="playTick()" onclick="startGame('trophies')" style="border-color:#3a2e0d;">
-      <img src="world cup.jpg" style="position:absolute;right:-10%;top:-10%;height:120%;width:80%;object-fit:cover;object-position:40% center;opacity:0.92;pointer-events:none;z-index:1;mask-image:radial-gradient(ellipse 65% 85% at 65% 50%,black 40%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 65% 85% at 65% 50%,black 40%,transparent 100%);filter:brightness(1.4) contrast(1.1) saturate(1.3) hue-rotate(15deg);" >
-      <div style="position:absolute;right:-10%;top:-10%;height:120%;width:80%;z-index:2;pointer-events:none;background:linear-gradient(to left,rgba(20,5,0,0.85) 0%,rgba(10,3,0,0.4) 40%,transparent 70%);mask-image:radial-gradient(ellipse 65% 85% at 65% 50%,black 40%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 65% 85% at 65% 50%,black 40%,transparent 100%);"></div>
-      <div class="card-content">
-        <div class="card-tag" style="color:#fbbf24;">Honours</div>
-        <div class="card-label">Major Trophies</div>
-        <div class="card-desc">Total major trophies won</div>
-        <div class="card-best" id="best-trophies"></div>
-      </div>
-      <div class="card-arrow">→</div>
-    </div>
-    <div class="card" onmouseenter="playTick()" onclick="startGame('career_appearances')" style="border-color:#1a1a3a;">
-      <div class="card-bg-icon">👟</div>
-      <div class="card-content">
-        <div class="card-tag" style="color:#60a5fa;">Endurance</div>
-        <div class="card-label">Appearances</div>
-        <div class="card-desc">Competitive games played in career</div>
-        <div class="card-best" id="best-career_appearances"></div>
-      </div>
-      <div class="card-arrow">→</div>
-    </div>
-    <div class="card" onmouseenter="playTick()" onclick="startGame('intl_goals')" style="border-color:#3a1a0d;">
-      <div class="card-bg-icon">🌍</div>
-      <div class="card-content">
-        <div class="card-tag" style="color:#fb923c;">International</div>
-        <div class="card-label">International Goals</div>
-        <div class="card-desc">Goals scored for their country</div>
-        <div class="card-best" id="best-intl_goals"></div>
-      </div>
-      <div class="card-arrow">→</div>
-    </div>
-    <div class="card" onmouseenter="playTick()" onclick="startGame('intl_caps')" style="border-color:#3a1a0d;">
-      <div class="card-bg-icon">🏅</div>
-      <div class="card-content">
-        <div class="card-tag" style="color:#fb923c;">International</div>
-        <div class="card-label">International Caps</div>
-        <div class="card-desc">Games played for their country</div>
-        <div class="card-best" id="best-intl_caps"></div>
-      </div>
-      <div class="card-arrow">→</div>
     </div>
   </div>
 </div>
 
+<!-- HIGHER OR LOWER SECTION -->
+<div id="higherOrLowerSection" style="display:none;">
+<div class="hero">
+  <div class="hero-title"><span class="green">HIGHER</span> <span style="color:#888;font-size:0.7em;">or</span> <span class="red">LOWER</span></div>
+  <div class="hero-sub">Test your football knowledge. Beat your best streak.</div>
+  <div class="hero-pills">
+    <div class="hero-pill">⊕ Global Leaderboard</div>
+  </div>
+</div>
+
+<!-- MENU -->
+<div id="menuScreen">
+  <div id="menuStreak" style="display:none;"></div>
+  <div style="display:none;" id="menuBestNum"></div>
+  <div style="display:none;" id="menuRecordEl"></div>
+  <div style="padding:10px 20px 0;">
+    <button onclick="showLanding()" style="background:none;border:1px solid #333;color:#666;padding:7px 16px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back Home</button>
+  </div>
+  <div class="section-label">Choose your category</div>
+  <div class="grid">
+    <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('career_goals')" style="border-color:#2a2a2a;background:#080808;">
+      <img class="card-photo" src="career goals image.png" alt="" style="width:100%;opacity:1;object-position:center center;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.2) 55%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none;"></div>
+      <div class="card-content">
+        <div class="card-top">
+          <div class="card-label">Career Goals</div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-best" id="best-career_goals"></div>
+          <div class="card-arrow-btn">›</div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('assists')" style="border-color:#2a2a2a;background:#080808;">
+      <img class="card-photo" src="assists category image.png" alt="" style="width:100%;opacity:1;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.2) 55%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none;"></div>
+      <div class="card-content">
+        <div class="card-top">
+          <div class="card-label">Assists</div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-best" id="best-assists"></div>
+          <div class="card-arrow-btn">›</div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('trophies')" style="border-color:#2a2a2a;background:#080808;">
+      <img class="card-photo" src="Major trophies category image.png" alt="" style="width:100%;opacity:1;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.2) 55%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none;"></div>
+      <div class="card-content">
+        <div class="card-top">
+          <div class="card-label">Major Trophies</div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-best" id="best-trophies"></div>
+          <div class="card-arrow-btn">›</div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('career_appearances')" style="border-color:#2a2a2a;background:#080808;">
+      <img class="card-photo" src="Appearences category image.png" alt="" style="width:100%;opacity:1;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.2) 55%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none;"></div>
+      <div class="card-content">
+        <div class="card-top">
+          <div class="card-label">Appearances</div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-best" id="best-career_appearances"></div>
+          <div class="card-arrow-btn">›</div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('intl_goals')" style="border-color:#2a2a2a;background:#080808;">
+      <img class="card-photo" src="International goals image.png" alt="" style="width:100%;opacity:1;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.2) 55%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none;"></div>
+      <div class="card-content">
+        <div class="card-top">
+          <div class="card-label">International Goals</div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-best" id="best-intl_goals"></div>
+          <div class="card-arrow-btn">›</div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('intl_caps')" style="border-color:#2a2a2a;background:#080808;">
+      <img class="card-photo" src="International caps image.png" alt="" style="width:100%;opacity:1;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.2) 55%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none;"></div>
+      <div class="card-content">
+        <div class="card-top">
+          <div class="card-label">International Caps</div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-best" id="best-intl_caps"></div>
+          <div class="card-arrow-btn">›</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Streak milestone bar -->
+  <div class="streak-section">
+    <div class="streak-current">
+      <div class="streak-label-txt">Current Streak</div>
+      <div class="streak-big"><span id="menuStreakBig">0</span><span class="streak-lightning">⚡</span></div>
+    </div>
+    <div class="milestone-track" id="milestoneTrack">
+      <div class="milestone-line" id="mline1"></div>
+      <div class="milestone-dot" id="ms3">
+        <div class="milestone-circle">3</div>
+        <div class="milestone-name">On Fire</div>
+      </div>
+      <div class="milestone-line" id="mline2"></div>
+      <div class="milestone-dot" id="ms5">
+        <div class="milestone-circle">5</div>
+        <div class="milestone-name">Hot Streak</div>
+      </div>
+      <div class="milestone-line" id="mline3"></div>
+      <div class="milestone-dot" id="ms10">
+        <div class="milestone-circle">10</div>
+        <div class="milestone-name">Unstoppable</div>
+      </div>
+      <div class="milestone-line" id="mline4"></div>
+      <div class="milestone-dot" id="ms15">
+        <div class="milestone-circle">15</div>
+        <div class="milestone-name">Legend</div>
+      </div>
+      <div class="milestone-line" id="mline5"></div>
+      <div class="milestone-dot gold" id="ms20">
+        <div class="milestone-circle">👑</div>
+        <div class="milestone-name">Goat Status</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end higherOrLowerSection -->
+
+<!-- EL GRANDE MENU -->
+<div id="elGrandeMenu">
+  <div class="eg-title">El Grande</div>
+  <div class="eg-sub">Choose a category — then take turns naming players before the clock runs out</div>
+  <div class="eg-category-card" onclick="startElGrande('cl_scorers')">
+    <div class="eg-cat-icon">🏆</div>
+    <div>
+      <div class="eg-cat-label">Champions League Final Goalscorers</div>
+      <div class="eg-cat-desc">1992/93 to present · 70 players</div>
+    </div>
+    <div class="eg-cat-arrow">›</div>
+  </div>
+  <button onclick="showLanding()" style="margin-top:20px;background:none;border:1px solid #333;color:#666;padding:10px 24px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.8rem;">← Back</button>
+</div>
+
+<!-- EL GRANDE GAME -->
+<div id="elGrandeGame">
+  <div class="eg-game-header">
+    <div>
+      <div id="egTurnBadge" class="eg-turn-badge p1">PLAYER 1'S TURN</div>
+    </div>
+    <div class="eg-timer-ring">
+      <svg class="eg-timer-svg" viewBox="0 0 90 90">
+        <circle class="eg-timer-track" cx="45" cy="45" r="36"/>
+        <circle class="eg-timer-fill" id="egTimerFill" cx="45" cy="45" r="36"/>
+      </svg>
+      <div class="eg-timer-num" id="egTimerNum">30</div>
+    </div>
+  </div>
+  <div class="eg-score-row">
+    <div class="eg-score-box active-player" id="egScore1Box">
+      <div class="eg-score-name">Player 1</div>
+      <div class="eg-score-num" id="egScore1">0</div>
+    </div>
+    <div class="eg-score-box" id="egScore2Box">
+      <div class="eg-score-name">Player 2</div>
+      <div class="eg-score-num" id="egScore2">0</div>
+    </div>
+  </div>
+  <div class="eg-input-wrap" id="egInputWrap">
+    <input class="eg-input" id="egInput" type="text" placeholder="Type a player name..." autocomplete="off" autocorrect="off" spellcheck="false" onkeydown="if(event.key==='Enter')egSubmit()">
+    <button class="eg-submit-btn" onclick="egSubmit()">Submit</button>
+  </div>
+  <div class="eg-named-cols">
+    <div class="eg-named-col" id="egNamedList1"></div>
+    <div class="eg-named-col" id="egNamedList2"></div>
+  </div>
+  <div id="egGameover" class="eg-gameover" style="display:none;"></div>
+  <button onclick="showElGrandeMenu()" style="margin-top:16px;background:none;border:1px solid #333;color:#666;padding:10px 24px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.8rem;">← Categories</button>
+</div>
+
 <!-- GAME -->
-<div id="gameScreen"><button id="cornerMenu" onclick="goMenu()" style="position:fixed;top:62px;left:14px;z-index:200;background:#1c1c1c;border:1px solid #555;color:#ccc;padding:8px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.82rem;font-weight:600;letter-spacing:0.5px;transition:all 0.2s;display:none;">← Menu</button>
+<div id="gameScreen"><button id="cornerMenu" onclick="goMenu()" style="position:fixed;top:62px;left:14px;z-index:200;background:#1c1c1c;border:1px solid #555;color:#ccc;padding:8px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.82rem;font-weight:600;letter-spacing:0.5px;transition:all 0.2s;display:none;">Sub off</button>
   <div class="topbar">
     
     <div class="pill">Score <strong id="scoreEl">0</strong></div>
@@ -432,6 +804,292 @@ body::before{
 <div class="footer">Football Royal · Stats sourced from Transfermarkt & Wikipedia</div>
 
 <script>
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+function setBg(hol, fade){
+  const ov = document.getElementById('hol-bg-overlay');
+  if(hol){
+    ov.style.transition = fade ? 'opacity 0.9s ease' : 'none';
+    ov.style.opacity = '1';
+  } else {
+    ov.style.transition = 'none';
+    ov.style.opacity = '0';
+  }
+}
+function showLanding(){
+  setBg(false);
+  document.getElementById('landingScreen').style.display='flex';
+  document.getElementById('higherOrLowerSection').style.display='none';
+  document.getElementById('elGrandeMenu').style.display='none';
+  document.getElementById('elGrandeGame').style.display='none';
+  document.getElementById('gameScreen').style.display='none';
+}
+function showHigherOrLower(){
+  document.getElementById('landingScreen').style.display='none';
+  document.getElementById('higherOrLowerSection').style.display='block';
+  document.getElementById('elGrandeMenu').style.display='none';
+  document.getElementById('elGrandeGame').style.display='none';
+  document.getElementById('gameScreen').style.display='none';
+  setTimeout(()=>setBg(true, true), 50);
+}
+function showElGrande(){
+  setBg(false);
+  document.getElementById('landingScreen').style.display='none';
+  document.getElementById('higherOrLowerSection').style.display='none';
+  document.getElementById('elGrandeMenu').style.display='block';
+  document.getElementById('elGrandeGame').style.display='none';
+  document.getElementById('gameScreen').style.display='none';
+}
+function showElGrandeMenu(){
+  egStop();
+  document.getElementById('elGrandeMenu').style.display='block';
+  document.getElementById('elGrandeGame').style.display='none';
+}
+
+// ── EL GRANDE DATA ────────────────────────────────────────────────────────────
+const EG_DATASETS = {
+  cl_scorers: {
+    title: 'Champions League Final Goalscorers',
+    players: [
+      {name:'Basile Boli', aliases:['boli']},
+      {name:'Daniele Massaro', aliases:['massaro']},
+      {name:'Dejan Savićević', aliases:['savicevic','savićević']},
+      {name:'Marcel Desailly', aliases:['desailly']},
+      {name:'Patrick Kluivert', aliases:['kluivert']},
+      {name:'Fabrizio Ravanelli', aliases:['ravanelli']},
+      {name:'Jari Litmanen', aliases:['litmanen']},
+      {name:'Karl-Heinz Riedle', aliases:['riedle','karl heinz riedle']},
+      {name:'Alessandro Del Piero', aliases:['del piero','delpiero']},
+      {name:'Lars Ricken', aliases:['ricken']},
+      {name:'Predrag Mijatović', aliases:['mijatovic','mijatović']},
+      {name:'Mario Basler', aliases:['basler']},
+      {name:'Teddy Sheringham', aliases:['sheringham']},
+      {name:'Ole Gunnar Solskjær', aliases:['solskjaer','solskjær','ole gunnar','solskjer']},
+      {name:'Fernando Morientes', aliases:['morientes']},
+      {name:'Steve McManaman', aliases:['mcmanaman','macmanaman']},
+      {name:'Raúl', aliases:['raul']},
+      {name:'Gaizka Mendieta', aliases:['mendieta']},
+      {name:'Stefan Effenberg', aliases:['effenberg']},
+      {name:'Lúcio', aliases:['lucio']},
+      {name:'Zinedine Zidane', aliases:['zidane']},
+      {name:'Carlos Alberto', aliases:['carlos alberto']},
+      {name:'Deco', aliases:['deco']},
+      {name:'Dmitri Alenichev', aliases:['alenichev']},
+      {name:'Paolo Maldini', aliases:['maldini']},
+      {name:'Hernán Crespo', aliases:['crespo','hernan crespo']},
+      {name:'Steven Gerrard', aliases:['gerrard']},
+      {name:'Vladimír Šmicer', aliases:['smicer','šmicer']},
+      {name:'Xabi Alonso', aliases:['alonso','xabi']},
+      {name:'Sol Campbell', aliases:['campbell']},
+      {name:'Samuel Eto\'o', aliases:['etoo','eto\'o','samuel etoo']},
+      {name:'Juliano Belletti', aliases:['belletti']},
+      {name:'Filippo Inzaghi', aliases:['inzaghi','pippo inzaghi']},
+      {name:'Dirk Kuyt', aliases:['kuyt']},
+      {name:'Cristiano Ronaldo', aliases:['ronaldo','cr7','cristiano']},
+      {name:'Frank Lampard', aliases:['lampard']},
+      {name:'Lionel Messi', aliases:['messi','leo messi']},
+      {name:'Diego Milito', aliases:['milito']},
+      {name:'Pedro', aliases:['pedro']},
+      {name:'Wayne Rooney', aliases:['rooney']},
+      {name:'David Villa', aliases:['villa','david villa']},
+      {name:'Thomas Müller', aliases:['muller','müller','thomas muller']},
+      {name:'Didier Drogba', aliases:['drogba']},
+      {name:'Mario Mandžukić', aliases:['mandzukic','mandžukić','mandzukić']},
+      {name:'İlkay Gündoğan', aliases:['gundogan','gündoğan','ilkay gundogan']},
+      {name:'Arjen Robben', aliases:['robben']},
+      {name:'Diego Godín', aliases:['godin','godín']},
+      {name:'Sergio Ramos', aliases:['ramos','sergio ramos']},
+      {name:'Gareth Bale', aliases:['bale']},
+      {name:'Marcelo', aliases:['marcelo']},
+      {name:'Ivan Rakitić', aliases:['rakitic','rakitić']},
+      {name:'Álvaro Morata', aliases:['morata','alvaro morata']},
+      {name:'Luis Suárez', aliases:['suarez','suárez','luis suarez']},
+      {name:'Neymar', aliases:['neymar','neymar jr']},
+      {name:'Yannick Carrasco', aliases:['carrasco']},
+      {name:'Casemiro', aliases:['casemiro']},
+      {name:'Marco Asensio', aliases:['asensio']},
+      {name:'Karim Benzema', aliases:['benzema']},
+      {name:'Sadio Mané', aliases:['mane','mané','sadio mane']},
+      {name:'Mohamed Salah', aliases:['salah','mo salah']},
+      {name:'Divock Origi', aliases:['origi']},
+      {name:'Kingsley Coman', aliases:['coman']},
+      {name:'Kai Havertz', aliases:['havertz']},
+      {name:'Vinícius Júnior', aliases:['vinicius','vinícius','vini jr','vinicius junior']},
+      {name:'Rodri', aliases:['rodri']},
+      {name:'Dani Carvajal', aliases:['carvajal']},
+      {name:'Achraf Hakimi', aliases:['hakimi']},
+      {name:'Désiré Doué', aliases:['doue','doué','desire doue']},
+      {name:'Khvicha Kvaratskhelia', aliases:['kvara','kvaratskhelia']},
+      {name:'Senny Mayulu', aliases:['mayulu']},
+    ]
+  }
+};
+
+// ── EL GRANDE GAME ENGINE ─────────────────────────────────────────────────────
+let egDataset=null, egNamed=[], egCurrentPlayer=1, egScores=[0,0], egTimer=null, egSeconds=30, egRunning=false, egSuddenDeath=false;
+const EG_TIME = 30;
+const CIRCUMFERENCE = 226; // 2 * pi * 36
+
+function startElGrande(key){
+  egDataset = EG_DATASETS[key];
+  egNamed = [];
+  egCurrentPlayer = 1;
+  egScores = [0, 0];
+  egRunning = false;
+  egSuddenDeath = false;
+  document.getElementById('elGrandeMenu').style.display='none';
+  document.getElementById('elGrandeGame').style.display='flex';
+  document.getElementById('egNamedList1').innerHTML='';
+  document.getElementById('egNamedList2').innerHTML='';
+  document.getElementById('egGameover').style.display='none';
+  document.getElementById('egInputWrap').style.display='flex';
+  document.getElementById('egInput').value='';
+  updateEgScoreUI();
+  egStartTurn();
+}
+
+function egStartTurn(){
+  egSeconds = EG_TIME;
+  egRunning = true;
+  updateEgTurnUI();
+  updateEgTimer();
+  clearInterval(egTimer);
+  egTimer = setInterval(()=>{
+    egSeconds--;
+    updateEgTimer();
+    if(egSeconds<=0){ clearInterval(egTimer); egTimeOut(); }
+  }, 1000);
+  setTimeout(()=>document.getElementById('egInput').focus(), 100);
+}
+
+function updateEgTimer(){
+  const pct = egSeconds / EG_TIME;
+  const offset = CIRCUMFERENCE * (1 - pct);
+  const fill = document.getElementById('egTimerFill');
+  const num = document.getElementById('egTimerNum');
+  fill.style.strokeDashoffset = offset;
+  num.textContent = egSeconds;
+  fill.classList.remove('warning','danger');
+  if(egSeconds <= 10) fill.classList.add('danger');
+  else if(egSeconds <= 20) fill.classList.add('warning');
+}
+
+function updateEgTurnUI(){
+  const badge = document.getElementById('egTurnBadge');
+  badge.textContent = `PLAYER ${egCurrentPlayer}'S TURN`;
+  badge.className = `eg-turn-badge p${egCurrentPlayer}`;
+  const b1 = document.getElementById('egScore1Box');
+  const b2 = document.getElementById('egScore2Box');
+  b1.className = 'eg-score-box' + (egCurrentPlayer===1?' active-player':'');
+  b2.className = 'eg-score-box' + (egCurrentPlayer===2?' active-player p2':'');
+}
+
+function updateEgScoreUI(){
+  document.getElementById('egScore1').textContent = egScores[0];
+  document.getElementById('egScore2').textContent = egScores[1];
+}
+
+function egNormalize(str){
+  return str.toLowerCase().trim()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9 ]/g,'');
+}
+
+function egFindPlayer(input){
+  const norm = egNormalize(input);
+  return egDataset.players.find(p=>{
+    if(egNormalize(p.name)===norm) return true;
+    return p.aliases.some(a=>egNormalize(a)===norm);
+  });
+}
+
+function egAlreadyNamed(player){
+  return egNamed.some(n=>n.canonical===player.name);
+}
+
+function egSubmit(){
+  if(!egRunning) return;
+  const input = document.getElementById('egInput').value.trim();
+  if(!input) return;
+  const player = egFindPlayer(input);
+  const wrap = document.getElementById('egInputWrap');
+  if(!player){
+    wrap.classList.add('wrong');
+    setTimeout(()=>wrap.classList.remove('wrong'),400);
+    playWrong();
+    return;
+  }
+  if(egAlreadyNamed(player)){
+    wrap.classList.add('wrong');
+    setTimeout(()=>wrap.classList.remove('wrong'),400);
+    playWrong();
+    return;
+  }
+  // Correct!
+  wrap.classList.add('correct');
+  setTimeout(()=>wrap.classList.remove('correct'),400);
+  playCrowd();
+  egNamed.push({canonical:player.name, player: egCurrentPlayer});
+  egScores[egCurrentPlayer-1]++;
+  updateEgScoreUI();
+  addEgChip(player.name, egCurrentPlayer);
+  document.getElementById('egInput').value='';
+  // If in sudden death, this player scored → they win
+  if(egSuddenDeath){ clearInterval(egTimer); egShowResult('win', egCurrentPlayer); return; }
+  // Switch player, reset timer
+  egCurrentPlayer = egCurrentPlayer===1 ? 2 : 1;
+  clearInterval(egTimer);
+  egStartTurn();
+}
+
+function addEgChip(name, player){
+  const list = document.getElementById(`egNamedList${player}`);
+  const chip = document.createElement('div');
+  chip.className = `eg-named-chip p${player}`;
+  chip.textContent = name;
+  list.appendChild(chip);
+  list.scrollTop = list.scrollHeight;
+}
+
+function egShowResult(type, winner){
+  egRunning = false;
+  const go = document.getElementById('egGameover');
+  go.style.display='block';
+  document.getElementById('egInputWrap').style.display='none';
+  const scores = `<div style="display:flex;gap:16px;justify-content:center;color:#666;font-size:0.8rem;margin-bottom:20px;"><span>Player 1: ${egScores[0]}</span><span>Player 2: ${egScores[1]}</span></div>`;
+  const btns = `<button onclick="startElGrande('cl_scorers')" style="background:#4ade80;color:#000;border:none;padding:12px 28px;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;margin-right:10px;">Play Again</button><button onclick="showElGrandeMenu()" style="background:none;border:1px solid #333;color:#aaa;padding:12px 28px;border-radius:10px;font-size:0.9rem;cursor:pointer;">Categories</button>`;
+  if(type==='draw'){
+    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🤝</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#fbbf24;margin-bottom:8px;">IT'S A DRAW!</div><div style="color:#aaa;font-size:0.9rem;margin-bottom:16px;">Neither player could break the tie</div>${scores}${btns}`;
+  } else {
+    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🏆</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#4ade80;margin-bottom:8px;">PLAYER ${winner} WINS!</div><div style="color:#aaa;font-size:0.9rem;margin-bottom:16px;">Well played</div>${scores}${btns}`;
+  }
+}
+
+function egTimeOut(){
+  egRunning = false;
+  clearInterval(egTimer);
+  playWrong();
+  // If already in sudden death and this player failed too → draw
+  if(egSuddenDeath){ egShowResult('draw', null); return; }
+  // Tied scores → sudden death for the OTHER player
+  if(egScores[0]===egScores[1]){
+    egSuddenDeath = true;
+    egCurrentPlayer = egCurrentPlayer===1 ? 2 : 1;
+    const sd = document.getElementById('egGameover');
+    sd.style.display='block';
+    sd.innerHTML=`<div style="font-size:2rem;margin-bottom:6px;">⭐</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:#FFD700;margin-bottom:6px;">GOLDEN GOAL</div><div style="color:#aaa;font-size:0.85rem;margin-bottom:14px;">Player ${egCurrentPlayer} — name one more to win!</div>`;
+    setTimeout(()=>{ sd.style.display='none'; egStartTurn(); }, 2500);
+    return;
+  }
+  // Normal case — player who ran out of time was behind or tied but other had more
+  const winner = egScores[0]>egScores[1] ? 1 : 2;
+  egShowResult('win', winner);
+}
+
+function egStop(){
+  clearInterval(egTimer);
+  egRunning=false;
+}
+
 // ── SOUND ENGINE ──────────────────────────────────────────────────────────────
 let _ac = null;
 function ac(){ if(!_ac) _ac = new (window.AudioContext||window.webkitAudioContext)(); return _ac; }
@@ -1309,8 +1967,20 @@ function renderCatBests(){
   const labels={career_goals:'Career Goals',career_appearances:'Appearances',assists:'Assists',intl_caps:'Intl Caps',intl_goals:'Intl Goals',trophies:'Major Trophies'};
   for(const cat of Object.keys(labels)){
     const el=document.getElementById('best-'+cat);
-    if(el) el.textContent=catBests[cat]?'Best: '+catBests[cat]:'';
+    if(el) el.innerHTML=catBests[cat]?'🏆 BEST: '+catBests[cat]:'';
   }
+}
+
+function renderMilestones(s){
+  const milestones=[{id:'ms3',v:3,line:'mline1'},{id:'ms5',v:5,line:'mline2'},{id:'ms10',v:10,line:'mline3'},{id:'ms15',v:15,line:'mline4'},{id:'ms20',v:20,line:'mline5'}];
+  milestones.forEach(m=>{
+    const dot=document.getElementById(m.id);
+    const line=document.getElementById(m.line);
+    if(dot){dot.classList.toggle('done',s>=m.v);}
+    if(line){line.classList.toggle('done',s>=m.v);}
+  });
+  const el=document.getElementById('menuStreakBig');
+  if(el) el.textContent=s;
 }
 
 renderCatBests();
@@ -1336,16 +2006,24 @@ function catValue(p,cat){
 }
 
 function goMenu(){
+  setBg(true);
+  document.getElementById("higherOrLowerSection").style.display="block";
   document.getElementById("menuScreen").style.display="block";
   document.getElementById("gameScreen").style.display="none";
   document.getElementById("cornerMenu").style.display="none";
   const rec=document.getElementById("menuRecordEl");
   if(rec) rec.textContent=best;
   renderCatBests();
+  renderMilestones(score);
+  const hb=document.getElementById('headerBestEl');
+  if(hb) hb.textContent=best;
 }
 
 function startGame(cat){
   playCrowd();
+  setBg(true);
+  document.getElementById("higherOrLowerSection").style.display="none";
+  document.getElementById("landingScreen").style.display="none";
   category=cat;score=0;lives=2;
   document.getElementById("scoreEl").textContent=0;
   document.getElementById("bestEl").textContent=best;
