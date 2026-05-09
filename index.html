@@ -1827,9 +1827,9 @@ function playCrowd(){
 
 function playWhistle(){
   const audio = new Audio('whistle.mp3');
-  audio.currentTime = 0;
+  audio.currentTime = 0.75;
   audio.play().catch(()=>{});
-  setTimeout(()=>{ audio.pause(); audio.currentTime = 0; }, 1000);
+  setTimeout(()=>{ audio.pause(); audio.currentTime = 0; }, 800);
 }
 // ── DATA ──────────────────────────────────────────────────────────────────────
 
