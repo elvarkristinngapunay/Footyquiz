@@ -2940,6 +2940,7 @@ function guess(dir){
   const rc=document.getElementById("rightCard");
   if(correct){
     playWhoosh();
+    playCrowd();
     lc.classList.add("flash-correct");rc.classList.add("flash-correct");
     rightNumEl.classList.add("correct-num");
     score++;
