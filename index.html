@@ -541,6 +541,12 @@ body::before{display:none;}
 @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
 @keyframes chipBuzz{0%,100%{transform:scale(1);opacity:1;}20%{transform:scale(1.45);}40%{transform:scale(0.92);}60%{transform:scale(1.35);}80%{transform:scale(0.97);}}
 .eg-named-chip.buzz{animation:chipBuzz 0.55s ease;outline:3px solid #fff;box-shadow:0 0 16px rgba(255,255,255,0.5);}
+.eg-missed{border-color:rgba(248,113,113,0.35)!important;color:#f87171!important;background:rgba(248,113,113,0.06)!important;opacity:0.85;}
+.eg-see-missing-btn{margin-top:14px;background:none;border:1px solid #2a2a2a;color:#555;padding:9px 22px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.8rem;transition:color 0.2s,border-color 0.2s;display:inline-flex;align-items:center;gap:6px;}
+.eg-see-missing-btn:hover{color:#aaa;border-color:#444;}
+.eg-missing-section{margin-top:20px;padding-top:18px;border-top:1px solid #181818;text-align:left;}
+.eg-missing-label{color:#444;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.eg-missing-chips{display:flex;flex-wrap:wrap;gap:5px;}
 /* ── YEAR TOAST ── */
 #egYearToast{
   position:fixed;top:50%;left:50%;
@@ -888,6 +894,7 @@ function showElGrandeMenu(){
 const EG_DATASETS = {
   cl_scorers: {
     title: 'Champions League Final Goalscorers',
+    missingLabel: 'goalscorers',
     players: [
       {name:'Basile Boli', aliases:['boli']},
       {name:'Daniele Massaro', aliases:['massaro']},
@@ -963,6 +970,7 @@ const EG_DATASETS = {
   },
   wc_countries: {
     title: 'Countries at the World Cup',
+    missingLabel: 'countries',
     players: [
       // South America
       {name:'Brazil', aliases:['brasil']},
@@ -1055,6 +1063,7 @@ const EG_DATASETS = {
 
   wc_semifinalists: {
     title: 'World Cup Semi-Finalists',
+    missingLabel: 'countries',
     players: [
       // South America
       {name:'Brazil',         aliases:['brasil']},
@@ -1091,6 +1100,7 @@ const EG_DATASETS = {
 
   wc_final_scorers: {
     title: 'World Cup Final Goalscorers',
+    missingLabel: 'goalscorers',
     players: [
       // 1930 — Uruguay 4-2 Argentina
       {name:'Pablo Dorado',           aliases:['dorado'],                                            year:1930},
@@ -1352,13 +1362,36 @@ function egShowResult(type, winner){
   const go = document.getElementById('egGameover');
   go.style.display='block';
   document.getElementById('egInputWrap').style.display='none';
-  const scores = `<div style="display:flex;gap:16px;justify-content:center;color:#666;font-size:0.8rem;margin-bottom:20px;"><span>Player 1: ${egScores[0]}</span><span>Player 2: ${egScores[1]}</span></div>`;
-  const btns = `<button onclick="startElGrande('${egDataset._key}')" style="background:#4ade80;color:#000;border:none;padding:12px 28px;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;margin-right:10px;">Play Again</button><button onclick="showElGrandeMenu()" style="background:none;border:1px solid #333;color:#aaa;padding:12px 28px;border-radius:10px;font-size:0.9rem;cursor:pointer;">Categories</button>`;
+  const label = egDataset.missingLabel || 'answers';
+  const namedSet = new Set(egNamed.map(n=>n.canonical));
+  const missingCount = egDataset.players.filter(p=>!namedSet.has(p.name)).length;
+  const p1col = '#FFD700', p2col = '#60a5fa';
+  const scores = `<div style="display:flex;gap:20px;justify-content:center;margin-bottom:20px;">
+    <div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">PLAYER 1</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p1col};">${egScores[0]}</div></div>
+    <div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">PLAYER 2</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p2col};">${egScores[1]}</div></div>
+  </div>`;
+  const btns = `<button onclick="startElGrande(egDataset._key)" style="background:#4ade80;color:#000;border:none;padding:12px 28px;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;margin-right:10px;">Play Again</button><button onclick="showElGrandeMenu()" style="background:none;border:1px solid #333;color:#aaa;padding:12px 28px;border-radius:10px;font-size:0.9rem;cursor:pointer;">Categories</button>`;
+  const seeMissingBtn = missingCount > 0
+    ? `<div><button class="eg-see-missing-btn" id="egSeeMissingBtn" onclick="egShowMissing()">👁 See missing ${label} (${missingCount})</button></div>`
+    : '';
   if(type==='draw'){
-    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🤝</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#fbbf24;margin-bottom:8px;">IT'S A DRAW!</div><div style="color:#aaa;font-size:0.9rem;margin-bottom:16px;">Neither player could break the tie</div>${scores}${btns}`;
+    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🤝</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#fbbf24;margin-bottom:8px;">IT'S A DRAW!</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">Neither player could break the tie</div>${scores}${btns}${seeMissingBtn}`;
   } else {
-    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🏆</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#4ade80;margin-bottom:8px;">PLAYER ${winner} WINS!</div><div style="color:#aaa;font-size:0.9rem;margin-bottom:16px;">Well played</div>${scores}${btns}`;
+    const winCol = winner===1 ? p1col : p2col;
+    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🏆</div><div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:${winCol};margin-bottom:4px;">PLAYER ${winner} WINS!</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">${egScores[winner-1]} – ${egScores[winner===1?1:0]}</div>${scores}${btns}${seeMissingBtn}`;
   }
+}
+
+function egShowMissing(){
+  const namedSet = new Set(egNamed.map(n=>n.canonical));
+  const missing = egDataset.players.filter(p=>!namedSet.has(p.name));
+  if(!missing.length) return;
+  const btn = document.getElementById('egSeeMissingBtn');
+  if(btn) btn.style.display='none';
+  const section = document.createElement('div');
+  section.className = 'eg-missing-section';
+  section.innerHTML = `<div class="eg-missing-label">Not named — ${missing.length} missing</div><div class="eg-missing-chips">${missing.map(p=>`<div class="eg-named-chip eg-missed">${p.name}</div>`).join('')}</div>`;
+  document.getElementById('egGameover').appendChild(section);
 }
 
 function egTimeOut(){
