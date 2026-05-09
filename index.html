@@ -1595,28 +1595,40 @@ function playCrowd(){
 
 function playWhistle(){
   const c=ac(), now=c.currentTime;
-  // Two detuned sine waves for a rich whistle body
-  [[2650,2700],[2680,2750]].forEach(([f1,f2],i)=>{
-    const o=c.createOscillator(), g=c.createGain();
-    o.type='sine';
-    o.frequency.setValueAtTime(f1,now);
-    o.frequency.linearRampToValueAtTime(f2,now+0.09);
-    o.frequency.linearRampToValueAtTime(f2-80,now+0.7);
-    g.gain.setValueAtTime(0.001,now);
-    g.gain.exponentialRampToValueAtTime(i===0?0.38:0.18,now+0.05);
-    g.gain.setValueAtTime(i===0?0.36:0.16,now+0.52);
-    g.gain.exponentialRampToValueAtTime(0.001,now+0.88);
-    o.connect(g); g.connect(c.destination);
-    o.start(now); o.stop(now+0.95);
-  });
-  // High overtone shimmer
-  const oh=c.createOscillator(), gh=c.createGain();
-  oh.type='sine'; oh.frequency.value=5400;
-  gh.gain.setValueAtTime(0.001,now);
-  gh.gain.linearRampToValueAtTime(0.06,now+0.04);
-  gh.gain.exponentialRampToValueAtTime(0.001,now+0.45);
-  oh.connect(gh); gh.connect(c.destination);
-  oh.start(now); oh.stop(now+0.5);
+  const f=1950; // pitch of a referee whistle
+
+  // Sawtooth → bandpass filter gives the airy, reedy whistle timbre
+  const osc=c.createOscillator(), filt=c.createBiquadFilter();
+  const peaMod=c.createGain(), env=c.createGain();
+  osc.type='sawtooth';
+  osc.frequency.setValueAtTime(f,now);
+  osc.frequency.linearRampToValueAtTime(f+90,now+0.07);
+  osc.frequency.linearRampToValueAtTime(f+55,now+0.76);
+  filt.type='bandpass'; filt.frequency.value=2300; filt.Q.value=4;
+
+  // Pea tremolo — LFO at ~28 Hz modulates gain, simulates the ball spinning inside
+  const lfo=c.createOscillator(), lfoAmt=c.createGain();
+  lfo.frequency.value=28; lfoAmt.gain.value=0.28;
+  peaMod.gain.value=1;
+  lfo.connect(lfoAmt); lfoAmt.connect(peaMod.gain);
+
+  env.gain.setValueAtTime(0.001,now);
+  env.gain.exponentialRampToValueAtTime(0.55,now+0.04);
+  env.gain.setValueAtTime(0.5,now+0.52);
+  env.gain.exponentialRampToValueAtTime(0.001,now+0.9);
+
+  osc.connect(filt); filt.connect(peaMod); peaMod.connect(env); env.connect(c.destination);
+  osc.start(now); osc.stop(now+0.95);
+  lfo.start(now); lfo.stop(now+0.95);
+
+  // Subtle second harmonic body
+  const o2=c.createOscillator(), g2=c.createGain();
+  o2.type='sine'; o2.frequency.setValueAtTime(f*1.5,now);
+  g2.gain.setValueAtTime(0.001,now);
+  g2.gain.linearRampToValueAtTime(0.1,now+0.05);
+  g2.gain.exponentialRampToValueAtTime(0.001,now+0.65);
+  o2.connect(g2); g2.connect(c.destination);
+  o2.start(now); o2.stop(now+0.7);
 }
 // ── DATA ──────────────────────────────────────────────────────────────────────
 
