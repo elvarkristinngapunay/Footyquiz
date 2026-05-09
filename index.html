@@ -454,7 +454,7 @@ body::before{display:none;}
 /* ── EL GRANDE ── */
 #elGrandeMenu{display:none;max-width:700px;margin:0 auto;padding:40px 24px;}
 #elGrandeGame{display:none;flex-direction:column;align-items:center;padding:20px 16px 40px;max-width:700px;margin:0 auto;}
-.eg-title{font-family:'Anton',sans-serif;font-size:2.5rem;color:#fff;text-align:center;margin-bottom:6px;}
+.eg-title{font-family:'Anton',sans-serif;font-size:clamp(3rem,9vw,6rem);line-height:0.92;letter-spacing:2px;color:#fff;text-align:center;margin-bottom:12px;}
 .eg-sub{color:#666;font-size:0.8rem;text-align:center;margin-bottom:30px;}
 .eg-category-card{
   background:rgba(255,255,255,0.04);border:1px solid #2a2a2a;
@@ -672,7 +672,7 @@ body::before{display:none;}
     <div class="game-pick-card" onclick="showElGrande()">
       <img class="game-pick-bg" src="International caps image.png" alt="">
       <div class="game-pick-content">
-        <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">El Grande</div>
+        <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">Football Under Pressure</div>
         <div class="game-pick-name">El<br>Grande</div>
         <div class="game-pick-desc">Name as many players as you can before the clock runs out. Hot-seat. 30 seconds.</div>
         <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
@@ -831,7 +831,7 @@ body::before{display:none;}
 <!-- EL GRANDE MENU -->
 <div id="elGrandeMenu">
   <div style="font-family:'Anton',sans-serif;font-size:clamp(1.6rem,6vw,2.8rem);color:#aaa;letter-spacing:4px;text-align:center;margin-bottom:2px;">WELCOME TO</div>
-  <div class="eg-title">El Grande</div>
+  <div class="eg-title">Football Under Pressure</div>
   <div class="eg-sub">Choose a category — then take turns naming players before the clock runs out</div>
   <div class="eg-category-card" onclick="startElGrande('cl_scorers')">
     <div class="eg-cat-icon">🏆</div>
@@ -961,11 +961,11 @@ body::before{display:none;}
   <div class="eg-ne-sub">Enter names before kick-off</div>
   <div class="eg-ne-field">
     <div class="eg-ne-label p1">Player 1</div>
-    <input class="eg-ne-input p1" id="egNameInput1" type="text" placeholder="Enter name..." maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('egNameInput2').focus()">
+    <input class="eg-ne-input p1" id="egNameInput1" type="text" placeholder="Enter name..." maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('egNameInput2').focus()" onkeyup="if(event.key==='Enter')document.getElementById('egNameInput2').focus()">
   </div>
   <div class="eg-ne-field">
     <div class="eg-ne-label p2">Player 2</div>
-    <input class="eg-ne-input p2" id="egNameInput2" type="text" placeholder="Enter name..." maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')egConfirmNames()">
+    <input class="eg-ne-input p2" id="egNameInput2" type="text" placeholder="Enter name..." maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')egConfirmNames()" onkeyup="if(event.key==='Enter')egConfirmNames()">
   </div>
   <button class="eg-ne-go" onclick="egConfirmNames()">Kick Off →</button>
 </div>
