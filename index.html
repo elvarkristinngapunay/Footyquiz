@@ -548,6 +548,47 @@ body::before{display:none;}
 .eg-missing-label{color:#444;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
 .eg-missing-chips{display:flex;flex-wrap:wrap;gap:5px;}
 
+/* ── WELCOME OVERLAY ── */
+#gameWelcomeOverlay{position:fixed;inset:0;z-index:800;background:#050505;display:none;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:opacity 0.35s ease;}
+#gameWelcomeOverlay.fading{opacity:0;}
+.gwo-label{font-family:'Teko',sans-serif;font-size:1.1rem;color:#444;letter-spacing:5px;text-transform:uppercase;}
+.gwo-title{font-family:'Anton',sans-serif;font-size:clamp(3rem,13vw,6.5rem);text-align:center;line-height:1.05;}
+@keyframes gwoIn{from{opacity:0;transform:scale(0.82);}to{opacity:1;transform:scale(1);}}
+.gwo-title{animation:gwoIn 0.45s cubic-bezier(0.34,1.56,0.64,1) forwards;}
+
+/* ── SLOT MACHINE OVERLAY ── */
+#slotMachineOverlay{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;}
+.slot-header{font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;margin-bottom:28px;letter-spacing:2px;}
+.slot-reels{display:flex;gap:14px;margin-bottom:20px;}
+.slot-reel{width:108px;height:128px;border:2px solid #222;border-radius:14px;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:border-color 0.4s;}
+.slot-reel.spinning{filter:blur(0.8px);}
+.slot-reel.stopped{border-color:#FFD700;box-shadow:0 0 18px rgba(255,215,0,0.2);}
+.slot-chosen-name{font-family:'Anton',sans-serif;font-size:1.15rem;color:#FFD700;text-align:center;min-height:26px;margin-bottom:16px;padding:0 12px;}
+.slot-result-btns{display:flex;gap:12px;}
+.slot-play-btn{background:#FFD700;color:#000;border:none;padding:13px 26px;border-radius:12px;font-weight:900;font-size:0.88rem;cursor:pointer;font-family:inherit;letter-spacing:0.5px;}
+.slot-spin-btn{background:none;border:1px solid #2a2a2a;color:#777;padding:13px 26px;border-radius:12px;font-size:0.88rem;cursor:pointer;font-family:inherit;}
+.slot-spin-btn:hover{border-color:#555;color:#bbb;}
+.slot-back-btn{margin-top:22px;background:none;border:none;color:#333;font-size:0.78rem;cursor:pointer;font-family:inherit;}
+.hol-rand-wrap{padding:0 20px 24px;margin-top:4px;}
+.hol-rand-btn{width:100%;padding:16px 20px;background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.15);border-radius:14px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:all 0.2s;font-family:inherit;}
+.hol-rand-btn:hover{background:rgba(255,215,0,0.08);border-color:rgba(255,215,0,0.35);}
+.hol-rand-icon{font-size:1.8rem;}
+.hol-rand-title{font-family:'Anton',sans-serif;font-size:1.1rem;color:#FFD700;display:block;}
+.hol-rand-sub{font-size:0.72rem;color:#555;display:block;margin-top:1px;}
+
+/* ── MODE CHOICE OVERLAY ── */
+#egModeChoice{position:fixed;inset:0;z-index:450;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;}
+.eg-mc-icon{font-size:3rem;margin-bottom:10px;}
+.eg-mc-title{font-family:'Anton',sans-serif;font-size:clamp(1.5rem,6vw,2.4rem);color:#fff;line-height:1.15;margin-bottom:28px;max-width:340px;}
+.eg-mc-how{font-size:0.65rem;color:#444;letter-spacing:3px;margin-bottom:16px;text-transform:uppercase;}
+.eg-mc-btns{display:flex;gap:14px;width:100%;max-width:320px;}
+.eg-mc-btn{flex:1;padding:22px 12px;border-radius:16px;border:1px solid #2a2a2a;background:#0d0d0d;cursor:pointer;font-family:inherit;transition:all 0.2s;text-align:center;}
+.eg-mc-btn:hover{border-color:#FFD700;background:rgba(255,215,0,0.05);}
+.eg-mc-bi{font-size:2rem;margin-bottom:6px;}
+.eg-mc-bl{font-family:'Anton',sans-serif;font-size:1.25rem;color:#fff;}
+.eg-mc-bs{font-size:0.65rem;color:#555;margin-top:3px;}
+.eg-mc-back{margin-top:22px;background:none;border:none;color:#333;font-size:0.78rem;cursor:pointer;font-family:inherit;}
+
 /* ── NAME ENTRY OVERLAY ── */
 #egNameEntry{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;}
 .eg-ne-title{font-family:'Anton',sans-serif;font-size:2rem;color:#fff;margin-bottom:6px;text-align:center;}
@@ -740,6 +781,13 @@ body::before{display:none;}
     </div>
   </div>
 
+  <!-- Randomise button -->
+  <div class="hol-rand-wrap">
+    <button class="hol-rand-btn" onclick="openSlotMachine('hol')">
+      <span class="hol-rand-icon">🎰</span>
+      <span><span class="hol-rand-title">Randomise Category</span><span class="hol-rand-sub">Can't decide? Spin the slot machine!</span></span>
+    </button>
+  </div>
 
   <!-- Streak milestone bar -->
   <div class="streak-section">
@@ -815,6 +863,14 @@ body::before{display:none;}
     </div>
     <div class="eg-cat-arrow">›</div>
   </div>
+  <div class="eg-category-card" style="border-color:rgba(255,215,0,0.2);background:rgba(255,215,0,0.03);" onclick="openSlotMachine('eg')">
+    <div class="eg-cat-icon">🎰</div>
+    <div>
+      <div class="eg-cat-label" style="color:#FFD700;">Randomise Category</div>
+      <div class="eg-cat-desc">Spin the slot machine — let fate decide!</div>
+    </div>
+    <div class="eg-cat-arrow">›</div>
+  </div>
   <button onclick="showLanding()" style="margin-top:20px;background:none;border:1px solid #333;color:#666;padding:10px 24px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.8rem;">← Back</button>
 </div>
 
@@ -853,6 +909,48 @@ body::before{display:none;}
   <div id="egGameover" class="eg-gameover" style="display:none;"></div>
   <div id="egYearToast"></div>
   <button onclick="showElGrandeMenu()" style="margin-top:16px;background:none;border:1px solid #333;color:#666;padding:10px 24px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.8rem;">← Categories</button>
+</div>
+
+<!-- WELCOME OVERLAY -->
+<div id="gameWelcomeOverlay">
+  <div class="gwo-label">WELCOME TO</div>
+  <div class="gwo-title" id="gwoTitle"></div>
+</div>
+
+<!-- SLOT MACHINE OVERLAY -->
+<div id="slotMachineOverlay">
+  <div class="slot-header">🎰 SPIN TO DECIDE</div>
+  <div class="slot-reels">
+    <div class="slot-reel" id="slotReel1"></div>
+    <div class="slot-reel" id="slotReel2"></div>
+    <div class="slot-reel" id="slotReel3"></div>
+  </div>
+  <div class="slot-chosen-name" id="slotChosenName"></div>
+  <div class="slot-result-btns" id="slotResultBtns" style="display:none;">
+    <button class="slot-play-btn" onclick="slotPlayCategory()">▶ Play this category</button>
+    <button class="slot-spin-btn" onclick="slotSpinAgain()">🔄 Spin again</button>
+  </div>
+  <button class="slot-back-btn" onclick="closeSlotMachine()">← Back</button>
+</div>
+
+<!-- EL GRANDE MODE CHOICE -->
+<div id="egModeChoice">
+  <div class="eg-mc-icon" id="egMcIcon"></div>
+  <div class="eg-mc-title" id="egMcTitle"></div>
+  <div class="eg-mc-how">HOW MANY PLAYERS?</div>
+  <div class="eg-mc-btns">
+    <button class="eg-mc-btn" onclick="egChooseMode(1)">
+      <div class="eg-mc-bi">🙋</div>
+      <div class="eg-mc-bl">1 Player</div>
+      <div class="eg-mc-bs">Solo challenge</div>
+    </button>
+    <button class="eg-mc-btn" onclick="egChooseMode(2)">
+      <div class="eg-mc-bi">👥</div>
+      <div class="eg-mc-bl">2 Players</div>
+      <div class="eg-mc-bs">Head to head</div>
+    </button>
+  </div>
+  <button class="eg-mc-back" onclick="egModeBack()">← Back to categories</button>
 </div>
 
 <!-- NAME ENTRY OVERLAY -->
@@ -902,8 +1000,14 @@ function setBg(hol, fade){
     ov.style.opacity = '0';
   }
 }
+function closeAllOverlays(){
+  ['gameWelcomeOverlay','slotMachineOverlay','egModeChoice','egNameEntry','egCountdownOverlay'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display='none';
+  });
+}
 function showLanding(){
   setBg(false);
+  closeAllOverlays();
   document.getElementById('landingScreen').style.display='flex';
   document.getElementById('higherOrLowerSection').style.display='none';
   document.getElementById('elGrandeMenu').style.display='none';
@@ -912,24 +1016,41 @@ function showLanding(){
 }
 function showHigherOrLower(){
   document.getElementById('landingScreen').style.display='none';
-  document.getElementById('higherOrLowerSection').style.display='block';
-  document.getElementById('elGrandeMenu').style.display='none';
-  document.getElementById('elGrandeGame').style.display='none';
-  document.getElementById('gameScreen').style.display='none';
-  setTimeout(()=>setBg(true, true), 50);
+  showWelcome(`<span style="color:#4ade80">HIGHER</span> <span style="color:#555;font-size:0.6em">or</span> <span style="color:#ef4444">LOWER</span>`, ()=>{
+    document.getElementById('higherOrLowerSection').style.display='block';
+    document.getElementById('elGrandeMenu').style.display='none';
+    document.getElementById('elGrandeGame').style.display='none';
+    document.getElementById('gameScreen').style.display='none';
+    setTimeout(()=>setBg(true, true), 50);
+  });
 }
 function showElGrande(){
   setBg(false);
   document.getElementById('landingScreen').style.display='none';
-  document.getElementById('higherOrLowerSection').style.display='none';
-  document.getElementById('elGrandeMenu').style.display='block';
-  document.getElementById('elGrandeGame').style.display='none';
-  document.getElementById('gameScreen').style.display='none';
+  showWelcome(`<span style="color:#FFD700">EL GRANDE</span>`, ()=>{
+    document.getElementById('higherOrLowerSection').style.display='none';
+    document.getElementById('elGrandeMenu').style.display='block';
+    document.getElementById('elGrandeGame').style.display='none';
+    document.getElementById('gameScreen').style.display='none';
+  });
 }
 function showElGrandeMenu(){
   egStop();
+  document.getElementById('egModeChoice').style.display='none';
+  document.getElementById('slotMachineOverlay').style.display='none';
   document.getElementById('elGrandeMenu').style.display='block';
   document.getElementById('elGrandeGame').style.display='none';
+}
+
+function showWelcome(titleHTML, callback){
+  const ov=document.getElementById('gameWelcomeOverlay');
+  document.getElementById('gwoTitle').innerHTML=titleHTML;
+  ov.classList.remove('fading');
+  ov.style.display='flex';
+  setTimeout(()=>{
+    ov.classList.add('fading');
+    setTimeout(()=>{ ov.style.display='none'; ov.classList.remove('fading'); callback(); }, 380);
+  }, 1750);
 }
 
 // ── EL GRANDE DATA ────────────────────────────────────────────────────────────
@@ -1233,66 +1354,176 @@ const EG_DATASETS = {
 // ── EL GRANDE GAME ENGINE ─────────────────────────────────────────────────────
 let egDataset=null, egNamed=[], egCurrentPlayer=1, egScores=[0,0], egTimer=null, egSeconds=30, egRunning=false, egSuddenDeath=false;
 let egPlayerNames = ['Player 1', 'Player 2'];
+let egPlayerCount = 2; // 1 or 2
 const EG_TIME = 30;
-const CIRCUMFERENCE = 226; // 2 * pi * 36
+const CIRCUMFERENCE = 226;
 
+const EG_CAT_ICONS = {cl_scorers:'🏆',wc_countries:'🌍',wc_semifinalists:'🏅',wc_final_scorers:'🥇'};
+const HOL_SLOT_CATS = [
+  {key:'career_goals', label:'Career Goals',        img:'career goals image.png'},
+  {key:'assists',      label:'Assists',              img:'assists category image.png'},
+  {key:'trophies',     label:'Major Trophies',       img:'Major trophies category image.png'},
+  {key:'appearances',  label:'Appearances',          img:'Appearences category image.png'},
+  {key:'intl_goals',   label:'International Goals',  img:'International goals image.png'},
+  {key:'intl_caps',    label:'International Caps',   img:'International caps image.png'},
+];
+const EG_SLOT_CATS = [
+  {key:'cl_scorers',       label:'Champions League Final Goalscorers', icon:'🏆'},
+  {key:'wc_countries',     label:'Countries at the World Cup',         icon:'🌍'},
+  {key:'wc_semifinalists', label:'World Cup Semi-Finalists',           icon:'🏅'},
+  {key:'wc_final_scorers', label:'World Cup Final Goalscorers',        icon:'🥇'},
+];
+
+// ── SLOT MACHINE ──────────────────────────────────────────────────────────────
+let _slotType='eg', _slotChosen=null, _slotRunning=false;
+
+function openSlotMachine(type){
+  _slotType=type; _slotChosen=null;
+  const ov=document.getElementById('slotMachineOverlay');
+  ov.style.display='flex';
+  document.getElementById('slotChosenName').textContent='';
+  document.getElementById('slotResultBtns').style.display='none';
+  ['slotReel1','slotReel2','slotReel3'].forEach(id=>{ const el=document.getElementById(id); el.innerHTML=''; el.classList.remove('stopped','spinning'); });
+  setTimeout(()=>runSlotMachine(), 350);
+}
+
+function runSlotMachine(){
+  if(_slotRunning) return;
+  _slotRunning=true;
+  document.getElementById('slotChosenName').textContent='';
+  document.getElementById('slotResultBtns').style.display='none';
+  const cats=_slotType==='hol'?HOL_SLOT_CATS:EG_SLOT_CATS;
+  const targetIdx=Math.floor(Math.random()*cats.length);
+  _slotChosen=cats[targetIdx];
+  ['slotReel1','slotReel2','slotReel3'].forEach(id=>document.getElementById(id).classList.remove('stopped'));
+  let done=0;
+  [1400,1950,2500].forEach((dur,i)=>{
+    spinReel(document.getElementById(`slotReel${i+1}`), cats, targetIdx, dur, ()=>{
+      done++;
+      if(done===3){
+        _slotRunning=false;
+        document.getElementById('slotChosenName').textContent=_slotChosen.label;
+        document.getElementById('slotResultBtns').style.display='flex';
+      }
+    });
+  });
+}
+
+function spinReel(el, cats, targetIdx, dur, onDone){
+  let idx=Math.floor(Math.random()*cats.length), speed=75, elapsed=0;
+  el.classList.add('spinning');
+  function draw(i){
+    const c=cats[i%cats.length];
+    if(_slotType==='hol'){
+      el.innerHTML=`<img src="${c.img}" style="width:92px;height:78px;object-fit:cover;border-radius:8px;"><div style="font-size:0.58rem;color:#ccc;margin-top:4px;text-align:center;padding:0 4px;line-height:1.2;">${c.label}</div>`;
+    } else {
+      el.innerHTML=`<div style="font-size:2.6rem;line-height:1;">${c.icon}</div><div style="font-size:0.55rem;color:#ccc;text-align:center;padding:0 6px;margin-top:4px;line-height:1.3;">${c.label}</div>`;
+    }
+  }
+  draw(idx);
+  function tick(){
+    idx=(idx+1)%cats.length; draw(idx); elapsed+=speed;
+    if(elapsed<400) speed=75;
+    else if(elapsed<dur) speed=110;
+    else if(elapsed<dur+500){ speed=230; }
+    else {
+      draw(targetIdx);
+      el.classList.remove('spinning'); el.classList.add('stopped');
+      onDone(); return;
+    }
+    setTimeout(tick, speed);
+  }
+  setTimeout(tick, speed);
+}
+
+function slotPlayCategory(){
+  if(!_slotChosen) return;
+  document.getElementById('slotMachineOverlay').style.display='none';
+  if(_slotType==='hol'){ startGame(_slotChosen.key); }
+  else { startElGrande(_slotChosen.key); }
+}
+function slotSpinAgain(){
+  if(_slotRunning) return;
+  ['slotReel1','slotReel2','slotReel3'].forEach(id=>document.getElementById(id).classList.remove('stopped'));
+  runSlotMachine();
+}
+function closeSlotMachine(){
+  document.getElementById('slotMachineOverlay').style.display='none';
+  _slotRunning=false;
+}
+
+// ── MODE CHOICE ───────────────────────────────────────────────────────────────
 function startElGrande(key){
-  egDataset = EG_DATASETS[key];
-  egDataset._key = key;
-  // Show name entry overlay
+  egDataset=EG_DATASETS[key]; egDataset._key=key;
   document.getElementById('elGrandeMenu').style.display='none';
   document.getElementById('elGrandeGame').style.display='none';
-  const ne = document.getElementById('egNameEntry');
-  ne.style.display='flex';
-  // Pre-fill with existing names if playing again
-  document.getElementById('egNameInput1').value = egPlayerNames[0]==='Player 1' ? '' : egPlayerNames[0];
-  document.getElementById('egNameInput2').value = egPlayerNames[1]==='Player 2' ? '' : egPlayerNames[1];
-  setTimeout(()=>document.getElementById('egNameInput1').focus(), 100);
+  document.getElementById('egMcIcon').textContent = EG_CAT_ICONS[key]||'⚽';
+  document.getElementById('egMcTitle').textContent = egDataset.title;
+  document.getElementById('egModeChoice').style.display='flex';
+}
+
+function egChooseMode(n){
+  egPlayerCount=n;
+  document.getElementById('egModeChoice').style.display='none';
+  if(n===1){
+    egPlayerNames=['Player 1',''];
+    egRunCountdown();
+  } else {
+    const ne=document.getElementById('egNameEntry');
+    ne.style.display='flex';
+    document.getElementById('egNameInput1').value=egPlayerNames[0]==='Player 1'?'':egPlayerNames[0];
+    document.getElementById('egNameInput2').value=egPlayerNames[1]==='Player 2'?'':egPlayerNames[1];
+    setTimeout(()=>document.getElementById('egNameInput1').focus(),100);
+  }
+}
+
+function egModeBack(){
+  document.getElementById('egModeChoice').style.display='none';
+  document.getElementById('elGrandeMenu').style.display='block';
 }
 
 function egConfirmNames(){
-  const n1 = document.getElementById('egNameInput1').value.trim() || 'Player 1';
-  const n2 = document.getElementById('egNameInput2').value.trim() || 'Player 2';
-  egPlayerNames = [n1, n2];
+  const n1=document.getElementById('egNameInput1').value.trim()||'Player 1';
+  const n2=document.getElementById('egNameInput2').value.trim()||'Player 2';
+  egPlayerNames=[n1,n2];
   document.getElementById('egNameEntry').style.display='none';
   egRunCountdown();
 }
 
 function egRunCountdown(){
-  const overlay = document.getElementById('egCountdownOverlay');
-  const text = document.getElementById('egCountdownText');
+  const overlay=document.getElementById('egCountdownOverlay');
+  const text=document.getElementById('egCountdownText');
   overlay.style.display='flex';
-  const steps = ['3','2','1','KICK OFF'];
-  let i = 0;
+  const steps=['3','2','1','KICK OFF'];
+  let i=0;
   function next(){
-    if(i >= steps.length){ overlay.style.display='none'; egBegin(); return; }
-    const val = steps[i];
-    const isKO = val==='KICK OFF';
-    text.className='';
-    void text.offsetWidth;
-    text.textContent = val;
-    text.className = (isKO ? 'eg-cd-kickoff' : 'eg-cd-num') + ' go';
+    if(i>=steps.length){ overlay.style.display='none'; egBegin(); return; }
+    const val=steps[i]; const isKO=val==='KICK OFF';
+    text.className=''; void text.offsetWidth;
+    text.textContent=val;
+    text.className=(isKO?'eg-cd-kickoff':'eg-cd-num')+' go';
     if(isKO) playWhistle();
-    i++;
-    setTimeout(next, isKO ? 1150 : 820);
+    i++; setTimeout(next, isKO?1150:820);
   }
   next();
 }
 
 function egBegin(){
-  egNamed = [];
-  egCurrentPlayer = 1;
-  egScores = [0, 0];
-  egRunning = false;
-  egSuddenDeath = false;
+  egNamed=[]; egCurrentPlayer=1; egScores=[0,0]; egRunning=false; egSuddenDeath=false;
   document.getElementById('elGrandeGame').style.display='flex';
   document.getElementById('egNamedList1').innerHTML='';
   document.getElementById('egNamedList2').innerHTML='';
   document.getElementById('egGameover').style.display='none';
   document.getElementById('egInputWrap').style.display='flex';
   document.getElementById('egInput').value='';
-  document.getElementById('egPlayerLabel1').textContent = egPlayerNames[0];
-  document.getElementById('egPlayerLabel2').textContent = egPlayerNames[1];
+  document.getElementById('egPlayerLabel1').textContent=egPlayerNames[0];
+  const s2box=document.getElementById('egScore2Box');
+  if(egPlayerCount===1){
+    s2box.style.display='none';
+  } else {
+    s2box.style.display='';
+    document.getElementById('egPlayerLabel2').textContent=egPlayerNames[1];
+  }
   updateEgScoreUI();
   egStartTurn();
 }
@@ -1403,6 +1634,8 @@ function egSubmit(){
     `;
     return;
   }
+  // 1P: no switching — keep the same player going
+  if(egPlayerCount===1){ clearInterval(egTimer); egStartTurn(); return; }
   // If in sudden death, this player scored → they win
   if(egSuddenDeath){ clearInterval(egTimer); egShowResult('win', egCurrentPlayer); return; }
   // Switch player, reset timer
@@ -1450,20 +1683,19 @@ function egShowResult(type, winner){
   const label = egDataset.missingLabel || 'answers';
   const namedSet = new Set(egNamed.map(n=>n.canonical));
   const missingCount = egDataset.players.filter(p=>!namedSet.has(p.name)).length;
-  const p1col = '#FFD700', p2col = '#60a5fa';
-  const scores = `<div style="display:flex;gap:20px;justify-content:center;margin-bottom:20px;">
-    <div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">${egPlayerNames[0].toUpperCase()}</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p1col};">${egScores[0]}</div></div>
-    <div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">${egPlayerNames[1].toUpperCase()}</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p2col};">${egScores[1]}</div></div>
-  </div>`;
-  const btns = `<button onclick="startElGrande(egDataset._key)" style="background:#4ade80;color:#000;border:none;padding:12px 28px;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;margin-right:10px;">Play Again</button><button onclick="showElGrandeMenu()" style="background:none;border:1px solid #333;color:#aaa;padding:12px 28px;border-radius:10px;font-size:0.9rem;cursor:pointer;">Categories</button>`;
-  const seeMissingBtn = missingCount > 0
-    ? `<div><button class="eg-see-missing-btn" id="egSeeMissingBtn" onclick="egShowMissing()">👁 See missing ${label} (${missingCount})</button></div>`
-    : '';
-  if(type==='draw'){
+  const p1col='#FFD700', p2col='#60a5fa';
+  const btns=`<button onclick="startElGrande(egDataset._key)" style="background:#4ade80;color:#000;border:none;padding:12px 28px;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;margin-right:10px;">Play Again</button><button onclick="showElGrandeMenu()" style="background:none;border:1px solid #333;color:#aaa;padding:12px 28px;border-radius:10px;font-size:0.9rem;cursor:pointer;">Categories</button>`;
+  const seeMissingBtn=missingCount>0?`<div><button class="eg-see-missing-btn" id="egSeeMissingBtn" onclick="egShowMissing()">👁 See missing ${label} (${missingCount})</button></div>`:'';
+  if(type==='solo'){
+    // 1-player end screen
+    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">⏱️</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#FFD700;margin-bottom:8px;">TIME'S UP!</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">You named ${egScores[0]} answer${egScores[0]!==1?'s':''}</div><div style="font-family:'Anton',sans-serif;font-size:2.4rem;color:#FFD700;margin-bottom:20px;">${egScores[0]}</div>${btns}${seeMissingBtn}`;
+  } else if(type==='draw'){
+    const scores=`<div style="display:flex;gap:20px;justify-content:center;margin-bottom:20px;"><div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">${egPlayerNames[0].toUpperCase()}</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p1col};">${egScores[0]}</div></div><div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">${egPlayerNames[1].toUpperCase()}</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p2col};">${egScores[1]}</div></div></div>`;
     go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🤝</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#fbbf24;margin-bottom:8px;">IT'S A DRAW!</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">Neither player could break the tie</div>${scores}${btns}${seeMissingBtn}`;
   } else {
-    const winCol = winner===1 ? p1col : p2col;
-    const winName = egPlayerNames[winner-1].toUpperCase();
+    const scores=`<div style="display:flex;gap:20px;justify-content:center;margin-bottom:20px;"><div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">${egPlayerNames[0].toUpperCase()}</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p1col};">${egScores[0]}</div></div><div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">${egPlayerNames[1].toUpperCase()}</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p2col};">${egScores[1]}</div></div></div>`;
+    const winCol=winner===1?p1col:p2col;
+    const winName=egPlayerNames[winner-1].toUpperCase();
     go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🏆</div><div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:${winCol};margin-bottom:4px;">${winName} WINS!</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">${egScores[winner-1]} – ${egScores[winner===1?1:0]}</div>${scores}${btns}${seeMissingBtn}`;
   }
 }
@@ -1484,6 +1716,8 @@ function egTimeOut(){
   egRunning = false;
   clearInterval(egTimer);
   playWrong();
+  // 1P: just end the game
+  if(egPlayerCount===1){ egShowResult('solo', 1); return; }
   // If already in sudden death and this player failed too → draw
   if(egSuddenDeath){ egShowResult('draw', null); return; }
   // Tied scores → sudden death for the OTHER player
