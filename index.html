@@ -684,6 +684,7 @@ body::before{display:none;}
 <!-- HIGHER OR LOWER SECTION -->
 <div id="higherOrLowerSection" style="display:none;">
 <div class="hero">
+  <div style="font-family:'Anton',sans-serif;font-size:clamp(1.6rem,6vw,2.8rem);color:#aaa;letter-spacing:4px;margin-bottom:2px;">WELCOME TO</div>
   <div class="hero-title"><span class="green">HIGHER</span> <span style="color:#888;font-size:0.7em;">or</span> <span class="red">LOWER</span></div>
   <div class="hero-sub">Test your football knowledge. Beat your best streak.</div>
   <div class="hero-pills">
@@ -829,6 +830,7 @@ body::before{display:none;}
 
 <!-- EL GRANDE MENU -->
 <div id="elGrandeMenu">
+  <div style="font-family:'Anton',sans-serif;font-size:clamp(1.6rem,6vw,2.8rem);color:#aaa;letter-spacing:4px;text-align:center;margin-bottom:2px;">WELCOME TO</div>
   <div class="eg-title">El Grande</div>
   <div class="eg-sub">Choose a category — then take turns naming players before the clock runs out</div>
   <div class="eg-category-card" onclick="startElGrande('cl_scorers')">
@@ -1016,23 +1018,19 @@ function showLanding(){
 }
 function showHigherOrLower(){
   document.getElementById('landingScreen').style.display='none';
-  showWelcome(`<span style="color:#4ade80">HIGHER</span> <span style="color:#555;font-size:0.6em">or</span> <span style="color:#ef4444">LOWER</span>`, ()=>{
-    document.getElementById('higherOrLowerSection').style.display='block';
-    document.getElementById('elGrandeMenu').style.display='none';
-    document.getElementById('elGrandeGame').style.display='none';
-    document.getElementById('gameScreen').style.display='none';
-    setTimeout(()=>setBg(true, true), 50);
-  });
+  document.getElementById('higherOrLowerSection').style.display='block';
+  document.getElementById('elGrandeMenu').style.display='none';
+  document.getElementById('elGrandeGame').style.display='none';
+  document.getElementById('gameScreen').style.display='none';
+  setTimeout(()=>setBg(true, true), 50);
 }
 function showElGrande(){
   setBg(false);
   document.getElementById('landingScreen').style.display='none';
-  showWelcome(`<span style="color:#FFD700">EL GRANDE</span>`, ()=>{
-    document.getElementById('higherOrLowerSection').style.display='none';
-    document.getElementById('elGrandeMenu').style.display='block';
-    document.getElementById('elGrandeGame').style.display='none';
-    document.getElementById('gameScreen').style.display='none';
-  });
+  document.getElementById('higherOrLowerSection').style.display='none';
+  document.getElementById('elGrandeMenu').style.display='block';
+  document.getElementById('elGrandeGame').style.display='none';
+  document.getElementById('gameScreen').style.display='none';
 }
 function showElGrandeMenu(){
   egStop();
