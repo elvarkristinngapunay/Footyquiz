@@ -547,6 +547,28 @@ body::before{display:none;}
 .eg-missing-section{margin-top:20px;padding-top:18px;border-top:1px solid #181818;text-align:left;}
 .eg-missing-label{color:#444;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
 .eg-missing-chips{display:flex;flex-wrap:wrap;gap:5px;}
+
+/* ── NAME ENTRY OVERLAY ── */
+#egNameEntry{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;}
+.eg-ne-title{font-family:'Anton',sans-serif;font-size:2rem;color:#fff;margin-bottom:6px;text-align:center;}
+.eg-ne-sub{color:#444;font-size:0.8rem;margin-bottom:32px;text-align:center;}
+.eg-ne-field{width:100%;max-width:310px;margin-bottom:18px;}
+.eg-ne-label{font-size:0.65rem;letter-spacing:3px;font-weight:800;margin-bottom:7px;text-transform:uppercase;}
+.eg-ne-label.p1{color:#FFD700;}.eg-ne-label.p2{color:#60a5fa;}
+.eg-ne-input{width:100%;background:#0d0d0d;border:1px solid #222;color:#fff;padding:13px 16px;border-radius:11px;font-family:inherit;font-size:1rem;box-sizing:border-box;outline:none;transition:border-color 0.2s;}
+.eg-ne-input.p1:focus{border-color:#FFD700;}.eg-ne-input.p2:focus{border-color:#60a5fa;}
+.eg-ne-go{margin-top:8px;background:#FFD700;color:#000;border:none;padding:15px 44px;border-radius:13px;font-weight:900;font-size:1rem;cursor:pointer;font-family:inherit;letter-spacing:1px;transition:transform 0.15s;}
+.eg-ne-go:hover{transform:scale(1.04);}
+
+/* ── COUNTDOWN OVERLAY ── */
+#egCountdownOverlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.98);display:none;align-items:center;justify-content:center;flex-direction:column;}
+#egCountdownText{font-family:'Anton',sans-serif;text-align:center;line-height:1;}
+.eg-cd-num{font-size:clamp(7rem,28vw,16rem);color:#fff;}
+.eg-cd-kickoff{font-size:clamp(3.5rem,13vw,8rem);color:#FFD700;text-shadow:0 0 80px rgba(255,215,0,0.6);}
+@keyframes egCdPop{0%{transform:scale(0.08);opacity:0;}28%{transform:scale(1.18);opacity:1;}45%{transform:scale(1);opacity:1;}82%{transform:scale(1);opacity:1;}100%{transform:scale(1.05);opacity:0;}}
+@keyframes egKoPop{0%{transform:scale(0.15);opacity:0;}22%{transform:scale(1.1);opacity:1;}38%{transform:scale(1);opacity:1;}100%{transform:scale(1.02);opacity:1;}}
+.eg-cd-num.go{animation:egCdPop 0.82s ease forwards;}
+.eg-cd-kickoff.go{animation:egKoPop 1.1s ease forwards;}
 /* ── YEAR TOAST ── */
 #egYearToast{
   position:fixed;top:50%;left:50%;
@@ -812,11 +834,11 @@ body::before{display:none;}
   </div>
   <div class="eg-score-row">
     <div class="eg-score-box active-player" id="egScore1Box">
-      <div class="eg-score-name">Player 1</div>
+      <div class="eg-score-name" id="egPlayerLabel1">Player 1</div>
       <div class="eg-score-num" id="egScore1">0</div>
     </div>
     <div class="eg-score-box" id="egScore2Box">
-      <div class="eg-score-name">Player 2</div>
+      <div class="eg-score-name" id="egPlayerLabel2">Player 2</div>
       <div class="eg-score-num" id="egScore2">0</div>
     </div>
   </div>
@@ -831,6 +853,26 @@ body::before{display:none;}
   <div id="egGameover" class="eg-gameover" style="display:none;"></div>
   <div id="egYearToast"></div>
   <button onclick="showElGrandeMenu()" style="margin-top:16px;background:none;border:1px solid #333;color:#666;padding:10px 24px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.8rem;">← Categories</button>
+</div>
+
+<!-- NAME ENTRY OVERLAY -->
+<div id="egNameEntry">
+  <div class="eg-ne-title">Name Your Teams</div>
+  <div class="eg-ne-sub">Enter names before kick-off</div>
+  <div class="eg-ne-field">
+    <div class="eg-ne-label p1">Player 1</div>
+    <input class="eg-ne-input p1" id="egNameInput1" type="text" placeholder="Enter name..." maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('egNameInput2').focus()">
+  </div>
+  <div class="eg-ne-field">
+    <div class="eg-ne-label p2">Player 2</div>
+    <input class="eg-ne-input p2" id="egNameInput2" type="text" placeholder="Enter name..." maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')egConfirmNames()">
+  </div>
+  <button class="eg-ne-go" onclick="egConfirmNames()">Kick Off →</button>
+</div>
+
+<!-- COUNTDOWN OVERLAY -->
+<div id="egCountdownOverlay">
+  <div id="egCountdownText"></div>
 </div>
 
 <!-- GAME -->
@@ -1190,24 +1232,67 @@ const EG_DATASETS = {
 
 // ── EL GRANDE GAME ENGINE ─────────────────────────────────────────────────────
 let egDataset=null, egNamed=[], egCurrentPlayer=1, egScores=[0,0], egTimer=null, egSeconds=30, egRunning=false, egSuddenDeath=false;
+let egPlayerNames = ['Player 1', 'Player 2'];
 const EG_TIME = 30;
 const CIRCUMFERENCE = 226; // 2 * pi * 36
 
 function startElGrande(key){
   egDataset = EG_DATASETS[key];
   egDataset._key = key;
+  // Show name entry overlay
+  document.getElementById('elGrandeMenu').style.display='none';
+  document.getElementById('elGrandeGame').style.display='none';
+  const ne = document.getElementById('egNameEntry');
+  ne.style.display='flex';
+  // Pre-fill with existing names if playing again
+  document.getElementById('egNameInput1').value = egPlayerNames[0]==='Player 1' ? '' : egPlayerNames[0];
+  document.getElementById('egNameInput2').value = egPlayerNames[1]==='Player 2' ? '' : egPlayerNames[1];
+  setTimeout(()=>document.getElementById('egNameInput1').focus(), 100);
+}
+
+function egConfirmNames(){
+  const n1 = document.getElementById('egNameInput1').value.trim() || 'Player 1';
+  const n2 = document.getElementById('egNameInput2').value.trim() || 'Player 2';
+  egPlayerNames = [n1, n2];
+  document.getElementById('egNameEntry').style.display='none';
+  egRunCountdown();
+}
+
+function egRunCountdown(){
+  const overlay = document.getElementById('egCountdownOverlay');
+  const text = document.getElementById('egCountdownText');
+  overlay.style.display='flex';
+  const steps = ['3','2','1','KICK OFF'];
+  let i = 0;
+  function next(){
+    if(i >= steps.length){ overlay.style.display='none'; egBegin(); return; }
+    const val = steps[i];
+    const isKO = val==='KICK OFF';
+    text.className='';
+    void text.offsetWidth;
+    text.textContent = val;
+    text.className = (isKO ? 'eg-cd-kickoff' : 'eg-cd-num') + ' go';
+    if(isKO) playWhistle();
+    i++;
+    setTimeout(next, isKO ? 1150 : 820);
+  }
+  next();
+}
+
+function egBegin(){
   egNamed = [];
   egCurrentPlayer = 1;
   egScores = [0, 0];
   egRunning = false;
   egSuddenDeath = false;
-  document.getElementById('elGrandeMenu').style.display='none';
   document.getElementById('elGrandeGame').style.display='flex';
   document.getElementById('egNamedList1').innerHTML='';
   document.getElementById('egNamedList2').innerHTML='';
   document.getElementById('egGameover').style.display='none';
   document.getElementById('egInputWrap').style.display='flex';
   document.getElementById('egInput').value='';
+  document.getElementById('egPlayerLabel1').textContent = egPlayerNames[0];
+  document.getElementById('egPlayerLabel2').textContent = egPlayerNames[1];
   updateEgScoreUI();
   egStartTurn();
 }
@@ -1240,7 +1325,7 @@ function updateEgTimer(){
 
 function updateEgTurnUI(){
   const badge = document.getElementById('egTurnBadge');
-  badge.textContent = `PLAYER ${egCurrentPlayer}'S TURN`;
+  badge.textContent = `${egPlayerNames[egCurrentPlayer-1].toUpperCase()}'S TURN`;
   badge.className = `eg-turn-badge p${egCurrentPlayer}`;
   const b1 = document.getElementById('egScore1Box');
   const b2 = document.getElementById('egScore2Box');
@@ -1312,7 +1397,7 @@ function egSubmit(){
       <div style="font-size:2.5rem;margin-bottom:8px;">🎉</div>
       <div style="font-family:'Anton',sans-serif;font-size:1.8rem;color:#FFD700;margin-bottom:8px;">INCREDIBLE!</div>
       <div style="color:#fff;font-size:0.95rem;margin-bottom:6px;">You named all ${egDataset.players.length} answers!</div>
-      <div style="color:#aaa;font-size:0.8rem;margin-bottom:20px;">Player 1: ${egScores[0]} · Player 2: ${egScores[1]}</div>
+      <div style="color:#aaa;font-size:0.8rem;margin-bottom:20px;">${egPlayerNames[0]}: ${egScores[0]} · ${egPlayerNames[1]}: ${egScores[1]}</div>
       <button onclick="startElGrande(egDataset._key)" style="background:#FFD700;color:#000;border:none;padding:12px 28px;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;margin-right:10px;">Play Again</button>
       <button onclick="showElGrandeMenu()" style="background:none;border:1px solid #333;color:#aaa;padding:12px 28px;border-radius:10px;font-size:0.9rem;cursor:pointer;">Categories</button>
     `;
@@ -1367,8 +1452,8 @@ function egShowResult(type, winner){
   const missingCount = egDataset.players.filter(p=>!namedSet.has(p.name)).length;
   const p1col = '#FFD700', p2col = '#60a5fa';
   const scores = `<div style="display:flex;gap:20px;justify-content:center;margin-bottom:20px;">
-    <div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">PLAYER 1</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p1col};">${egScores[0]}</div></div>
-    <div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">PLAYER 2</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p2col};">${egScores[1]}</div></div>
+    <div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">${egPlayerNames[0].toUpperCase()}</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p1col};">${egScores[0]}</div></div>
+    <div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">${egPlayerNames[1].toUpperCase()}</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p2col};">${egScores[1]}</div></div>
   </div>`;
   const btns = `<button onclick="startElGrande(egDataset._key)" style="background:#4ade80;color:#000;border:none;padding:12px 28px;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;margin-right:10px;">Play Again</button><button onclick="showElGrandeMenu()" style="background:none;border:1px solid #333;color:#aaa;padding:12px 28px;border-radius:10px;font-size:0.9rem;cursor:pointer;">Categories</button>`;
   const seeMissingBtn = missingCount > 0
@@ -1378,7 +1463,8 @@ function egShowResult(type, winner){
     go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🤝</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#fbbf24;margin-bottom:8px;">IT'S A DRAW!</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">Neither player could break the tie</div>${scores}${btns}${seeMissingBtn}`;
   } else {
     const winCol = winner===1 ? p1col : p2col;
-    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🏆</div><div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:${winCol};margin-bottom:4px;">PLAYER ${winner} WINS!</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">${egScores[winner-1]} – ${egScores[winner===1?1:0]}</div>${scores}${btns}${seeMissingBtn}`;
+    const winName = egPlayerNames[winner-1].toUpperCase();
+    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🏆</div><div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:${winCol};margin-bottom:4px;">${winName} WINS!</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">${egScores[winner-1]} – ${egScores[winner===1?1:0]}</div>${scores}${btns}${seeMissingBtn}`;
   }
 }
 
@@ -1406,7 +1492,7 @@ function egTimeOut(){
     egCurrentPlayer = egCurrentPlayer===1 ? 2 : 1;
     const sd = document.getElementById('egGameover');
     sd.style.display='block';
-    sd.innerHTML=`<div style="font-size:2rem;margin-bottom:6px;">⭐</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:#FFD700;margin-bottom:6px;">GOLDEN GOAL</div><div style="color:#aaa;font-size:0.85rem;margin-bottom:14px;">Player ${egCurrentPlayer} — name one more to win!</div>`;
+    sd.innerHTML=`<div style="font-size:2rem;margin-bottom:6px;">⭐</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:#FFD700;margin-bottom:6px;">GOLDEN GOAL</div><div style="color:#aaa;font-size:0.85rem;margin-bottom:14px;">${egPlayerNames[egCurrentPlayer-1]} — name one more to win!</div>`;
     setTimeout(()=>{ sd.style.display='none'; egStartTurn(); }, 2500);
     return;
   }
@@ -1505,6 +1591,32 @@ function playCrowd(){
   g2.gain.setValueAtTime(0.12,t2);
   g2.gain.exponentialRampToValueAtTime(0.001,t2+0.25);
   o2.start(t2); o2.stop(t2+0.25);
+}
+
+function playWhistle(){
+  const c=ac(), now=c.currentTime;
+  // Two detuned sine waves for a rich whistle body
+  [[2650,2700],[2680,2750]].forEach(([f1,f2],i)=>{
+    const o=c.createOscillator(), g=c.createGain();
+    o.type='sine';
+    o.frequency.setValueAtTime(f1,now);
+    o.frequency.linearRampToValueAtTime(f2,now+0.09);
+    o.frequency.linearRampToValueAtTime(f2-80,now+0.7);
+    g.gain.setValueAtTime(0.001,now);
+    g.gain.exponentialRampToValueAtTime(i===0?0.38:0.18,now+0.05);
+    g.gain.setValueAtTime(i===0?0.36:0.16,now+0.52);
+    g.gain.exponentialRampToValueAtTime(0.001,now+0.88);
+    o.connect(g); g.connect(c.destination);
+    o.start(now); o.stop(now+0.95);
+  });
+  // High overtone shimmer
+  const oh=c.createOscillator(), gh=c.createGain();
+  oh.type='sine'; oh.frequency.value=5400;
+  gh.gain.setValueAtTime(0.001,now);
+  gh.gain.linearRampToValueAtTime(0.06,now+0.04);
+  gh.gain.exponentialRampToValueAtTime(0.001,now+0.45);
+  oh.connect(gh); gh.connect(c.destination);
+  oh.start(now); oh.stop(now+0.5);
 }
 // ── DATA ──────────────────────────────────────────────────────────────────────
 
