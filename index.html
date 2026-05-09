@@ -1594,41 +1594,49 @@ function playCrowd(){
 }
 
 function playWhistle(){
-  const c=ac(), now=c.currentTime;
-  const f=1950; // pitch of a referee whistle
+  const c=ac(), now=c.currentTime, sr=c.sampleRate;
 
-  // Sawtooth → bandpass filter gives the airy, reedy whistle timbre
-  const osc=c.createOscillator(), filt=c.createBiquadFilter();
-  const peaMod=c.createGain(), env=c.createGain();
-  osc.type='sawtooth';
-  osc.frequency.setValueAtTime(f,now);
-  osc.frequency.linearRampToValueAtTime(f+90,now+0.07);
-  osc.frequency.linearRampToValueAtTime(f+55,now+0.76);
-  filt.type='bandpass'; filt.frequency.value=2300; filt.Q.value=4;
+  // A real whistle = white noise forced through a resonant chamber.
+  // Oscillators sound electronic; noise through a tight bandpass sounds natural.
+  const len=Math.ceil(sr*1.05);
+  const buf=c.createBuffer(1,len,sr);
+  const d=buf.getChannelData(0);
+  for(let i=0;i<len;i++) d[i]=Math.random()*2-1;
+  const src=c.createBufferSource();
+  src.buffer=buf;
 
-  // Pea tremolo — LFO at ~28 Hz modulates gain, simulates the ball spinning inside
-  const lfo=c.createOscillator(), lfoAmt=c.createGain();
-  lfo.frequency.value=28; lfoAmt.gain.value=0.28;
-  peaMod.gain.value=1;
+  // Tight bandpass at ~2200 Hz — standard referee whistle pitch.
+  // Q=30 keeps it tonal without sounding like a pure oscillator.
+  const bp=c.createBiquadFilter();
+  bp.type='bandpass';
+  bp.frequency.setValueAtTime(2150,now);
+  bp.frequency.linearRampToValueAtTime(2300,now+0.06);
+  bp.frequency.linearRampToValueAtTime(2230,now+0.65);
+  bp.Q.value=30;
+
+  // Pea flutter — the ball spinning inside creates ~25 Hz amplitude tremolo
+  const lfo=c.createOscillator(), lfoAmt=c.createGain(), peaMod=c.createGain();
+  lfo.type='sine'; lfo.frequency.value=25;
+  lfoAmt.gain.value=0.3; peaMod.gain.value=1;
   lfo.connect(lfoAmt); lfoAmt.connect(peaMod.gain);
 
-  env.gain.setValueAtTime(0.001,now);
-  env.gain.exponentialRampToValueAtTime(0.55,now+0.04);
-  env.gain.setValueAtTime(0.5,now+0.52);
-  env.gain.exponentialRampToValueAtTime(0.001,now+0.9);
+  // Envelope — fast attack, sustained body, clean release
+  const env=c.createGain();
+  env.gain.setValueAtTime(0,now);
+  env.gain.linearRampToValueAtTime(18,now+0.02);
+  env.gain.setValueAtTime(16,now+0.58);
+  env.gain.linearRampToValueAtTime(0,now+0.82);
 
-  osc.connect(filt); filt.connect(peaMod); peaMod.connect(env); env.connect(c.destination);
-  osc.start(now); osc.stop(now+0.95);
-  lfo.start(now); lfo.stop(now+0.95);
+  // Soft limiter so the high gain doesn't clip
+  const lim=c.createDynamicsCompressor();
+  lim.threshold.value=-4; lim.ratio.value=10;
+  lim.attack.value=0.001; lim.release.value=0.04;
 
-  // Subtle second harmonic body
-  const o2=c.createOscillator(), g2=c.createGain();
-  o2.type='sine'; o2.frequency.setValueAtTime(f*1.5,now);
-  g2.gain.setValueAtTime(0.001,now);
-  g2.gain.linearRampToValueAtTime(0.1,now+0.05);
-  g2.gain.exponentialRampToValueAtTime(0.001,now+0.65);
-  o2.connect(g2); g2.connect(c.destination);
-  o2.start(now); o2.stop(now+0.7);
+  src.connect(bp); bp.connect(peaMod); peaMod.connect(env);
+  env.connect(lim); lim.connect(c.destination);
+
+  src.start(now); src.stop(now+1.05);
+  lfo.start(now); lfo.stop(now+0.85);
 }
 // ── DATA ──────────────────────────────────────────────────────────────────────
 
