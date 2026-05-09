@@ -1826,49 +1826,10 @@ function playCrowd(){
 }
 
 function playWhistle(){
-  const c=ac(), now=c.currentTime, sr=c.sampleRate;
-
-  // A real whistle = white noise forced through a resonant chamber.
-  // Oscillators sound electronic; noise through a tight bandpass sounds natural.
-  const len=Math.ceil(sr*1.05);
-  const buf=c.createBuffer(1,len,sr);
-  const d=buf.getChannelData(0);
-  for(let i=0;i<len;i++) d[i]=Math.random()*2-1;
-  const src=c.createBufferSource();
-  src.buffer=buf;
-
-  // Tight bandpass at ~2200 Hz — standard referee whistle pitch.
-  // Q=30 keeps it tonal without sounding like a pure oscillator.
-  const bp=c.createBiquadFilter();
-  bp.type='bandpass';
-  bp.frequency.setValueAtTime(2150,now);
-  bp.frequency.linearRampToValueAtTime(2300,now+0.06);
-  bp.frequency.linearRampToValueAtTime(2230,now+0.65);
-  bp.Q.value=30;
-
-  // Pea flutter — the ball spinning inside creates ~25 Hz amplitude tremolo
-  const lfo=c.createOscillator(), lfoAmt=c.createGain(), peaMod=c.createGain();
-  lfo.type='sine'; lfo.frequency.value=25;
-  lfoAmt.gain.value=0.3; peaMod.gain.value=1;
-  lfo.connect(lfoAmt); lfoAmt.connect(peaMod.gain);
-
-  // Envelope — fast attack, sustained body, clean release
-  const env=c.createGain();
-  env.gain.setValueAtTime(0,now);
-  env.gain.linearRampToValueAtTime(18,now+0.02);
-  env.gain.setValueAtTime(16,now+0.58);
-  env.gain.linearRampToValueAtTime(0,now+0.82);
-
-  // Soft limiter so the high gain doesn't clip
-  const lim=c.createDynamicsCompressor();
-  lim.threshold.value=-4; lim.ratio.value=10;
-  lim.attack.value=0.001; lim.release.value=0.04;
-
-  src.connect(bp); bp.connect(peaMod); peaMod.connect(env);
-  env.connect(lim); lim.connect(c.destination);
-
-  src.start(now); src.stop(now+1.05);
-  lfo.start(now); lfo.stop(now+0.85);
+  const audio = new Audio('whistle.mp3');
+  audio.currentTime = 0;
+  audio.play().catch(()=>{});
+  setTimeout(()=>{ audio.pause(); audio.currentTime = 0; }, 1000);
 }
 // ── DATA ──────────────────────────────────────────────────────────────────────
 
