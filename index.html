@@ -641,7 +641,8 @@ body::before{display:none;}
 <div class="header">
   <!-- Left nav -->
   <nav style="display:flex;align-items:center;gap:4px;justify-content:flex-end;">
-    <button id="globalBackBtn" style="display:none;background:none;border:1px solid #333;color:#666;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back</button>
+    <a class="nav-link active" href="#">Home</a>
+    <a class="nav-link" href="#">Leaderboard</a>
   </nav>
   <!-- Center: logo -->
   <div style="display:flex;align-items:center;justify-content:center;">
@@ -653,6 +654,8 @@ body::before{display:none;}
     <a class="nav-link" href="#">Stats</a>
   </nav>
 </div>
+
+<button id="globalBackBtn" style="display:none;position:fixed;top:110px;left:16px;z-index:150;background:none;border:1px solid #333;color:#666;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back</button>
 
 <!-- LANDING SCREEN -->
 <div id="landingScreen">
