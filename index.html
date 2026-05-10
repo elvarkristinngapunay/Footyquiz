@@ -641,8 +641,7 @@ body::before{display:none;}
 <div class="header">
   <!-- Left nav -->
   <nav style="display:flex;align-items:center;gap:4px;justify-content:flex-end;">
-    <a class="nav-link active" href="#">Home</a>
-    <a class="nav-link" href="#">Leaderboard</a>
+    <button id="globalBackBtn" style="display:none;background:none;border:1px solid #333;color:#666;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back</button>
   </nav>
   <!-- Center: logo -->
   <div style="display:flex;align-items:center;justify-content:center;">
@@ -697,9 +696,6 @@ body::before{display:none;}
   <div id="menuStreak" style="display:none;"></div>
   <div style="display:none;" id="menuBestNum"></div>
   <div style="display:none;" id="menuRecordEl"></div>
-  <div style="padding:10px 20px 0;">
-    <button onclick="showLanding()" style="background:none;border:1px solid #333;color:#666;padding:7px 16px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back Home</button>
-  </div>
   <div class="section-label">Choose your category</div>
   <div class="grid">
     <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('career_goals')" style="border-color:#2a2a2a;background:#080808;">
@@ -873,7 +869,6 @@ body::before{display:none;}
     </div>
     <div class="eg-cat-arrow">›</div>
   </div>
-  <button onclick="showLanding()" style="margin-top:20px;background:none;border:1px solid #333;color:#666;padding:7px 16px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back Home</button>
 </div>
 
 <!-- EL GRANDE GAME -->
@@ -952,7 +947,6 @@ body::before{display:none;}
       <div class="eg-mc-bs">Head to head</div>
     </button>
   </div>
-  <button class="eg-mc-back" onclick="egModeBack()">← Back</button>
 </div>
 
 <!-- NAME ENTRY OVERLAY -->
@@ -968,7 +962,6 @@ body::before{display:none;}
     <input class="eg-ne-input p2" id="egNameInput2" type="text" placeholder="Enter name..." maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')egConfirmNames()" onkeyup="if(event.key==='Enter')egConfirmNames()">
   </div>
   <button class="eg-ne-go" onclick="egConfirmNames()">Kick Off →</button>
-  <button class="eg-mc-back" onclick="egNameBack()">← Back</button>
 </div>
 
 <!-- COUNTDOWN OVERLAY -->
@@ -983,9 +976,6 @@ body::before{display:none;}
     <div class="pill pill-record">🏆 Record <strong id="bestEl">0</strong></div>
     <div class="lives" id="livesEl"></div>
     <div class="mode-badge" id="modeEl"></div>
-  </div>
-  <div style="width:100%;max-width:640px;padding:0 4px 8px;">
-    <button id="cornerMenu" onclick="goMenu()" style="display:none;background:none;border:1px solid #333;color:#666;padding:7px 16px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back</button>
   </div>
   <div class="arena" id="arenaEl"></div>
   <div id="resultEl"></div>
@@ -1010,6 +1000,13 @@ function closeAllOverlays(){
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
 }
+function setBackBtn(label, fn){
+  const btn=document.getElementById('globalBackBtn');
+  if(!label){ btn.style.display='none'; btn.onclick=null; return; }
+  btn.style.display='';
+  btn.textContent=label;
+  btn.onclick=fn;
+}
 function showLanding(){
   setBg(false);
   closeAllOverlays();
@@ -1018,6 +1015,7 @@ function showLanding(){
   document.getElementById('elGrandeMenu').style.display='none';
   document.getElementById('elGrandeGame').style.display='none';
   document.getElementById('gameScreen').style.display='none';
+  setBackBtn(null);
 }
 function showHigherOrLower(){
   document.getElementById('landingScreen').style.display='none';
@@ -1026,6 +1024,7 @@ function showHigherOrLower(){
   document.getElementById('elGrandeGame').style.display='none';
   document.getElementById('gameScreen').style.display='none';
   setTimeout(()=>setBg(true, true), 50);
+  setBackBtn('← Back Home', showLanding);
 }
 function showElGrande(){
   setBg(false);
@@ -1034,6 +1033,7 @@ function showElGrande(){
   document.getElementById('elGrandeMenu').style.display='block';
   document.getElementById('elGrandeGame').style.display='none';
   document.getElementById('gameScreen').style.display='none';
+  setBackBtn('← Back Home', showLanding);
 }
 function showElGrandeMenu(){
   egStop();
@@ -1041,6 +1041,7 @@ function showElGrandeMenu(){
   document.getElementById('slotMachineOverlay').style.display='none';
   document.getElementById('elGrandeMenu').style.display='block';
   document.getElementById('elGrandeGame').style.display='none';
+  setBackBtn('← Back Home', showLanding);
 }
 
 function showWelcome(titleHTML, callback){
@@ -1461,6 +1462,7 @@ function startElGrande(key){
   document.getElementById('egMcIcon').textContent = EG_CAT_ICONS[key]||'⚽';
   document.getElementById('egMcTitle').textContent = egDataset.title;
   document.getElementById('egModeChoice').style.display='flex';
+  setBackBtn('← Back', egModeBack);
 }
 
 function egChooseMode(n){
@@ -1468,6 +1470,7 @@ function egChooseMode(n){
   document.getElementById('egModeChoice').style.display='none';
   if(n===1){
     egPlayerNames=['Player 1',''];
+    setBackBtn(null);
     egRunCountdown();
   } else {
     const ne=document.getElementById('egNameEntry');
@@ -1475,16 +1478,19 @@ function egChooseMode(n){
     document.getElementById('egNameInput1').value=egPlayerNames[0]==='Player 1'?'':egPlayerNames[0];
     document.getElementById('egNameInput2').value=egPlayerNames[1]==='Player 2'?'':egPlayerNames[1];
     setTimeout(()=>document.getElementById('egNameInput1').focus(),100);
+    setBackBtn('← Back', egNameBack);
   }
 }
 
 function egModeBack(){
   document.getElementById('egModeChoice').style.display='none';
   document.getElementById('elGrandeMenu').style.display='block';
+  setBackBtn('← Back Home', showLanding);
 }
 function egNameBack(){
   document.getElementById('egNameEntry').style.display='none';
   document.getElementById('egModeChoice').style.display='flex';
+  setBackBtn('← Back', egModeBack);
 }
 
 function egConfirmNames(){
@@ -2672,7 +2678,7 @@ function goMenu(){
   document.getElementById("higherOrLowerSection").style.display="block";
   document.getElementById("menuScreen").style.display="block";
   document.getElementById("gameScreen").style.display="none";
-  document.getElementById("cornerMenu").style.display="none";
+  setBackBtn('← Back Home', showLanding);
   const rec=document.getElementById("menuRecordEl");
   if(rec) rec.textContent=best;
   renderCatBests();
@@ -2696,8 +2702,8 @@ function startGame(cat){
   rightPlayer=nextFromDeck();
   document.getElementById("menuScreen").style.display="none";
   document.getElementById("gameScreen").style.display="flex";
-  document.getElementById("cornerMenu").style.display="block";
   document.getElementById("resultEl").innerHTML="";
+  setBackBtn('← Back', goMenu);
   awaitingNext=false;
   renderArena();
 }
