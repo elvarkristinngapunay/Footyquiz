@@ -655,7 +655,7 @@ body::before{display:none;}
   </nav>
 </div>
 
-<button id="globalBackBtn" style="display:none;position:fixed;top:110px;left:16px;z-index:150;background:none;border:1px solid #333;color:#666;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back</button>
+<button id="globalBackBtn" style="display:none;position:fixed;top:110px;left:16px;z-index:460;background:none;border:1px solid #333;color:#666;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back</button>
 
 <!-- LANDING SCREEN -->
 <div id="landingScreen">
@@ -1505,6 +1505,7 @@ function egConfirmNames(){
 }
 
 function egRunCountdown(){
+  setBackBtn(null);
   const overlay=document.getElementById('egCountdownOverlay');
   const text=document.getElementById('egCountdownText');
   overlay.style.display='flex';
@@ -1523,6 +1524,7 @@ function egRunCountdown(){
 }
 
 function egBegin(){
+  setBackBtn('← Back', showElGrandeMenu);
   egNamed=[]; egCurrentPlayer=1; egScores=[0,0]; egRunning=false; egSuddenDeath=false;
   document.getElementById('elGrandeGame').style.display='flex';
   document.getElementById('egNamedList1').innerHTML='';
