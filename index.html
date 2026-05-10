@@ -968,6 +968,7 @@ body::before{display:none;}
     <input class="eg-ne-input p2" id="egNameInput2" type="text" placeholder="Enter name..." maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')egConfirmNames()" onkeyup="if(event.key==='Enter')egConfirmNames()">
   </div>
   <button class="eg-ne-go" onclick="egConfirmNames()">Kick Off →</button>
+  <button class="eg-mc-back" onclick="egNameBack()">← Back</button>
 </div>
 
 <!-- COUNTDOWN OVERLAY -->
@@ -1478,6 +1479,10 @@ function egChooseMode(n){
 function egModeBack(){
   document.getElementById('egModeChoice').style.display='none';
   document.getElementById('elGrandeMenu').style.display='block';
+}
+function egNameBack(){
+  document.getElementById('egNameEntry').style.display='none';
+  document.getElementById('egModeChoice').style.display='flex';
 }
 
 function egConfirmNames(){
