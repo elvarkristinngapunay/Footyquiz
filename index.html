@@ -1630,7 +1630,6 @@ function egSubmit(){
   egScores[egCurrentPlayer-1]++;
   updateEgScoreUI();
   addEgChip(player.name, egCurrentPlayer);
-  if(player.year !== undefined) egShowYearToast(player.year);
   document.getElementById('egInput').value='';
   // Check if all answers have been named
   if(egNamed.length >= egDataset.players.length){
