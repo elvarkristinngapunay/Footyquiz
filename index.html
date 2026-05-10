@@ -641,6 +641,7 @@ body::before{display:none;}
 <div class="header">
   <!-- Left nav -->
   <nav style="display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+    <button id="cornerMenu" onclick="goMenu()" style="display:none;background:#1c1c1c;border:1px solid #555;color:#ccc;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.82rem;font-weight:600;letter-spacing:0.5px;transition:all 0.2s;">← Back</button>
     <a class="nav-link active" href="#">Home</a>
     <a class="nav-link" href="#">Leaderboard</a>
   </nav>
@@ -979,7 +980,6 @@ body::before{display:none;}
 <!-- GAME -->
 <div id="gameScreen">
   <div class="topbar">
-    <button id="cornerMenu" onclick="goMenu()" style="background:#1c1c1c;border:1px solid #555;color:#ccc;padding:7px 13px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.82rem;font-weight:600;letter-spacing:0.5px;transition:all 0.2s;display:none;">Sub off</button>
     <div class="pill">Score <strong id="scoreEl">0</strong></div>
     <div class="pill pill-record">🏆 Record <strong id="bestEl">0</strong></div>
     <div class="lives" id="livesEl"></div>
