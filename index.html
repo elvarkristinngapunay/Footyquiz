@@ -899,7 +899,7 @@ body::before{display:none;}
     </div>
   </div>
   <div class="eg-input-wrap" id="egInputWrap">
-    <input class="eg-input" id="egInput" type="text" placeholder="Type a player name..." autocomplete="off" autocorrect="off" spellcheck="false" onkeydown="if(event.key==='Enter')egSubmit()">
+    <input class="eg-input" id="egInput" type="text" placeholder="Type a player name..." autocomplete="off" autocorrect="off" spellcheck="false" onkeydown="if(event.key==='Enter')egSubmit()" oninput="egAutoSubmit()">
     <button class="eg-submit-btn" onclick="egSubmit()">Submit</button>
   </div>
   <div class="eg-named-cols">
@@ -1603,6 +1603,13 @@ function egAlreadyNamed(player){
   return egNamed.some(n=>n.canonical===player.name);
 }
 
+function egAutoSubmit(){
+  if(!egRunning) return;
+  const input = document.getElementById('egInput').value.trim();
+  if(!input) return;
+  const player = egFindPlayer(input);
+  if(player && !egAlreadyNamed(player)) egSubmit();
+}
 function egSubmit(){
   if(!egRunning) return;
   const input = document.getElementById('egInput').value.trim();
