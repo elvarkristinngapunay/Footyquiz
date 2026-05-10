@@ -641,7 +641,6 @@ body::before{display:none;}
 <div class="header">
   <!-- Left nav -->
   <nav style="display:flex;align-items:center;gap:4px;justify-content:flex-end;">
-    <button id="cornerMenu" onclick="goMenu()" style="display:none;background:#1c1c1c;border:1px solid #555;color:#ccc;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.82rem;font-weight:600;letter-spacing:0.5px;transition:all 0.2s;">← Back</button>
     <a class="nav-link active" href="#">Home</a>
     <a class="nav-link" href="#">Leaderboard</a>
   </nav>
@@ -984,6 +983,9 @@ body::before{display:none;}
     <div class="pill pill-record">🏆 Record <strong id="bestEl">0</strong></div>
     <div class="lives" id="livesEl"></div>
     <div class="mode-badge" id="modeEl"></div>
+  </div>
+  <div style="width:100%;max-width:640px;padding:0 4px 8px;">
+    <button id="cornerMenu" onclick="goMenu()" style="display:none;background:none;border:1px solid #333;color:#666;padding:7px 16px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back</button>
   </div>
   <div class="arena" id="arenaEl"></div>
   <div id="resultEl"></div>
