@@ -30,7 +30,7 @@ body::before{display:none;}
     url('backround image for for higher and lower.png') center top / cover;
   opacity:0;
 }
-#landingScreen,#higherOrLowerSection,#elGrandeMenu,#elGrandeGame,#gameScreen{position:relative;z-index:2;}
+#landingScreen,#higherOrLowerSection,#elGrandeMenu,#elGrandeGame,#gameScreen,#sxiScreen{position:relative;z-index:2;}
 
 /* ── HEADER ── */
 .header{
@@ -399,7 +399,7 @@ body::before{display:none;}
 
 /* ── LANDING SCREEN ── */
 #landingScreen{
-  max-width:820px;margin:0 auto;padding:60px 24px 40px;
+  max-width:1100px;margin:0 auto;padding:60px 24px 40px;
   display:flex;flex-direction:column;align-items:center;
 }
 .landing-title{
@@ -409,7 +409,8 @@ body::before{display:none;}
   margin-bottom:8px;
 }
 .landing-sub{color:#666;font-size:0.9rem;margin-bottom:50px;text-align:center;letter-spacing:0.5px;}
-.game-pick-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;}
+.game-pick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:100%;}
+@media(max-width:640px){.game-pick-grid{grid-template-columns:1fr;}}
 .game-pick-card{
   position:relative;overflow:hidden;
   border-radius:18px;border:1px solid #2a2a2a;
@@ -548,6 +549,85 @@ body::before{display:none;}
 .eg-missing-label{color:#444;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
 .eg-missing-chips{display:flex;flex-wrap:wrap;gap:5px;}
 
+/* ── STARTING XI ── */
+#sxiScreen{display:none;flex-direction:column;align-items:center;padding:20px 16px 60px;max-width:700px;margin:0 auto;}
+.sxi-title-pre{font-family:'Anton',sans-serif;font-size:clamp(1.4rem,5vw,2.4rem);color:#aaa;letter-spacing:4px;text-align:center;margin-bottom:2px;}
+.sxi-title{font-family:'Anton',sans-serif;font-size:clamp(3rem,9vw,6rem);line-height:0.9;letter-spacing:2px;text-align:center;color:#fff;margin-bottom:10px;}
+.sxi-sub{color:#666;font-size:0.8rem;text-align:center;margin-bottom:28px;}
+.sxi-mode-row{display:flex;gap:12px;justify-content:center;margin-bottom:24px;}
+.sxi-mode-btn{padding:10px 26px;border-radius:10px;font-family:inherit;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;}
+.sxi-mode-btn.p1{background:rgba(74,222,128,0.1);border:1px solid #2d6b3e;color:#4ade80;}
+.sxi-mode-btn.p1:hover,.sxi-mode-btn.p1.active{background:rgba(74,222,128,0.2);border-color:#4ade80;}
+.sxi-mode-btn.p2{background:rgba(96,165,250,0.1);border:1px solid #2d4a6b;color:#60a5fa;}
+.sxi-mode-btn.p2:hover,.sxi-mode-btn.p2.active{background:rgba(96,165,250,0.2);border-color:#60a5fa;}
+.sxi-team-grid{display:block;width:100%;margin-top:16px;}
+.sxi-section-header{font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--gold);margin:22px 0 10px;text-transform:uppercase;}
+.sxi-cat-grid{display:flex;flex-direction:column;gap:12px;width:100%;margin-top:14px;}
+.sxi-cat-card{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.04);border:1px solid #2a2a2a;border-radius:16px;padding:16px 22px;cursor:pointer;transition:all 0.2s;}
+.sxi-cat-card:hover{border-color:var(--gold);background:rgba(255,215,0,0.06);transform:translateX(4px);}
+.sxi-cat-trophy{width:48px;height:48px;object-fit:contain;flex-shrink:0;}
+.sxi-cat-name{font-family:'Anton',sans-serif;font-size:1.15rem;letter-spacing:1px;color:#fff;flex:1;}
+.sxi-cat-count{font-size:0.68rem;color:#555;letter-spacing:1px;white-space:nowrap;}
+.sxi-section-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sxi-team-card{background:rgba(255,255,255,0.04);border:1px solid #2a2a2a;border-radius:14px;padding:16px 14px;cursor:pointer;transition:all 0.2s;text-align:center;}
+.sxi-team-card:hover{border-color:var(--gold);background:rgba(255,215,0,0.06);transform:translateY(-2px);}
+.sxi-team-flag{font-size:2rem;margin-bottom:6px;}
+.sxi-team-name{font-family:'Anton',sans-serif;font-size:1.05rem;letter-spacing:1px;color:#fff;line-height:1.1;}
+.sxi-team-year{font-size:0.68rem;color:#555;margin-top:3px;letter-spacing:1px;}
+.sxi-team-opp{font-size:0.62rem;color:#444;margin-top:1px;}
+/* Name entry */
+.sxi-ne-input{width:100%;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px 18px;font-family:'Teko',sans-serif;font-size:1.4rem;outline:none;letter-spacing:1px;}
+.sxi-ne-input.p1{border:2px solid #7a5f00;color:#FFD700;background:rgba(255,215,0,0.06);}
+.sxi-ne-input.p2{border:2px solid #2d4a6b;color:#60a5fa;background:rgba(96,165,250,0.06);}
+/* Pitch */
+.sxi-pitch-wrap{width:100%;max-width:360px;margin:0 auto 14px;}
+.sxi-pitch{position:relative;width:100%;padding-bottom:150%;
+  background:repeating-linear-gradient(0deg,#166216 0px,#166216 40px,#1b7a1b 40px,#1b7a1b 80px);
+  border:3px solid rgba(255,255,255,0.22);border-radius:8px;overflow:hidden;}
+.sxi-pitch-line{position:absolute;background:rgba(255,255,255,0.18);pointer-events:none;}
+/* Player dot */
+.sxi-pos{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:3px;z-index:3;}
+.sxi-pos-dot{width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,0.55);border:2px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:0.44rem;font-weight:900;color:rgba(255,255,255,0.3);letter-spacing:0.5px;text-transform:uppercase;transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);}
+.sxi-pos.filled-solo .sxi-pos-dot{background:rgba(74,222,128,0.3);border-color:#4ade80;box-shadow:0 0 10px rgba(74,222,128,0.5);color:#4ade80;}
+.sxi-pos.filled-p1 .sxi-pos-dot{background:rgba(255,215,0,0.3);border-color:#FFD700;box-shadow:0 0 10px rgba(255,215,0,0.5);color:#FFD700;}
+.sxi-pos.filled-p2 .sxi-pos-dot{background:rgba(96,165,250,0.3);border-color:#60a5fa;box-shadow:0 0 10px rgba(96,165,250,0.5);color:#60a5fa;}
+.sxi-pos-name{font-size:0.5rem;font-weight:800;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.95);text-align:center;max-width:58px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.3px;}
+/* Bench */
+.sxi-bench-wrap{width:100%;max-width:360px;margin:0 auto 16px;background:rgba(0,0,0,0.35);border:1px solid #1e1e1e;border-radius:10px;padding:10px 12px;}
+.sxi-bench-lbl{font-size:0.52rem;font-weight:800;letter-spacing:2.5px;color:#333;text-transform:uppercase;margin-bottom:7px;}
+.sxi-bench-slots{display:flex;flex-wrap:wrap;gap:5px;}
+.sxi-bench-slot{background:rgba(255,255,255,0.03);border:1px solid #1e1e1e;border-radius:7px;padding:4px 10px;font-size:0.66rem;color:#333;transition:all 0.35s;}
+.sxi-bench-slot.filled-solo{border-color:rgba(74,222,128,0.4);color:#4ade80;background:rgba(74,222,128,0.06);}
+.sxi-bench-slot.filled-p1{border-color:rgba(255,215,0,0.4);color:#FFD700;background:rgba(255,215,0,0.06);}
+.sxi-bench-slot.filled-p2{border-color:rgba(96,165,250,0.4);color:#60a5fa;background:rgba(96,165,250,0.06);}
+/* Controls */
+.sxi-controls{width:100%;max-width:360px;margin:0 auto;}
+.sxi-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.sxi-turn-badge{font-family:'Anton',sans-serif;font-size:0.88rem;letter-spacing:2px;padding:7px 16px;border-radius:10px;background:rgba(255,255,255,0.07);border:1px solid #333;color:#fff;}
+.sxi-turn-badge.p1{border-color:#FFD700;color:#FFD700;background:rgba(255,215,0,0.08);}
+.sxi-turn-badge.p2{border-color:#60a5fa;color:#60a5fa;background:rgba(96,165,250,0.08);}
+.sxi-score-row{display:flex;gap:10px;width:100%;max-width:360px;margin:0 auto 12px;}
+.sxi-score-box{flex:1;background:rgba(255,255,255,0.04);border:1px solid #1e1e1e;border-radius:10px;padding:10px;text-align:center;transition:border-color 0.3s;}
+.sxi-score-box.active{border-color:#FFD700;}
+.sxi-score-box.active.p2{border-color:#60a5fa;}
+.sxi-score-name{font-size:0.58rem;font-weight:700;color:#444;letter-spacing:2px;text-transform:uppercase;margin-bottom:2px;}
+.sxi-score-num{font-family:'Anton',sans-serif;font-size:1.7rem;color:#fff;}
+.sxi-lives-row{display:flex;gap:6px;justify-content:center;margin-bottom:10px;}
+.sxi-input-wrap{width:100%;background:rgba(255,255,255,0.05);border:2px solid #333;border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:10px;margin-bottom:10px;transition:border-color 0.2s;}
+.sxi-input-wrap:focus-within{border-color:#4ade80;}
+.sxi-input-wrap.wrong{border-color:#ef4444;animation:shake 0.3s;}
+.sxi-input-wrap.correct{border-color:#4ade80;}
+.sxi-input{flex:1;background:none;border:none;outline:none;font-family:'Teko',sans-serif;font-size:1.5rem;color:#fff;letter-spacing:1px;}
+.sxi-input::placeholder{color:#333;}
+.sxi-status{text-align:center;color:#444;font-size:0.72rem;letter-spacing:1px;min-height:18px;margin-bottom:6px;}
+/* Formation badge */
+.sxi-form-badge{font-size:0.6rem;font-weight:800;letter-spacing:2px;color:#444;text-transform:uppercase;}
+/* End screen */
+.sxi-end-card{position:relative;background:rgba(10,10,10,0.9);border:1px solid #2a2a2a;border-radius:20px;padding:32px 24px;text-align:center;animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);}
+.sxi-stars{font-size:2rem;margin:12px 0;letter-spacing:4px;}
+@keyframes sxiDotPop{from{transform:scale(0.4);opacity:0;}to{transform:scale(1);opacity:1;}}
+.sxi-pos.filled-solo .sxi-pos-dot,.sxi-pos.filled-p1 .sxi-pos-dot,.sxi-pos.filled-p2 .sxi-pos-dot{animation:sxiDotPop 0.35s cubic-bezier(0.34,1.56,0.64,1);}
+
 /* ── WELCOME OVERLAY ── */
 #gameWelcomeOverlay{position:fixed;inset:0;z-index:800;background:#050505;display:none;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:opacity 0.35s ease;}
 #gameWelcomeOverlay.fading{opacity:0;}
@@ -678,6 +758,15 @@ body::before{display:none;}
         <div class="game-pick-name">Football<br>Under Pressure</div>
         <div class="game-pick-desc">Name as many players as you can before the clock runs out. Hot-seat. 30 seconds.</div>
         <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
+      </div>
+    </div>
+    <div class="game-pick-card" onclick="showSxi()">
+      <img class="game-pick-bg" src="Major trophies category image.png" alt="">
+      <div class="game-pick-content">
+        <div class="game-pick-badge" style="background:rgba(255,215,0,0.12);border:1px solid #7a5f00;color:#FFD700;">Starting XI</div>
+        <div class="game-pick-name">Starting<br>XI</div>
+        <div class="game-pick-desc">Name the starting 11 from iconic World Cup winning teams. 1 player or 2.</div>
+        <button class="game-pick-btn" style="background:#FFD700;color:#000;">Play Now ›</button>
       </div>
     </div>
   </div>
@@ -919,6 +1008,117 @@ body::before{display:none;}
   <button onclick="showElGrandeMenu()" style="margin-top:16px;background:none;border:1px solid #333;color:#666;padding:10px 24px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.8rem;">← Categories</button>
 </div>
 
+<!-- STARTING XI SCREEN -->
+<div id="sxiScreen">
+
+  <!-- Team Select -->
+  <div id="sxiTeamSelect">
+    <div class="sxi-title-pre">WELCOME TO</div>
+    <div class="sxi-title">Starting <span style="color:var(--gold)">XI</span></div>
+    <div class="sxi-sub">Name the starting 11 from iconic winning teams</div>
+    <div class="sxi-mode-row">
+      <button class="sxi-mode-btn p1 active" id="sxiBtn1p" onclick="sxiSetMode(1)">1 Player</button>
+      <button class="sxi-mode-btn p2" id="sxiBtn2p" onclick="sxiSetMode(2)">2 Players</button>
+    </div>
+
+    <!-- Category Picker -->
+    <div id="sxiCatPicker">
+      <div class="section-label">Choose a competition</div>
+      <div class="sxi-cat-grid" id="sxiCatGrid">
+        <div class="sxi-cat-card" onclick="sxiPickCategory('World Cup Final')">
+          <img class="sxi-cat-trophy" src="" id="sxiTrophyWC" alt="">
+          <div class="sxi-cat-name">World Cup</div>
+          <div class="sxi-cat-count">8 teams</div>
+        </div>
+        <div class="sxi-cat-card" onclick="sxiPickCategory('Champions League Final')">
+          <img class="sxi-cat-trophy" src="" id="sxiTrophyCL" alt="">
+          <div class="sxi-cat-name">Champions League</div>
+          <div class="sxi-cat-count">33 teams</div>
+        </div>
+        <div class="sxi-cat-card" onclick="sxiPickCategory('European Championship Final')">
+          <img class="sxi-cat-trophy" src="" id="sxiTrophyEuros" alt="">
+          <div class="sxi-cat-name">European Championship</div>
+          <div class="sxi-cat-count">9 teams</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Grid (shown after category pick) -->
+    <div id="sxiTeamPicker" style="display:none">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+        <button onclick="sxiBackToCategories()" style="background:none;border:none;color:#555;font-size:0.8rem;cursor:pointer;font-family:inherit;letter-spacing:1px;padding:0;">← Back</button>
+        <div class="section-label" style="margin:0;" id="sxiTeamPickerLabel"></div>
+      </div>
+      <div class="sxi-team-grid" id="sxiTeamGrid"></div>
+    </div>
+  </div>
+
+  <!-- 2-Player Name Entry -->
+  <div id="sxiNameEntry" style="display:none;text-align:center;padding-top:30px;width:100%;">
+    <div style="font-family:'Anton',sans-serif;font-size:2rem;color:#fff;margin-bottom:6px;letter-spacing:2px;">ENTER NAMES</div>
+    <div style="color:#555;font-size:0.78rem;margin-bottom:28px;" id="sxiNETeam"></div>
+    <div style="display:flex;flex-direction:column;gap:14px;max-width:360px;margin:0 auto 28px;">
+      <input id="sxiP1Name" class="sxi-ne-input p1" placeholder="Player 1 name" />
+      <input id="sxiP2Name" class="sxi-ne-input p2" placeholder="Player 2 name" />
+    </div>
+    <button onclick="sxiConfirmNames()" style="background:#4ade80;color:#000;border:none;padding:14px 36px;border-radius:12px;font-family:inherit;font-weight:800;font-size:0.9rem;cursor:pointer;letter-spacing:1px;">Kick Off →</button>
+    <br><button onclick="sxiShowTeamSelect()" style="margin-top:16px;background:none;border:none;color:#444;font-size:0.78rem;cursor:pointer;font-family:inherit;">← Back</button>
+  </div>
+
+  <!-- Game Area -->
+  <div id="sxiGame" style="display:none;width:100%;flex-direction:column;align-items:center;">
+    <div style="display:flex;justify-content:space-between;align-items:center;width:100%;max-width:360px;margin-bottom:10px;">
+      <div id="sxiTeamBadge" style="font-family:'Anton',sans-serif;font-size:0.95rem;color:#aaa;letter-spacing:2px;"></div>
+      <div id="sxiFormBadge" class="sxi-form-badge"></div>
+    </div>
+    <div id="sxiScoreRow" class="sxi-score-row" style="display:none;"></div>
+    <div id="sxiTurnBadge" class="sxi-turn-badge" style="display:none;width:100%;max-width:360px;margin:0 auto 10px;text-align:center;"></div>
+
+    <!-- Pitch -->
+    <div class="sxi-pitch-wrap">
+      <div class="sxi-pitch" id="sxiPitch">
+        <!-- Static pitch lines -->
+        <div class="sxi-pitch-line" style="left:0;right:0;top:50%;height:1px;"></div>
+        <div style="position:absolute;inset:4%;border:1px solid rgba(255,255,255,0.18);pointer-events:none;"></div>
+        <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:18%;aspect-ratio:1;border:1px solid rgba(255,255,255,0.18);border-radius:50%;pointer-events:none;"></div>
+        <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:4px;height:4px;background:rgba(255,255,255,0.25);border-radius:50%;pointer-events:none;"></div>
+        <div style="position:absolute;left:22%;right:22%;top:4%;height:15%;border:1px solid rgba(255,255,255,0.18);border-top:none;pointer-events:none;"></div>
+        <div style="position:absolute;left:22%;right:22%;bottom:4%;height:15%;border:1px solid rgba(255,255,255,0.18);border-bottom:none;pointer-events:none;"></div>
+        <div style="position:absolute;left:34%;right:34%;top:4%;height:7%;border:1px solid rgba(255,255,255,0.12);border-top:none;pointer-events:none;"></div>
+        <div style="position:absolute;left:34%;right:34%;bottom:4%;height:7%;border:1px solid rgba(255,255,255,0.12);border-bottom:none;pointer-events:none;"></div>
+        <div style="position:absolute;left:50%;top:19%;transform:translateX(-50%);width:5px;height:5px;background:rgba(255,255,255,0.2);border-radius:50%;pointer-events:none;"></div>
+        <div style="position:absolute;left:50%;bottom:19%;transform:translateX(-50%);width:5px;height:5px;background:rgba(255,255,255,0.2);border-radius:50%;pointer-events:none;"></div>
+        <!-- Player positions injected by JS -->
+      </div>
+    </div>
+
+    <!-- Bench -->
+    <div class="sxi-bench-wrap">
+      <div class="sxi-bench-lbl">Bench</div>
+      <div class="sxi-bench-slots" id="sxiBenchSlots"></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="sxi-controls">
+      <div id="sxiLivesRow" class="sxi-lives-row"></div>
+      <div class="sxi-input-wrap" id="sxiInputWrap">
+        <input class="sxi-input" id="sxiInput" placeholder="Type a player name…"
+          oninput="sxiOnInput()" onkeydown="if(event.key==='Enter')sxiSubmit();"
+          autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+        <button class="eg-submit-btn" onclick="sxiSubmit()">→</button>
+      </div>
+      <div class="sxi-status" id="sxiStatus"></div>
+      <div style="text-align:center;margin-top:8px;">
+        <button onclick="sxiGiveUp()" style="background:none;border:none;color:#333;font-size:0.72rem;cursor:pointer;font-family:inherit;letter-spacing:1px;">Give up</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Screen -->
+  <div id="sxiEnd" style="display:none;width:100%;max-width:420px;margin:40px auto 0;"></div>
+
+</div>
+
 <!-- WELCOME OVERLAY -->
 <div id="gameWelcomeOverlay">
   <div class="gwo-label">WELCOME TO</div>
@@ -1026,7 +1226,19 @@ function showLanding(){
   document.getElementById('elGrandeMenu').style.display='none';
   document.getElementById('elGrandeGame').style.display='none';
   document.getElementById('gameScreen').style.display='none';
+  document.getElementById('sxiScreen').style.display='none';
   setBackBtn(null);
+}
+function showSxi(){
+  setBg(false);
+  document.getElementById('landingScreen').style.display='none';
+  document.getElementById('higherOrLowerSection').style.display='none';
+  document.getElementById('elGrandeMenu').style.display='none';
+  document.getElementById('elGrandeGame').style.display='none';
+  document.getElementById('gameScreen').style.display='none';
+  document.getElementById('sxiScreen').style.display='flex';
+  sxiShowTeamSelect();
+  setBackBtn('← Back Home', showLanding);
 }
 function showHigherOrLower(){
   document.getElementById('landingScreen').style.display='none';
@@ -3235,6 +3447,1393 @@ async function syncFromSheet() {
 }
 
 // syncFromSheet disabled — all stats live in hardcoded PLAYERS array
+
+// ── STARTING XI ────────────────────────────────────────────────────────────────
+
+const SXI_TEAMS = [
+  {
+    id:'france-1998', name:'France', year:1998, flag:'🇫🇷',
+    tournament:'World Cup Final', opponent:'Brazil', score:'3-0', formation:'4-2-3-1',
+    starters:[
+      {name:'Fabien Barthez',  short:'Barthez',   pos:'GK',  x:50, y:85, aliases:['barthez','fabien barthez']},
+      {name:'Lilian Thuram',   short:'Thuram',    pos:'RB',  x:78, y:70, aliases:['thuram','lilian thuram']},
+      {name:'Marcel Desailly', short:'Desailly',  pos:'CB',  x:62, y:70, aliases:['desailly','marcel desailly']},
+      {name:'Frank Leboeuf',   short:'Leboeuf',   pos:'CB',  x:38, y:70, aliases:['leboeuf','frank leboeuf']},
+      {name:'Bixente Lizarazu',short:'Lizarazu',  pos:'LB',  x:22, y:70, aliases:['lizarazu','bixente lizarazu']},
+      {name:'Didier Deschamps',short:'Deschamps', pos:'CDM', x:60, y:54, aliases:['deschamps','didier deschamps']},
+      {name:'Emmanuel Petit',  short:'Petit',     pos:'CDM', x:40, y:54, aliases:['petit','emmanuel petit']},
+      {name:'Christian Karembeu',short:'Karembeu',pos:'RM',  x:75, y:37, aliases:['karembeu','christian karembeu']},
+      {name:'Zinedine Zidane', short:'Zidane',    pos:'CAM', x:50, y:37, aliases:['zidane','zinedine zidane','zizou']},
+      {name:'Youri Djorkaeff', short:'Djorkaeff', pos:'LM',  x:25, y:37, aliases:['djorkaeff','youri djorkaeff']},
+      {name:"Stephane Guivarc'h",short:"Guivarc'h",pos:'ST',x:50, y:16, aliases:['guivarch',"guivarc'h",'stephane guivarch']},
+    ],
+    subs:[
+      {name:'Alain Boghossian', aliases:['boghossian','alain boghossian']},
+      {name:'Christophe Dugarry', aliases:['dugarry','christophe dugarry']},
+      {name:'Patrick Vieira', aliases:['vieira','patrick vieira']},
+    ]
+  },
+  {
+    id:'brazil-2002', name:'Brazil', year:2002, flag:'🇧🇷',
+    tournament:'World Cup Final', opponent:'Germany', score:'2-0', formation:'4-2-3-1',
+    starters:[
+      {name:'Marcos',         short:'Marcos',       pos:'GK',  x:50, y:85, aliases:['marcos']},
+      {name:'Cafu',           short:'Cafu',         pos:'RB',  x:78, y:70, aliases:['cafu']},
+      {name:'Lucio',          short:'Lucio',        pos:'CB',  x:62, y:70, aliases:['lucio']},
+      {name:'Roque Junior',   short:'Roque Jr',     pos:'CB',  x:38, y:70, aliases:['roque junior','roque','junior']},
+      {name:'Roberto Carlos', short:'R. Carlos',    pos:'LB',  x:22, y:70, aliases:['roberto carlos','roberto']},
+      {name:'Edmilson',       short:'Edmilson',     pos:'CDM', x:60, y:54, aliases:['edmilson']},
+      {name:'Gilberto Silva', short:'Gilberto',     pos:'CDM', x:40, y:54, aliases:['gilberto silva','gilberto']},
+      {name:'Kleberson',      short:'Kleberson',    pos:'RM',  x:75, y:37, aliases:['kleberson']},
+      {name:'Rivaldo',        short:'Rivaldo',      pos:'CAM', x:50, y:37, aliases:['rivaldo']},
+      {name:'Ronaldinho',     short:'Ronaldinho',   pos:'LM',  x:25, y:37, aliases:['ronaldinho']},
+      {name:'Ronaldo',        short:'Ronaldo',      pos:'ST',  x:50, y:16, aliases:['ronaldo','r9']},
+    ],
+    subs:[
+      {name:'Juninho Paulista', aliases:['juninho','juninho paulista']},
+      {name:'Denilson', aliases:['denilson']},
+    ]
+  },
+  {
+    id:'italy-2006', name:'Italy', year:2006, flag:'🇮🇹',
+    tournament:'World Cup Final', opponent:'France', score:'5-3 (pens)', formation:'4-4-1-1',
+    starters:[
+      {name:'Gianluigi Buffon',   short:'Buffon',    pos:'GK', x:50, y:85, aliases:['buffon','gianluigi buffon']},
+      {name:'Gianluca Zambrotta', short:'Zambrotta', pos:'RB', x:78, y:70, aliases:['zambrotta','gianluca zambrotta']},
+      {name:'Fabio Cannavaro',    short:'Cannavaro', pos:'CB', x:62, y:70, aliases:['cannavaro','fabio cannavaro']},
+      {name:'Marco Materazzi',    short:'Materazzi', pos:'CB', x:38, y:70, aliases:['materazzi','marco materazzi']},
+      {name:'Fabio Grosso',       short:'Grosso',    pos:'LB', x:22, y:70, aliases:['grosso','fabio grosso']},
+      {name:'Mauro Camoranesi',   short:'Camoranesi',pos:'RM', x:78, y:52, aliases:['camoranesi','mauro camoranesi']},
+      {name:'Gennaro Gattuso',    short:'Gattuso',   pos:'CM', x:60, y:52, aliases:['gattuso','gennaro gattuso']},
+      {name:'Andrea Pirlo',       short:'Pirlo',     pos:'CM', x:40, y:52, aliases:['pirlo','andrea pirlo']},
+      {name:'Simone Perrotta',    short:'Perrotta',  pos:'LM', x:22, y:52, aliases:['perrotta','simone perrotta']},
+      {name:'Francesco Totti',    short:'Totti',     pos:'SS', x:50, y:33, aliases:['totti','francesco totti']},
+      {name:'Luca Toni',          short:'Toni',      pos:'ST', x:50, y:16, aliases:['toni','luca toni']},
+    ],
+    subs:[
+      {name:'Daniele De Rossi', aliases:['de rossi','daniele de rossi']},
+      {name:'Vincenzo Iaquinta', aliases:['iaquinta','vincenzo iaquinta']},
+      {name:'Alessandro Del Piero', aliases:['del piero','alessandro del piero']},
+    ]
+  },
+  {
+    id:'spain-2010', name:'Spain', year:2010, flag:'🇪🇸',
+    tournament:'World Cup Final', opponent:'Netherlands', score:'1-0 (aet)', formation:'4-2-3-1',
+    starters:[
+      {name:'Iker Casillas',   short:'Casillas',    pos:'GK',  x:50, y:85, aliases:['casillas','iker casillas']},
+      {name:'Sergio Ramos',    short:'S. Ramos',    pos:'RB',  x:78, y:70, aliases:['sergio ramos','ramos']},
+      {name:'Gerard Pique',    short:'Pique',       pos:'CB',  x:62, y:70, aliases:['pique','gerard pique']},
+      {name:'Carles Puyol',    short:'Puyol',       pos:'CB',  x:38, y:70, aliases:['puyol','carles puyol']},
+      {name:'Joan Capdevila',  short:'Capdevila',   pos:'LB',  x:22, y:70, aliases:['capdevila','joan capdevila']},
+      {name:'Sergio Busquets', short:'Busquets',    pos:'CDM', x:60, y:54, aliases:['busquets','sergio busquets']},
+      {name:'Xabi Alonso',     short:'Xabi Alonso', pos:'CDM', x:40, y:54, aliases:['xabi alonso','alonso']},
+      {name:'Pedro Rodriguez', short:'Pedro',       pos:'RM',  x:75, y:37, aliases:['pedro','pedro rodriguez']},
+      {name:'Xavi Hernandez',  short:'Xavi',        pos:'CAM', x:50, y:37, aliases:['xavi','xavi hernandez']},
+      {name:'Andres Iniesta',  short:'Iniesta',     pos:'LM',  x:25, y:37, aliases:['iniesta','andres iniesta']},
+      {name:'David Villa',     short:'Villa',       pos:'ST',  x:50, y:16, aliases:['villa','david villa']},
+    ],
+    subs:[
+      {name:'Jesus Navas', aliases:['navas','jesus navas']},
+      {name:'Cesc Fabregas', aliases:['fabregas','cesc fabregas']},
+      {name:'Fernando Torres', aliases:['torres','fernando torres']},
+    ]
+  },
+  {
+    id:'germany-2014', name:'Germany', year:2014, flag:'🇩🇪',
+    tournament:'World Cup Final', opponent:'Argentina', score:'1-0 (aet)', formation:'4-2-3-1',
+    starters:[
+      {name:'Manuel Neuer',          short:'Neuer',          pos:'GK',  x:50, y:85, aliases:['neuer','manuel neuer']},
+      {name:'Philipp Lahm',          short:'Lahm',           pos:'RB',  x:78, y:70, aliases:['lahm','philipp lahm']},
+      {name:'Jerome Boateng',        short:'Boateng',        pos:'CB',  x:62, y:70, aliases:['boateng','jerome boateng']},
+      {name:'Mats Hummels',          short:'Hummels',        pos:'CB',  x:38, y:70, aliases:['hummels','mats hummels']},
+      {name:'Benedikt Howedes',      short:'Howedes',        pos:'LB',  x:22, y:70, aliases:['howedes','benedikt howedes']},
+      {name:'Christoph Kramer',      short:'Kramer',         pos:'CDM', x:60, y:54, aliases:['kramer','christoph kramer']},
+      {name:'Bastian Schweinsteiger',short:'Schweini',       pos:'CDM', x:40, y:54, aliases:['schweinsteiger','bastian schweinsteiger','schweini']},
+      {name:'Thomas Muller',         short:'Muller',         pos:'RM',  x:75, y:37, aliases:['muller','thomas muller','thomas mueller']},
+      {name:'Toni Kroos',            short:'Kroos',          pos:'CAM', x:50, y:37, aliases:['kroos','toni kroos']},
+      {name:'Mesut Ozil',            short:'Ozil',           pos:'LM',  x:25, y:37, aliases:['ozil','mesut ozil','mesut ozil']},
+      {name:'Miroslav Klose',        short:'Klose',          pos:'ST',  x:50, y:16, aliases:['klose','miroslav klose']},
+    ],
+    subs:[
+      {name:'Andre Schurrle', aliases:['schurrle','andre schurrle']},
+      {name:'Mario Gotze', aliases:['gotze','mario gotze']},
+      {name:'Per Mertesacker', aliases:['mertesacker','per mertesacker']},
+    ]
+  },
+  {
+    id:'france-2018', name:'France', year:2018, flag:'🇫🇷',
+    tournament:'World Cup Final', opponent:'Croatia', score:'4-2', formation:'4-2-3-1',
+    starters:[
+      {name:'Hugo Lloris',      short:'Lloris',    pos:'GK',  x:50, y:85, aliases:['lloris','hugo lloris']},
+      {name:'Benjamin Pavard', short:'Pavard',    pos:'RB',  x:78, y:70, aliases:['pavard','benjamin pavard']},
+      {name:'Raphael Varane',  short:'Varane',    pos:'CB',  x:62, y:70, aliases:['varane','raphael varane']},
+      {name:'Samuel Umtiti',   short:'Umtiti',    pos:'CB',  x:38, y:70, aliases:['umtiti','samuel umtiti']},
+      {name:'Lucas Hernandez', short:'Hernandez', pos:'LB',  x:22, y:70, aliases:['lucas hernandez','hernandez']},
+      {name:'N\'Golo Kante',   short:'Kante',     pos:'CDM', x:60, y:54, aliases:['kante',"n'golo kante",'ngolo kante']},
+      {name:'Blaise Matuidi',  short:'Matuidi',   pos:'CDM', x:40, y:54, aliases:['matuidi','blaise matuidi']},
+      {name:'Paul Pogba',      short:'Pogba',     pos:'RM',  x:75, y:37, aliases:['pogba','paul pogba']},
+      {name:'Antoine Griezmann',short:'Griezmann',pos:'CAM', x:50, y:37, aliases:['griezmann','antoine griezmann']},
+      {name:'Kylian Mbappe',   short:'Mbappe',    pos:'LM',  x:25, y:37, aliases:['mbappe','kylian mbappe']},
+      {name:'Olivier Giroud',  short:'Giroud',    pos:'ST',  x:50, y:16, aliases:['giroud','olivier giroud']},
+    ],
+    subs:[
+      {name:"Steven N'Zonzi", aliases:['nzonzi',"n'zonzi",'steven nzonzi']},
+      {name:'Corentin Tolisso', aliases:['tolisso','corentin tolisso']},
+      {name:'Nabil Fekir', aliases:['fekir','nabil fekir']},
+    ]
+  },
+  {
+    id:'argentina-2022', name:'Argentina', year:2022, flag:'🇦🇷',
+    tournament:'World Cup Final', opponent:'France', score:'4-2 (pens)', formation:'4-4-2',
+    starters:[
+      {name:'Emiliano Martinez', short:'E. Martinez',  pos:'GK', x:50, y:85, aliases:['emiliano martinez','martinez','emi martinez']},
+      {name:'Nahuel Molina',     short:'Molina',       pos:'RB', x:78, y:70, aliases:['molina','nahuel molina']},
+      {name:'Cristian Romero',   short:'Romero',       pos:'CB', x:62, y:70, aliases:['romero','cristian romero','cuti romero']},
+      {name:'Nicolas Otamendi',  short:'Otamendi',     pos:'CB', x:38, y:70, aliases:['otamendi','nicolas otamendi']},
+      {name:'Nicolas Tagliafico',short:'Tagliafico',   pos:'LB', x:22, y:70, aliases:['tagliafico','nicolas tagliafico']},
+      {name:'Alexis Mac Allister',short:'Mac Allister',pos:'RM', x:75, y:50, aliases:['mac allister','alexis mac allister','macallister']},
+      {name:'Rodrigo De Paul',   short:'De Paul',      pos:'CM', x:59, y:52, aliases:['de paul','rodrigo de paul']},
+      {name:'Enzo Fernandez',    short:'E. Fernandez', pos:'CM', x:41, y:52, aliases:['enzo fernandez','enzo']},
+      {name:'Angel Di Maria',    short:'Di Maria',     pos:'LM', x:25, y:50, aliases:['di maria','angel di maria']},
+      {name:'Lionel Messi',      short:'Messi',        pos:'SS', x:60, y:27, aliases:['messi','lionel messi','leo messi']},
+      {name:'Julian Alvarez',    short:'J. Alvarez',   pos:'ST', x:40, y:22, aliases:['julian alvarez','alvarez']},
+    ],
+    subs:[
+      {name:'Marcos Acuna', aliases:['acuna','marcos acuna']},
+      {name:'Gonzalo Montiel', aliases:['montiel','gonzalo montiel']},
+      {name:'Leandro Paredes', aliases:['paredes','leandro paredes']},
+      {name:'Lautaro Martinez', aliases:['lautaro','lautaro martinez']},
+      {name:'German Pezzella', aliases:['pezzella','german pezzella']},
+      {name:'Paulo Dybala', aliases:['dybala','paulo dybala']},
+    ]
+  },
+  {
+    id:'brazil-1994', name:'Brazil', year:1994, flag:'🇧🇷',
+    tournament:'World Cup Final', opponent:'Italy', score:'0-0 (3-2 pens)', formation:'4-4-2',
+    starters:[
+      {name:'Cláudio Taffarel', short:'Taffarel', pos:'GK', x:50, y:85, aliases:['taffarel','claudio taffarel']},
+      {name:'Mazinho', short:'Mazinho', pos:'RM', x:78, y:54, aliases:['mazinho']},
+      {name:'Aldair', short:'Aldair', pos:'CB', x:62, y:70, aliases:['aldair']},
+      {name:'Márcio Santos', short:'M. Santos', pos:'CB', x:38, y:70, aliases:['marcio santos','santos']},
+      {name:'Branco', short:'Branco', pos:'LB', x:22, y:70, aliases:['branco']},
+      {name:'Mauro Silva', short:'Mauro Silva', pos:'CM', x:62, y:54, aliases:['mauro silva']},
+      {name:'Dunga', short:'Dunga', pos:'CM', x:38, y:54, aliases:['dunga','carlos dunga']},
+      {name:'Zinho', short:'Zinho', pos:'LM', x:22, y:54, aliases:['zinho']},
+      {name:'Jorginho', short:'Jorginho', pos:'RB', x:78, y:70, aliases:['jorginho']},
+      {name:'Bebeto', short:'Bebeto', pos:'ST', x:62, y:25, aliases:['bebeto','jose roberto gama']},
+      {name:'Romário', short:'Romário', pos:'ST', x:38, y:25, aliases:['romario','romario faria']},
+    ],
+    subs:[
+      {name:'Cafu', aliases:['cafu','marcos cafu']},
+      {name:'Viola', aliases:['viola']},
+    ]
+  },
+  {
+    id:'marseille-1993', name:'Marseille', year:1993, flag:'🏆',
+    tournament:'Champions League Final', opponent:'AC Milan', score:'1-0', formation:'4-4-2',
+    starters:[
+      {name:'Fabien Barthez', short:'Barthez', pos:'GK', x:50, y:85, aliases:['barthez','fabien barthez']},
+      {name:'Jocelyn Angloma', short:'Angloma', pos:'RB', x:78, y:70, aliases:['angloma','jocelyn angloma']},
+      {name:'Basile Boli', short:'Boli', pos:'CB', x:62, y:70, aliases:['boli','basile boli']},
+      {name:'Marcel Desailly', short:'Desailly', pos:'CB', x:38, y:70, aliases:['desailly','marcel desailly']},
+      {name:'Éric Di Meco', short:'Di Meco', pos:'LB', x:22, y:70, aliases:['di meco','eric di meco']},
+      {name:'Franck Sauzée', short:'Sauzée', pos:'RM', x:78, y:54, aliases:['sauzee','franck sauzee']},
+      {name:'Jean-Jacques Eydelie', short:'Eydelie', pos:'CM', x:62, y:54, aliases:['eydelie','jean-jacques eydelie','jean jacques eydelie']},
+      {name:'Didier Deschamps', short:'Deschamps', pos:'CM', x:38, y:54, aliases:['deschamps','didier deschamps']},
+      {name:'Abedi Pelé', short:'Abedi Pelé', pos:'LM', x:22, y:54, aliases:['abedi pele','abedi']},
+      {name:'Alen Bokšić', short:'Bokšić', pos:'ST', x:62, y:25, aliases:['boksic','alen boksic']},
+      {name:'Rudi Völler', short:'Völler', pos:'ST', x:38, y:25, aliases:['voller','rudi voller']},
+    ],
+    subs:[
+      {name:'Jean-Philippe Durand', aliases:['durand','jean-philippe durand','jean philippe durand']},
+      {name:'Jean-Christophe Thomas', aliases:['thomas','jean-christophe thomas','jean christophe thomas']},
+    ]
+  },
+  {
+    id:'ac-milan-1994', name:'AC Milan', year:1994, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Barcelona', score:'4-0', formation:'4-4-2',
+    starters:[
+      {name:'Sebastiano Rossi', short:'S. Rossi', pos:'GK', x:50, y:85, aliases:['rossi','sebastiano rossi']},
+      {name:'Mauro Tassotti', short:'Tassotti', pos:'RB', x:78, y:70, aliases:['tassotti','mauro tassotti']},
+      {name:'Filippo Galli', short:'F. Galli', pos:'CB', x:62, y:70, aliases:['galli','filippo galli']},
+      {name:'Paolo Maldini', short:'Maldini', pos:'CB', x:38, y:70, aliases:['maldini','paolo maldini']},
+      {name:'Christian Panucci', short:'Panucci', pos:'LB', x:22, y:70, aliases:['panucci','christian panucci']},
+      {name:'Zvonimir Boban', short:'Boban', pos:'RM', x:78, y:54, aliases:['boban','zvonimir boban']},
+      {name:'Demetrio Albertini', short:'Albertini', pos:'CM', x:62, y:54, aliases:['albertini','demetrio albertini']},
+      {name:'Marcel Desailly', short:'Desailly', pos:'CM', x:38, y:54, aliases:['desailly','marcel desailly']},
+      {name:'Roberto Donadoni', short:'Donadoni', pos:'LM', x:22, y:54, aliases:['donadoni','roberto donadoni']},
+      {name:'Dejan Savićević', short:'Savićević', pos:'ST', x:62, y:25, aliases:['savicevic','dejan savicevic']},
+      {name:'Daniele Massaro', short:'Massaro', pos:'ST', x:38, y:25, aliases:['massaro','daniele massaro']},
+    ],
+    subs:[
+      {name:'Stefano Nava', aliases:['nava','stefano nava']},
+    ]
+  },
+  {
+    id:'ajax-1995', name:'Ajax', year:1995, flag:'🏆',
+    tournament:'Champions League Final', opponent:'AC Milan', score:'1-0', formation:'4-3-3',
+    starters:[
+      {name:'Edwin van der Sar', short:'Van der Sar', pos:'GK', x:50, y:85, aliases:['van der sar','edwin van der sar']},
+      {name:'Michael Reiziger', short:'Reiziger', pos:'RB', x:78, y:70, aliases:['reiziger','michael reiziger']},
+      {name:'Danny Blind', short:'Blind', pos:'CB', x:62, y:70, aliases:['blind','danny blind']},
+      {name:'Frank Rijkaard', short:'Rijkaard', pos:'CB', x:38, y:70, aliases:['rijkaard','frank rijkaard']},
+      {name:'Frank de Boer', short:'F. de Boer', pos:'LB', x:22, y:70, aliases:['frank de boer','de boer']},
+      {name:'Clarence Seedorf', short:'Seedorf', pos:'CM', x:65, y:52, aliases:['seedorf','clarence seedorf']},
+      {name:'Edgar Davids', short:'Davids', pos:'CM', x:50, y:52, aliases:['davids','edgar davids']},
+      {name:'Ronald de Boer', short:'R. de Boer', pos:'CM', x:35, y:52, aliases:['ronald de boer']},
+      {name:'Finidi George', short:'Finidi', pos:'RW', x:75, y:25, aliases:['finidi','finidi george']},
+      {name:'Jari Litmanen', short:'Litmanen', pos:'ST', x:50, y:20, aliases:['litmanen','jari litmanen']},
+      {name:'Marc Overmars', short:'Overmars', pos:'LW', x:25, y:25, aliases:['overmars','marc overmars']},
+    ],
+    subs:[
+      {name:'Nwankwo Kanu', aliases:['kanu','nwankwo kanu']},
+      {name:'Patrick Kluivert', aliases:['kluivert','patrick kluivert']},
+    ]
+  },
+  {
+    id:'juventus-1996', name:'Juventus', year:1996, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Ajax', score:'1-1 (4-2 pens)', formation:'4-3-3',
+    starters:[
+      {name:'Angelo Peruzzi', short:'Peruzzi', pos:'GK', x:50, y:85, aliases:['peruzzi','angelo peruzzi']},
+      {name:'Moreno Torricelli', short:'Torricelli', pos:'RB', x:78, y:70, aliases:['torricelli','moreno torricelli']},
+      {name:'Ciro Ferrara', short:'Ferrara', pos:'CB', x:62, y:70, aliases:['ferrara','ciro ferrara']},
+      {name:'Pietro Vierchowod', short:'Vierchowod', pos:'CB', x:38, y:70, aliases:['vierchowod','pietro vierchowod']},
+      {name:'Gianluca Pessotto', short:'Pessotto', pos:'LB', x:22, y:70, aliases:['pessotto','gianluca pessotto']},
+      {name:'Didier Deschamps', short:'Deschamps', pos:'CM', x:65, y:52, aliases:['deschamps','didier deschamps']},
+      {name:'Paulo Sousa', short:'Sousa', pos:'CM', x:50, y:52, aliases:['sousa','paulo sousa']},
+      {name:'Antonio Conte', short:'Conte', pos:'CM', x:35, y:52, aliases:['conte','antonio conte']},
+      {name:'Fabrizio Ravanelli', short:'Ravanelli', pos:'RW', x:75, y:25, aliases:['ravanelli','fabrizio ravanelli']},
+      {name:'Gianluca Vialli', short:'Vialli', pos:'ST', x:50, y:20, aliases:['vialli','gianluca vialli']},
+      {name:'Alessandro Del Piero', short:'Del Piero', pos:'LW', x:25, y:25, aliases:['del piero','alessandro del piero']},
+    ],
+    subs:[
+      {name:'Vladimir Jugović', aliases:['jugovic','vladimir jugovic']},
+      {name:'Angelo Di Livio', aliases:['di livio','angelo di livio']},
+      {name:'Michele Padovano', aliases:['padovano','michele padovano']},
+    ]
+  },
+  {
+    id:'borussia-dortmund-1997', name:'Borussia Dortmund', year:1997, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Juventus', score:'3-1', formation:'3-5-2',
+    starters:[
+      {name:'Stefan Klos', short:'Klos', pos:'GK', x:50, y:85, aliases:['klos','stefan klos']},
+      {name:'Matthias Sammer', short:'Sammer', pos:'CB', x:68, y:70, aliases:['sammer','matthias sammer']},
+      {name:'Jürgen Kohler', short:'Kohler', pos:'CB', x:50, y:70, aliases:['kohler','jurgen kohler']},
+      {name:'Martin Kree', short:'Kree', pos:'CB', x:32, y:70, aliases:['kree','martin kree']},
+      {name:'Stefan Reuter', short:'Reuter', pos:'RWB', x:85, y:55, aliases:['reuter','stefan reuter']},
+      {name:'Paulo Sousa', short:'Sousa', pos:'CM', x:65, y:52, aliases:['sousa','paulo sousa']},
+      {name:'Paul Lambert', short:'Lambert', pos:'CM', x:50, y:52, aliases:['lambert','paul lambert']},
+      {name:'Andreas Möller', short:'Möller', pos:'CM', x:35, y:52, aliases:['moller','andreas moller']},
+      {name:'Jörg Heinrich', short:'Heinrich', pos:'LWB', x:15, y:55, aliases:['heinrich','jorg heinrich']},
+      {name:'Karl-Heinz Riedle', short:'Riedle', pos:'ST', x:60, y:25, aliases:['riedle','karl-heinz riedle','karl heinz riedle']},
+      {name:'Stéphane Chapuisat', short:'Chapuisat', pos:'ST', x:40, y:25, aliases:['chapuisat','stephane chapuisat']},
+    ],
+    subs:[
+      {name:'Lars Ricken', aliases:['ricken','lars ricken']},
+      {name:'Heiko Herrlich', aliases:['herrlich','heiko herrlich']},
+      {name:'Michael Zorc', aliases:['zorc','michael zorc']},
+    ]
+  },
+  {
+    id:'real-madrid-1998', name:'Real Madrid', year:1998, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Juventus', score:'1-0', formation:'4-2-3-1',
+    starters:[
+      {name:'Bodo Illgner', short:'Illgner', pos:'GK', x:50, y:85, aliases:['illgner','bodo illgner']},
+      {name:'Christian Panucci', short:'Panucci', pos:'RB', x:78, y:70, aliases:['panucci','christian panucci']},
+      {name:'Manolo Sanchís', short:'Sanchís', pos:'CB', x:62, y:70, aliases:['sanchis','manolo sanchis']},
+      {name:'Fernando Hierro', short:'Hierro', pos:'CB', x:38, y:70, aliases:['hierro','fernando hierro']},
+      {name:'Roberto Carlos', short:'R. Carlos', pos:'LB', x:22, y:70, aliases:['roberto carlos']},
+      {name:'Christian Karembeu', short:'Karembeu', pos:'CDM', x:62, y:57, aliases:['karembeu','christian karembeu']},
+      {name:'Fernando Redondo', short:'Redondo', pos:'CDM', x:38, y:57, aliases:['redondo','fernando redondo']},
+      {name:'Clarence Seedorf', short:'Seedorf', pos:'RAM', x:72, y:40, aliases:['seedorf','clarence seedorf']},
+      {name:'Fernando Morientes', short:'Morientes', pos:'CAM', x:50, y:40, aliases:['morientes','fernando morientes']},
+      {name:'Predrag Mijatović', short:'Mijatović', pos:'LAM', x:28, y:40, aliases:['mijatovic','predrag mijatovic']},
+      {name:'Raúl', short:'Raúl', pos:'ST', x:50, y:20, aliases:['raul']},
+    ],
+    subs:[
+      {name:'Davor Šuker', aliases:['suker','davor suker']},
+      {name:'José Amavisca', aliases:['amavisca','jose amavisca']},
+    ]
+  },
+  {
+    id:'manchester-united-1999', name:'Manchester United', year:1999, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Bayern Munich', score:'2-1', formation:'4-3-3',
+    starters:[
+      {name:'Peter Schmeichel', short:'Schmeichel', pos:'GK', x:50, y:85, aliases:['schmeichel','peter schmeichel']},
+      {name:'Gary Neville', short:'G. Neville', pos:'RB', x:78, y:70, aliases:['gary neville','neville']},
+      {name:'Jaap Stam', short:'Stam', pos:'CB', x:62, y:70, aliases:['stam','jaap stam']},
+      {name:'Ronny Johnsen', short:'Johnsen', pos:'CB', x:38, y:70, aliases:['johnsen','ronny johnsen']},
+      {name:'Denis Irwin', short:'Irwin', pos:'LB', x:22, y:70, aliases:['irwin','denis irwin']},
+      {name:'David Beckham', short:'Beckham', pos:'CM', x:65, y:52, aliases:['beckham','david beckham']},
+      {name:'Nicky Butt', short:'Butt', pos:'CM', x:50, y:52, aliases:['butt','nicky butt']},
+      {name:'Ryan Giggs', short:'Giggs', pos:'CM', x:35, y:52, aliases:['giggs','ryan giggs']},
+      {name:'Jesper Blomqvist', short:'Blomqvist', pos:'LW', x:25, y:25, aliases:['blomqvist','jesper blomqvist']},
+      {name:'Dwight Yorke', short:'Yorke', pos:'ST', x:50, y:20, aliases:['yorke','dwight yorke']},
+      {name:'Andy Cole', short:'Cole', pos:'RW', x:75, y:25, aliases:['cole','andy cole']},
+    ],
+    subs:[
+      {name:'Teddy Sheringham', aliases:['sheringham','teddy sheringham']},
+      {name:'Ole Gunnar Solskjær', aliases:['solskjaer','ole gunnar solskjaer']},
+    ]
+  },
+  {
+    id:'real-madrid-2000', name:'Real Madrid', year:2000, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Valencia', score:'3-0', formation:'4-4-2',
+    starters:[
+      {name:'Iker Casillas', short:'Casillas', pos:'GK', x:50, y:85, aliases:['casillas','iker casillas']},
+      {name:'Míchel Salgado', short:'Salgado', pos:'RB', x:78, y:70, aliases:['salgado','michel salgado']},
+      {name:'Aitor Karanka', short:'Karanka', pos:'CB', x:62, y:70, aliases:['karanka','aitor karanka']},
+      {name:'Iván Helguera', short:'Helguera', pos:'CB', x:38, y:70, aliases:['helguera','ivan helguera']},
+      {name:'Roberto Carlos', short:'R. Carlos', pos:'LB', x:22, y:70, aliases:['roberto carlos']},
+      {name:'Steve McManaman', short:'McManaman', pos:'RM', x:78, y:54, aliases:['mcmanaman','steve mcmanaman']},
+      {name:'Fernando Redondo', short:'Redondo', pos:'CM', x:62, y:54, aliases:['redondo','fernando redondo']},
+      {name:'Iván Campo', short:'Campo', pos:'CM', x:38, y:54, aliases:['campo','ivan campo']},
+      {name:'Raúl', short:'Raúl', pos:'LM', x:22, y:54, aliases:['raul']},
+      {name:'Fernando Morientes', short:'Morientes', pos:'ST', x:62, y:25, aliases:['morientes','fernando morientes']},
+      {name:'Nicolas Anelka', short:'Anelka', pos:'ST', x:38, y:25, aliases:['anelka','nicolas anelka']},
+    ],
+    subs:[
+      {name:'Sávio', aliases:['savio']},
+      {name:'Manolo Sanchís', aliases:['sanchis','manolo sanchis']},
+      {name:'Fernando Hierro', aliases:['hierro','fernando hierro']},
+    ]
+  },
+  {
+    id:'bayern-munich-2001', name:'Bayern Munich', year:2001, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Valencia', score:'1-1 (5-4 pens)', formation:'3-5-2',
+    starters:[
+      {name:'Oliver Kahn', short:'Kahn', pos:'GK', x:50, y:85, aliases:['kahn','oliver kahn']},
+      {name:'Samuel Kuffour', short:'Kuffour', pos:'CB', x:68, y:70, aliases:['kuffour','samuel kuffour']},
+      {name:'Patrik Andersson', short:'Andersson', pos:'CB', x:50, y:70, aliases:['andersson','patrik andersson']},
+      {name:'Thomas Linke', short:'Linke', pos:'CB', x:32, y:70, aliases:['linke','thomas linke']},
+      {name:'Willy Sagnol', short:'Sagnol', pos:'RWB', x:85, y:55, aliases:['sagnol','willy sagnol']},
+      {name:'Owen Hargreaves', short:'Hargreaves', pos:'CM', x:65, y:52, aliases:['hargreaves','owen hargreaves']},
+      {name:'Stefan Effenberg', short:'Effenberg', pos:'CM', x:50, y:52, aliases:['effenberg','stefan effenberg']},
+      {name:'Hasan Salihamidžić', short:'Salihamidžić', pos:'CM', x:35, y:52, aliases:['salihamidzic','hasan salihamidzic']},
+      {name:'Bixente Lizarazu', short:'Lizarazu', pos:'LWB', x:15, y:55, aliases:['lizarazu','bixente lizarazu']},
+      {name:'Mehmet Scholl', short:'Scholl', pos:'ST', x:60, y:25, aliases:['scholl','mehmet scholl']},
+      {name:'Giovane Élber', short:'Élber', pos:'ST', x:40, y:25, aliases:['elber','giovane elber']},
+    ],
+    subs:[
+      {name:'Carsten Jancker', aliases:['jancker','carsten jancker']},
+      {name:'Alexander Zickler', aliases:['zickler','alexander zickler']},
+      {name:'Paulo Sérgio', aliases:['paulo sergio']},
+    ]
+  },
+  {
+    id:'real-madrid-2002', name:'Real Madrid', year:2002, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Bayer Leverkusen', score:'2-1', formation:'4-3-3',
+    starters:[
+      {name:'César', short:'César', pos:'GK', x:50, y:85, aliases:['cesar']},
+      {name:'Míchel Salgado', short:'Salgado', pos:'RB', x:78, y:70, aliases:['salgado','michel salgado']},
+      {name:'Fernando Hierro', short:'Hierro', pos:'CB', x:62, y:70, aliases:['hierro','fernando hierro']},
+      {name:'Iván Helguera', short:'Helguera', pos:'CB', x:38, y:70, aliases:['helguera','ivan helguera']},
+      {name:'Roberto Carlos', short:'R. Carlos', pos:'LB', x:22, y:70, aliases:['roberto carlos']},
+      {name:'Luís Figo', short:'Figo', pos:'CM', x:65, y:52, aliases:['figo','luis figo']},
+      {name:'Claude Makélélé', short:'Makélélé', pos:'CM', x:50, y:52, aliases:['makelele','claude makelele']},
+      {name:'Santiago Solari', short:'Solari', pos:'CM', x:35, y:52, aliases:['solari','santiago solari']},
+      {name:'Raúl', short:'Raúl', pos:'RW', x:75, y:25, aliases:['raul']},
+      {name:'Zinedine Zidane', short:'Zidane', pos:'ST', x:50, y:20, aliases:['zidane','zinedine zidane']},
+      {name:'Fernando Morientes', short:'Morientes', pos:'LW', x:25, y:25, aliases:['morientes','fernando morientes']},
+    ],
+    subs:[
+      {name:'Steve McManaman', aliases:['mcmanaman','steve mcmanaman']},
+      {name:'Iker Casillas', aliases:['casillas','iker casillas']},
+      {name:'Flávio Conceição', aliases:['conceicao','flavio conceicao']},
+    ]
+  },
+  {
+    id:'ac-milan-2003', name:'AC Milan', year:2003, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Juventus', score:'0-0 (3-2 pens)', formation:'4-3-3',
+    starters:[
+      {name:'Dida', short:'Dida', pos:'GK', x:50, y:85, aliases:['dida']},
+      {name:'Alessandro Costacurta', short:'Costacurta', pos:'RB', x:78, y:70, aliases:['costacurta','alessandro costacurta']},
+      {name:'Alessandro Nesta', short:'Nesta', pos:'CB', x:62, y:70, aliases:['nesta','alessandro nesta']},
+      {name:'Paolo Maldini', short:'Maldini', pos:'CB', x:38, y:70, aliases:['maldini','paolo maldini']},
+      {name:'Kakha Kaladze', short:'Kaladze', pos:'LB', x:22, y:70, aliases:['kaladze','kakha kaladze']},
+      {name:'Gennaro Gattuso', short:'Gattuso', pos:'CM', x:65, y:52, aliases:['gattuso','gennaro gattuso']},
+      {name:'Andrea Pirlo', short:'Pirlo', pos:'CM', x:50, y:52, aliases:['pirlo','andrea pirlo']},
+      {name:'Clarence Seedorf', short:'Seedorf', pos:'CM', x:35, y:52, aliases:['seedorf','clarence seedorf']},
+      {name:'Rui Costa', short:'Rui Costa', pos:'RW', x:75, y:25, aliases:['rui costa']},
+      {name:'Andriy Shevchenko', short:'Shevchenko', pos:'ST', x:50, y:20, aliases:['shevchenko','andriy shevchenko']},
+      {name:'Filippo Inzaghi', short:'Inzaghi', pos:'LW', x:25, y:25, aliases:['inzaghi','filippo inzaghi']},
+    ],
+    subs:[
+      {name:'Roque Júnior', aliases:['roque junior']},
+      {name:'Serginho', aliases:['serginho']},
+      {name:'Massimo Ambrosini', aliases:['ambrosini','massimo ambrosini']},
+    ]
+  },
+  {
+    id:'porto-2004', name:'Porto', year:2004, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Monaco', score:'3-0', formation:'4-3-3',
+    starters:[
+      {name:'Vítor Baía', short:'Baía', pos:'GK', x:50, y:85, aliases:['baia','vitor baia']},
+      {name:'Paulo Ferreira', short:'P. Ferreira', pos:'RB', x:78, y:70, aliases:['paulo ferreira','ferreira']},
+      {name:'Jorge Costa', short:'J. Costa', pos:'CB', x:62, y:70, aliases:['jorge costa']},
+      {name:'Ricardo Carvalho', short:'Carvalho', pos:'CB', x:38, y:70, aliases:['carvalho','ricardo carvalho']},
+      {name:'Nuno Valente', short:'Valente', pos:'LB', x:22, y:70, aliases:['valente','nuno valente']},
+      {name:'Costinha', short:'Costinha', pos:'CM', x:65, y:52, aliases:['costinha']},
+      {name:'Pedro Mendes', short:'P. Mendes', pos:'CM', x:50, y:52, aliases:['pedro mendes']},
+      {name:'Maniche', short:'Maniche', pos:'CM', x:35, y:52, aliases:['maniche']},
+      {name:'Deco', short:'Deco', pos:'RW', x:75, y:25, aliases:['deco']},
+      {name:'Carlos Alberto', short:'C. Alberto', pos:'ST', x:50, y:20, aliases:['carlos alberto']},
+      {name:'Derlei', short:'Derlei', pos:'LW', x:25, y:25, aliases:['derlei']},
+    ],
+    subs:[
+      {name:'Dmitri Alenichev', aliases:['alenichev','dmitri alenichev']},
+      {name:'Benni McCarthy', aliases:['mccarthy','benni mccarthy']},
+      {name:'Pedro Emanuel', aliases:['pedro emanuel']},
+    ]
+  },
+  {
+    id:'liverpool-2005', name:'Liverpool', year:2005, flag:'🏆',
+    tournament:'Champions League Final', opponent:'AC Milan', score:'3-3 (3-2 pens)', formation:'4-4-2',
+    starters:[
+      {name:'Jerzy Dudek', short:'Dudek', pos:'GK', x:50, y:85, aliases:['dudek','jerzy dudek']},
+      {name:'Steve Finnan', short:'Finnan', pos:'RB', x:78, y:70, aliases:['finnan','steve finnan']},
+      {name:'Sami Hyypiä', short:'Hyypiä', pos:'CB', x:62, y:70, aliases:['hyypiae','sami hyypiae','hyypia']},
+      {name:'Jamie Carragher', short:'Carragher', pos:'CB', x:38, y:70, aliases:['carragher','jamie carragher']},
+      {name:'Djimi Traoré', short:'Traoré', pos:'LB', x:22, y:70, aliases:['traore','djimi traore']},
+      {name:'Luis García', short:'L. García', pos:'RM', x:78, y:54, aliases:['luis garcia','garcia']},
+      {name:'Steven Gerrard', short:'Gerrard', pos:'CM', x:62, y:54, aliases:['gerrard','steven gerrard']},
+      {name:'Xabi Alonso', short:'Xabi Alonso', pos:'CM', x:38, y:54, aliases:['xabi alonso','alonso']},
+      {name:'John Arne Riise', short:'Riise', pos:'LM', x:22, y:54, aliases:['riise','john arne riise']},
+      {name:'Harry Kewell', short:'Kewell', pos:'ST', x:62, y:25, aliases:['kewell','harry kewell']},
+      {name:'Milan Baroš', short:'Baroš', pos:'ST', x:38, y:25, aliases:['baros','milan baros']},
+    ],
+    subs:[
+      {name:'Vladimír Šmicer', aliases:['smicer','vladimir smicer']},
+      {name:'Dietmar Hamann', aliases:['hamann','dietmar hamann']},
+      {name:'Djibril Cissé', aliases:['cisse','djibril cisse']},
+    ]
+  },
+  {
+    id:'barcelona-2006', name:'Barcelona', year:2006, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Arsenal', score:'2-1', formation:'4-3-3',
+    starters:[
+      {name:'Víctor Valdés', short:'Valdés', pos:'GK', x:50, y:85, aliases:['valdes','victor valdes']},
+      {name:'Oleguer Presas', short:'Oleguer', pos:'RB', x:78, y:70, aliases:['oleguer','oleguer presas']},
+      {name:'Rafael Márquez', short:'Márquez', pos:'CB', x:62, y:70, aliases:['marquez','rafael marquez']},
+      {name:'Carles Puyol', short:'Puyol', pos:'CB', x:38, y:70, aliases:['puyol','carles puyol']},
+      {name:'Giovanni van Bronckhorst', short:'Van Bronckhorst', pos:'LB', x:22, y:70, aliases:['van bronckhorst','giovanni van bronckhorst']},
+      {name:'Edmílson', short:'Edmílson', pos:'CM', x:65, y:52, aliases:['edmilson']},
+      {name:'Deco', short:'Deco', pos:'CM', x:50, y:52, aliases:['deco']},
+      {name:'Mark van Bommel', short:'Van Bommel', pos:'CM', x:35, y:52, aliases:['van bommel','mark van bommel']},
+      {name:'Ludovic Giuly', short:'Giuly', pos:'RW', x:75, y:25, aliases:['giuly','ludovic giuly']},
+      {name:'Samuel Eto\'o', short:'Eto\'o', pos:'ST', x:50, y:20, aliases:["eto'o",'samuel etoo','etoo']},
+      {name:'Ronaldinho', short:'Ronaldinho', pos:'LW', x:25, y:25, aliases:['ronaldinho']},
+    ],
+    subs:[
+      {name:'Andrés Iniesta', aliases:['iniesta','andres iniesta']},
+      {name:'Henrik Larsson', aliases:['larsson','henrik larsson']},
+      {name:'Juliano Belletti', aliases:['belletti','juliano belletti']},
+    ]
+  },
+  {
+    id:'ac-milan-2007', name:'AC Milan', year:2007, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Liverpool', score:'2-1', formation:'4-2-3-1',
+    starters:[
+      {name:'Dida', short:'Dida', pos:'GK', x:50, y:85, aliases:['dida']},
+      {name:'Massimo Oddo', short:'Oddo', pos:'RB', x:78, y:70, aliases:['oddo','massimo oddo']},
+      {name:'Alessandro Nesta', short:'Nesta', pos:'CB', x:62, y:70, aliases:['nesta','alessandro nesta']},
+      {name:'Paolo Maldini', short:'Maldini', pos:'CB', x:38, y:70, aliases:['maldini','paolo maldini']},
+      {name:'Marek Jankulovski', short:'Jankulovski', pos:'LB', x:22, y:70, aliases:['jankulovski','marek jankulovski']},
+      {name:'Gennaro Gattuso', short:'Gattuso', pos:'CDM', x:62, y:57, aliases:['gattuso','gennaro gattuso']},
+      {name:'Massimo Ambrosini', short:'Ambrosini', pos:'CDM', x:38, y:57, aliases:['ambrosini','massimo ambrosini']},
+      {name:'Andrea Pirlo', short:'Pirlo', pos:'RAM', x:72, y:40, aliases:['pirlo','andrea pirlo']},
+      {name:'Kaká', short:'Kaká', pos:'CAM', x:50, y:40, aliases:['kaka']},
+      {name:'Clarence Seedorf', short:'Seedorf', pos:'LAM', x:28, y:40, aliases:['seedorf','clarence seedorf']},
+      {name:'Filippo Inzaghi', short:'Inzaghi', pos:'ST', x:50, y:20, aliases:['inzaghi','filippo inzaghi']},
+    ],
+    subs:[
+      {name:'Kakha Kaladze', aliases:['kaladze','kakha kaladze']},
+      {name:'Alberto Gilardino', aliases:['gilardino','alberto gilardino']},
+      {name:'Giuseppe Favalli', aliases:['favalli','giuseppe favalli']},
+    ]
+  },
+  {
+    id:'manchester-united-2008', name:'Manchester United', year:2008, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Chelsea', score:'1-1 (6-5 pens)', formation:'4-4-2',
+    starters:[
+      {name:'Edwin van der Sar', short:'Van der Sar', pos:'GK', x:50, y:85, aliases:['van der sar','edwin van der sar']},
+      {name:'Wes Brown', short:'Brown', pos:'RB', x:78, y:70, aliases:['brown','wes brown']},
+      {name:'Rio Ferdinand', short:'Ferdinand', pos:'CB', x:62, y:70, aliases:['ferdinand','rio ferdinand']},
+      {name:'Nemanja Vidić', short:'Vidić', pos:'CB', x:38, y:70, aliases:['vidic','nemanja vidic']},
+      {name:'Patrice Evra', short:'Evra', pos:'LB', x:22, y:70, aliases:['evra','patrice evra']},
+      {name:'Owen Hargreaves', short:'Hargreaves', pos:'RM', x:78, y:54, aliases:['hargreaves','owen hargreaves']},
+      {name:'Paul Scholes', short:'Scholes', pos:'CM', x:62, y:54, aliases:['scholes','paul scholes']},
+      {name:'Michael Carrick', short:'Carrick', pos:'CM', x:38, y:54, aliases:['carrick','michael carrick']},
+      {name:'Cristiano Ronaldo', short:'Ronaldo', pos:'LM', x:22, y:54, aliases:['cristiano ronaldo','ronaldo']},
+      {name:'Wayne Rooney', short:'Rooney', pos:'ST', x:62, y:25, aliases:['rooney','wayne rooney']},
+      {name:'Carlos Tevez', short:'Tevez', pos:'ST', x:38, y:25, aliases:['tevez','carlos tevez']},
+    ],
+    subs:[
+      {name:'Ryan Giggs', aliases:['giggs','ryan giggs']},
+      {name:'Nani', aliases:['nani']},
+      {name:'Anderson', aliases:['anderson']},
+    ]
+  },
+  {
+    id:'barcelona-2009', name:'Barcelona', year:2009, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Manchester United', score:'2-0', formation:'4-3-3',
+    starters:[
+      {name:'Víctor Valdés', short:'Valdés', pos:'GK', x:50, y:85, aliases:['valdes','victor valdes']},
+      {name:'Carles Puyol', short:'Puyol', pos:'RB', x:78, y:70, aliases:['puyol','carles puyol']},
+      {name:'Yaya Touré', short:'Y. Touré', pos:'CB', x:62, y:70, aliases:['yaya toure','toure']},
+      {name:'Gerard Piqué', short:'Piqué', pos:'CB', x:38, y:70, aliases:['pique','gerard pique']},
+      {name:'Sylvinho', short:'Sylvinho', pos:'LB', x:22, y:70, aliases:['sylvinho']},
+      {name:'Sergio Busquets', short:'Busquets', pos:'CM', x:65, y:52, aliases:['busquets','sergio busquets']},
+      {name:'Xavi', short:'Xavi', pos:'CM', x:50, y:52, aliases:['xavi','xavi hernandez']},
+      {name:'Andrés Iniesta', short:'Iniesta', pos:'CM', x:35, y:52, aliases:['iniesta','andres iniesta']},
+      {name:'Samuel Eto\'o', short:'Eto\'o', pos:'RW', x:75, y:25, aliases:["eto'o",'samuel etoo','etoo']},
+      {name:'Lionel Messi', short:'Messi', pos:'ST', x:50, y:20, aliases:['messi','lionel messi']},
+      {name:'Thierry Henry', short:'Henry', pos:'LW', x:25, y:25, aliases:['henry','thierry henry']},
+    ],
+    subs:[
+      {name:'Seydou Keita', aliases:['keita','seydou keita']},
+      {name:'Pedro', aliases:['pedro']},
+    ]
+  },
+  {
+    id:'inter-milan-2010', name:'Inter Milan', year:2010, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Bayern Munich', score:'2-0', formation:'4-2-3-1',
+    starters:[
+      {name:'Júlio César', short:'Júlio César', pos:'GK', x:50, y:85, aliases:['julio cesar']},
+      {name:'Maicon', short:'Maicon', pos:'RB', x:78, y:70, aliases:['maicon']},
+      {name:'Lúcio', short:'Lúcio', pos:'CB', x:62, y:70, aliases:['lucio']},
+      {name:'Walter Samuel', short:'Samuel', pos:'CB', x:38, y:70, aliases:['samuel','walter samuel']},
+      {name:'Cristian Chivu', short:'Chivu', pos:'LB', x:22, y:70, aliases:['chivu','cristian chivu']},
+      {name:'Javier Zanetti', short:'Zanetti', pos:'CDM', x:62, y:57, aliases:['zanetti','javier zanetti']},
+      {name:'Esteban Cambiasso', short:'Cambiasso', pos:'CDM', x:38, y:57, aliases:['cambiasso','esteban cambiasso']},
+      {name:'Samuel Eto\'o', short:'Eto\'o', pos:'RAM', x:72, y:40, aliases:["eto'o",'samuel etoo','etoo']},
+      {name:'Wesley Sneijder', short:'Sneijder', pos:'CAM', x:50, y:40, aliases:['sneijder','wesley sneijder']},
+      {name:'Goran Pandev', short:'Pandev', pos:'LAM', x:28, y:40, aliases:['pandev','goran pandev']},
+      {name:'Diego Milito', short:'Milito', pos:'ST', x:50, y:20, aliases:['milito','diego milito']},
+    ],
+    subs:[
+      {name:'Dejan Stanković', aliases:['stankovic','dejan stankovic']},
+      {name:'Sulley Muntari', aliases:['muntari','sulley muntari']},
+      {name:'Marco Materazzi', aliases:['materazzi','marco materazzi']},
+    ]
+  },
+  {
+    id:'barcelona-2011', name:'Barcelona', year:2011, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Manchester United', score:'3-1', formation:'4-3-3',
+    starters:[
+      {name:'Víctor Valdés', short:'Valdés', pos:'GK', x:50, y:85, aliases:['valdes','victor valdes']},
+      {name:'Dani Alves', short:'Dani Alves', pos:'RB', x:78, y:70, aliases:['dani alves','alves']},
+      {name:'Gerard Piqué', short:'Piqué', pos:'CB', x:62, y:70, aliases:['pique','gerard pique']},
+      {name:'Javier Mascherano', short:'Mascherano', pos:'CB', x:38, y:70, aliases:['mascherano','javier mascherano']},
+      {name:'Eric Abidal', short:'Abidal', pos:'LB', x:22, y:70, aliases:['abidal','eric abidal']},
+      {name:'Sergio Busquets', short:'Busquets', pos:'CM', x:65, y:52, aliases:['busquets','sergio busquets']},
+      {name:'Xavi', short:'Xavi', pos:'CM', x:50, y:52, aliases:['xavi','xavi hernandez']},
+      {name:'Andrés Iniesta', short:'Iniesta', pos:'CM', x:35, y:52, aliases:['iniesta','andres iniesta']},
+      {name:'David Villa', short:'Villa', pos:'RW', x:75, y:25, aliases:['villa','david villa']},
+      {name:'Lionel Messi', short:'Messi', pos:'ST', x:50, y:20, aliases:['messi','lionel messi']},
+      {name:'Pedro', short:'Pedro', pos:'LW', x:25, y:25, aliases:['pedro']},
+    ],
+    subs:[
+      {name:'Seydou Keita', aliases:['keita','seydou keita']},
+      {name:'Carles Puyol', aliases:['puyol','carles puyol']},
+      {name:'Ibrahim Afellay', aliases:['afellay','ibrahim afellay']},
+    ]
+  },
+  {
+    id:'chelsea-2012', name:'Chelsea', year:2012, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Bayern Munich', score:'1-1 (4-3 pens)', formation:'4-3-3',
+    starters:[
+      {name:'Petr Čech', short:'Čech', pos:'GK', x:50, y:85, aliases:['cech','petr cech']},
+      {name:'José Bosingwa', short:'Bosingwa', pos:'RB', x:78, y:70, aliases:['bosingwa','jose bosingwa']},
+      {name:'David Luiz', short:'David Luiz', pos:'CB', x:62, y:70, aliases:['david luiz','luiz']},
+      {name:'Gary Cahill', short:'Cahill', pos:'CB', x:38, y:70, aliases:['cahill','gary cahill']},
+      {name:'Ashley Cole', short:'A. Cole', pos:'LB', x:22, y:70, aliases:['ashley cole','cole']},
+      {name:'Salomon Kalou', short:'Kalou', pos:'CM', x:65, y:52, aliases:['kalou','salomon kalou']},
+      {name:'Frank Lampard', short:'Lampard', pos:'CM', x:50, y:52, aliases:['lampard','frank lampard']},
+      {name:'John Obi Mikel', short:'Mikel', pos:'CM', x:35, y:52, aliases:['mikel','john obi mikel','obi mikel']},
+      {name:'Juan Mata', short:'Mata', pos:'RW', x:75, y:25, aliases:['mata','juan mata']},
+      {name:'Didier Drogba', short:'Drogba', pos:'ST', x:50, y:20, aliases:['drogba','didier drogba']},
+      {name:'Ryan Bertrand', short:'Bertrand', pos:'LW', x:25, y:25, aliases:['bertrand','ryan bertrand']},
+    ],
+    subs:[
+      {name:'Florent Malouda', aliases:['malouda','florent malouda']},
+      {name:'Fernando Torres', aliases:['torres','fernando torres']},
+    ]
+  },
+  {
+    id:'bayern-munich-2013', name:'Bayern Munich', year:2013, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Borussia Dortmund', score:'2-1', formation:'4-2-3-1',
+    starters:[
+      {name:'Manuel Neuer', short:'Neuer', pos:'GK', x:50, y:85, aliases:['neuer','manuel neuer']},
+      {name:'Philipp Lahm', short:'Lahm', pos:'RB', x:78, y:70, aliases:['lahm','philipp lahm']},
+      {name:'Jérôme Boateng', short:'Boateng', pos:'CB', x:62, y:70, aliases:['boateng','jerome boateng']},
+      {name:'Dante', short:'Dante', pos:'CB', x:38, y:70, aliases:['dante']},
+      {name:'David Alaba', short:'Alaba', pos:'LB', x:22, y:70, aliases:['alaba','david alaba']},
+      {name:'Javi Martínez', short:'J. Martínez', pos:'CDM', x:62, y:57, aliases:['javi martinez']},
+      {name:'Bastian Schweinsteiger', short:'Schweinsteiger', pos:'CDM', x:38, y:57, aliases:['schweinsteiger','bastian schweinsteiger']},
+      {name:'Arjen Robben', short:'Robben', pos:'RAM', x:72, y:40, aliases:['robben','arjen robben']},
+      {name:'Thomas Müller', short:'Müller', pos:'CAM', x:50, y:40, aliases:['muller','thomas muller']},
+      {name:'Franck Ribéry', short:'Ribéry', pos:'LAM', x:28, y:40, aliases:['ribery','franck ribery']},
+      {name:'Mario Mandžukić', short:'Mandžukić', pos:'ST', x:50, y:20, aliases:['mandzukic','mario mandzukic']},
+    ],
+    subs:[
+      {name:'Luiz Gustavo', aliases:['luiz gustavo']},
+      {name:'Mario Gómez', aliases:['gomez','mario gomez']},
+    ]
+  },
+  {
+    id:'real-madrid-2014', name:'Real Madrid', year:2014, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Atlético Madrid', score:'4-1 aet', formation:'4-3-3',
+    starters:[
+      {name:'Iker Casillas', short:'Casillas', pos:'GK', x:50, y:85, aliases:['casillas','iker casillas']},
+      {name:'Dani Carvajal', short:'Carvajal', pos:'RB', x:78, y:70, aliases:['carvajal','dani carvajal']},
+      {name:'Raphaël Varane', short:'Varane', pos:'CB', x:62, y:70, aliases:['varane','raphael varane']},
+      {name:'Sergio Ramos', short:'Ramos', pos:'CB', x:38, y:70, aliases:['ramos','sergio ramos']},
+      {name:'Fábio Coentrão', short:'Coentrão', pos:'LB', x:22, y:70, aliases:['coentrao','fabio coentrao']},
+      {name:'Luka Modrić', short:'Modrić', pos:'CM', x:65, y:52, aliases:['modric','luka modric']},
+      {name:'Sami Khedira', short:'Khedira', pos:'CM', x:50, y:52, aliases:['khedira','sami khedira']},
+      {name:'Ángel Di María', short:'Di María', pos:'CM', x:35, y:52, aliases:['di maria','angel di maria']},
+      {name:'Gareth Bale', short:'Bale', pos:'RW', x:75, y:25, aliases:['bale','gareth bale']},
+      {name:'Karim Benzema', short:'Benzema', pos:'ST', x:50, y:20, aliases:['benzema','karim benzema']},
+      {name:'Cristiano Ronaldo', short:'Ronaldo', pos:'LW', x:25, y:25, aliases:['cristiano ronaldo','ronaldo']},
+    ],
+    subs:[
+      {name:'Marcelo', aliases:['marcelo']},
+      {name:'Isco', aliases:['isco']},
+      {name:'Álvaro Morata', aliases:['morata','alvaro morata']},
+    ]
+  },
+  {
+    id:'barcelona-2015', name:'Barcelona', year:2015, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Juventus', score:'3-1', formation:'4-3-3',
+    starters:[
+      {name:'Marc-André ter Stegen', short:'Ter Stegen', pos:'GK', x:50, y:85, aliases:['ter stegen','marc-andre ter stegen','marc andre ter stegen']},
+      {name:'Dani Alves', short:'Dani Alves', pos:'RB', x:78, y:70, aliases:['dani alves','alves']},
+      {name:'Gerard Piqué', short:'Piqué', pos:'CB', x:62, y:70, aliases:['pique','gerard pique']},
+      {name:'Javier Mascherano', short:'Mascherano', pos:'CB', x:38, y:70, aliases:['mascherano','javier mascherano']},
+      {name:'Jordi Alba', short:'Alba', pos:'LB', x:22, y:70, aliases:['alba','jordi alba']},
+      {name:'Ivan Rakitić', short:'Rakitić', pos:'CM', x:65, y:52, aliases:['rakitic','ivan rakitic']},
+      {name:'Sergio Busquets', short:'Busquets', pos:'CM', x:50, y:52, aliases:['busquets','sergio busquets']},
+      {name:'Andrés Iniesta', short:'Iniesta', pos:'CM', x:35, y:52, aliases:['iniesta','andres iniesta']},
+      {name:'Lionel Messi', short:'Messi', pos:'RW', x:75, y:25, aliases:['messi','lionel messi']},
+      {name:'Luis Suárez', short:'Suárez', pos:'ST', x:50, y:20, aliases:['suarez','luis suarez']},
+      {name:'Neymar', short:'Neymar', pos:'LW', x:25, y:25, aliases:['neymar','neymar jr']},
+    ],
+    subs:[
+      {name:'Xavi', aliases:['xavi','xavi hernandez']},
+      {name:'Jérémy Mathieu', aliases:['mathieu','jeremy mathieu']},
+      {name:'Pedro', aliases:['pedro']},
+    ]
+  },
+  {
+    id:'real-madrid-2016', name:'Real Madrid', year:2016, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Atlético Madrid', score:'1-1 (5-3 pens)', formation:'4-3-3',
+    starters:[
+      {name:'Keylor Navas', short:'Navas', pos:'GK', x:50, y:85, aliases:['navas','keylor navas']},
+      {name:'Dani Carvajal', short:'Carvajal', pos:'RB', x:78, y:70, aliases:['carvajal','dani carvajal']},
+      {name:'Sergio Ramos', short:'Ramos', pos:'CB', x:62, y:70, aliases:['ramos','sergio ramos']},
+      {name:'Pepe', short:'Pepe', pos:'CB', x:38, y:70, aliases:['pepe']},
+      {name:'Marcelo', short:'Marcelo', pos:'LB', x:22, y:70, aliases:['marcelo']},
+      {name:'Casemiro', short:'Casemiro', pos:'CM', x:65, y:52, aliases:['casemiro']},
+      {name:'Luka Modrić', short:'Modrić', pos:'CM', x:50, y:52, aliases:['modric','luka modric']},
+      {name:'Toni Kroos', short:'Kroos', pos:'CM', x:35, y:52, aliases:['kroos','toni kroos']},
+      {name:'Gareth Bale', short:'Bale', pos:'RW', x:75, y:25, aliases:['bale','gareth bale']},
+      {name:'Karim Benzema', short:'Benzema', pos:'ST', x:50, y:20, aliases:['benzema','karim benzema']},
+      {name:'Cristiano Ronaldo', short:'Ronaldo', pos:'LW', x:25, y:25, aliases:['cristiano ronaldo','ronaldo']},
+    ],
+    subs:[
+      {name:'Danilo', aliases:['danilo']},
+      {name:'Isco', aliases:['isco']},
+      {name:'Lucas Vázquez', aliases:['lucas vazquez','vazquez']},
+    ]
+  },
+  {
+    id:'real-madrid-2017', name:'Real Madrid', year:2017, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Juventus', score:'4-1', formation:'4-3-3',
+    starters:[
+      {name:'Keylor Navas', short:'Navas', pos:'GK', x:50, y:85, aliases:['navas','keylor navas']},
+      {name:'Dani Carvajal', short:'Carvajal', pos:'RB', x:78, y:70, aliases:['carvajal','dani carvajal']},
+      {name:'Sergio Ramos', short:'Ramos', pos:'CB', x:62, y:70, aliases:['ramos','sergio ramos']},
+      {name:'Raphaël Varane', short:'Varane', pos:'CB', x:38, y:70, aliases:['varane','raphael varane']},
+      {name:'Marcelo', short:'Marcelo', pos:'LB', x:22, y:70, aliases:['marcelo']},
+      {name:'Casemiro', short:'Casemiro', pos:'CM', x:65, y:52, aliases:['casemiro']},
+      {name:'Luka Modrić', short:'Modrić', pos:'CM', x:50, y:52, aliases:['modric','luka modric']},
+      {name:'Toni Kroos', short:'Kroos', pos:'CM', x:35, y:52, aliases:['kroos','toni kroos']},
+      {name:'Isco', short:'Isco', pos:'RW', x:75, y:25, aliases:['isco']},
+      {name:'Karim Benzema', short:'Benzema', pos:'ST', x:50, y:20, aliases:['benzema','karim benzema']},
+      {name:'Cristiano Ronaldo', short:'Ronaldo', pos:'LW', x:25, y:25, aliases:['cristiano ronaldo','ronaldo']},
+    ],
+    subs:[
+      {name:'Gareth Bale', aliases:['bale','gareth bale']},
+      {name:'Marco Asensio', aliases:['asensio','marco asensio']},
+      {name:'Álvaro Morata', aliases:['morata','alvaro morata']},
+    ]
+  },
+  {
+    id:'real-madrid-2018', name:'Real Madrid', year:2018, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Liverpool', score:'3-1', formation:'4-3-3',
+    starters:[
+      {name:'Keylor Navas', short:'Navas', pos:'GK', x:50, y:85, aliases:['navas','keylor navas']},
+      {name:'Dani Carvajal', short:'Carvajal', pos:'RB', x:78, y:70, aliases:['carvajal','dani carvajal']},
+      {name:'Raphaël Varane', short:'Varane', pos:'CB', x:62, y:70, aliases:['varane','raphael varane']},
+      {name:'Sergio Ramos', short:'Ramos', pos:'CB', x:38, y:70, aliases:['ramos','sergio ramos']},
+      {name:'Marcelo', short:'Marcelo', pos:'LB', x:22, y:70, aliases:['marcelo']},
+      {name:'Casemiro', short:'Casemiro', pos:'CM', x:65, y:52, aliases:['casemiro']},
+      {name:'Luka Modrić', short:'Modrić', pos:'CM', x:50, y:52, aliases:['modric','luka modric']},
+      {name:'Toni Kroos', short:'Kroos', pos:'CM', x:35, y:52, aliases:['kroos','toni kroos']},
+      {name:'Isco', short:'Isco', pos:'RW', x:75, y:25, aliases:['isco']},
+      {name:'Karim Benzema', short:'Benzema', pos:'ST', x:50, y:20, aliases:['benzema','karim benzema']},
+      {name:'Cristiano Ronaldo', short:'Ronaldo', pos:'LW', x:25, y:25, aliases:['cristiano ronaldo','ronaldo']},
+    ],
+    subs:[
+      {name:'Nacho', aliases:['nacho']},
+      {name:'Gareth Bale', aliases:['bale','gareth bale']},
+      {name:'Marco Asensio', aliases:['asensio','marco asensio']},
+    ]
+  },
+  {
+    id:'liverpool-2019', name:'Liverpool', year:2019, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Tottenham', score:'2-0', formation:'4-3-3',
+    starters:[
+      {name:'Alisson', short:'Alisson', pos:'GK', x:50, y:85, aliases:['alisson','alisson becker']},
+      {name:'Trent Alexander-Arnold', short:'Alexander-Arnold', pos:'RB', x:78, y:70, aliases:['alexander-arnold','trent alexander-arnold','taa']},
+      {name:'Joël Matip', short:'Matip', pos:'CB', x:62, y:70, aliases:['matip','joel matip']},
+      {name:'Virgil van Dijk', short:'Van Dijk', pos:'CB', x:38, y:70, aliases:['van dijk','virgil van dijk']},
+      {name:'Andy Robertson', short:'Robertson', pos:'LB', x:22, y:70, aliases:['robertson','andy robertson']},
+      {name:'Jordan Henderson', short:'Henderson', pos:'CM', x:65, y:52, aliases:['henderson','jordan henderson']},
+      {name:'Fabinho', short:'Fabinho', pos:'CM', x:50, y:52, aliases:['fabinho']},
+      {name:'Georginio Wijnaldum', short:'Wijnaldum', pos:'CM', x:35, y:52, aliases:['wijnaldum','georginio wijnaldum']},
+      {name:'Mohamed Salah', short:'Salah', pos:'RW', x:75, y:25, aliases:['salah','mohamed salah','mo salah']},
+      {name:'Roberto Firmino', short:'Firmino', pos:'ST', x:50, y:20, aliases:['firmino','roberto firmino']},
+      {name:'Sadio Mané', short:'Mané', pos:'LW', x:25, y:25, aliases:['mane','sadio mane']},
+    ],
+    subs:[
+      {name:'Divock Origi', aliases:['origi','divock origi']},
+      {name:'James Milner', aliases:['milner','james milner']},
+      {name:'Joe Gomez', aliases:['gomez','joe gomez']},
+    ]
+  },
+  {
+    id:'bayern-munich-2020', name:'Bayern Munich', year:2020, flag:'🏆',
+    tournament:'Champions League Final', opponent:'PSG', score:'1-0', formation:'4-2-3-1',
+    starters:[
+      {name:'Manuel Neuer', short:'Neuer', pos:'GK', x:50, y:85, aliases:['neuer','manuel neuer']},
+      {name:'Joshua Kimmich', short:'Kimmich', pos:'RB', x:78, y:70, aliases:['kimmich','joshua kimmich']},
+      {name:'Jérôme Boateng', short:'Boateng', pos:'CB', x:62, y:70, aliases:['boateng','jerome boateng']},
+      {name:'David Alaba', short:'Alaba', pos:'CB', x:38, y:70, aliases:['alaba','david alaba']},
+      {name:'Alphonso Davies', short:'Davies', pos:'LB', x:22, y:70, aliases:['davies','alphonso davies']},
+      {name:'Thiago Alcântara', short:'Thiago', pos:'CDM', x:62, y:57, aliases:['thiago','thiago alcantara']},
+      {name:'Leon Goretzka', short:'Goretzka', pos:'CDM', x:38, y:57, aliases:['goretzka','leon goretzka']},
+      {name:'Serge Gnabry', short:'Gnabry', pos:'RAM', x:72, y:40, aliases:['gnabry','serge gnabry']},
+      {name:'Thomas Müller', short:'Müller', pos:'CAM', x:50, y:40, aliases:['muller','thomas muller']},
+      {name:'Kingsley Coman', short:'Coman', pos:'LAM', x:28, y:40, aliases:['coman','kingsley coman']},
+      {name:'Robert Lewandowski', short:'Lewandowski', pos:'ST', x:50, y:20, aliases:['lewandowski','robert lewandowski']},
+    ],
+    subs:[
+      {name:'Niklas Süle', aliases:['sule','niklas sule']},
+      {name:'Philippe Coutinho', aliases:['coutinho','philippe coutinho']},
+      {name:'Ivan Perišić', aliases:['perisic','ivan perisic']},
+      {name:'Corentin Tolisso', aliases:['tolisso','corentin tolisso']},
+    ]
+  },
+  {
+    id:'chelsea-2021', name:'Chelsea', year:2021, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Manchester City', score:'1-0', formation:'3-4-2-1',
+    starters:[
+      {name:'Édouard Mendy', short:'Mendy', pos:'GK', x:50, y:85, aliases:['mendy','edouard mendy']},
+      {name:'César Azpilicueta', short:'Azpilicueta', pos:'CB', x:68, y:70, aliases:['azpilicueta','cesar azpilicueta']},
+      {name:'Thiago Silva', short:'T. Silva', pos:'CB', x:50, y:70, aliases:['thiago silva']},
+      {name:'Antonio Rüdiger', short:'Rüdiger', pos:'CB', x:32, y:70, aliases:['rudiger','antonio rudiger']},
+      {name:'Reece James', short:'James', pos:'RWB', x:85, y:55, aliases:['reece james','james']},
+      {name:'N\'Golo Kanté', short:'Kanté', pos:'CM', x:65, y:52, aliases:["n'golo kante",'kante','ngolo kante']},
+      {name:'Jorginho', short:'Jorginho', pos:'CM', x:50, y:52, aliases:['jorginho']},
+      {name:'Ben Chilwell', short:'Chilwell', pos:'LWB', x:15, y:55, aliases:['chilwell','ben chilwell']},
+      {name:'Mason Mount', short:'Mount', pos:'RAM', x:72, y:40, aliases:['mount','mason mount']},
+      {name:'Kai Havertz', short:'Havertz', pos:'CAM', x:50, y:40, aliases:['havertz','kai havertz']},
+      {name:'Timo Werner', short:'Werner', pos:'ST', x:50, y:20, aliases:['werner','timo werner']},
+    ],
+    subs:[
+      {name:'Andreas Christensen', aliases:['christensen','andreas christensen']},
+      {name:'Christian Pulisic', aliases:['pulisic','christian pulisic']},
+      {name:'Mateo Kovačić', aliases:['kovacic','mateo kovacic']},
+    ]
+  },
+  {
+    id:'real-madrid-2022', name:'Real Madrid', year:2022, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Liverpool', score:'1-0', formation:'4-3-3',
+    starters:[
+      {name:'Thibaut Courtois', short:'Courtois', pos:'GK', x:50, y:85, aliases:['courtois','thibaut courtois']},
+      {name:'Dani Carvajal', short:'Carvajal', pos:'RB', x:78, y:70, aliases:['carvajal','dani carvajal']},
+      {name:'Éder Militão', short:'Militão', pos:'CB', x:62, y:70, aliases:['militao','eder militao']},
+      {name:'David Alaba', short:'Alaba', pos:'CB', x:38, y:70, aliases:['alaba','david alaba']},
+      {name:'Ferland Mendy', short:'F. Mendy', pos:'LB', x:22, y:70, aliases:['ferland mendy','mendy']},
+      {name:'Luka Modrić', short:'Modrić', pos:'CM', x:65, y:52, aliases:['modric','luka modric']},
+      {name:'Casemiro', short:'Casemiro', pos:'CM', x:50, y:52, aliases:['casemiro']},
+      {name:'Toni Kroos', short:'Kroos', pos:'CM', x:35, y:52, aliases:['kroos','toni kroos']},
+      {name:'Federico Valverde', short:'Valverde', pos:'RW', x:75, y:25, aliases:['valverde','federico valverde']},
+      {name:'Karim Benzema', short:'Benzema', pos:'ST', x:50, y:20, aliases:['benzema','karim benzema']},
+      {name:'Vinícius Júnior', short:'Vinícius', pos:'LW', x:25, y:25, aliases:['vinicius','vinicius junior']},
+    ],
+    subs:[
+      {name:'Eduardo Camavinga', aliases:['camavinga','eduardo camavinga']},
+      {name:'Dani Ceballos', aliases:['ceballos','dani ceballos']},
+      {name:'Rodrygo', aliases:['rodrygo']},
+    ]
+  },
+  {
+    id:'manchester-city-2023', name:'Manchester City', year:2023, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Inter Milan', score:'1-0', formation:'4-3-3',
+    starters:[
+      {name:'Ederson', short:'Ederson', pos:'GK', x:50, y:85, aliases:['ederson']},
+      {name:'Manuel Akanji', short:'Akanji', pos:'RB', x:78, y:70, aliases:['akanji','manuel akanji']},
+      {name:'Rúben Dias', short:'Dias', pos:'CB', x:62, y:70, aliases:['dias','ruben dias']},
+      {name:'Nathan Aké', short:'Aké', pos:'CB', x:38, y:70, aliases:['ake','nathan ake']},
+      {name:'John Stones', short:'Stones', pos:'LB', x:22, y:70, aliases:['stones','john stones']},
+      {name:'Rodri', short:'Rodri', pos:'CM', x:65, y:52, aliases:['rodri']},
+      {name:'Kevin De Bruyne', short:'De Bruyne', pos:'CM', x:50, y:52, aliases:['de bruyne','kevin de bruyne']},
+      {name:'İlkay Gündoğan', short:'Gündoğan', pos:'CM', x:35, y:52, aliases:['gundogan','ilkay gundogan']},
+      {name:'Bernardo Silva', short:'B. Silva', pos:'RW', x:75, y:25, aliases:['bernardo silva','bernardo']},
+      {name:'Erling Haaland', short:'Haaland', pos:'ST', x:50, y:20, aliases:['haaland','erling haaland']},
+      {name:'Jack Grealish', short:'Grealish', pos:'LW', x:25, y:25, aliases:['grealish','jack grealish']},
+    ],
+    subs:[
+      {name:'Phil Foden', aliases:['foden','phil foden']},
+      {name:'Kyle Walker', aliases:['walker','kyle walker']},
+    ]
+  },
+  {
+    id:'real-madrid-2024', name:'Real Madrid', year:2024, flag:'🏆',
+    tournament:'Champions League Final', opponent:'Borussia Dortmund', score:'2-0', formation:'4-3-3',
+    starters:[
+      {name:'Thibaut Courtois', short:'Courtois', pos:'GK', x:50, y:85, aliases:['courtois','thibaut courtois']},
+      {name:'Dani Carvajal', short:'Carvajal', pos:'RB', x:78, y:70, aliases:['carvajal','dani carvajal']},
+      {name:'Antonio Rüdiger', short:'Rüdiger', pos:'CB', x:62, y:70, aliases:['rudiger','antonio rudiger']},
+      {name:'Nacho', short:'Nacho', pos:'CB', x:38, y:70, aliases:['nacho']},
+      {name:'Ferland Mendy', short:'F. Mendy', pos:'LB', x:22, y:70, aliases:['ferland mendy','mendy']},
+      {name:'Eduardo Camavinga', short:'Camavinga', pos:'CM', x:65, y:52, aliases:['camavinga','eduardo camavinga']},
+      {name:'Federico Valverde', short:'Valverde', pos:'CM', x:50, y:52, aliases:['valverde','federico valverde']},
+      {name:'Toni Kroos', short:'Kroos', pos:'CM', x:35, y:52, aliases:['kroos','toni kroos']},
+      {name:'Jude Bellingham', short:'Bellingham', pos:'RW', x:75, y:25, aliases:['bellingham','jude bellingham']},
+      {name:'Rodrygo', short:'Rodrygo', pos:'ST', x:50, y:20, aliases:['rodrygo']},
+      {name:'Vinícius Júnior', short:'Vinícius', pos:'LW', x:25, y:25, aliases:['vinicius','vinicius junior']},
+    ],
+    subs:[
+      {name:'Luka Modrić', aliases:['modric','luka modric']},
+      {name:'Joselu', aliases:['joselu']},
+      {name:'Éder Militão', aliases:['militao','eder militao']},
+      {name:'Lucas Vázquez', aliases:['lucas vazquez','vazquez']},
+    ]
+  },
+  {
+    id:'denmark-1992', name:'Denmark', year:1992, flag:'🇩🇰',
+    tournament:'European Championship Final', opponent:'Germany', score:'2-0', formation:'3-5-2',
+    starters:[
+      {name:'Peter Schmeichel', short:'Schmeichel', pos:'GK', x:50, y:85, aliases:['schmeichel','peter schmeichel']},
+      {name:'Lars Olsen', short:'L. Olsen', pos:'CB', x:68, y:70, aliases:['lars olsen','olsen']},
+      {name:'Torben Piechnik', short:'Piechnik', pos:'CB', x:50, y:70, aliases:['piechnik','torben piechnik']},
+      {name:'Kent Nielsen', short:'Nielsen', pos:'CB', x:32, y:70, aliases:['nielsen','kent nielsen']},
+      {name:'John Sivebæk', short:'Sivebæk', pos:'RWB', x:85, y:55, aliases:['sivebaek','john sivebaek']},
+      {name:'John Jensen', short:'J. Jensen', pos:'CM', x:65, y:52, aliases:['john jensen','jensen']},
+      {name:'Kim Vilfort', short:'Vilfort', pos:'CM', x:50, y:52, aliases:['vilfort','kim vilfort']},
+      {name:'Henrik Larsen', short:'H. Larsen', pos:'CM', x:35, y:52, aliases:['henrik larsen']},
+      {name:'Kim Christofte', short:'Christofte', pos:'LWB', x:15, y:55, aliases:['christofte','kim christofte']},
+      {name:'Brian Laudrup', short:'B. Laudrup', pos:'ST', x:60, y:25, aliases:['brian laudrup','laudrup']},
+      {name:'Flemming Povlsen', short:'Povlsen', pos:'ST', x:40, y:25, aliases:['povlsen','flemming povlsen']},
+    ],
+    subs:[
+      {name:'Claus Christiansen', aliases:['christiansen','claus christiansen']},
+    ]
+  },
+  {
+    id:'germany-1996', name:'Germany', year:1996, flag:'🇩🇪',
+    tournament:'European Championship Final', opponent:'Czech Republic', score:'2-1 aet', formation:'3-5-2',
+    starters:[
+      {name:'Andreas Köpke', short:'Köpke', pos:'GK', x:50, y:85, aliases:['kopke','andreas kopke']},
+      {name:'Matthias Sammer', short:'Sammer', pos:'CB', x:68, y:70, aliases:['sammer','matthias sammer']},
+      {name:'Markus Babbel', short:'Babbel', pos:'CB', x:50, y:70, aliases:['babbel','markus babbel']},
+      {name:'Thomas Helmer', short:'Helmer', pos:'CB', x:32, y:70, aliases:['helmer','thomas helmer']},
+      {name:'Thomas Strunz', short:'Strunz', pos:'RWB', x:85, y:55, aliases:['strunz','thomas strunz']},
+      {name:'Dieter Eilts', short:'Eilts', pos:'CM', x:65, y:52, aliases:['eilts','dieter eilts']},
+      {name:'Thomas Häßler', short:'Häßler', pos:'CM', x:50, y:52, aliases:['hassler','thomas hassler']},
+      {name:'Mehmet Scholl', short:'Scholl', pos:'CM', x:35, y:52, aliases:['scholl','mehmet scholl']},
+      {name:'Christian Ziege', short:'Ziege', pos:'LWB', x:15, y:55, aliases:['ziege','christian ziege']},
+      {name:'Stefan Kuntz', short:'Kuntz', pos:'ST', x:60, y:25, aliases:['kuntz','stefan kuntz']},
+      {name:'Jürgen Klinsmann', short:'Klinsmann', pos:'ST', x:40, y:25, aliases:['klinsmann','jurgen klinsmann']},
+    ],
+    subs:[
+      {name:'Marco Bode', aliases:['bode','marco bode']},
+      {name:'Oliver Bierhoff', aliases:['bierhoff','oliver bierhoff']},
+    ]
+  },
+  {
+    id:'france-2000', name:'France', year:2000, flag:'🇫🇷',
+    tournament:'European Championship Final', opponent:'Italy', score:'2-1 aet', formation:'4-4-2',
+    starters:[
+      {name:'Fabien Barthez', short:'Barthez', pos:'GK', x:50, y:85, aliases:['barthez','fabien barthez']},
+      {name:'Lilian Thuram', short:'Thuram', pos:'RB', x:78, y:70, aliases:['thuram','lilian thuram']},
+      {name:'Marcel Desailly', short:'Desailly', pos:'CB', x:62, y:70, aliases:['desailly','marcel desailly']},
+      {name:'Laurent Blanc', short:'Blanc', pos:'CB', x:38, y:70, aliases:['blanc','laurent blanc']},
+      {name:'Bixente Lizarazu', short:'Lizarazu', pos:'LB', x:22, y:70, aliases:['lizarazu','bixente lizarazu']},
+      {name:'Youri Djorkaeff', short:'Djorkaeff', pos:'RM', x:78, y:54, aliases:['djorkaeff','youri djorkaeff']},
+      {name:'Patrick Vieira', short:'Vieira', pos:'CM', x:62, y:54, aliases:['vieira','patrick vieira']},
+      {name:'Didier Deschamps', short:'Deschamps', pos:'CM', x:38, y:54, aliases:['deschamps','didier deschamps']},
+      {name:'Zinedine Zidane', short:'Zidane', pos:'LM', x:22, y:54, aliases:['zidane','zinedine zidane']},
+      {name:'Thierry Henry', short:'Henry', pos:'ST', x:62, y:25, aliases:['henry','thierry henry']},
+      {name:'Christophe Dugarry', short:'Dugarry', pos:'ST', x:38, y:25, aliases:['dugarry','christophe dugarry']},
+    ],
+    subs:[
+      {name:'Sylvain Wiltord', aliases:['wiltord','sylvain wiltord']},
+      {name:'David Trezeguet', aliases:['trezeguet','david trezeguet']},
+      {name:'Robert Pires', aliases:['pires','robert pires']},
+    ]
+  },
+  {
+    id:'greece-2004', name:'Greece', year:2004, flag:'🇬🇷',
+    tournament:'European Championship Final', opponent:'Portugal', score:'1-0', formation:'4-2-3-1',
+    starters:[
+      {name:'Antonios Nikopolidis', short:'Nikopolidis', pos:'GK', x:50, y:85, aliases:['nikopolidis','antonios nikopolidis']},
+      {name:'Giourkas Seitaridis', short:'Seitaridis', pos:'RB', x:78, y:70, aliases:['seitaridis','giourkas seitaridis']},
+      {name:'Michalis Kapsis', short:'Kapsis', pos:'CB', x:62, y:70, aliases:['kapsis','michalis kapsis']},
+      {name:'Traianos Dellas', short:'Dellas', pos:'CB', x:38, y:70, aliases:['dellas','traianos dellas']},
+      {name:'Takis Fyssas', short:'Fyssas', pos:'LB', x:22, y:70, aliases:['fyssas','takis fyssas']},
+      {name:'Kostas Katsouranis', short:'Katsouranis', pos:'CDM', x:62, y:57, aliases:['katsouranis','kostas katsouranis']},
+      {name:'Theodoros Zagorakis', short:'Zagorakis', pos:'CDM', x:38, y:57, aliases:['zagorakis','theodoros zagorakis']},
+      {name:'Angelos Charisteas', short:'Charisteas', pos:'RAM', x:72, y:40, aliases:['charisteas','angelos charisteas']},
+      {name:'Angelos Basinas', short:'Basinas', pos:'CAM', x:50, y:40, aliases:['basinas','angelos basinas']},
+      {name:'Stelios Giannakopoulos', short:'Stelios', pos:'LAM', x:28, y:40, aliases:['stelios','giannakopoulos','stelios giannakopoulos']},
+      {name:'Zisis Vryzas', short:'Vryzas', pos:'ST', x:50, y:20, aliases:['vryzas','zisis vryzas']},
+    ],
+    subs:[
+      {name:'Stylianos Venetidis', aliases:['venetidis','stylianos venetidis']},
+      {name:'Dimitrios Papadopoulos', aliases:['papadopoulos','dimitrios papadopoulos']},
+    ]
+  },
+  {
+    id:'spain-2008', name:'Spain', year:2008, flag:'🇪🇸',
+    tournament:'European Championship Final', opponent:'Germany', score:'1-0', formation:'4-3-3',
+    starters:[
+      {name:'Iker Casillas', short:'Casillas', pos:'GK', x:50, y:85, aliases:['casillas','iker casillas']},
+      {name:'Sergio Ramos', short:'Ramos', pos:'RB', x:78, y:70, aliases:['ramos','sergio ramos']},
+      {name:'Carlos Marchena', short:'Marchena', pos:'CB', x:62, y:70, aliases:['marchena','carlos marchena']},
+      {name:'Carles Puyol', short:'Puyol', pos:'CB', x:38, y:70, aliases:['puyol','carles puyol']},
+      {name:'Joan Capdevila', short:'Capdevila', pos:'LB', x:22, y:70, aliases:['capdevila','joan capdevila']},
+      {name:'Marcos Senna', short:'Senna', pos:'CM', x:65, y:52, aliases:['senna','marcos senna']},
+      {name:'Xavi', short:'Xavi', pos:'CM', x:50, y:52, aliases:['xavi','xavi hernandez']},
+      {name:'Andrés Iniesta', short:'Iniesta', pos:'CM', x:35, y:52, aliases:['iniesta','andres iniesta']},
+      {name:'Cesc Fàbregas', short:'Fàbregas', pos:'RW', x:75, y:25, aliases:['fabregas','cesc fabregas']},
+      {name:'Fernando Torres', short:'Torres', pos:'ST', x:50, y:20, aliases:['torres','fernando torres']},
+      {name:'David Silva', short:'D. Silva', pos:'LW', x:25, y:25, aliases:['david silva','silva']},
+    ],
+    subs:[
+      {name:'Xabi Alonso', aliases:['xabi alonso','alonso']},
+      {name:'Santi Cazorla', aliases:['cazorla','santi cazorla']},
+      {name:'Dani Güiza', aliases:['guiza','dani guiza']},
+    ]
+  },
+  {
+    id:'spain-2012', name:'Spain', year:2012, flag:'🇪🇸',
+    tournament:'European Championship Final', opponent:'Italy', score:'4-0', formation:'4-3-3',
+    starters:[
+      {name:'Iker Casillas', short:'Casillas', pos:'GK', x:50, y:85, aliases:['casillas','iker casillas']},
+      {name:'Álvaro Arbeloa', short:'Arbeloa', pos:'RB', x:78, y:70, aliases:['arbeloa','alvaro arbeloa']},
+      {name:'Gerard Piqué', short:'Piqué', pos:'CB', x:62, y:70, aliases:['pique','gerard pique']},
+      {name:'Sergio Ramos', short:'Ramos', pos:'CB', x:38, y:70, aliases:['ramos','sergio ramos']},
+      {name:'Jordi Alba', short:'Alba', pos:'LB', x:22, y:70, aliases:['alba','jordi alba']},
+      {name:'Sergio Busquets', short:'Busquets', pos:'CM', x:65, y:52, aliases:['busquets','sergio busquets']},
+      {name:'Xavi', short:'Xavi', pos:'CM', x:50, y:52, aliases:['xavi','xavi hernandez']},
+      {name:'Xabi Alonso', short:'Xabi Alonso', pos:'CM', x:35, y:52, aliases:['xabi alonso','alonso']},
+      {name:'Cesc Fàbregas', short:'Fàbregas', pos:'RW', x:75, y:25, aliases:['fabregas','cesc fabregas']},
+      {name:'David Silva', short:'D. Silva', pos:'ST', x:50, y:20, aliases:['david silva','silva']},
+      {name:'Andrés Iniesta', short:'Iniesta', pos:'LW', x:25, y:25, aliases:['iniesta','andres iniesta']},
+    ],
+    subs:[
+      {name:'Pedro', aliases:['pedro']},
+      {name:'Fernando Torres', aliases:['torres','fernando torres']},
+      {name:'Juan Mata', aliases:['mata','juan mata']},
+    ]
+  },
+  {
+    id:'portugal-2016', name:'Portugal', year:2016, flag:'🇵🇹',
+    tournament:'European Championship Final', opponent:'France', score:'1-0 aet', formation:'4-4-2',
+    starters:[
+      {name:'Rui Patrício', short:'Patrício', pos:'GK', x:50, y:85, aliases:['rui patricio','patricio']},
+      {name:'Cédric Soares', short:'Cédric', pos:'RB', x:78, y:70, aliases:['cedric','cedric soares']},
+      {name:'Pepe', short:'Pepe', pos:'CB', x:62, y:70, aliases:['pepe']},
+      {name:'José Fonte', short:'Fonte', pos:'CB', x:38, y:70, aliases:['fonte','jose fonte']},
+      {name:'Raphaël Guerreiro', short:'Guerreiro', pos:'LB', x:22, y:70, aliases:['guerreiro','raphael guerreiro']},
+      {name:'Renato Sanches', short:'R. Sanches', pos:'RM', x:78, y:54, aliases:['renato sanches','sanches']},
+      {name:'William Carvalho', short:'W. Carvalho', pos:'CM', x:62, y:54, aliases:['william carvalho','carvalho']},
+      {name:'Adrien Silva', short:'A. Silva', pos:'CM', x:38, y:54, aliases:['adrien silva']},
+      {name:'João Mário', short:'João Mário', pos:'LM', x:22, y:54, aliases:['joao mario']},
+      {name:'Nani', short:'Nani', pos:'ST', x:62, y:25, aliases:['nani']},
+      {name:'Cristiano Ronaldo', short:'Ronaldo', pos:'ST', x:38, y:25, aliases:['cristiano ronaldo','ronaldo']},
+    ],
+    subs:[
+      {name:'Ricardo Quaresma', aliases:['quaresma','ricardo quaresma']},
+      {name:'João Moutinho', aliases:['moutinho','joao moutinho']},
+      {name:'Éder', aliases:['eder']},
+    ]
+  },
+  {
+    id:'italy-2021', name:'Italy', year:2021, flag:'🇮🇹',
+    tournament:'European Championship Final', opponent:'England', score:'1-1 (3-2 pens)', formation:'4-3-3',
+    starters:[
+      {name:'Gianluigi Donnarumma', short:'Donnarumma', pos:'GK', x:50, y:85, aliases:['donnarumma','gianluigi donnarumma']},
+      {name:'Giovanni Di Lorenzo', short:'Di Lorenzo', pos:'RB', x:78, y:70, aliases:['di lorenzo','giovanni di lorenzo']},
+      {name:'Leonardo Bonucci', short:'Bonucci', pos:'CB', x:62, y:70, aliases:['bonucci','leonardo bonucci']},
+      {name:'Giorgio Chiellini', short:'Chiellini', pos:'CB', x:38, y:70, aliases:['chiellini','giorgio chiellini']},
+      {name:'Emerson Palmieri', short:'Emerson', pos:'LB', x:22, y:70, aliases:['emerson','emerson palmieri']},
+      {name:'Nicolò Barella', short:'Barella', pos:'CM', x:65, y:52, aliases:['barella','nicolo barella']},
+      {name:'Jorginho', short:'Jorginho', pos:'CM', x:50, y:52, aliases:['jorginho']},
+      {name:'Marco Verratti', short:'Verratti', pos:'CM', x:35, y:52, aliases:['verratti','marco verratti']},
+      {name:'Federico Chiesa', short:'Chiesa', pos:'RW', x:75, y:25, aliases:['chiesa','federico chiesa']},
+      {name:'Ciro Immobile', short:'Immobile', pos:'ST', x:50, y:20, aliases:['immobile','ciro immobile']},
+      {name:'Lorenzo Insigne', short:'Insigne', pos:'LW', x:25, y:25, aliases:['insigne','lorenzo insigne']},
+    ],
+    subs:[
+      {name:'Bryan Cristante', aliases:['cristante','bryan cristante']},
+      {name:'Domenico Berardi', aliases:['berardi','domenico berardi']},
+      {name:'Federico Bernardeschi', aliases:['bernardeschi','federico bernardeschi']},
+      {name:'Andrea Belotti', aliases:['belotti','andrea belotti']},
+      {name:'Manuel Locatelli', aliases:['locatelli','manuel locatelli']},
+    ]
+  },
+  {
+    id:'spain-2024', name:'Spain', year:2024, flag:'🇪🇸',
+    tournament:'European Championship Final', opponent:'England', score:'2-1', formation:'4-2-3-1',
+    starters:[
+      {name:'Unai Simón', short:'Simón', pos:'GK', x:50, y:85, aliases:['unai simon','simon']},
+      {name:'Dani Carvajal', short:'Carvajal', pos:'RB', x:78, y:70, aliases:['carvajal','dani carvajal']},
+      {name:'Robin Le Normand', short:'Le Normand', pos:'CB', x:62, y:70, aliases:['le normand','robin le normand']},
+      {name:'Aymeric Laporte', short:'Laporte', pos:'CB', x:38, y:70, aliases:['laporte','aymeric laporte']},
+      {name:'Marc Cucurella', short:'Cucurella', pos:'LB', x:22, y:70, aliases:['cucurella','marc cucurella']},
+      {name:'Rodri', short:'Rodri', pos:'CDM', x:62, y:57, aliases:['rodri']},
+      {name:'Fabián Ruiz', short:'Fabián', pos:'CDM', x:38, y:57, aliases:['fabian ruiz','fabian']},
+      {name:'Lamine Yamal', short:'Yamal', pos:'RAM', x:72, y:40, aliases:['yamal','lamine yamal']},
+      {name:'Dani Olmo', short:'Olmo', pos:'CAM', x:50, y:40, aliases:['olmo','dani olmo']},
+      {name:'Nico Williams', short:'N. Williams', pos:'LAM', x:28, y:40, aliases:['nico williams','williams']},
+      {name:'Álvaro Morata', short:'Morata', pos:'ST', x:50, y:20, aliases:['morata','alvaro morata']},
+    ],
+    subs:[
+      {name:'Martín Zubimendi', aliases:['zubimendi','martin zubimendi']},
+      {name:'Mikel Oyarzabal', aliases:['oyarzabal','mikel oyarzabal']},
+      {name:'Nacho', aliases:['nacho']},
+      {name:'Mikel Merino', aliases:['merino','mikel merino']},
+    ]
+  },
+];
+
+// ── SXI State ──────────────────────────────────────────────────────────────────
+let sxiMode=1, sxiTeam=null, sxiP1='Player 1', sxiP2='Player 2';
+let sxiLives=[3,3], sxiScores=[0,0], sxiCurrentTurn=0, sxiRunning=false;
+let sxiFoundStarters=[], sxiFoundSubs=[];
+
+function sxiSetMode(m){
+  sxiMode=m;
+  document.getElementById('sxiBtn1p').classList.toggle('active', m===1);
+  document.getElementById('sxiBtn2p').classList.toggle('active', m===2);
+}
+
+let sxiActiveCategory=null;
+
+function sxiShowTeamSelect(){
+  document.getElementById('sxiTeamSelect').style.display='block';
+  document.getElementById('sxiNameEntry').style.display='none';
+  document.getElementById('sxiGame').style.display='none';
+  document.getElementById('sxiEnd').style.display='none';
+  document.getElementById('sxiTrophyWC').src=TROPHY_IMGS['World Cup']||'';
+  document.getElementById('sxiTrophyCL').src=TROPHY_IMGS['Champions League']||'';
+  document.getElementById('sxiTrophyEuros').src=TROPHY_IMGS['Euros']||'';
+  sxiBackToCategories();
+}
+
+function sxiBackToCategories(){
+  sxiActiveCategory=null;
+  document.getElementById('sxiCatPicker').style.display='block';
+  document.getElementById('sxiTeamPicker').style.display='none';
+}
+
+function sxiPickCategory(key){
+  sxiActiveCategory=key;
+  const labels={'World Cup Final':'🌍 World Cup','Champions League Final':'🏆 Champions League','European Championship Final':'⭐ Euros'};
+  document.getElementById('sxiTeamPickerLabel').textContent=labels[key]||key;
+  document.getElementById('sxiCatPicker').style.display='none';
+  document.getElementById('sxiTeamPicker').style.display='block';
+  sxiRenderTeamGrid();
+}
+
+function sxiRenderTeamGrid(){
+  const g=document.getElementById('sxiTeamGrid');
+  const teams=SXI_TEAMS.filter(t=>t.tournament===sxiActiveCategory).sort((a,b)=>a.year-b.year);
+  g.innerHTML=`<div class="sxi-section-grid">${teams.map(t=>`
+    <div class="sxi-team-card" onclick="sxiPickTeam('${t.id}')">
+      <div class="sxi-team-flag">${t.flag}</div>
+      <div class="sxi-team-name">${t.name} ${t.year}</div>
+      <div class="sxi-team-year">${t.formation} · vs ${t.opponent}</div>
+      <div class="sxi-team-opp">${t.score}</div>
+    </div>`).join('')}</div>`;
+}
+
+function sxiPickTeam(id){
+  sxiTeam=SXI_TEAMS.find(t=>t.id===id);
+  if(!sxiTeam) return;
+  if(sxiMode===2){
+    document.getElementById('sxiNETeam').textContent=`${sxiTeam.flag} ${sxiTeam.name} ${sxiTeam.year} · ${sxiTeam.formation}`;
+    document.getElementById('sxiTeamSelect').style.display='none';
+    document.getElementById('sxiNameEntry').style.display='block';
+    setTimeout(()=>document.getElementById('sxiP1Name').focus(),100);
+  } else {
+    sxiP1='You'; sxiP2='';
+    sxiBegin();
+  }
+}
+
+function sxiConfirmNames(){
+  const n1=document.getElementById('sxiP1Name').value.trim();
+  const n2=document.getElementById('sxiP2Name').value.trim();
+  sxiP1=n1||'Player 1';
+  sxiP2=n2||'Player 2';
+  sxiBegin();
+}
+
+function sxiBegin(){
+  sxiLives=[3,3]; sxiScores=[0,0]; sxiCurrentTurn=0; sxiRunning=true;
+  sxiFoundStarters=[]; sxiFoundSubs=[];
+  document.getElementById('sxiNameEntry').style.display='none';
+  document.getElementById('sxiTeamSelect').style.display='none';
+  document.getElementById('sxiEnd').style.display='none';
+  const g=document.getElementById('sxiGame');
+  g.style.display='flex';
+  // Header
+  document.getElementById('sxiTeamBadge').textContent=`${sxiTeam.flag} ${sxiTeam.name.toUpperCase()} ${sxiTeam.year}`;
+  document.getElementById('sxiFormBadge').textContent=sxiTeam.formation;
+  // Render pitch
+  sxiRenderPitch();
+  sxiRenderBench();
+  sxiRenderHUD();
+  document.getElementById('sxiInput').value='';
+  document.getElementById('sxiStatus').textContent='';
+  setTimeout(()=>document.getElementById('sxiInput').focus(),200);
+}
+
+function sxiRenderPitch(){
+  const pitch=document.getElementById('sxiPitch');
+  // Remove old dots
+  pitch.querySelectorAll('.sxi-pos').forEach(el=>el.remove());
+  sxiTeam.starters.forEach((p,i)=>{
+    const dot=document.createElement('div');
+    dot.className='sxi-pos';
+    dot.id='sxiDot'+i;
+    dot.style.left=p.x+'%';
+    dot.style.top=p.y+'%';
+    dot.innerHTML=`<div class="sxi-pos-dot">${p.pos}</div><div class="sxi-pos-name" style="display:none"></div>`;
+    pitch.appendChild(dot);
+  });
+}
+
+function sxiRenderBench(){
+  const wrap=document.getElementById('sxiBenchSlots');
+  wrap.innerHTML=sxiTeam.subs.map((s,i)=>
+    `<div class="sxi-bench-slot" id="sxiSub${i}">${'?'}</div>`
+  ).join('');
+}
+
+function sxiRenderHUD(){
+  // Turn badge
+  const tb=document.getElementById('sxiTurnBadge');
+  const sr=document.getElementById('sxiScoreRow');
+  if(sxiMode===2){
+    tb.style.display='block';
+    sr.style.display='flex';
+    const isP1=sxiCurrentTurn===0;
+    tb.className='sxi-turn-badge '+(isP1?'p1':'p2');
+    tb.textContent=(isP1?sxiP1:sxiP2)+"'s turn";
+    sr.innerHTML=`
+      <div class="sxi-score-box ${sxiCurrentTurn===0?'active':''}" id="sxiSB0">
+        <div class="sxi-score-name">${sxiP1}</div>
+        <div class="sxi-score-num">${sxiScores[0]}</div>
+      </div>
+      <div class="sxi-score-box ${sxiCurrentTurn===1?'active p2':''}" id="sxiSB1">
+        <div class="sxi-score-name">${sxiP2}</div>
+        <div class="sxi-score-num">${sxiScores[1]}</div>
+      </div>`;
+  } else {
+    tb.style.display='none';
+    sr.style.display='none';
+  }
+  // Lives
+  const lr=document.getElementById('sxiLivesRow');
+  if(sxiMode===2){
+    lr.innerHTML=
+      `<span style="font-size:0.6rem;color:#555;font-weight:700;letter-spacing:1px;margin-right:6px;">${sxiP1}</span>`+
+      [0,1,2].map(i=>`<span class="heart${sxiLives[0]<=i?' lost':''}" style="font-size:1rem;">❤️</span>`).join('')+
+      `<span style="margin:0 10px;color:#333;">|</span>`+
+      `<span style="font-size:0.6rem;color:#555;font-weight:700;letter-spacing:1px;margin-right:6px;">${sxiP2}</span>`+
+      [0,1,2].map(i=>`<span class="heart${sxiLives[1]<=i?' lost':''}" style="font-size:1rem;">❤️</span>`).join('');
+  } else {
+    lr.innerHTML=[0,1,2].map(i=>`<span class="heart${sxiLives[0]<=i?' lost':''}" style="font-size:1.1rem;">❤️</span>`).join('');
+  }
+}
+
+function sxiNorm(s){
+  return s.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9 ]/g,' ')
+    .replace(/\s+/g,' ').trim();
+}
+
+function sxiOnInput(){
+  const wrap=document.getElementById('sxiInputWrap');
+  wrap.classList.remove('wrong','correct');
+}
+
+function sxiSubmit(){
+  if(!sxiRunning) return;
+  const input=document.getElementById('sxiInput');
+  const raw=input.value.trim();
+  if(!raw) return;
+  const norm=sxiNorm(raw);
+  const turn=sxiCurrentTurn;
+
+  // Check starters
+  const si=sxiTeam.starters.findIndex((p,i)=>{
+    if(sxiFoundStarters.some(f=>f.idx===i)) return false;
+    return p.aliases.some(a=>sxiNorm(a)===norm);
+  });
+  if(si>=0){
+    sxiFoundStarters.push({idx:si, by:turn});
+    sxiScores[turn]++;
+    const colorClass=sxiMode===2?(turn===0?'filled-p1':'filled-p2'):'filled-solo';
+    const dot=document.getElementById('sxiDot'+si);
+    dot.classList.add(colorClass);
+    dot.querySelector('.sxi-pos-dot').textContent=sxiTeam.starters[si].pos;
+    const nameEl=dot.querySelector('.sxi-pos-name');
+    nameEl.textContent=sxiTeam.starters[si].short;
+    nameEl.style.display='block';
+    document.getElementById('sxiInputWrap').classList.add('correct');
+    document.getElementById('sxiStatus').textContent=`✓ ${sxiTeam.starters[si].name}`;
+    playTick();
+    input.value='';
+    setTimeout(()=>{
+      document.getElementById('sxiInputWrap').classList.remove('correct');
+      document.getElementById('sxiStatus').textContent='';
+    },800);
+    if(sxiMode===2){ sxiCurrentTurn=1-sxiCurrentTurn; }
+    sxiRenderHUD();
+    if(sxiFoundStarters.length===sxiTeam.starters.length) { sxiEndGame(false); return; }
+    return;
+  }
+
+  // Check subs
+  const subi=sxiTeam.subs.findIndex((s,i)=>{
+    if(sxiFoundSubs.some(f=>f.idx===i)) return false;
+    return s.aliases.some(a=>sxiNorm(a)===norm);
+  });
+  if(subi>=0){
+    sxiFoundSubs.push({idx:subi, by:turn});
+    const colorClass=sxiMode===2?(turn===0?'filled-p1':'filled-p2'):'filled-solo';
+    const slot=document.getElementById('sxiSub'+subi);
+    slot.className='sxi-bench-slot '+colorClass;
+    slot.textContent=sxiTeam.subs[subi].name;
+    document.getElementById('sxiInputWrap').classList.add('correct');
+    document.getElementById('sxiStatus').textContent=`✓ ${sxiTeam.subs[subi].name} (sub)`;
+    playTick();
+    input.value='';
+    setTimeout(()=>{
+      document.getElementById('sxiInputWrap').classList.remove('correct');
+      document.getElementById('sxiStatus').textContent='';
+    },800);
+    if(sxiMode===2){ sxiCurrentTurn=1-sxiCurrentTurn; }
+    sxiRenderHUD();
+    return;
+  }
+
+  // Wrong answer
+  playWrong();
+  sxiLives[turn]--;
+  document.getElementById('sxiInputWrap').classList.add('wrong');
+  document.getElementById('sxiStatus').textContent='Not in this team';
+  input.select();
+  setTimeout(()=>{
+    document.getElementById('sxiInputWrap').classList.remove('wrong');
+    document.getElementById('sxiStatus').textContent='';
+  },700);
+  sxiRenderHUD();
+  if(sxiLives[turn]<=0){ sxiEndGame(true); return; }
+  if(sxiMode===2){ sxiCurrentTurn=1-sxiCurrentTurn; sxiRenderHUD(); }
+}
+
+function sxiCompete(){
+  alert('Compete mode coming soon! 🏆');
+}
+
+function sxiGiveUp(){
+  if(!sxiRunning) return;
+  sxiEndGame(true);
+}
+
+function sxiEndGame(outOfLives){
+  sxiRunning=false;
+  document.getElementById('sxiGame').style.display='none';
+  // Reveal missing starters on pitch briefly — show all
+  sxiTeam.starters.forEach((p,i)=>{
+    if(!sxiFoundStarters.some(f=>f.idx===i)){
+      const dot=document.getElementById('sxiDot'+i);
+      if(dot){
+        dot.querySelector('.sxi-pos-dot').style.borderColor='#333';
+        const nameEl=dot.querySelector('.sxi-pos-name');
+        nameEl.textContent=p.short;
+        nameEl.style.display='block';
+        nameEl.style.color='#555';
+      }
+    }
+  });
+  // Build end screen
+  const total=sxiTeam.starters.length;
+  const found1=sxiFoundStarters.filter(f=>f.by===0).length;
+  const found2=sxiFoundStarters.filter(f=>f.by===1).length;
+  const totalFound=sxiFoundStarters.length;
+  const stars=totalFound===total?3:totalFound>=8?2:totalFound>=5?1:0;
+  const starStr='⭐'.repeat(stars)+'☆'.repeat(3-stars);
+  let html='<div class="sxi-end-card">';
+  if(sxiMode===1){
+    html+=`<div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#fff;letter-spacing:2px;">${totalFound}/${total}</div>`;
+    html+=`<div class="sxi-stars">${starStr}</div>`;
+    html+=`<div style="color:#555;font-size:0.78rem;margin-bottom:20px;">${sxiTeam.flag} ${sxiTeam.name} ${sxiTeam.year}</div>`;
+    if(totalFound===total) html+=`<div style="color:#4ade80;font-weight:700;margin-bottom:14px;">All 11 named! 🎉</div>`;
+  } else {
+    const winner=found1>found2?sxiP1:found2>found1?sxiP2:'Draw';
+    const winColor=found1>found2?'#FFD700':found2>found1?'#60a5fa':'#aaa';
+    html+=`<div style="font-family:'Anton',sans-serif;font-size:1.8rem;color:${winColor};letter-spacing:2px;margin-bottom:6px;">${winner==='Draw'?'DRAW':winner+' WINS'}</div>`;
+    html+=`<div style="display:flex;gap:20px;justify-content:center;margin:16px 0;">
+      <div><div style="font-size:0.6rem;font-weight:700;color:#555;letter-spacing:2px;margin-bottom:4px;">${sxiP1}</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#FFD700;">${found1}</div></div>
+      <div style="color:#333;font-size:1.5rem;padding-top:10px;">vs</div>
+      <div><div style="font-size:0.6rem;font-weight:700;color:#555;letter-spacing:2px;margin-bottom:4px;">${sxiP2}</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#60a5fa;">${found2}</div></div>
+    </div>`;
+  }
+  // Missing players
+  const missed=sxiTeam.starters.filter((_,i)=>!sxiFoundStarters.some(f=>f.idx===i));
+  if(missed.length){
+    html+=`<div style="font-size:0.6rem;font-weight:700;color:#333;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Missed</div>`;
+    html+=`<div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:16px;">`;
+    html+=missed.map(p=>`<span style="background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.25);border-radius:7px;padding:4px 10px;font-size:0.7rem;color:#f87171;">${p.name}</span>`).join('');
+    html+='</div>';
+  }
+  html+=`<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:6px;">
+    <button onclick="sxiCompete()" style="background:var(--gold);color:#000;border:none;padding:14px 36px;border-radius:12px;font-family:'Anton',sans-serif;font-size:1.1rem;letter-spacing:2px;cursor:pointer;">COMPETE</button>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px;">
+    <button onclick="sxiShowTeamSelect()" style="background:none;border:1px solid #333;color:#aaa;padding:10px 20px;border-radius:10px;font-family:inherit;font-size:0.78rem;cursor:pointer;">Choose Team</button>
+    <button onclick="showLanding()" style="background:none;border:1px solid #222;color:#555;padding:10px 20px;border-radius:10px;font-family:inherit;font-size:0.78rem;cursor:pointer;">Home</button>
+  </div>
+  <button onclick="sxiBegin()" style="position:absolute;top:12px;right:12px;background:#4ade80;color:#000;border:none;padding:6px 12px;border-radius:8px;font-family:inherit;font-weight:800;font-size:0.68rem;cursor:pointer;letter-spacing:1px;">↺ Again</button>
+  </div>`;
+  const endEl=document.getElementById('sxiEnd');
+  endEl.innerHTML=html;
+  endEl.style.display='block';
+  // Show game area again briefly so pitch is visible behind? No — just show end screen
+  document.getElementById('sxiGame').style.display='none';
+}
 
 </script>
 </body>
