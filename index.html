@@ -864,6 +864,14 @@ body::before{display:none;}
     </div>
     <div class="eg-cat-arrow">›</div>
   </div>
+  <div class="eg-category-card" onmouseenter="playTick()" onclick="startElGrande('hundred_million')">
+    <div class="eg-cat-icon">💰</div>
+    <div>
+      <div class="eg-cat-label">€100M Club</div>
+      <div class="eg-cat-desc">Name every player transferred for €100M or more · 19 players</div>
+    </div>
+    <div class="eg-cat-arrow">›</div>
+  </div>
   <div class="eg-category-card" style="border-color:rgba(255,215,0,0.2);background:rgba(255,215,0,0.03);" onclick="openSlotMachine('eg')">
     <div class="eg-cat-icon">🎰</div>
     <div>
@@ -1353,6 +1361,32 @@ const EG_DATASETS = {
       {name:'Lionel Messi',           aliases:['messi','leo messi','la pulga','leo','goat'],         year:2022},
       {name:'Ángel Di María',         aliases:['di maria','angel di maria','el fideo','fideo','angel di maria'],year:2022},
     ]
+  },
+
+  hundred_million: {
+    title: '€100M Club',
+    missingLabel: 'transfers',
+    players: [
+      {name:'Neymar',            aliases:['neymar jr','neymar da silva'],           from:'Barcelona',       to:'PSG',             fee:'€222m', year:2017},
+      {name:'Kylian Mbappé',     aliases:['mbappe','kylian mbappe','km7'],          from:'Monaco',          to:'PSG',             fee:'€180m', year:2018},
+      {name:'Alexander Isak',    aliases:['isak'],                                  from:'Newcastle',       to:'Liverpool',       fee:'€147m', year:2025},
+      {name:'João Félix',        aliases:['joao felix','felix','joao felix'],        from:'Benfica',         to:'Atlético Madrid', fee:'€126m', year:2019},
+      {name:'Enzo Fernández',    aliases:['enzo fernandez','enzo'],                  from:'Benfica',         to:'Chelsea',         fee:'€121m', year:2023},
+      {name:'Antoine Griezmann', aliases:['griezmann','grizou'],                    from:'Atlético Madrid', to:'Barcelona',       fee:'€120m', year:2019},
+      {name:'Philippe Coutinho', aliases:['coutinho','phil coutinho'],              from:'Liverpool',       to:'Barcelona',       fee:'€118m', year:2018},
+      {name:'Jack Grealish',     aliases:['grealish'],                              from:'Aston Villa',     to:'Man City',        fee:'€118m', year:2021},
+      {name:'Florian Wirtz',     aliases:['wirtz'],                                 from:'Leverkusen',      to:'Liverpool',       fee:'€117m', year:2025},
+      {name:'Declan Rice',       aliases:['rice'],                                  from:'West Ham',        to:'Arsenal',         fee:'€116m', year:2023},
+      {name:'Moisés Caicedo',    aliases:['caicedo','moises caicedo'],              from:'Brighton',        to:'Chelsea',         fee:'€116m', year:2023},
+      {name:'Romelu Lukaku',     aliases:['lukaku','big rom'],                      from:'Inter Milan',     to:'Chelsea',         fee:'€115m', year:2021},
+      {name:'Ousmane Dembélé',   aliases:['dembele','dembélé','ousmane dembele'],   from:'Dortmund',        to:'Barcelona',       fee:'€105m', year:2017},
+      {name:'Paul Pogba',        aliases:['pogba','la pioche'],                     from:'Juventus',        to:'Man United',      fee:'€105m', year:2016},
+      {name:'Jude Bellingham',   aliases:['bellingham'],                            from:'Dortmund',        to:'Real Madrid',     fee:'€103m', year:2023},
+      {name:'Eden Hazard',       aliases:['hazard'],                                from:'Chelsea',         to:'Real Madrid',     fee:'€100m', year:2019},
+      {name:'Cristiano Ronaldo', aliases:['ronaldo','cr7','cristiano'],             from:'Real Madrid',     to:'Juventus',        fee:'€100m', year:2018},
+      {name:'Harry Kane',        aliases:['kane'],                                  from:'Tottenham',       to:'Bayern Munich',   fee:'€100m', year:2023},
+      {name:'Gareth Bale',       aliases:['bale'],                                  from:'Tottenham',       to:'Real Madrid',     fee:'€100m', year:2013},
+    ]
   }
 };
 
@@ -1363,7 +1397,7 @@ let egPlayerCount = 2; // 1 or 2
 const EG_TIME = 30;
 const CIRCUMFERENCE = 226;
 
-const EG_CAT_ICONS = {cl_scorers:'🏆',wc_countries:'🌍',wc_semifinalists:'🏅',wc_final_scorers:'🥇'};
+const EG_CAT_ICONS = {cl_scorers:'🏆',wc_countries:'🌍',wc_semifinalists:'🏅',wc_final_scorers:'🥇',hundred_million:'💰'};
 const HOL_SLOT_CATS = [
   {key:'career_goals', label:'Career Goals',        img:'career goals image.png'},
   {key:'assists',      label:'Assists',              img:'assists category image.png'},
@@ -1377,6 +1411,7 @@ const EG_SLOT_CATS = [
   {key:'wc_countries',     label:'Countries at the World Cup',         icon:'🌍'},
   {key:'wc_semifinalists', label:'World Cup Semi-Finalists',           icon:'🏅'},
   {key:'wc_final_scorers', label:'World Cup Final Goalscorers',        icon:'🥇'},
+  {key:'hundred_million',  label:'€100M Club',                        icon:'💰'},
 ];
 
 // ── SLOT MACHINE ──────────────────────────────────────────────────────────────
@@ -1671,7 +1706,12 @@ function addEgChip(name, player){
   const chip = document.createElement('div');
   chip.className = `eg-named-chip p${player}`;
   chip.dataset.canonical = name.toLowerCase();
-  chip.textContent = name;
+  const pd = egDataset.players.find(p=>p.name===name);
+  if(pd && pd.fee){
+    chip.innerHTML = `${name}<div style="font-size:0.6rem;opacity:0.65;margin-top:2px;font-family:inherit;letter-spacing:0;">${pd.fee} · ${pd.from} → ${pd.to}</div>`;
+  } else {
+    chip.textContent = name;
+  }
   list.appendChild(chip);
   list.scrollTop = list.scrollHeight;
 }
@@ -1730,7 +1770,7 @@ function egShowMissing(){
   if(btn) btn.style.display='none';
   const section = document.createElement('div');
   section.className = 'eg-missing-section';
-  section.innerHTML = `<div class="eg-missing-label">Not named — ${missing.length} missing</div><div class="eg-missing-chips">${missing.map(p=>`<div class="eg-named-chip eg-missed">${p.name}</div>`).join('')}</div>`;
+  section.innerHTML = `<div class="eg-missing-label">Not named — ${missing.length} missing</div><div class="eg-missing-chips">${missing.map(p=>`<div class="eg-named-chip eg-missed">${p.fee?`${p.name}<div style="font-size:0.6rem;opacity:0.65;margin-top:2px;font-family:inherit;letter-spacing:0;">${p.fee} · ${p.from} → ${p.to}</div>`:p.name}</div>`).join('')}</div>`;
   document.getElementById('egGameover').appendChild(section);
 }
 
