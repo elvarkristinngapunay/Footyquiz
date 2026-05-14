@@ -657,7 +657,7 @@ body::before{display:none;}
 .hol-rand-sub{font-size:0.72rem;color:#555;display:block;margin-top:1px;}
 
 /* ── MODE CHOICE OVERLAY ── */
-#egModeChoice{position:fixed;inset:0;z-index:450;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;}
+#egModeChoice,#sxiModeChoice{position:fixed;inset:0;z-index:450;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;}
 .eg-mc-icon{font-size:3rem;margin-bottom:10px;}
 .eg-mc-title{font-family:'Anton',sans-serif;font-size:clamp(1.5rem,6vw,2.4rem);color:#fff;line-height:1.15;margin-bottom:28px;max-width:340px;}
 .eg-mc-how{font-size:0.65rem;color:#444;letter-spacing:3px;margin-bottom:16px;text-transform:uppercase;}
@@ -1016,10 +1016,6 @@ body::before{display:none;}
     <div class="sxi-title-pre">WELCOME TO</div>
     <div class="sxi-title">Starting <span style="color:var(--gold)">XI</span></div>
     <div class="sxi-sub">Name the starting 11 from iconic winning teams</div>
-    <div class="sxi-mode-row">
-      <button class="sxi-mode-btn p1 active" id="sxiBtn1p" onclick="sxiSetMode(1)">1 Player</button>
-      <button class="sxi-mode-btn p2" id="sxiBtn2p" onclick="sxiSetMode(2)">2 Players</button>
-    </div>
 
     <!-- Category Picker -->
     <div id="sxiCatPicker">
@@ -1062,7 +1058,7 @@ body::before{display:none;}
       <input id="sxiP2Name" class="sxi-ne-input p2" placeholder="Player 2 name" />
     </div>
     <button onclick="sxiConfirmNames()" style="background:#4ade80;color:#000;border:none;padding:14px 36px;border-radius:12px;font-family:inherit;font-weight:800;font-size:0.9rem;cursor:pointer;letter-spacing:1px;">Kick Off →</button>
-    <br><button onclick="sxiShowTeamSelect()" style="margin-top:16px;background:none;border:none;color:#444;font-size:0.78rem;cursor:pointer;font-family:inherit;">← Back</button>
+    <br><button onclick="document.getElementById('sxiNameEntry').style.display='none';document.getElementById('sxiModeChoice').style.display='flex';setBackBtn('← Back',sxiModeBack);" style="margin-top:16px;background:none;border:none;color:#444;font-size:0.78rem;cursor:pointer;font-family:inherit;">← Back</button>
   </div>
 
   <!-- Game Area -->
@@ -1160,6 +1156,25 @@ body::before{display:none;}
   </div>
 </div>
 
+<!-- STARTING XI MODE CHOICE -->
+<div id="sxiModeChoice">
+  <div class="eg-mc-icon" id="sxiMcIcon"></div>
+  <div class="eg-mc-title" id="sxiMcTitle"></div>
+  <div class="eg-mc-how">HOW MANY PLAYERS?</div>
+  <div class="eg-mc-btns">
+    <button class="eg-mc-btn" onclick="sxiChooseMode(1)">
+      <div class="eg-mc-bi">🙋</div>
+      <div class="eg-mc-bl">1 Player</div>
+      <div class="eg-mc-bs">Solo challenge</div>
+    </button>
+    <button class="eg-mc-btn" onclick="sxiChooseMode(2)">
+      <div class="eg-mc-bi">👥</div>
+      <div class="eg-mc-bl">2 Players</div>
+      <div class="eg-mc-bs">Head to head</div>
+    </button>
+  </div>
+</div>
+
 <!-- NAME ENTRY OVERLAY -->
 <div id="egNameEntry">
   <div class="eg-ne-title">Name Your Teams</div>
@@ -1207,7 +1222,7 @@ function setBg(hol, fade){
   }
 }
 function closeAllOverlays(){
-  ['gameWelcomeOverlay','slotMachineOverlay','egModeChoice','egNameEntry','egCountdownOverlay'].forEach(id=>{
+  ['gameWelcomeOverlay','slotMachineOverlay','egModeChoice','egNameEntry','egCountdownOverlay','sxiModeChoice'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
 }
@@ -4568,6 +4583,7 @@ let sxiActiveCategory=null;
 function sxiShowTeamSelect(){
   document.getElementById('sxiTeamSelect').style.display='block';
   document.getElementById('sxiNameEntry').style.display='none';
+  document.getElementById('sxiModeChoice').style.display='none';
   document.getElementById('sxiGame').style.display='none';
   document.getElementById('sxiEnd').style.display='none';
   document.getElementById('sxiTrophyWC').src=TROPHY_IMGS['World Cup']||'';
@@ -4611,14 +4627,35 @@ function sxiRenderTeamGrid(){
 function sxiPickTeam(id){
   sxiTeam=SXI_TEAMS.find(t=>t.id===id);
   if(!sxiTeam) return;
-  if(sxiMode===2){
+  // Show mode choice overlay (same as FUP flow)
+  document.getElementById('sxiMcIcon').textContent=sxiTeam.flag||'🏆';
+  document.getElementById('sxiMcTitle').textContent=`${sxiTeam.name} ${sxiTeam.year}`;
+  document.getElementById('sxiModeChoice').style.display='flex';
+  setBackBtn('← Back', sxiModeBack);
+}
+
+function sxiModeBack(){
+  document.getElementById('sxiModeChoice').style.display='none';
+  setBackBtn('← Back Home', showLanding);
+}
+
+function sxiChooseMode(n){
+  sxiMode=n;
+  document.getElementById('sxiModeChoice').style.display='none';
+  if(n===1){
+    sxiP1='You'; sxiP2='';
+    setBackBtn(null);
+    sxiBegin();
+  } else {
     document.getElementById('sxiNETeam').textContent=`${sxiTeam.flag} ${sxiTeam.name} ${sxiTeam.year} · ${sxiTeam.formation}`;
     document.getElementById('sxiTeamSelect').style.display='none';
     document.getElementById('sxiNameEntry').style.display='block';
+    setBackBtn('← Back', ()=>{
+      document.getElementById('sxiNameEntry').style.display='none';
+      document.getElementById('sxiModeChoice').style.display='flex';
+      setBackBtn('← Back', sxiModeBack);
+    });
     setTimeout(()=>document.getElementById('sxiP1Name').focus(),100);
-  } else {
-    sxiP1='You'; sxiP2='';
-    sxiBegin();
   }
 }
 
