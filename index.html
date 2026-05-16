@@ -1039,7 +1039,7 @@ body::before{display:none;}
         <div class="sxi-cat-card" onclick="sxiPickCategory('Copa América Final')">
           <img class="sxi-cat-trophy" src="" id="sxiTrophyCopa" alt="">
           <div class="sxi-cat-name">Copa América</div>
-          <div class="sxi-cat-count">2 teams</div>
+          <div class="sxi-cat-count">14 teams</div>
         </div>
       </div>
     </div>
@@ -4574,51 +4574,305 @@ const SXI_TEAMS = [
 
   // ── Copa América Finals ──────────────────────────────────────────────────────
   {
-    id:'arg-2021', name:'Argentina', year:2021, flag:'🇦🇷',
-    tournament:'Copa América Final', opponent:'Brazil', score:'1-0', formation:'4-3-3',
-    starters:[
-      {name:'Emiliano Martínez',  short:'E. Martínez', pos:'GK',  x:50, y:85, aliases:['emiliano martinez','martinez','dibu','dibu martinez']},
-      {name:'Gonzalo Montiel',    short:'Montiel',      pos:'RB',  x:78, y:70, aliases:['montiel','gonzalo montiel']},
-      {name:'Cristian Romero',   short:'Romero',        pos:'CB',  x:62, y:70, aliases:['cristian romero','cuti romero','romero']},
-      {name:'Nicolás Otamendi',  short:'Otamendi',      pos:'CB',  x:38, y:70, aliases:['otamendi','nicolas otamendi']},
-      {name:'Marcos Acuña',      short:'Acuña',         pos:'LB',  x:22, y:70, aliases:['acuna','marcos acuna']},
-      {name:'Guido Rodríguez',   short:'G. Rodríguez',  pos:'CDM', x:62, y:55, aliases:['guido rodriguez','guido']},
-      {name:'Rodrigo De Paul',   short:'De Paul',       pos:'CM',  x:50, y:55, aliases:['de paul','rodrigo de paul','depaul']},
-      {name:'Leandro Paredes',   short:'Paredes',       pos:'CM',  x:38, y:55, aliases:['paredes','leandro paredes']},
-      {name:'Ángel Di María',    short:'Di María',      pos:'RW',  x:75, y:35, aliases:['di maria','angel di maria','fideo']},
-      {name:'Lautaro Martínez',  short:'Lautaro',       pos:'ST',  x:50, y:20, aliases:['lautaro','lautaro martinez']},
-      {name:'Lionel Messi',      short:'Messi',         pos:'LW',  x:25, y:35, aliases:['messi','leo messi','lionel messi']},
-    ],
-    subs:[
-      {name:'Nicolás González', aliases:['nicolas gonzalez','n. gonzalez']},
-      {name:'Giovani Lo Celso', aliases:['lo celso','giovani lo celso']},
-      {name:'Nicolás Tagliafico', aliases:['tagliafico','nicolas tagliafico']},
-      {name:'Nahuel Molina', aliases:['molina','nahuel molina']},
-    ]
-  },
-  {
-    id:'arg-2024', name:'Argentina', year:2024, flag:'🇦🇷',
-    tournament:'Copa América Final', opponent:'Colombia', score:'1-0 aet', formation:'4-4-2',
-    starters:[
-      {name:'Emiliano Martínez',  short:'E. Martínez', pos:'GK',  x:50, y:85, aliases:['emiliano martinez','martinez','dibu','dibu martinez']},
-      {name:'Gonzalo Montiel',    short:'Montiel',      pos:'RB',  x:78, y:70, aliases:['montiel','gonzalo montiel']},
-      {name:'Cristian Romero',   short:'Romero',        pos:'CB',  x:62, y:70, aliases:['cristian romero','cuti romero','romero']},
-      {name:'Lisandro Martínez', short:'L. Martínez',  pos:'CB',  x:38, y:70, aliases:['lisandro martinez','lisandro']},
-      {name:'Nicolás Tagliafico',short:'Tagliafico',    pos:'LB',  x:22, y:70, aliases:['tagliafico','nicolas tagliafico']},
-      {name:'Rodrigo De Paul',   short:'De Paul',       pos:'RM',  x:75, y:50, aliases:['de paul','rodrigo de paul','depaul']},
-      {name:'Alexis Mac Allister',short:'Mac Allister', pos:'CM',  x:62, y:55, aliases:['mac allister','alexis mac allister','macallister']},
-      {name:'Leandro Paredes',   short:'Paredes',       pos:'CM',  x:38, y:55, aliases:['paredes','leandro paredes']},
-      {name:'Lionel Messi',      short:'Messi',         pos:'LM',  x:25, y:50, aliases:['messi','leo messi','lionel messi']},
-      {name:'Lautaro Martínez',  short:'Lautaro',       pos:'ST',  x:62, y:25, aliases:['lautaro','lautaro martinez']},
-      {name:'Julián Álvarez',    short:'J. Álvarez',    pos:'ST',  x:38, y:25, aliases:['julian alvarez','alvarez']},
-    ],
-    subs:[
-      {name:'Ángel Di María', aliases:['di maria','angel di maria','fideo']},
-      {name:'Nicolás González', aliases:['nicolas gonzalez','n. gonzalez']},
-      {name:'Giovani Lo Celso', aliases:['lo celso','giovani lo celso']},
-      {name:'Nahuel Molina', aliases:['molina','nahuel molina']},
-    ]
-  },
+  id:'argentina-1991-ca', name:'Argentina', year:1991, flag:'🇦🇷',
+  tournament:'Copa América Final', opponent:'Brazil', score:'3-2', formation:'4-4-2',
+  starters:[
+    {name:'Sergio Goycochea', short:'Goycochea', pos:'GK', x:50, y:85, aliases:['goycochea','sergio goycochea']},
+    {name:'Sergio Vázquez', short:'Vázquez', pos:'RB', x:78, y:70, aliases:['vazquez','sergio vazquez']},
+    {name:'Oscar Ruggeri', short:'Ruggeri', pos:'CB', x:62, y:70, aliases:['ruggeri','oscar ruggeri']},
+    {name:'Fabián Basualdo', short:'Basualdo', pos:'CB', x:38, y:70, aliases:['basualdo','fabian basualdo']},
+    {name:'Carlos Enrique', short:'Enrique', pos:'LB', x:22, y:70, aliases:['enrique','carlos enrique']},
+    {name:'Leonardo Rodríguez', short:'Rodríguez', pos:'RM', x:78, y:54, aliases:['rodriguez','leonardo rodriguez']},
+    {name:'Diego Simeone', short:'Simeone', pos:'CM', x:62, y:54, aliases:['simeone','diego simeone']},
+    {name:'Darío Franco', short:'Franco', pos:'CM', x:38, y:54, aliases:['franco','dario franco']},
+    {name:'Leonardo Astrada', short:'Astrada', pos:'LM', x:22, y:54, aliases:['astrada','leonardo astrada']},
+    {name:'Claudio Caniggia', short:'Caniggia', pos:'ST', x:62, y:25, aliases:['caniggia','claudio caniggia']},
+    {name:'Gabriel Batistuta', short:'Batistuta', pos:'ST', x:38, y:25, aliases:['batistuta','gabriel batistuta','batigol']},
+  ],
+  subs:[
+    {name:'Blas Giunta', aliases:['giunta','blas giunta']},
+  ]
+},
+{
+  id:'argentina-1993-ca', name:'Argentina', year:1993, flag:'🇦🇷',
+  tournament:'Copa América Final', opponent:'Mexico', score:'2-1', formation:'4-3-3',
+  starters:[
+    {name:'Sergio Goycochea', short:'Goycochea', pos:'GK', x:50, y:85, aliases:['goycochea','sergio goycochea']},
+    {name:'Fabián Basualdo', short:'Basualdo', pos:'RB', x:78, y:70, aliases:['basualdo','fabian basualdo']},
+    {name:'Oscar Ruggeri', short:'Ruggeri', pos:'CB', x:62, y:70, aliases:['ruggeri','oscar ruggeri']},
+    {name:'Jorge Borelli', short:'Borelli', pos:'CB', x:38, y:70, aliases:['borelli','jorge borelli']},
+    {name:'Ricardo Altamirano', short:'Altamirano', pos:'LB', x:22, y:70, aliases:['altamirano','ricardo altamirano']},
+    {name:'Diego Simeone', short:'Simeone', pos:'CM', x:65, y:52, aliases:['simeone','diego simeone']},
+    {name:'Fernando Redondo', short:'Redondo', pos:'CM', x:50, y:52, aliases:['redondo','fernando redondo']},
+    {name:'Gustavo Zapata', short:'Zapata', pos:'CM', x:35, y:52, aliases:['zapata','gustavo zapata']},
+    {name:'Néstor Gorosito', short:'Gorosito', pos:'RW', x:75, y:25, aliases:['gorosito','nestor gorosito']},
+    {name:'Alberto Acosta', short:'Acosta', pos:'ST', x:50, y:20, aliases:['acosta','alberto acosta','beto acosta']},
+    {name:'Gabriel Batistuta', short:'Batistuta', pos:'LW', x:25, y:25, aliases:['batistuta','gabriel batistuta','batigol']},
+  ],
+  subs:[
+    {name:'Fernando Cáceres', aliases:['caceres','fernando caceres']},
+    {name:'Leonardo Rodríguez', aliases:['rodriguez','leonardo rodriguez']},
+  ]
+},
+{
+  id:'uruguay-1995-ca', name:'Uruguay', year:1995, flag:'🇺🇾',
+  tournament:'Copa América Final', opponent:'Brazil', score:'5-3 pens', formation:'4-3-3',
+  starters:[
+    {name:'Fernando Álvez', short:'Álvez', pos:'GK', x:50, y:85, aliases:['alvez','fernando alvez']},
+    {name:'Gustavo Méndez', short:'Méndez', pos:'RB', x:78, y:70, aliases:['mendez','gustavo mendez']},
+    {name:'José Herrera', short:'Herrera', pos:'CB', x:62, y:70, aliases:['herrera','jose herrera']},
+    {name:'Eber Moas', short:'Moas', pos:'CB', x:38, y:70, aliases:['moas','eber moas']},
+    {name:'Tabaré Silva', short:'T. Silva', pos:'LB', x:22, y:70, aliases:['tabare silva','t silva']},
+    {name:'Álvaro Gutiérrez', short:'Gutiérrez', pos:'CM', x:65, y:52, aliases:['gutierrez','alvaro gutierrez']},
+    {name:'Diego Dorta', short:'Dorta', pos:'CM', x:50, y:52, aliases:['dorta','diego dorta']},
+    {name:'Gus Poyet', short:'Poyet', pos:'CM', x:35, y:52, aliases:['poyet','gus poyet','gustavo poyet']},
+    {name:'Daniel Fonseca', short:'Fonseca', pos:'RW', x:75, y:25, aliases:['fonseca','daniel fonseca']},
+    {name:'Enzo Francescoli', short:'Francescoli', pos:'ST', x:50, y:20, aliases:['francescoli','enzo francescoli']},
+    {name:'Marcelo Otero', short:'Otero', pos:'LW', x:25, y:25, aliases:['otero','marcelo otero']},
+  ],
+  subs:[
+    {name:'Edgardo Adinolfi', aliases:['adinolfi','edgardo adinolfi']},
+    {name:'Pablo Bengoechea', aliases:['bengoechea','pablo bengoechea']},
+    {name:'Sergio Martínez', aliases:['sergio martinez']},
+  ]
+},
+{
+  id:'brazil-1997-ca', name:'Brazil', year:1997, flag:'🇧🇷',
+  tournament:'Copa América Final', opponent:'Bolivia', score:'3-1', formation:'4-3-3',
+  starters:[
+    {name:'Cláudio Taffarel', short:'Taffarel', pos:'GK', x:50, y:85, aliases:['taffarel','claudio taffarel']},
+    {name:'Cafu', short:'Cafu', pos:'RB', x:78, y:70, aliases:['cafu']},
+    {name:'Aldair', short:'Aldair', pos:'CB', x:62, y:70, aliases:['aldair']},
+    {name:'Marcelo Gonçalves', short:'Gonçalves', pos:'CB', x:38, y:70, aliases:['goncalves','marcelo goncalves']},
+    {name:'Roberto Carlos', short:'R. Carlos', pos:'LB', x:22, y:70, aliases:['roberto carlos']},
+    {name:'Dunga', short:'Dunga', pos:'CM', x:65, y:52, aliases:['dunga']},
+    {name:'Flávio Conceição', short:'Conceição', pos:'CM', x:50, y:52, aliases:['conceicao','flavio conceicao']},
+    {name:'Leonardo', short:'Leonardo', pos:'CM', x:35, y:52, aliases:['leonardo']},
+    {name:'Edmundo', short:'Edmundo', pos:'RW', x:75, y:25, aliases:['edmundo']},
+    {name:'Ronaldo', short:'Ronaldo', pos:'ST', x:50, y:20, aliases:['ronaldo','r9','ronaldo nazario']},
+    {name:'Denílson', short:'Denílson', pos:'LW', x:25, y:25, aliases:['denilson']},
+  ],
+  subs:[
+    {name:'Mauro Silva', aliases:['mauro silva']},
+    {name:'Paulo Nunes', aliases:['paulo nunes','nunes']},
+    {name:'Zé Roberto', aliases:['ze roberto']},
+  ]
+},
+{
+  id:'brazil-1999-ca', name:'Brazil', year:1999, flag:'🇧🇷',
+  tournament:'Copa América Final', opponent:'Uruguay', score:'3-0', formation:'4-3-3',
+  starters:[
+    {name:'Dida', short:'Dida', pos:'GK', x:50, y:85, aliases:['dida']},
+    {name:'Cafu', short:'Cafu', pos:'RB', x:78, y:70, aliases:['cafu']},
+    {name:'João Carlos', short:'J. Carlos', pos:'CB', x:62, y:70, aliases:['joao carlos']},
+    {name:'Antônio Carlos', short:'A. Carlos', pos:'CB', x:38, y:70, aliases:['antonio carlos']},
+    {name:'Roberto Carlos', short:'R. Carlos', pos:'LB', x:22, y:70, aliases:['roberto carlos']},
+    {name:'Flávio Conceição', short:'Conceição', pos:'CM', x:65, y:52, aliases:['conceicao','flavio conceicao']},
+    {name:'Emerson', short:'Emerson', pos:'CM', x:50, y:52, aliases:['emerson']},
+    {name:'Zé Roberto', short:'Zé Roberto', pos:'CM', x:35, y:52, aliases:['ze roberto']},
+    {name:'Rivaldo', short:'Rivaldo', pos:'RW', x:75, y:25, aliases:['rivaldo']},
+    {name:'Ronaldo', short:'Ronaldo', pos:'ST', x:50, y:20, aliases:['ronaldo','r9','ronaldo nazario']},
+    {name:'Márcio Amoroso', short:'Amoroso', pos:'LW', x:25, y:25, aliases:['amoroso','marcio amoroso']},
+  ],
+  subs:[],
+},
+{
+  id:'colombia-2001-ca', name:'Colombia', year:2001, flag:'🇨🇴',
+  tournament:'Copa América Final', opponent:'Mexico', score:'1-0', formation:'4-3-3',
+  starters:[
+    {name:'Óscar Córdoba', short:'Córdoba', pos:'GK', x:50, y:85, aliases:['cordoba','oscar cordoba']},
+    {name:'Iván López', short:'López', pos:'RB', x:78, y:70, aliases:['lopez','ivan lopez']},
+    {name:'Mario Yepes', short:'Yepes', pos:'CB', x:62, y:70, aliases:['yepes','mario yepes']},
+    {name:'Iván Córdoba', short:'I. Córdoba', pos:'CB', x:38, y:70, aliases:['ivan cordoba']},
+    {name:'Gerardo Bedoya', short:'Bedoya', pos:'LB', x:22, y:70, aliases:['bedoya','gerardo bedoya']},
+    {name:'Juan Carlos Ramírez', short:'Ramírez', pos:'CM', x:65, y:52, aliases:['ramirez','juan carlos ramirez']},
+    {name:'Fabián Vargas', short:'Vargas', pos:'CM', x:50, y:52, aliases:['vargas','fabian vargas']},
+    {name:'Freddy Grisales', short:'Grisales', pos:'CM', x:35, y:52, aliases:['grisales','freddy grisales']},
+    {name:'Giovanni Hernández', short:'Hernández', pos:'RW', x:75, y:25, aliases:['hernandez','giovanni hernandez']},
+    {name:'Víctor Aristizábal', short:'Aristizábal', pos:'ST', x:50, y:20, aliases:['aristizabal','victor aristizabal']},
+    {name:'Elkin Murillo', short:'Murillo', pos:'LW', x:25, y:25, aliases:['murillo','elkin murillo']},
+  ],
+  subs:[
+    {name:'Jairo Castillo', aliases:['castillo','jairo castillo']},
+    {name:'Mauricio Molina', aliases:['molina','mauricio molina']},
+  ]
+},
+{
+  id:'brazil-2004-ca', name:'Brazil', year:2004, flag:'🇧🇷',
+  tournament:'Copa América Final', opponent:'Argentina', score:'4-2 pens', formation:'4-3-3',
+  starters:[
+    {name:'Júlio César', short:'J. César', pos:'GK', x:50, y:85, aliases:['julio cesar']},
+    {name:'Maicon', short:'Maicon', pos:'RB', x:78, y:70, aliases:['maicon']},
+    {name:'Luisão', short:'Luisão', pos:'CB', x:62, y:70, aliases:['luisao']},
+    {name:'Juan', short:'Juan', pos:'CB', x:38, y:70, aliases:['juan']},
+    {name:'Gustavo Nery', short:'Nery', pos:'LB', x:22, y:70, aliases:['nery','gustavo nery']},
+    {name:'Kléberson', short:'Kléberson', pos:'CM', x:65, y:52, aliases:['kleberson']},
+    {name:'Renato', short:'Renato', pos:'CM', x:50, y:52, aliases:['renato']},
+    {name:'Edu', short:'Edu', pos:'CM', x:35, y:52, aliases:['edu']},
+    {name:'Alex', short:'Alex', pos:'RW', x:75, y:25, aliases:['alex']},
+    {name:'Adriano', short:'Adriano', pos:'ST', x:50, y:20, aliases:['adriano']},
+    {name:'Luís Fabiano', short:'L. Fabiano', pos:'LW', x:25, y:25, aliases:['luis fabiano','l fabiano']},
+  ],
+  subs:[
+    {name:'Diego', aliases:['diego']},
+    {name:'Felipe', aliases:['felipe']},
+    {name:'Cris', aliases:['cris']},
+  ]
+},
+{
+  id:'brazil-2007-ca', name:'Brazil', year:2007, flag:'🇧🇷',
+  tournament:'Copa América Final', opponent:'Argentina', score:'3-0', formation:'4-2-3-1',
+  starters:[
+    {name:'Doni', short:'Doni', pos:'GK', x:50, y:85, aliases:['doni']},
+    {name:'Maicon', short:'Maicon', pos:'RB', x:78, y:70, aliases:['maicon']},
+    {name:'Alex', short:'Alex', pos:'CB', x:62, y:70, aliases:['alex']},
+    {name:'Juan', short:'Juan', pos:'CB', x:38, y:70, aliases:['juan']},
+    {name:'Gilberto', short:'Gilberto', pos:'LB', x:22, y:70, aliases:['gilberto']},
+    {name:'Mineiro', short:'Mineiro', pos:'CDM', x:62, y:57, aliases:['mineiro']},
+    {name:'Josué', short:'Josué', pos:'CDM', x:38, y:57, aliases:['josue']},
+    {name:'Elano', short:'Elano', pos:'RAM', x:72, y:40, aliases:['elano']},
+    {name:'Júlio Baptista', short:'Baptista', pos:'CAM', x:50, y:40, aliases:['baptista','julio baptista']},
+    {name:'Robinho', short:'Robinho', pos:'LAM', x:28, y:40, aliases:['robinho']},
+    {name:'Vágner Love', short:'Vágner Love', pos:'ST', x:50, y:20, aliases:['vagner love','vagner']},
+  ],
+  subs:[
+    {name:'Dani Alves', aliases:['dani alves','alves']},
+    {name:'Fernando', aliases:['fernando']},
+    {name:'Diego', aliases:['diego']},
+  ]
+},
+{
+  id:'uruguay-2011-ca', name:'Uruguay', year:2011, flag:'🇺🇾',
+  tournament:'Copa América Final', opponent:'Paraguay', score:'3-0', formation:'4-4-2',
+  starters:[
+    {name:'Fernando Muslera', short:'Muslera', pos:'GK', x:50, y:85, aliases:['muslera','fernando muslera']},
+    {name:'Maxi Pereira', short:'M. Pereira', pos:'RB', x:78, y:70, aliases:['maxi pereira','pereira']},
+    {name:'Diego Lugano', short:'Lugano', pos:'CB', x:62, y:70, aliases:['lugano','diego lugano']},
+    {name:'Sebastián Coates', short:'Coates', pos:'CB', x:38, y:70, aliases:['coates','sebastian coates']},
+    {name:'Martín Cáceres', short:'M. Cáceres', pos:'LB', x:22, y:70, aliases:['caceres','martin caceres']},
+    {name:'Álvaro González', short:'González', pos:'RM', x:78, y:54, aliases:['gonzalez','alvaro gonzalez']},
+    {name:'Diego Pérez', short:'Pérez', pos:'CM', x:62, y:54, aliases:['perez','diego perez']},
+    {name:'Egidio Arévalo Ríos', short:'Arévalo', pos:'CM', x:38, y:54, aliases:['arevalo','egidio arevalo','arevalo rios']},
+    {name:'Álvaro Pereira', short:'Á. Pereira', pos:'LM', x:22, y:54, aliases:['alvaro pereira','a pereira']},
+    {name:'Luis Suárez', short:'Suárez', pos:'ST', x:62, y:25, aliases:['suarez','luis suarez']},
+    {name:'Diego Forlán', short:'Forlán', pos:'ST', x:38, y:25, aliases:['forlan','diego forlan']},
+  ],
+  subs:[
+    {name:'Edinson Cavani', aliases:['cavani','edinson cavani']},
+    {name:'Sebastián Eguren', aliases:['eguren','sebastian eguren']},
+    {name:'Diego Godín', aliases:['godin','diego godin']},
+  ]
+},
+{
+  id:'chile-2015-ca', name:'Chile', year:2015, flag:'🇨🇱',
+  tournament:'Copa América Final', opponent:'Argentina', score:'4-1 pens', formation:'4-3-3',
+  starters:[
+    {name:'Claudio Bravo', short:'Bravo', pos:'GK', x:50, y:85, aliases:['bravo','claudio bravo']},
+    {name:'Mauricio Isla', short:'Isla', pos:'RB', x:78, y:70, aliases:['isla','mauricio isla']},
+    {name:'Gary Medel', short:'Medel', pos:'CB', x:62, y:70, aliases:['medel','gary medel']},
+    {name:'Francisco Silva', short:'Silva', pos:'CB', x:38, y:70, aliases:['silva','francisco silva']},
+    {name:'Jean Beausejour', short:'Beausejour', pos:'LB', x:22, y:70, aliases:['beausejour','jean beausejour']},
+    {name:'Arturo Vidal', short:'Vidal', pos:'CM', x:65, y:52, aliases:['vidal','arturo vidal']},
+    {name:'Charles Aránguiz', short:'Aránguiz', pos:'CM', x:50, y:52, aliases:['aranguiz','charles aranguiz']},
+    {name:'Marcelo Díaz', short:'Díaz', pos:'CM', x:35, y:52, aliases:['diaz','marcelo diaz']},
+    {name:'Jorge Valdivia', short:'Valdivia', pos:'RW', x:75, y:25, aliases:['valdivia','jorge valdivia']},
+    {name:'Eduardo Vargas', short:'Vargas', pos:'ST', x:50, y:20, aliases:['vargas','eduardo vargas']},
+    {name:'Alexis Sánchez', short:'Sánchez', pos:'LW', x:25, y:25, aliases:['sanchez','alexis sanchez']},
+  ],
+  subs:[
+    {name:'Matías Fernández', aliases:['fernandez','matias fernandez']},
+    {name:'Ángelo Henríquez', aliases:['henriquez','angelo henriquez']},
+  ]
+},
+{
+  id:'chile-2016-ca', name:'Chile', year:2016, flag:'🇨🇱',
+  tournament:'Copa América Final', opponent:'Argentina', score:'4-2 pens', formation:'4-2-3-1',
+  starters:[
+    {name:'Claudio Bravo', short:'Bravo', pos:'GK', x:50, y:85, aliases:['bravo','claudio bravo']},
+    {name:'Mauricio Isla', short:'Isla', pos:'RB', x:78, y:70, aliases:['isla','mauricio isla']},
+    {name:'Gonzalo Jara', short:'Jara', pos:'CB', x:62, y:70, aliases:['jara','gonzalo jara']},
+    {name:'Gary Medel', short:'Medel', pos:'CB', x:38, y:70, aliases:['medel','gary medel']},
+    {name:'Jean Beausejour', short:'Beausejour', pos:'LB', x:22, y:70, aliases:['beausejour','jean beausejour']},
+    {name:'Marcelo Díaz', short:'Díaz', pos:'CDM', x:62, y:57, aliases:['diaz','marcelo diaz']},
+    {name:'Arturo Vidal', short:'Vidal', pos:'CDM', x:38, y:57, aliases:['vidal','arturo vidal']},
+    {name:'José Pedro Fuenzalida', short:'Fuenzalida', pos:'RAM', x:72, y:40, aliases:['fuenzalida','jose pedro fuenzalida']},
+    {name:'Charles Aránguiz', short:'Aránguiz', pos:'CAM', x:50, y:40, aliases:['aranguiz','charles aranguiz']},
+    {name:'Alexis Sánchez', short:'Sánchez', pos:'LAM', x:28, y:40, aliases:['sanchez','alexis sanchez']},
+    {name:'Eduardo Vargas', short:'Vargas', pos:'ST', x:50, y:20, aliases:['vargas','eduardo vargas']},
+  ],
+  subs:[
+    {name:'Edson Puch', aliases:['puch','edson puch']},
+    {name:'Francisco Silva', aliases:['francisco silva']},
+    {name:'Nicolás Castillo', aliases:['castillo','nicolas castillo']},
+  ]
+},
+{
+  id:'brazil-2019-ca', name:'Brazil', year:2019, flag:'🇧🇷',
+  tournament:'Copa América Final', opponent:'Peru', score:'3-1', formation:'4-2-3-1',
+  starters:[
+    {name:'Alisson Becker', short:'Alisson', pos:'GK', x:50, y:85, aliases:['alisson','alisson becker']},
+    {name:'Dani Alves', short:'Dani Alves', pos:'RB', x:78, y:70, aliases:['dani alves','alves']},
+    {name:'Marquinhos', short:'Marquinhos', pos:'CB', x:62, y:70, aliases:['marquinhos']},
+    {name:'Thiago Silva', short:'T. Silva', pos:'CB', x:38, y:70, aliases:['thiago silva','t silva']},
+    {name:'Alex Sandro', short:'A. Sandro', pos:'LB', x:22, y:70, aliases:['alex sandro','a sandro']},
+    {name:'Casemiro', short:'Casemiro', pos:'CDM', x:62, y:57, aliases:['casemiro']},
+    {name:'Arthur', short:'Arthur', pos:'CDM', x:38, y:57, aliases:['arthur','arthur melo']},
+    {name:'Gabriel Jesus', short:'G. Jesus', pos:'RAM', x:72, y:40, aliases:['gabriel jesus','g jesus']},
+    {name:'Philippe Coutinho', short:'Coutinho', pos:'CAM', x:50, y:40, aliases:['coutinho','philippe coutinho']},
+    {name:'Everton Soares', short:'Everton', pos:'LAM', x:28, y:40, aliases:['everton','everton soares']},
+    {name:'Roberto Firmino', short:'Firmino', pos:'ST', x:50, y:20, aliases:['firmino','roberto firmino']},
+  ],
+  subs:[
+    {name:'Richarlison', aliases:['richarlison']},
+    {name:'Éder Militão', aliases:['militao','eder militao']},
+    {name:'Allan', aliases:['allan']},
+  ]
+},
+{
+  id:'argentina-2021-ca', name:'Argentina', year:2021, flag:'🇦🇷',
+  tournament:'Copa América Final', opponent:'Brazil', score:'1-0', formation:'4-3-3',
+  starters:[
+    {name:'Emiliano Martínez', short:'E. Martínez', pos:'GK', x:50, y:85, aliases:['emiliano martinez','dibu martinez','dibu']},
+    {name:'Gonzalo Montiel', short:'Montiel', pos:'RB', x:78, y:70, aliases:['montiel','gonzalo montiel']},
+    {name:'Cristian Romero', short:'Romero', pos:'CB', x:62, y:70, aliases:['romero','cristian romero','cuti romero']},
+    {name:'Nicolás Otamendi', short:'Otamendi', pos:'CB', x:38, y:70, aliases:['otamendi','nicolas otamendi']},
+    {name:'Marcos Acuña', short:'Acuña', pos:'LB', x:22, y:70, aliases:['acuna','marcos acuna']},
+    {name:'Rodrigo De Paul', short:'De Paul', pos:'CM', x:65, y:52, aliases:['de paul','rodrigo de paul']},
+    {name:'Leandro Paredes', short:'Paredes', pos:'CM', x:50, y:52, aliases:['paredes','leandro paredes']},
+    {name:'Giovani Lo Celso', short:'Lo Celso', pos:'CM', x:35, y:52, aliases:['lo celso','giovani lo celso']},
+    {name:'Lionel Messi', short:'Messi', pos:'RW', x:75, y:25, aliases:['messi','lionel messi','leo messi']},
+    {name:'Lautaro Martínez', short:'Lautaro', pos:'ST', x:50, y:20, aliases:['lautaro','lautaro martinez']},
+    {name:'Ángel Di María', short:'Di María', pos:'LW', x:25, y:25, aliases:['di maria','angel di maria','fideo']},
+  ],
+  subs:[
+    {name:'Guido Rodríguez', aliases:['guido rodriguez']},
+    {name:'Nicolás Tagliafico', aliases:['tagliafico','nicolas tagliafico']},
+    {name:'Germán Pezzella', aliases:['pezzella','german pezzella']},
+  ]
+},
+{
+  id:'argentina-2024-ca', name:'Argentina', year:2024, flag:'🇦🇷',
+  tournament:'Copa América Final', opponent:'Colombia', score:'1-0 aet', formation:'4-3-3',
+  starters:[
+    {name:'Emiliano Martínez', short:'E. Martínez', pos:'GK', x:50, y:85, aliases:['emiliano martinez','dibu martinez','dibu']},
+    {name:'Gonzalo Montiel', short:'Montiel', pos:'RB', x:78, y:70, aliases:['montiel','gonzalo montiel']},
+    {name:'Cristian Romero', short:'Romero', pos:'CB', x:62, y:70, aliases:['romero','cristian romero','cuti romero']},
+    {name:'Lisandro Martínez', short:'L. Martínez', pos:'CB', x:38, y:70, aliases:['lisandro martinez','l martinez']},
+    {name:'Nicolás Tagliafico', short:'Tagliafico', pos:'LB', x:22, y:70, aliases:['tagliafico','nicolas tagliafico']},
+    {name:'Rodrigo De Paul', short:'De Paul', pos:'CM', x:65, y:52, aliases:['de paul','rodrigo de paul']},
+    {name:'Enzo Fernández', short:'E. Fernández', pos:'CM', x:50, y:52, aliases:['enzo fernandez','e fernandez']},
+    {name:'Alexis Mac Allister', short:'Mac Allister', pos:'CM', x:35, y:52, aliases:['mac allister','alexis mac allister']},
+    {name:'Lionel Messi', short:'Messi', pos:'RW', x:75, y:25, aliases:['messi','lionel messi','leo messi']},
+    {name:'Julián Álvarez', short:'J. Álvarez', pos:'ST', x:50, y:20, aliases:['julian alvarez','j alvarez']},
+    {name:'Ángel Di María', short:'Di María', pos:'LW', x:25, y:25, aliases:['di maria','angel di maria','fideo']},
+  ],
+  subs:[
+    {name:'Nicolás González', aliases:['nicolas gonzalez','n gonzalez']},
+    {name:'Nahuel Molina', aliases:['molina','nahuel molina']},
+    {name:'Lautaro Martínez', aliases:['lautaro','lautaro martinez']},
+    {name:'Nicolás Otamendi', aliases:['otamendi','nicolas otamendi']},
+  ]
+}
 ];
 
 // ── SXI State ──────────────────────────────────────────────────────────────────
