@@ -443,6 +443,35 @@ body::before{display:none;}
   color:#fff;line-height:1.1;margin-bottom:6px;
 }
 .game-pick-desc{font-size:0.75rem;color:#aaa;line-height:1.4;margin-bottom:16px;}
+.game-info-btn{
+  position:absolute;top:10px;right:10px;z-index:10;
+  width:26px;height:26px;border-radius:50%;
+  background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);
+  color:#fff;font-size:0.75rem;font-weight:700;font-family:'Inter',sans-serif;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:background 0.2s;backdrop-filter:blur(4px);
+}
+.game-info-btn:hover{background:rgba(255,255,255,0.25);}
+.game-info-modal{
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0.75);align-items:center;justify-content:center;
+  backdrop-filter:blur(6px);
+}
+.game-info-modal.open{display:flex;}
+.game-info-box{
+  background:#141418;border:1px solid #2a2a2a;border-radius:20px;
+  padding:32px 28px;max-width:380px;width:90%;position:relative;
+}
+.game-info-title{
+  font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;
+  margin-bottom:14px;letter-spacing:1px;
+}
+.game-info-body{font-size:0.9rem;color:#bbb;line-height:1.65;}
+.game-info-close{
+  position:absolute;top:14px;right:16px;background:none;border:none;
+  color:#666;font-size:1.4rem;cursor:pointer;line-height:1;
+}
+.game-info-close:hover{color:#fff;}
 .game-pick-btn{
   display:inline-flex;align-items:center;gap:8px;
   padding:10px 20px;border-radius:10px;border:none;
@@ -742,33 +771,39 @@ body::before{display:none;}
   <div class="landing-title">Choose Your Game</div>
   <div class="landing-sub">Football Royal — pick a mode and prove your knowledge</div>
   <div class="game-pick-grid">
-    <div class="game-pick-card" onclick="showHigherOrLower()">
+    <div class="game-pick-card" onclick="showHigherOrLower()" style="position:relative;">
       <img class="game-pick-bg" src="Higher or lower card image.png" alt="">
+      <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('hol')" title="How to play">i</div>
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(74,222,128,0.12);border:1px solid #2d6b3e;color:#4ade80;">Higher or Lower</div>
-        <div class="game-pick-name">Higher or<br>Lower</div>
-        <div class="game-pick-desc">Guess if the next player's stat is higher or lower. 6 categories. Beat your streak.</div>
         <button class="game-pick-btn" style="background:#4ade80;color:#000;">Play Now ›</button>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showElGrande()">
+    <div class="game-pick-card" onclick="showElGrande()" style="position:relative;">
       <img class="game-pick-bg" src="Football under pressure card image.png" alt="">
+      <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('fup')" title="How to play">i</div>
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">Football Under Pressure</div>
-        <div class="game-pick-name">Football<br>Under Pressure</div>
-        <div class="game-pick-desc">Name as many players as you can before the clock runs out. Hot-seat. 30 seconds.</div>
         <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showSxi()">
+    <div class="game-pick-card" onclick="showSxi()" style="position:relative;">
       <img class="game-pick-bg" src="Starting XI card image.png" alt="">
+      <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('sxi')" title="How to play">i</div>
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(255,215,0,0.12);border:1px solid #7a5f00;color:#FFD700;">Starting XI</div>
-        <div class="game-pick-name">Starting<br>XI</div>
-        <div class="game-pick-desc">Name the starting 11 from iconic World Cup winning teams. 1 player or 2.</div>
         <button class="game-pick-btn" style="background:#FFD700;color:#000;">Play Now ›</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- GAME INFO MODAL -->
+<div class="game-info-modal" id="gameInfoModal" onclick="closeGameInfo()">
+  <div class="game-info-box" onclick="event.stopPropagation()">
+    <button class="game-info-close" onclick="closeGameInfo()">✕</button>
+    <div class="game-info-title" id="gameInfoTitle"></div>
+    <div class="game-info-body" id="gameInfoBody"></div>
   </div>
 </div>
 
@@ -1234,6 +1269,31 @@ function closeAllOverlays(){
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
 }
+const GAME_INFO = {
+  hol: {
+    title: 'Higher or Lower',
+    body: `Two players, one stat — is the next number higher or lower? Choose from 6 categories: Career Goals, Assists, Major Trophies, International Goals, Appearances, and International Caps. Each correct answer extends your streak. One wrong answer and it's over. How far can you go?`
+  },
+  fup: {
+    title: 'Football Under Pressure',
+    body: `The clock is ticking — you've got 30 seconds. A category appears and you have to name as many players as possible before time runs out. Play solo and beat your record, or pass it to a mate and see who knows their football. No pressure... well, actually, loads of pressure.`
+  },
+  sxi: {
+    title: 'Starting XI',
+    body: `Can you name every player who started in some of football's greatest finals? Pick a tournament — World Cup, Champions League, Euros or Copa América — then choose a team. Type in the names and fill the pitch. Play solo or go head-to-head: one player on each side of the screen. First to complete the XI wins.`
+  }
+};
+function openGameInfo(key){
+  const info = GAME_INFO[key];
+  if(!info) return;
+  document.getElementById('gameInfoTitle').textContent = info.title;
+  document.getElementById('gameInfoBody').textContent = info.body;
+  document.getElementById('gameInfoModal').classList.add('open');
+}
+function closeGameInfo(){
+  document.getElementById('gameInfoModal').classList.remove('open');
+}
+
 function setBackBtn(label, fn){
   const btn=document.getElementById('globalBackBtn');
   if(!label){ btn.style.display='none'; btn.onclick=null; return; }
