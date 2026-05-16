@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "footyquiz",
-      "runtimeExecutable": "ruby",
-      "runtimeArgs": ["-e", "require 'webrick'; s=WEBrick::HTTPServer.new(Port:3000,DocumentRoot:'/tmp/fq'); trap('INT'){s.shutdown}; s.start"],
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3000", "--directory", "/Users/ekg/Desktop/Footyquiz"],
       "port": 3000
     }
   ]
