@@ -430,13 +430,13 @@ body::before{display:none;}
 }
 .game-pick-content{
   position:relative;z-index:2;
-  padding:24px 22px;height:100%;
-  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:16px 18px;height:100%;
+  display:flex;flex-direction:column;justify-content:space-between;
 }
 .game-pick-badge{
-  display:inline-block;font-size:0.6rem;font-weight:800;letter-spacing:2px;
-  text-transform:uppercase;padding:4px 10px;border-radius:20px;
-  margin-bottom:10px;align-self:flex-start;
+  display:inline-block;font-size:0.7rem;font-weight:800;letter-spacing:2px;
+  text-transform:uppercase;padding:5px 12px;border-radius:20px;
+  align-self:flex-start;
 }
 .game-pick-name{
   font-family:'Anton',sans-serif;font-size:2rem;
@@ -776,6 +776,7 @@ body::before{display:none;}
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('hol')" title="How to play">i</div>
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(74,222,128,0.12);border:1px solid #2d6b3e;color:#4ade80;">Higher or Lower</div>
+        <div></div>
         <button class="game-pick-btn" style="background:#4ade80;color:#000;">Play Now ›</button>
       </div>
     </div>
@@ -784,6 +785,7 @@ body::before{display:none;}
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('fup')" title="How to play">i</div>
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">Football Under Pressure</div>
+        <div></div>
         <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
       </div>
     </div>
@@ -792,6 +794,7 @@ body::before{display:none;}
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('sxi')" title="How to play">i</div>
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(255,215,0,0.12);border:1px solid #7a5f00;color:#FFD700;">Starting XI</div>
+        <div></div>
         <button class="game-pick-btn" style="background:#FFD700;color:#000;">Play Now ›</button>
       </div>
     </div>
