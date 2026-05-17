@@ -686,7 +686,12 @@ body::before{display:none;}
 .hol-rand-sub{font-size:0.72rem;color:#555;display:block;margin-top:1px;}
 
 /* ── MODE CHOICE OVERLAY ── */
-#egModeChoice,#sxiModeChoice{position:fixed;inset:0;z-index:450;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;}
+#egModeChoice,#sxiModeChoice,#sxiTypeChoice{position:fixed;inset:0;z-index:450;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;}
+.sxi-timer-bar{width:100%;max-width:340px;height:6px;background:#1a1a1a;border-radius:3px;margin:10px 0 4px;overflow:hidden;}
+.sxi-timer-fill{height:100%;background:#4ade80;border-radius:3px;transition:width 1s linear,background 0.3s;}
+.sxi-timer-fill.danger{background:#ef4444;}
+.sxi-timer-num{font-family:'Anton',sans-serif;font-size:2rem;color:#fff;line-height:1;}
+.sxi-timer-label{font-size:0.6rem;color:#444;letter-spacing:2px;margin-bottom:8px;}
 .eg-mc-icon{font-size:3rem;margin-bottom:10px;}
 .eg-mc-title{font-family:'Anton',sans-serif;font-size:clamp(1.5rem,6vw,2.4rem);color:#fff;line-height:1.15;margin-bottom:28px;max-width:340px;}
 .eg-mc-how{font-size:0.65rem;color:#444;letter-spacing:3px;margin-bottom:16px;text-transform:uppercase;}
@@ -1143,6 +1148,11 @@ body::before{display:none;}
     <!-- Controls -->
     <div class="sxi-controls">
       <div id="sxiLivesRow" class="sxi-lives-row"></div>
+      <div id="sxiTimerRow" style="display:none;text-align:center;margin-bottom:6px;">
+        <div class="sxi-timer-label">TIME REMAINING</div>
+        <div class="sxi-timer-num" id="sxiTimerNum">30</div>
+        <div class="sxi-timer-bar"><div class="sxi-timer-fill" id="sxiTimerFill"></div></div>
+      </div>
       <div class="sxi-input-wrap" id="sxiInputWrap">
         <input class="sxi-input" id="sxiInput" placeholder="Type a player name…"
           oninput="sxiOnInput()" onkeydown="if(event.key==='Enter')sxiSubmit();"
@@ -1221,6 +1231,29 @@ body::before{display:none;}
   </div>
 </div>
 
+<!-- SXI GAME TYPE CHOICE (2-player only) -->
+<div id="sxiTypeChoice">
+  <div class="eg-mc-icon">👥</div>
+  <div class="eg-mc-title" id="sxiTypeTitle"></div>
+  <div class="eg-mc-how">CHOOSE YOUR FORMAT</div>
+  <div class="eg-mc-btns" style="flex-direction:column;gap:12px;max-width:300px;">
+    <button class="eg-mc-btn" onclick="sxiChooseType('lives')" style="display:flex;align-items:center;gap:14px;text-align:left;padding:18px 20px;">
+      <div style="font-size:2rem;">❤️</div>
+      <div>
+        <div class="eg-mc-bl">3 Lives</div>
+        <div class="eg-mc-bs">Classic mode — 3 wrong answers and you're out</div>
+      </div>
+    </button>
+    <button class="eg-mc-btn" onclick="sxiChooseType('pressure')" style="display:flex;align-items:center;gap:14px;text-align:left;padding:18px 20px;border-color:#e8b923;">
+      <div style="font-size:2rem;">⏱️</div>
+      <div>
+        <div class="eg-mc-bl" style="color:#e8b923;">Football Under Pressure</div>
+        <div class="eg-mc-bs">30 seconds per turn — name as many as you can</div>
+      </div>
+    </button>
+  </div>
+</div>
+
 <!-- NAME ENTRY OVERLAY -->
 <div id="egNameEntry">
   <div class="eg-ne-title">Name Your Teams</div>
@@ -1268,7 +1301,7 @@ function setBg(hol, fade){
   }
 }
 function closeAllOverlays(){
-  ['gameWelcomeOverlay','slotMachineOverlay','egModeChoice','egNameEntry','egCountdownOverlay','sxiModeChoice'].forEach(id=>{
+  ['gameWelcomeOverlay','slotMachineOverlay','egModeChoice','egNameEntry','egCountdownOverlay','sxiModeChoice','sxiTypeChoice'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
 }
@@ -4944,8 +4977,10 @@ const SXI_TEAMS = [
 
 // ── SXI State ──────────────────────────────────────────────────────────────────
 let sxiMode=1, sxiTeam=null, sxiP1='Player 1', sxiP2='Player 2';
+let sxiGameType='lives'; // 'lives' or 'pressure'
 let sxiLives=[3,3], sxiScores=[0,0], sxiCurrentTurn=0, sxiRunning=false;
 let sxiFoundStarters=[], sxiFoundSubs=[];
+let sxiTimerInterval=null, sxiTimeLeft=30;
 
 function sxiSetMode(m){
   sxiMode=m;
@@ -5021,20 +5056,38 @@ function sxiChooseMode(n){
   sxiMode=n;
   document.getElementById('sxiModeChoice').style.display='none';
   if(n===1){
+    sxiGameType='lives';
     sxiP1='You'; sxiP2='';
     setBackBtn(null);
     sxiBegin();
   } else {
-    document.getElementById('sxiNETeam').textContent=`${sxiTeam.flag} ${sxiTeam.name} ${sxiTeam.year} · ${sxiTeam.formation}`;
-    document.getElementById('sxiTeamSelect').style.display='none';
-    document.getElementById('sxiNameEntry').style.display='block';
+    // Show game type choice first
+    document.getElementById('sxiTypeTitle').textContent=`${sxiTeam.flag} ${sxiTeam.name} ${sxiTeam.year}`;
+    document.getElementById('sxiTypeChoice').style.display='flex';
     setBackBtn('← Back', ()=>{
-      document.getElementById('sxiNameEntry').style.display='none';
+      document.getElementById('sxiTypeChoice').style.display='none';
       document.getElementById('sxiModeChoice').style.display='flex';
       setBackBtn('← Back', sxiModeBack);
     });
-    setTimeout(()=>document.getElementById('sxiP1Name').focus(),100);
   }
+}
+
+function sxiChooseType(type){
+  sxiGameType=type;
+  document.getElementById('sxiTypeChoice').style.display='none';
+  document.getElementById('sxiNETeam').textContent=`${sxiTeam.flag} ${sxiTeam.name} ${sxiTeam.year} · ${sxiTeam.formation}`;
+  document.getElementById('sxiTeamSelect').style.display='none';
+  document.getElementById('sxiNameEntry').style.display='block';
+  setBackBtn('← Back', ()=>{
+    document.getElementById('sxiNameEntry').style.display='none';
+    document.getElementById('sxiTypeChoice').style.display='flex';
+    setBackBtn('← Back', ()=>{
+      document.getElementById('sxiTypeChoice').style.display='none';
+      document.getElementById('sxiModeChoice').style.display='flex';
+      setBackBtn('← Back', sxiModeBack);
+    });
+  });
+  setTimeout(()=>document.getElementById('sxiP1Name').focus(),100);
 }
 
 function sxiConfirmNames(){
@@ -5045,7 +5098,39 @@ function sxiConfirmNames(){
   sxiBegin();
 }
 
+function sxiStartTimer(){
+  sxiStopTimer();
+  sxiTimeLeft=30;
+  sxiUpdateTimerDisplay();
+  sxiTimerInterval=setInterval(()=>{
+    sxiTimeLeft--;
+    sxiUpdateTimerDisplay();
+    if(sxiTimeLeft<=0){
+      sxiStopTimer();
+      // Switch turns
+      sxiCurrentTurn=1-sxiCurrentTurn;
+      sxiRenderHUD();
+      document.getElementById('sxiStatus').textContent=(sxiCurrentTurn===0?sxiP1:sxiP2)+"'s turn!";
+      setTimeout(()=>{ document.getElementById('sxiStatus').textContent=''; sxiStartTimer(); },1000);
+    }
+  },1000);
+}
+function sxiStopTimer(){
+  if(sxiTimerInterval){ clearInterval(sxiTimerInterval); sxiTimerInterval=null; }
+}
+function sxiUpdateTimerDisplay(){
+  const num=document.getElementById('sxiTimerNum');
+  const fill=document.getElementById('sxiTimerFill');
+  if(!num) return;
+  num.textContent=sxiTimeLeft;
+  const pct=(sxiTimeLeft/30)*100;
+  fill.style.width=pct+'%';
+  fill.classList.toggle('danger', sxiTimeLeft<=10);
+  num.style.color=sxiTimeLeft<=10?'#ef4444':'#fff';
+}
+
 function sxiBegin(){
+  sxiStopTimer();
   sxiLives=[3,3]; sxiScores=[0,0]; sxiCurrentTurn=0; sxiRunning=true;
   sxiFoundStarters=[]; sxiFoundSubs=[];
   document.getElementById('sxiNameEntry').style.display='none';
@@ -5063,6 +5148,7 @@ function sxiBegin(){
   document.getElementById('sxiInput').value='';
   document.getElementById('sxiStatus').textContent='';
   setTimeout(()=>document.getElementById('sxiInput').focus(),200);
+  if(sxiMode===2 && sxiGameType==='pressure') sxiStartTimer();
 }
 
 function sxiRenderPitch(){
@@ -5110,9 +5196,15 @@ function sxiRenderHUD(){
     tb.style.display='none';
     sr.style.display='none';
   }
-  // Lives
+  // Lives / Timer row
   const lr=document.getElementById('sxiLivesRow');
-  if(sxiMode===2){
+  const tr=document.getElementById('sxiTimerRow');
+  if(sxiMode===2 && sxiGameType==='pressure'){
+    lr.style.display='none';
+    tr.style.display='block';
+  } else if(sxiMode===2){
+    tr.style.display='none';
+    lr.style.display='flex';
     lr.innerHTML=
       `<span style="font-size:0.6rem;color:#555;font-weight:700;letter-spacing:1px;margin-right:6px;">${sxiP1}</span>`+
       [0,1,2].map(i=>`<span class="heart${sxiLives[0]<=i?' lost':''}" style="font-size:1rem;">❤️</span>`).join('')+
@@ -5120,6 +5212,8 @@ function sxiRenderHUD(){
       `<span style="font-size:0.6rem;color:#555;font-weight:700;letter-spacing:1px;margin-right:6px;">${sxiP2}</span>`+
       [0,1,2].map(i=>`<span class="heart${sxiLives[1]<=i?' lost':''}" style="font-size:1rem;">❤️</span>`).join('');
   } else {
+    tr.style.display='none';
+    lr.style.display='flex';
     lr.innerHTML=[0,1,2].map(i=>`<span class="heart${sxiLives[0]<=i?' lost':''}" style="font-size:1.1rem;">❤️</span>`).join('');
   }
 }
@@ -5167,7 +5261,8 @@ function sxiSubmit(){
       document.getElementById('sxiInputWrap').classList.remove('correct');
       document.getElementById('sxiStatus').textContent='';
     },800);
-    if(sxiMode===2){ sxiCurrentTurn=1-sxiCurrentTurn; }
+    // In pressure mode, don't switch turns on correct answer — timer does that
+    if(sxiMode===2 && sxiGameType!=='pressure'){ sxiCurrentTurn=1-sxiCurrentTurn; }
     sxiRenderHUD();
     if(sxiFoundStarters.length===sxiTeam.starters.length) { sxiEndGame(false); return; }
     return;
@@ -5192,14 +5287,13 @@ function sxiSubmit(){
       document.getElementById('sxiInputWrap').classList.remove('correct');
       document.getElementById('sxiStatus').textContent='';
     },800);
-    if(sxiMode===2){ sxiCurrentTurn=1-sxiCurrentTurn; }
+    if(sxiMode===2 && sxiGameType!=='pressure'){ sxiCurrentTurn=1-sxiCurrentTurn; }
     sxiRenderHUD();
     return;
   }
 
   // Wrong answer
   playWrong();
-  sxiLives[turn]--;
   document.getElementById('sxiInputWrap').classList.add('wrong');
   document.getElementById('sxiStatus').textContent='Not in this team';
   input.select();
@@ -5207,6 +5301,9 @@ function sxiSubmit(){
     document.getElementById('sxiInputWrap').classList.remove('wrong');
     document.getElementById('sxiStatus').textContent='';
   },700);
+  // In pressure mode, wrong answers don't cost lives or switch turns
+  if(sxiGameType==='pressure') return;
+  sxiLives[turn]--;
   sxiRenderHUD();
   if(sxiLives[turn]<=0){ sxiEndGame(true); return; }
   if(sxiMode===2){ sxiCurrentTurn=1-sxiCurrentTurn; sxiRenderHUD(); }
@@ -5223,6 +5320,7 @@ function sxiGiveUp(){
 
 function sxiEndGame(outOfLives){
   sxiRunning=false;
+  sxiStopTimer();
   document.getElementById('sxiGame').style.display='none';
   // Reveal missing starters on pitch briefly — show all
   sxiTeam.starters.forEach((p,i)=>{
