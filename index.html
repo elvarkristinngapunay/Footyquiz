@@ -5098,6 +5098,8 @@ function sxiConfirmNames(){
   sxiBegin();
 }
 
+let sxiSuddenDeath=false;
+
 function sxiStartTimer(){
   sxiStopTimer();
   sxiTimeLeft=30;
@@ -5107,14 +5109,40 @@ function sxiStartTimer(){
     sxiUpdateTimerDisplay();
     if(sxiTimeLeft<=0){
       sxiStopTimer();
-      // Switch turns
-      sxiCurrentTurn=1-sxiCurrentTurn;
-      sxiRenderHUD();
-      document.getElementById('sxiStatus').textContent=(sxiCurrentTurn===0?sxiP1:sxiP2)+"'s turn!";
-      setTimeout(()=>{ document.getElementById('sxiStatus').textContent=''; sxiStartTimer(); },1000);
+      sxiPressureExpiry();
     }
   },1000);
 }
+
+function sxiPressureExpiry(){
+  if(!sxiRunning) return;
+  const myScore=sxiScores[sxiCurrentTurn];
+  const oppScore=sxiScores[1-sxiCurrentTurn];
+
+  if(sxiSuddenDeath){
+    // Opponent also failed in sudden death — it's a tie
+    sxiSuddenDeath=false;
+    sxiEndGame(false);
+    return;
+  }
+
+  if(myScore < oppScore){
+    // Failing player is losing — opponent wins immediately
+    sxiEndGame(false);
+  } else if(myScore > oppScore){
+    // Failing player is AHEAD — opponent gets no chance, failing player still wins
+    sxiEndGame(false);
+  } else {
+    // Tied — opponent gets one sudden-death attempt
+    sxiSuddenDeath=true;
+    sxiCurrentTurn=1-sxiCurrentTurn;
+    sxiRenderHUD();
+    const name=sxiCurrentTurn===0?sxiP1:sxiP2;
+    document.getElementById('sxiStatus').textContent=`⚡ Sudden death — ${name}, name one more!`;
+    setTimeout(()=>{ document.getElementById('sxiStatus').textContent=''; sxiStartTimer(); },1400);
+  }
+}
+
 function sxiStopTimer(){
   if(sxiTimerInterval){ clearInterval(sxiTimerInterval); sxiTimerInterval=null; }
 }
@@ -5131,6 +5159,7 @@ function sxiUpdateTimerDisplay(){
 
 function sxiBegin(){
   sxiStopTimer();
+  sxiSuddenDeath=false;
   sxiLives=[3,3]; sxiScores=[0,0]; sxiCurrentTurn=0; sxiRunning=true;
   sxiFoundStarters=[]; sxiFoundSubs=[];
   document.getElementById('sxiNameEntry').style.display='none';
@@ -5261,8 +5290,16 @@ function sxiSubmit(){
       document.getElementById('sxiInputWrap').classList.remove('correct');
       document.getElementById('sxiStatus').textContent='';
     },800);
-    // In pressure mode, don't switch turns on correct answer — timer does that
-    if(sxiMode===2 && sxiGameType!=='pressure'){ sxiCurrentTurn=1-sxiCurrentTurn; }
+    if(sxiMode===2){
+      sxiCurrentTurn=1-sxiCurrentTurn;
+      if(sxiGameType==='pressure'){
+        // In sudden death, a correct answer wins immediately
+        if(sxiSuddenDeath){ sxiSuddenDeath=false; sxiStopTimer(); sxiRenderHUD(); if(sxiFoundStarters.length===sxiTeam.starters.length){ sxiEndGame(false); return; } sxiEndGame(false); return; }
+        // Reset timer for next player's turn
+        sxiStopTimer();
+        sxiStartTimer();
+      }
+    }
     sxiRenderHUD();
     if(sxiFoundStarters.length===sxiTeam.starters.length) { sxiEndGame(false); return; }
     return;
@@ -5287,7 +5324,10 @@ function sxiSubmit(){
       document.getElementById('sxiInputWrap').classList.remove('correct');
       document.getElementById('sxiStatus').textContent='';
     },800);
-    if(sxiMode===2 && sxiGameType!=='pressure'){ sxiCurrentTurn=1-sxiCurrentTurn; }
+    if(sxiMode===2){
+      sxiCurrentTurn=1-sxiCurrentTurn;
+      if(sxiGameType==='pressure'){ sxiStopTimer(); sxiStartTimer(); }
+    }
     sxiRenderHUD();
     return;
   }
