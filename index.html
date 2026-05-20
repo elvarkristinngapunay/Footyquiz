@@ -1046,7 +1046,7 @@ body::before{display:none;}
       <input class="auth-input" id="authEmail" type="email" placeholder="Email address" autocomplete="email">
       <input class="auth-input" id="authPassword" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')authSubmit()">
       <div id="authUsernameWrap" style="display:none;">
-        <input class="auth-input" id="authUsername" type="text" placeholder="Username (max 10 chars, no spaces)" maxlength="10" autocomplete="off" oninput="this.value=this.value.replace(/\s/g,'')">
+        <input class="auth-input" id="authUsername" type="text" placeholder="Username (max 10 characters)" maxlength="10" autocomplete="off">
       </div>
       <button class="auth-submit" onclick="authSubmit()" id="authSubmitBtn">Sign In</button>
       <div class="auth-msg" id="authMsg"></div>
