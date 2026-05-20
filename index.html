@@ -1039,17 +1039,37 @@ body::before{display:none;}
 <div class="auth-modal" id="authModal" onclick="if(event.target===this)closeAuthModal()">
   <div class="auth-box">
     <button class="auth-close" onclick="closeAuthModal()">✕</button>
-    <h2 id="authModalTitle">Sign In</h2>
-    <p id="authModalSub">Save your streaks and records across all devices.</p>
-    <input class="auth-input" id="authEmail" type="email" placeholder="Email address" autocomplete="email">
-    <input class="auth-input" id="authPassword" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')authSubmit()">
-    <div id="authUsernameWrap" style="display:none;">
-      <input class="auth-input" id="authUsername" type="text" placeholder="Username (max 10 chars, no spaces)" maxlength="10" autocomplete="off" oninput="this.value=this.value.replace(/\s/g,'')">
+    <!-- Sign in / Sign up form -->
+    <div id="authFormWrap">
+      <h2 id="authModalTitle">Sign In</h2>
+      <p id="authModalSub">Save your streaks and records across all devices.</p>
+      <input class="auth-input" id="authEmail" type="email" placeholder="Email address" autocomplete="email">
+      <input class="auth-input" id="authPassword" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')authSubmit()">
+      <div id="authUsernameWrap" style="display:none;">
+        <input class="auth-input" id="authUsername" type="text" placeholder="Username (max 10 chars, no spaces)" maxlength="10" autocomplete="off" oninput="this.value=this.value.replace(/\s/g,'')">
+      </div>
+      <button class="auth-submit" onclick="authSubmit()" id="authSubmitBtn">Sign In</button>
+      <div class="auth-msg" id="authMsg"></div>
+      <div class="auth-toggle" id="authToggle">
+        No account? <span onclick="switchAuthMode('signup')">Create one</span>
+      </div>
     </div>
-    <button class="auth-submit" onclick="authSubmit()" id="authSubmitBtn">Sign In</button>
-    <div class="auth-msg" id="authMsg"></div>
-    <div class="auth-toggle" id="authToggle">
-      No account? <span onclick="switchAuthMode('signup')">Create one</span>
+    <!-- Verification code screen -->
+    <div id="authVerifyWrap" style="display:none;text-align:center;">
+      <div style="font-size:2.5rem;margin-bottom:10px;">📧</div>
+      <h2 style="font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;margin-bottom:8px;">Check Your Email</h2>
+      <p style="color:#555;font-size:0.8rem;margin-bottom:24px;">We sent a 6-digit code to <strong id="authVerifyEmail" style="color:#aaa;"></strong></p>
+      <div style="display:flex;gap:8px;justify-content:center;margin-bottom:16px;">
+        <input class="auth-input" id="vc1" maxlength="1" style="width:44px;text-align:center;font-size:1.4rem;font-weight:700;padding:10px 4px;margin:0;" oninput="vcNext(this,'vc2')" onkeydown="vcKey(event,this,'','vc1')">
+        <input class="auth-input" id="vc2" maxlength="1" style="width:44px;text-align:center;font-size:1.4rem;font-weight:700;padding:10px 4px;margin:0;" oninput="vcNext(this,'vc3')" onkeydown="vcKey(event,this,'vc1','vc3')">
+        <input class="auth-input" id="vc3" maxlength="1" style="width:44px;text-align:center;font-size:1.4rem;font-weight:700;padding:10px 4px;margin:0;" oninput="vcNext(this,'vc4')" onkeydown="vcKey(event,this,'vc2','vc4')">
+        <input class="auth-input" id="vc4" maxlength="1" style="width:44px;text-align:center;font-size:1.4rem;font-weight:700;padding:10px 4px;margin:0;" oninput="vcNext(this,'vc5')" onkeydown="vcKey(event,this,'vc3','vc5')">
+        <input class="auth-input" id="vc5" maxlength="1" style="width:44px;text-align:center;font-size:1.4rem;font-weight:700;padding:10px 4px;margin:0;" oninput="vcNext(this,'vc6')" onkeydown="vcKey(event,this,'vc4','vc6')">
+        <input class="auth-input" id="vc6" maxlength="1" style="width:44px;text-align:center;font-size:1.4rem;font-weight:700;padding:10px 4px;margin:0;" oninput="vcSubmitAuto()" onkeydown="vcKey(event,this,'vc5','')">
+      </div>
+      <button class="auth-submit" onclick="verifyCode()">Confirm</button>
+      <div class="auth-msg" id="authVerifyMsg"></div>
+      <div style="margin-top:14px;font-size:0.75rem;color:#444;">Didn't get it? <span style="color:#4ade80;cursor:pointer;" onclick="resendCode()">Resend code</span></div>
     </div>
   </div>
 </div>
@@ -5859,17 +5879,52 @@ async function authSubmit(){
     if(existing){ msg.className='auth-msg error'; msg.textContent='That username is already taken.'; return; }
     const { data, error } = await supa.auth.signUp({ email, password, options:{ data:{ username } } });
     if(error){ msg.className='auth-msg error'; msg.textContent=error.message; return; }
-    // Create profile
+    // Create profile row
     if(data.user){
       await supa.from('profiles').insert({ id: data.user.id, username });
     }
-    msg.className='auth-msg success'; msg.textContent='Account created! Check your email to confirm.';
+    // Show verification code screen
+    document.getElementById('authVerifyEmail').textContent = email;
+    document.getElementById('authFormWrap').style.display = 'none';
+    document.getElementById('authVerifyWrap').style.display = 'block';
+    setTimeout(()=>document.getElementById('vc1').focus(), 100);
   } else {
     const { error } = await supa.auth.signInWithPassword({ email, password });
-    if(error){ msg.className='auth-msg error'; msg.textContent='Wrong email or password.'; return; }
+    if(error){ msg.className='auth-msg error'; msg.textContent='Wrong email or password. If you just signed up, please confirm your email first.'; return; }
     msg.className='auth-msg success'; msg.textContent='Signed in!';
     setTimeout(closeAuthModal, 800);
   }
+}
+
+let pendingVerifyEmail = '';
+function vcNext(el, nextId){
+  el.value = el.value.replace(/[^0-9]/g,'');
+  if(el.value && nextId) document.getElementById(nextId).focus();
+}
+function vcKey(e, el, prevId, nextId){
+  if(e.key==='Backspace' && !el.value && prevId) document.getElementById(prevId).focus();
+}
+function vcSubmitAuto(){
+  document.getElementById('vc6').value = document.getElementById('vc6').value.replace(/[^0-9]/g,'');
+  const code = ['vc1','vc2','vc3','vc4','vc5','vc6'].map(id=>document.getElementById(id).value).join('');
+  if(code.length===6) verifyCode();
+}
+async function verifyCode(){
+  const code = ['vc1','vc2','vc3','vc4','vc5','vc6'].map(id=>document.getElementById(id).value).join('');
+  const email = document.getElementById('authEmail').value.trim();
+  const msg = document.getElementById('authVerifyMsg');
+  if(code.length < 6){ msg.className='auth-msg error'; msg.textContent='Enter all 6 digits.'; return; }
+  msg.className='auth-msg'; msg.textContent='Checking…';
+  const { error } = await supa.auth.verifyOtp({ email, token: code, type: 'email' });
+  if(error){ msg.className='auth-msg error'; msg.textContent='Wrong code. Try again or resend.'; return; }
+  msg.className='auth-msg success'; msg.textContent='✓ Confirmed!';
+  setTimeout(closeAuthModal, 800);
+}
+async function resendCode(){
+  const email = document.getElementById('authEmail').value.trim();
+  await supa.auth.resend({ type: 'signup', email });
+  document.getElementById('authVerifyMsg').className='auth-msg success';
+  document.getElementById('authVerifyMsg').textContent='Code resent!';
 }
 
 async function authSignOut(){
