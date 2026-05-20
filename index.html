@@ -1044,7 +1044,7 @@ body::before{display:none;}
     <input class="auth-input" id="authEmail" type="email" placeholder="Email address" autocomplete="email">
     <input class="auth-input" id="authPassword" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')authSubmit()">
     <div id="authUsernameWrap" style="display:none;">
-      <input class="auth-input" id="authUsername" type="text" placeholder="Choose a username" maxlength="20" autocomplete="off">
+      <input class="auth-input" id="authUsername" type="text" placeholder="Username (max 10 chars, no spaces)" maxlength="10" autocomplete="off" oninput="this.value=this.value.replace(/\s/g,'')">
     </div>
     <button class="auth-submit" onclick="authSubmit()" id="authSubmitBtn">Sign In</button>
     <div class="auth-msg" id="authMsg"></div>
@@ -5852,11 +5852,16 @@ async function authSubmit(){
 
   if(authMode === 'signup'){
     const username = document.getElementById('authUsername').value.trim();
+    if(!username){ msg.className='auth-msg error'; msg.textContent='Please choose a username.'; return; }
+    if(username.length > 10){ msg.className='auth-msg error'; msg.textContent='Username must be 10 characters or less.'; return; }
+    // Check username is taken
+    const { data: existing } = await supa.from('profiles').select('id').eq('username', username).maybeSingle();
+    if(existing){ msg.className='auth-msg error'; msg.textContent='That username is already taken.'; return; }
     const { data, error } = await supa.auth.signUp({ email, password, options:{ data:{ username } } });
     if(error){ msg.className='auth-msg error'; msg.textContent=error.message; return; }
     // Create profile
     if(data.user){
-      await supa.from('profiles').insert({ id: data.user.id, username: username || email.split('@')[0] });
+      await supa.from('profiles').insert({ id: data.user.id, username });
     }
     msg.className='auth-msg success'; msg.textContent='Account created! Check your email to confirm.';
   } else {
