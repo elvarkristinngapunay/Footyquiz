@@ -747,6 +747,64 @@ body::before{display:none;}
 .total-lbl{font-size:0.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;}
 .trophies-list{max-height:180px;}
 .footer{color:#222;font-size:0.58rem;text-align:center;padding:20px;letter-spacing:1px;}
+
+/* ── AUTH ── */
+.auth-btn{
+  padding:6px 14px;border-radius:8px;border:1px solid #333;
+  background:none;color:#aaa;font-family:'Inter',sans-serif;
+  font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;
+}
+.auth-btn:hover{border-color:#4ade80;color:#4ade80;}
+.auth-btn.signed-in{border-color:#2d6b3e;color:#4ade80;background:rgba(74,222,128,0.08);}
+.auth-modal{
+  display:none;position:fixed;inset:0;z-index:9998;
+  background:rgba(0,0,0,0.85);align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+}
+.auth-modal.open{display:flex;}
+.auth-box{
+  background:#111;border:1px solid #2a2a2a;border-radius:20px;
+  padding:36px 32px;width:90%;max-width:360px;position:relative;
+}
+.auth-box h2{font-family:'Anton',sans-serif;font-size:1.8rem;color:#fff;margin-bottom:6px;letter-spacing:1px;}
+.auth-box p{font-size:0.8rem;color:#555;margin-bottom:24px;}
+.auth-input{
+  width:100%;padding:12px 14px;border-radius:10px;
+  border:1px solid #2a2a2a;background:#0d0d0d;color:#fff;
+  font-family:'Inter',sans-serif;font-size:0.9rem;margin-bottom:12px;
+  outline:none;transition:border-color 0.2s;
+}
+.auth-input:focus{border-color:#4ade80;}
+.auth-submit{
+  width:100%;padding:13px;border-radius:10px;border:none;
+  background:#4ade80;color:#000;font-family:'Inter',sans-serif;
+  font-size:0.9rem;font-weight:700;cursor:pointer;margin-top:4px;
+  transition:opacity 0.2s;
+}
+.auth-submit:hover{opacity:0.85;}
+.auth-toggle{
+  text-align:center;margin-top:16px;font-size:0.78rem;color:#555;
+}
+.auth-toggle span{color:#4ade80;cursor:pointer;}
+.auth-toggle span:hover{text-decoration:underline;}
+.auth-msg{font-size:0.78rem;margin-top:10px;text-align:center;min-height:18px;}
+.auth-msg.error{color:#f87171;}
+.auth-msg.success{color:#4ade80;}
+.auth-close{position:absolute;top:14px;right:16px;background:none;border:none;color:#444;font-size:1.3rem;cursor:pointer;}
+.auth-close:hover{color:#fff;}
+.auth-user-menu{
+  position:absolute;top:100%;right:0;margin-top:6px;
+  background:#141418;border:1px solid #2a2a2a;border-radius:12px;
+  padding:8px;min-width:180px;z-index:9999;display:none;
+}
+.auth-user-menu.open{display:block;}
+.auth-user-email{font-size:0.72rem;color:#555;padding:6px 10px;border-bottom:1px solid #1a1a1a;margin-bottom:6px;}
+.auth-menu-item{
+  padding:8px 10px;border-radius:8px;font-size:0.8rem;color:#aaa;
+  cursor:pointer;transition:background 0.15s;
+}
+.auth-menu-item:hover{background:#1a1a1a;color:#fff;}
+.auth-menu-item.danger{color:#f87171;}
 </style>
 </head>
 <body>
@@ -763,10 +821,35 @@ body::before{display:none;}
     <img src="new logo.png" alt="Football Royal" onclick="showLanding()" style="height:100px;width:auto;object-fit:contain;display:block;cursor:pointer;">
   </div>
   <!-- Right nav -->
-  <nav style="display:flex;align-items:center;gap:4px;justify-content:flex-start;">
-    <a class="nav-link" href="#">Achievements</a>
-    <a class="nav-link" href="#">Stats</a>
+  <nav style="display:flex;align-items:center;gap:8px;justify-content:flex-start;position:relative;">
+    <div id="authNavWrap" style="position:relative;">
+      <button class="auth-btn" id="authNavBtn" onclick="toggleAuthMenu()">Sign In</button>
+      <div class="auth-user-menu" id="authUserMenu">
+        <div class="auth-user-email" id="authUserEmail"></div>
+        <div class="auth-menu-item" onclick="closeAuthMenu();showAuthModal('profile')">👤 My Profile</div>
+        <div class="auth-menu-item danger" onclick="authSignOut()">Sign Out</div>
+      </div>
+    </div>
   </nav>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" onclick="if(event.target===this)closeAuthModal()">
+  <div class="auth-box">
+    <button class="auth-close" onclick="closeAuthModal()">✕</button>
+    <h2 id="authModalTitle">Sign In</h2>
+    <p id="authModalSub">Save your streaks and records across all devices.</p>
+    <input class="auth-input" id="authEmail" type="email" placeholder="Email address" autocomplete="email">
+    <input class="auth-input" id="authPassword" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')authSubmit()">
+    <div id="authUsernameWrap" style="display:none;">
+      <input class="auth-input" id="authUsername" type="text" placeholder="Choose a username" maxlength="20" autocomplete="off">
+    </div>
+    <button class="auth-submit" onclick="authSubmit()" id="authSubmitBtn">Sign In</button>
+    <div class="auth-msg" id="authMsg"></div>
+    <div class="auth-toggle" id="authToggle">
+      No account? <span onclick="switchAuthMode('signup')">Create one</span>
+    </div>
+  </div>
 </div>
 
 <button id="globalBackBtn" style="display:none;position:fixed;top:110px;left:16px;z-index:460;background:none;border:1px solid #333;color:#666;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back</button>
@@ -3012,6 +3095,8 @@ function saveCatBest(cat,s){
   if(!catBests[cat]||s>catBests[cat]){
     catBests[cat]=s;
     localStorage.setItem('fq_catBests',JSON.stringify(catBests));
+    // Save to Supabase if logged in
+    if(typeof saveHolRecord === 'function') saveHolRecord(cat, s);
   }
 }
 
@@ -5422,6 +5507,140 @@ function sxiEndGame(outOfLives){
   document.getElementById('sxiGame').style.display='none';
 }
 
+</script>
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPA_URL = 'https://spittswvqstzmmqwhwqe.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNwaXR0c3d2cXN0em1tcXdod3FlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMzUzNjksImV4cCI6MjA5NDYxMTM2OX0.msbeE9m7OApVCb3ogaQrKd3n_9nSYt7KDHiJTbj42MM';
+const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+let currentUser = null;
+let authMode = 'signin'; // 'signin' or 'signup'
+
+// Listen for auth state changes
+supa.auth.onAuthStateChange(async (event, session) => {
+  currentUser = session?.user || null;
+  updateAuthNav();
+  if(currentUser) loadUserRecords();
+});
+
+function updateAuthNav(){
+  const btn = document.getElementById('authNavBtn');
+  if(currentUser){
+    const email = currentUser.email || '';
+    const label = currentUser.user_metadata?.username || email.split('@')[0];
+    btn.textContent = '👤 ' + label;
+    btn.classList.add('signed-in');
+    document.getElementById('authUserEmail').textContent = email;
+  } else {
+    btn.textContent = 'Sign In';
+    btn.classList.remove('signed-in');
+  }
+}
+
+function toggleAuthMenu(){
+  if(!currentUser){ showAuthModal('signin'); return; }
+  const menu = document.getElementById('authUserMenu');
+  menu.classList.toggle('open');
+}
+
+function closeAuthMenu(){
+  document.getElementById('authUserMenu').classList.remove('open');
+}
+
+function showAuthModal(mode){
+  authMode = mode || 'signin';
+  switchAuthMode(authMode);
+  document.getElementById('authModal').classList.add('open');
+  setTimeout(()=>document.getElementById('authEmail').focus(), 100);
+}
+
+function closeAuthModal(){
+  document.getElementById('authModal').classList.remove('open');
+  document.getElementById('authMsg').textContent = '';
+}
+
+function switchAuthMode(mode){
+  authMode = mode;
+  const isSignup = mode === 'signup';
+  document.getElementById('authModalTitle').textContent = isSignup ? 'Create Account' : 'Sign In';
+  document.getElementById('authModalSub').textContent = isSignup
+    ? 'Join Football Royal and save your records.'
+    : 'Save your streaks and records across all devices.';
+  document.getElementById('authSubmitBtn').textContent = isSignup ? 'Create Account' : 'Sign In';
+  document.getElementById('authUsernameWrap').style.display = isSignup ? 'block' : 'none';
+  document.getElementById('authToggle').innerHTML = isSignup
+    ? 'Already have an account? <span onclick="switchAuthMode(\'signin\')">Sign in</span>'
+    : 'No account? <span onclick="switchAuthMode(\'signup\')">Create one</span>';
+  document.getElementById('authMsg').textContent = '';
+  document.getElementById('authPassword').autocomplete = isSignup ? 'new-password' : 'current-password';
+}
+
+async function authSubmit(){
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const msg = document.getElementById('authMsg');
+  if(!email || !password){ msg.className='auth-msg error'; msg.textContent='Please fill in all fields.'; return; }
+  msg.className='auth-msg'; msg.textContent='...';
+
+  if(authMode === 'signup'){
+    const username = document.getElementById('authUsername').value.trim();
+    const { data, error } = await supa.auth.signUp({ email, password, options:{ data:{ username } } });
+    if(error){ msg.className='auth-msg error'; msg.textContent=error.message; return; }
+    // Create profile
+    if(data.user){
+      await supa.from('profiles').insert({ id: data.user.id, username: username || email.split('@')[0] });
+    }
+    msg.className='auth-msg success'; msg.textContent='Account created! Check your email to confirm.';
+  } else {
+    const { error } = await supa.auth.signInWithPassword({ email, password });
+    if(error){ msg.className='auth-msg error'; msg.textContent='Wrong email or password.'; return; }
+    msg.className='auth-msg success'; msg.textContent='Signed in!';
+    setTimeout(closeAuthModal, 800);
+  }
+}
+
+async function authSignOut(){
+  closeAuthMenu();
+  await supa.auth.signOut();
+  currentUser = null;
+  updateAuthNav();
+}
+
+// ── SAVE / LOAD RECORDS ──────────────────────────────────────────────────────
+async function saveHolRecord(category, streak){
+  if(!currentUser) return;
+  await supa.from('hol_records').upsert({
+    user_id: currentUser.id,
+    category,
+    best_streak: streak,
+    updated_at: new Date().toISOString()
+  }, { onConflict: 'user_id,category', ignoreDuplicates: false });
+}
+
+async function loadUserRecords(){
+  if(!currentUser) return;
+  const { data } = await supa.from('hol_records').select('*').eq('user_id', currentUser.id);
+  if(!data) return;
+  // Update local best scores display
+  data.forEach(row => {
+    const key = row.category;
+    const existing = parseInt(localStorage.getItem('best_'+key)||'0');
+    if(row.best_streak > existing){
+      localStorage.setItem('best_'+key, row.best_streak);
+      const el = document.getElementById('best-'+key);
+      if(el) el.textContent = '🏆 Best: ' + row.best_streak;
+    }
+  });
+}
+
+// Close user menu when clicking outside
+document.addEventListener('click', e => {
+  const wrap = document.getElementById('authNavWrap');
+  if(wrap && !wrap.contains(e.target)) closeAuthMenu();
+});
 </script>
 </body>
 </html>
