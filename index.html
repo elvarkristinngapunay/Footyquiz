@@ -1060,8 +1060,8 @@ body::before{display:none;}
       <h2 style="font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;margin-bottom:8px;">Check Your Email</h2>
       <p style="color:#555;font-size:0.8rem;margin-bottom:6px;">We sent a verification code to</p>
       <p style="color:#4ade80;font-size:0.85rem;font-weight:600;margin-bottom:20px;" id="authVerifyEmail"></p>
-      <p style="color:#555;font-size:0.75rem;margin-bottom:12px;">Copy the code from the email and paste it below</p>
-      <input class="auth-input" id="vcInput" placeholder="Paste your verification code here" style="text-align:center;font-size:1.1rem;font-weight:700;letter-spacing:3px;" onkeydown="if(event.key==='Enter')verifyCode()">
+      <p style="color:#555;font-size:0.75rem;margin-bottom:12px;">Enter your 8-digit code from the email</p>
+      <input class="auth-input" id="vcInput" placeholder="8-digit code" maxlength="8" style="text-align:center;font-size:1.1rem;font-weight:700;letter-spacing:4px;" onkeydown="if(event.key==='Enter')verifyCode()">
       <button class="auth-submit" onclick="verifyCode()" style="margin-top:8px;">Confirm →</button>
       <div class="auth-msg" id="authVerifyMsg"></div>
       <div style="margin-top:14px;font-size:0.75rem;color:#444;">Didn't get it? <span style="color:#4ade80;cursor:pointer;" onclick="resendCode()">Resend code</span></div>
