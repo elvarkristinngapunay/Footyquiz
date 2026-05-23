@@ -1052,6 +1052,14 @@ body::before{display:none;}
   .card{min-height:150px;}
   .card-label{font-size:1.35rem;}
 
+  /* ── Back button — fixed bottom-right on mobile ── */
+  #globalBackWrap{
+    position:fixed;
+    bottom:20px;
+    right:16px;
+    z-index:460;
+  }
+
   /* ── HOL game screen ── */
   #gameScreen{padding:0 10px 20px;}
   .topbar{padding:8px 0 12px;gap:7px;}
@@ -1175,8 +1183,8 @@ body::before{display:none;}
 </div>
 
 <!-- BACK BUTTON — sits just below header, scrolls with page -->
-<div id="globalBackWrap" style="display:none;padding:8px 16px 0;">
-  <button id="globalBackBtn" style="background:none;border:1px solid #333;color:#666;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back</button>
+<div id="globalBackWrap" style="display:none;">
+  <button id="globalBackBtn" style="background:rgba(10,10,10,0.92);border:1px solid #333;color:#888;padding:8px 16px;border-radius:20px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;backdrop-filter:blur(8px);" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#888'">← Back</button>
 </div>
 
 <!-- AUTH MODAL -->
