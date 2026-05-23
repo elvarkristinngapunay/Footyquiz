@@ -622,13 +622,6 @@ body::before{display:none;}
 .sxi-pos.filled-p2 .sxi-pos-dot{background:rgba(96,165,250,0.3);border-color:#60a5fa;box-shadow:0 0 10px rgba(96,165,250,0.5);color:#60a5fa;}
 .sxi-pos-name{font-size:0.5rem;font-weight:800;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.95);text-align:center;max-width:58px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.3px;}
 /* Bench */
-.sxi-bench-wrap{width:100%;max-width:360px;margin:0 auto 16px;background:rgba(0,0,0,0.35);border:1px solid #1e1e1e;border-radius:10px;padding:10px 12px;}
-.sxi-bench-lbl{font-size:0.52rem;font-weight:800;letter-spacing:2.5px;color:#333;text-transform:uppercase;margin-bottom:7px;}
-.sxi-bench-slots{display:flex;flex-wrap:wrap;gap:5px;}
-.sxi-bench-slot{background:rgba(255,255,255,0.03);border:1px solid #1e1e1e;border-radius:7px;padding:4px 10px;font-size:0.66rem;color:#333;transition:all 0.35s;}
-.sxi-bench-slot.filled-solo{border-color:rgba(74,222,128,0.4);color:#4ade80;background:rgba(74,222,128,0.06);}
-.sxi-bench-slot.filled-p1{border-color:rgba(255,215,0,0.4);color:#FFD700;background:rgba(255,215,0,0.06);}
-.sxi-bench-slot.filled-p2{border-color:rgba(96,165,250,0.4);color:#60a5fa;background:rgba(96,165,250,0.06);}
 /* Controls */
 .sxi-controls{width:100%;max-width:360px;margin:0 auto;}
 .sxi-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
@@ -1075,16 +1068,36 @@ body::before{display:none;}
   .eg-timer-num{font-size:1.3rem;}
 
   /* ── Starting XI ── */
-  #sxiScreen{padding:14px 10px 48px;}
+  #sxiScreen{
+    padding:14px 10px 12px;
+    min-height:100svh;
+    display:flex;flex-direction:column;
+  }
   .sxi-title{font-size:clamp(2.4rem,12vw,4rem);}
   .sxi-title-pre{font-size:clamp(1rem,5vw,1.6rem);}
   .sxi-section-grid{grid-template-columns:1fr 1fr;}
   .sxi-cat-card{padding:12px 14px;}
   .sxi-cat-trophy{width:36px;height:36px;}
   .sxi-cat-name{font-size:0.95rem;}
-  .sxi-pitch-wrap,.sxi-bench-wrap,.sxi-controls,.sxi-score-row{max-width:100%;}
+  .sxi-pitch-wrap,.sxi-controls,.sxi-score-row{max-width:100%;}
   .sxi-mode-row{flex-wrap:wrap;}
   .sxi-mode-btn{padding:9px 18px;font-size:0.78rem;}
+  /* No-scroll game layout: pitch compact, input always visible */
+  #sxiGame{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;}
+  .sxi-pitch-wrap{
+    position:relative;
+    width:100%;max-width:none;
+    height:55svh;max-height:55svh;
+    flex-shrink:0;margin-bottom:10px;
+  }
+  .sxi-pitch{
+    position:absolute;inset:0;
+    padding-bottom:0 !important;
+    height:100%;width:auto;
+    max-width:calc(55svh / 1.5);
+    margin:0 auto;
+  }
+  .sxi-controls{flex-shrink:0;width:100%;}
 
   /* ── Mode choice overlays ── */
   #egModeChoice,#sxiModeChoice,#sxiTypeChoice{padding:20px 16px;}
@@ -1227,7 +1240,7 @@ body::before{display:none;}
       <img class="game-pick-bg" src="Starting XI card image.png" alt="">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('sxi')" title="How to play">i</div>
       <div class="game-pick-content">
-        <div class="game-pick-badge" style="background:rgba(255,215,0,0.12);border:1px solid #7a5f00;color:#FFD700;">Starting XI</div>
+        <div class="game-pick-badge" style="background:rgba(0,0,0,0.55);border:1px solid rgba(255,215,0,0.5);color:#FFD700;text-shadow:0 1px 4px rgba(0,0,0,0.9);">Starting XI</div>
         <div></div>
         <button class="game-pick-btn" style="background:#FFD700;color:#000;">Play Now ›</button>
       </div>
@@ -1566,12 +1579,6 @@ body::before{display:none;}
         <div style="position:absolute;left:50%;bottom:19%;transform:translateX(-50%);width:5px;height:5px;background:rgba(255,255,255,0.2);border-radius:50%;pointer-events:none;"></div>
         <!-- Player positions injected by JS -->
       </div>
-    </div>
-
-    <!-- Bench -->
-    <div class="sxi-bench-wrap">
-      <div class="sxi-bench-lbl">Bench</div>
-      <div class="sxi-bench-slots" id="sxiBenchSlots"></div>
     </div>
 
     <!-- Controls -->
@@ -3079,7 +3086,6 @@ function sxiBegin(){
   document.getElementById('sxiFormBadge').textContent=sxiTeam.formation;
   // Render pitch
   sxiRenderPitch();
-  sxiRenderBench();
   sxiRenderHUD();
   document.getElementById('sxiInput').value='';
   document.getElementById('sxiStatus').textContent='';
@@ -3102,12 +3108,6 @@ function sxiRenderPitch(){
   });
 }
 
-function sxiRenderBench(){
-  const wrap=document.getElementById('sxiBenchSlots');
-  wrap.innerHTML=sxiTeam.subs.map((s,i)=>
-    `<div class="sxi-bench-slot" id="sxiSub${i}">${'?'}</div>`
-  ).join('');
-}
 
 function sxiRenderHUD(){
   // Turn badge
@@ -3209,33 +3209,6 @@ function sxiSubmit(){
     }
     sxiRenderHUD();
     if(sxiFoundStarters.length===sxiTeam.starters.length) { sxiEndGame(false); return; }
-    return;
-  }
-
-  // Check subs
-  const subi=sxiTeam.subs.findIndex((s,i)=>{
-    if(sxiFoundSubs.some(f=>f.idx===i)) return false;
-    return s.aliases.some(a=>sxiNorm(a)===norm);
-  });
-  if(subi>=0){
-    sxiFoundSubs.push({idx:subi, by:turn});
-    const colorClass=sxiMode===2?(turn===0?'filled-p1':'filled-p2'):'filled-solo';
-    const slot=document.getElementById('sxiSub'+subi);
-    slot.className='sxi-bench-slot '+colorClass;
-    slot.textContent=sxiTeam.subs[subi].name;
-    document.getElementById('sxiInputWrap').classList.add('correct');
-    document.getElementById('sxiStatus').textContent=`✓ ${sxiTeam.subs[subi].name} (sub)`;
-    playTick();
-    input.value='';
-    setTimeout(()=>{
-      document.getElementById('sxiInputWrap').classList.remove('correct');
-      document.getElementById('sxiStatus').textContent='';
-    },800);
-    if(sxiMode===2){
-      sxiCurrentTurn=1-sxiCurrentTurn;
-      if(sxiGameType==='pressure'){ sxiStopTimer(); sxiStartTimer(); }
-    }
-    sxiRenderHUD();
     return;
   }
 
