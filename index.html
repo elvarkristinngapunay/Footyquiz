@@ -2988,7 +2988,7 @@ async function sxiChooseMode(n){
   if(n===1){
     sxiGameType='lives';
     sxiP1='You'; sxiP2='';
-    setBackBtn(null);
+    setBackBtn('← Back', ()=>{ if(confirm('Leave this game?')){ sxiRunning=false; clearInterval(sxiTimerInterval); document.getElementById('sxiGame').style.display='none'; document.getElementById('sxiEnd').style.display='none'; sxiShowTeamSelect(); setBackBtn('← Back Home', showLanding); } });
     sxiBegin();
   } else {
     // Check if signed in
