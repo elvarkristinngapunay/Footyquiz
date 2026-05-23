@@ -1014,16 +1014,22 @@ body::before{display:none;}
   .header{
     height:58px;
     padding:0 14px;
-    grid-template-columns:auto 1fr auto;
+    grid-template-columns:1fr auto 1fr;
   }
+  /* Hide the left nav on mobile so logo stays truly centred */
+  .header > nav:first-child{display:none;}
+  /* Logo image: shrink to fit 58px header */
+  .header img[alt="Football Royal"]{height:44px !important;}
   .logo{font-size:1.05rem;letter-spacing:1px;}
   .logo-crown{font-size:0.9rem;margin-right:5px;}
   .fr-badge{width:28px;height:28px;font-size:0.7rem;margin-right:7px;}
-  /* Hide nav links on mobile — they don't fit */
   .header-nav,.header-streak,.header-badge{display:none;}
+  /* Right nav — keep bell, Friends, Sign In visible but compact */
   .header-right{gap:7px;}
-  .auth-btn,.friends-btn{padding:5px 10px;font-size:0.68rem;}
-  .notif-bell-btn{padding:5px 8px;font-size:0.9rem;}
+  .auth-btn,.friends-btn{padding:5px 9px;font-size:0.65rem;}
+  .notif-bell-btn{padding:5px 7px;font-size:0.9rem;}
+  /* Right nav justify to the right */
+  .header > nav:last-child{justify-content:flex-end;}
 
   /* ── Landing / game picker ── */
   #landingScreen{padding:20px 14px 28px;}
