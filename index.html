@@ -620,7 +620,10 @@ body::before{display:none;}
 .sxi-pos.filled-solo .sxi-pos-dot{background:rgba(74,222,128,0.3);border-color:#4ade80;box-shadow:0 0 10px rgba(74,222,128,0.5);color:#4ade80;}
 .sxi-pos.filled-p1 .sxi-pos-dot{background:rgba(255,215,0,0.3);border-color:#FFD700;box-shadow:0 0 10px rgba(255,215,0,0.5);color:#FFD700;}
 .sxi-pos.filled-p2 .sxi-pos-dot{background:rgba(96,165,250,0.3);border-color:#60a5fa;box-shadow:0 0 10px rgba(96,165,250,0.5);color:#60a5fa;}
-.sxi-pos-name{font-size:0.5rem;font-weight:800;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.95);text-align:center;max-width:58px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.3px;}
+.sxi-pos-name{font-size:0.55rem;font-weight:900;color:#fff;background:rgba(0,0,0,0.65);border-radius:4px;padding:1px 4px;text-align:center;max-width:62px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.2px;}
+.sxi-pos.filled-solo .sxi-pos-name{color:#4ade80;}
+.sxi-pos.filled-p1 .sxi-pos-name{color:#FFD700;}
+.sxi-pos.filled-p2 .sxi-pos-name{color:#60a5fa;}
 /* Bench */
 /* Controls */
 .sxi-controls{width:100%;max-width:360px;margin:0 auto;}
@@ -1053,10 +1056,10 @@ body::before{display:none;}
   .card-label{font-size:1.35rem;}
 
   /* ── Back button — fixed bottom-right on mobile ── */
-  /* Back button: fixed top-left, just under the header — never scrolls */
+  /* Back button: fixed top-left, below header — never scrolls */
   #globalBackWrap{
     position:fixed;
-    top:66px;
+    top:96px;
     left:14px;
     z-index:460;
   }
@@ -1115,9 +1118,25 @@ body::before{display:none;}
     max-width:100%;
     margin:0 auto;left:0;right:0;
   }
-  /* Shrink player dots on small pitch */
-  .sxi-pos-dot{width:22px !important;height:22px !important;}
-  .sxi-pos-name{font-size:0.42rem !important;max-width:44px !important;}
+  /* Player dots — bigger & names clearly readable */
+  .sxi-pos-dot{width:26px !important;height:26px !important;font-size:0.38rem !important;}
+  .sxi-pos-name{
+    font-size:0.55rem !important;
+    max-width:54px !important;
+    font-weight:900 !important;
+    color:#fff !important;
+    background:rgba(0,0,0,0.72) !important;
+    border-radius:4px !important;
+    padding:1px 3px !important;
+    text-shadow:none !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+  /* Filled name — colour-coded so you know it's correct */
+  .sxi-pos.filled-solo .sxi-pos-name{color:#4ade80 !important;background:rgba(0,0,0,0.8) !important;}
+  .sxi-pos.filled-p1 .sxi-pos-name{color:#FFD700 !important;background:rgba(0,0,0,0.8) !important;}
+  .sxi-pos.filled-p2 .sxi-pos-name{color:#60a5fa !important;background:rgba(0,0,0,0.8) !important;}
 
   /* Score row */
   .sxi-score-row{margin-bottom:6px;}
