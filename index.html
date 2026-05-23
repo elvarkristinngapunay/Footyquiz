@@ -1161,6 +1161,11 @@ body::before{display:none;}
   </nav>
 </div>
 
+<!-- BACK BUTTON — sits just below header, scrolls with page -->
+<div id="globalBackWrap" style="display:none;padding:8px 16px 0;">
+  <button id="globalBackBtn" style="background:none;border:1px solid #333;color:#666;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back</button>
+</div>
+
 <!-- AUTH MODAL -->
 <div class="auth-modal" id="authModal" onclick="if(event.target===this)closeAuthModal()">
   <div class="auth-box">
@@ -1194,8 +1199,6 @@ body::before{display:none;}
     </div>
   </div>
 </div>
-
-<button id="globalBackBtn" style="display:none;position:fixed;top:110px;left:16px;z-index:460;background:none;border:1px solid #333;color:#666;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.75rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='#888';this.style.color='#ccc'" onmouseout="this.style.borderColor='#333';this.style.color='#666'">← Back</button>
 
 <!-- LANDING SCREEN -->
 <div id="landingScreen">
@@ -1818,8 +1821,9 @@ function closeGameInfo(){
 
 function setBackBtn(label, fn){
   const btn=document.getElementById('globalBackBtn');
-  if(!label){ btn.style.display='none'; btn.onclick=null; return; }
-  btn.style.display='';
+  const wrap=document.getElementById('globalBackWrap');
+  if(!label){ wrap.style.display='none'; btn.onclick=null; return; }
+  wrap.style.display='block';
   btn.textContent=label;
   btn.onclick=fn;
 }
