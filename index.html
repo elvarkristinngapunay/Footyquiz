@@ -1053,11 +1053,16 @@ body::before{display:none;}
   .card-label{font-size:1.35rem;}
 
   /* ── Back button — fixed bottom-right on mobile ── */
+  /* Back button: fixed top-left, just under the header — never scrolls */
   #globalBackWrap{
     position:fixed;
-    bottom:20px;
-    right:16px;
+    top:66px;
+    left:14px;
     z-index:460;
+  }
+  #globalBackBtn{
+    font-size:0.68rem !important;
+    padding:5px 11px !important;
   }
 
   /* ── HOL game screen ── */
@@ -1076,13 +1081,10 @@ body::before{display:none;}
   .eg-timer-num{font-size:1.3rem;}
 
   /* ── Starting XI ── */
-  #sxiScreen{
-    padding:14px 10px 12px;
-    min-height:100svh;
-    display:flex;flex-direction:column;
-  }
-  .sxi-title{font-size:clamp(2.4rem,12vw,4rem);}
-  .sxi-title-pre{font-size:clamp(1rem,5vw,1.6rem);}
+  #sxiScreen{padding:10px 10px 16px;display:flex;flex-direction:column;}
+  .sxi-title{font-size:clamp(2rem,10vw,3rem);margin-bottom:6px;}
+  .sxi-title-pre{font-size:clamp(0.8rem,4vw,1.2rem);}
+  .sxi-sub{margin-bottom:16px;font-size:0.72rem;}
   .sxi-section-grid{grid-template-columns:1fr 1fr;}
   .sxi-cat-card{padding:12px 14px;}
   .sxi-cat-trophy{width:36px;height:36px;}
@@ -1090,21 +1092,29 @@ body::before{display:none;}
   .sxi-pitch-wrap,.sxi-controls,.sxi-score-row{max-width:100%;}
   .sxi-mode-row{flex-wrap:wrap;}
   .sxi-mode-btn{padding:9px 18px;font-size:0.78rem;}
-  /* No-scroll game layout: pitch compact, input always visible */
-  #sxiGame{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;}
+  /* No-scroll game layout: pitch compact, score + input always on screen */
+  #sxiGame{display:flex;flex-direction:column;align-items:center;width:100%;}
   .sxi-pitch-wrap{
     position:relative;
     width:100%;max-width:none;
-    height:55svh;max-height:55svh;
-    flex-shrink:0;margin-bottom:10px;
+    /* Pitch is roughly 1.5× tall — keep it short enough that score+input fit below */
+    height:42svh;max-height:42svh;
+    flex-shrink:0;margin-bottom:8px;
   }
   .sxi-pitch{
     position:absolute;inset:0;
     padding-bottom:0 !important;
-    height:100%;width:auto;
-    max-width:calc(55svh / 1.5);
-    margin:0 auto;
+    height:100%;
+    width:calc(42svh / 1.5);
+    max-width:100%;
+    margin:0 auto;left:0;right:0;
   }
+  .sxi-score-row{margin-bottom:8px;}
+  .sxi-score-box{padding:7px;}
+  .sxi-score-num{font-size:1.3rem;}
+  .sxi-score-name{font-size:0.52rem;}
+  .sxi-input-wrap{padding:10px 14px;margin-bottom:6px;}
+  .sxi-input{font-size:1.25rem;}
   .sxi-controls{flex-shrink:0;width:100%;}
 
   /* ── Mode choice overlays ── */
