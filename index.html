@@ -1056,10 +1056,10 @@ body::before{display:none;}
   .card-label{font-size:1.35rem;}
 
   /* ── Back button — fixed bottom-right on mobile ── */
-  /* Back button: fixed top-left, below header — never scrolls */
+  /* Back button: fixed top-left, just under header — never scrolls */
   #globalBackWrap{
     position:fixed;
-    top:96px;
+    top:66px;
     left:14px;
     z-index:460;
   }
@@ -1098,10 +1098,9 @@ body::before{display:none;}
   /* Compact game layout — everything visible, no scrolling */
   #sxiGame{display:flex;flex-direction:column;align-items:center;width:100%;}
 
-  /* Team / formation badge row — shrink it */
-  #sxiGame > div:first-child{margin-bottom:4px !important;}
-  #sxiTeamBadge{font-size:0.7rem !important;}
-  .sxi-form-badge{font-size:0.55rem;}
+  /* Team name row on mobile */
+  #sxiTeamBadge{font-size:0.82rem !important;}
+  .sxi-form-badge{font-size:0.55rem;display:block;text-align:center;}
 
   /* Pitch: short enough that input sits on screen even with keyboard open */
   .sxi-pitch-wrap{
@@ -1611,9 +1610,10 @@ body::before{display:none;}
 
   <!-- Game Area -->
   <div id="sxiGame" style="display:none;width:100%;flex-direction:column;align-items:center;">
-    <div style="display:flex;justify-content:space-between;align-items:center;width:100%;max-width:360px;margin-bottom:10px;">
-      <div id="sxiTeamBadge" style="font-family:'Anton',sans-serif;font-size:0.95rem;color:#aaa;letter-spacing:2px;"></div>
-      <div id="sxiFormBadge" class="sxi-form-badge"></div>
+    <!-- Team name — centred above pitch, never overlaps it -->
+    <div style="width:100%;text-align:center;margin-bottom:8px;padding-top:4px;">
+      <div id="sxiTeamBadge" style="font-family:'Anton',sans-serif;font-size:1rem;color:#fff;letter-spacing:2px;display:inline-block;"></div>
+      <div id="sxiFormBadge" class="sxi-form-badge" style="margin-top:2px;"></div>
     </div>
     <div id="sxiScoreRow" class="sxi-score-row" style="display:none;"></div>
     <div id="sxiTurnBadge" class="sxi-turn-badge" style="display:none;width:100%;max-width:360px;margin:0 auto 10px;text-align:center;"></div>
