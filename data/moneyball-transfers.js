@@ -209,6 +209,48 @@ const MONEYBALL_MANAGERS = [
     ]
   }
 
+  ,
+
+  {
+    id: 'pochettino',
+    manager: 'Mauricio Pochettino',
+    transfers: [
+
+      // ── Chelsea (2023 – 2024) ──────────────────────────────────────────────
+      { player:'Moisés Caicedo',       pos:'Defensive Midfield', from:'Brighton',       fromLeague:'Premier League', to:'Chelsea',     window:'Summer',  year:2023, fee:116.00 },
+      { player:'Roméo Lavia',          pos:'Defensive Midfield', from:'Southampton',    fromLeague:'Championship',   to:'Chelsea',     window:'Summer',  year:2023, fee:62.10  },
+      { player:'Christopher Nkunku',   pos:'Centre-Forward',     from:'RB Leipzig',     fromLeague:'Bundesliga',     to:'Chelsea',     window:'Summer',  year:2023, fee:60.00  },
+      { player:'Cole Palmer',          pos:'Attacking Midfield', from:'Manchester City',fromLeague:'Premier League', to:'Chelsea',     window:'Summer',  year:2023, fee:47.00  },
+      { player:'Axel Disasi',          pos:'Centre-Back',        from:'Monaco',         fromLeague:'Ligue 1',        to:'Chelsea',     window:'Summer',  year:2023, fee:45.00  },
+      { player:'Nicolas Jackson',      pos:'Centre-Forward',     from:'Villarreal',     fromLeague:'LaLiga',         to:'Chelsea',     window:'Summer',  year:2023, fee:37.00  },
+      { player:'Lesley Ugochukwu',     pos:'Defensive Midfield', from:'Stade Rennais',  fromLeague:'Ligue 1',        to:'Chelsea',     window:'Summer',  year:2023, fee:27.00  },
+      { player:'Robert Sánchez',       pos:'Goalkeeper',         from:'Brighton',       fromLeague:'Premier League', to:'Chelsea',     window:'Summer',  year:2023, fee:23.00  },
+      { player:'Djordje Petrovic',     pos:'Goalkeeper',         from:'New England',    fromLeague:'MLS',            to:'Chelsea',     window:'Summer',  year:2023, fee:16.00  },
+
+      // ── PSG (2021 – 2023) ──────────────────────────────────────────────────
+      { player:'Achraf Hakimi',        pos:'Right-Back',         from:'Inter Milan',    fromLeague:'Serie A',        to:'PSG',         window:'Summer',  year:2021, fee:68.00  },
+      { player:'Vitinha',              pos:'Defensive Midfield', from:'Porto',          fromLeague:'Liga Portugal',  to:'PSG',         window:'Summer',  year:2022, fee:41.50  },
+      { player:'Nuno Mendes',          pos:'Left-Back',          from:'Sporting CP',    fromLeague:'Liga Portugal',  to:'PSG',         window:'Summer',  year:2022, fee:38.00  },
+      { player:'Danilo Pereira',       pos:'Centre-Back',        from:'Porto',          fromLeague:'Liga Portugal',  to:'PSG',         window:'Summer',  year:2021, fee:16.00  },
+
+      // ── Tottenham (2014 – 2019) ────────────────────────────────────────────
+      { player:'Tanguy Ndombélé',      pos:'Central Midfield',   from:'Lyon',           fromLeague:'Ligue 1',        to:'Tottenham',   window:'Summer',  year:2019, fee:62.00  },
+      { player:'Davinson Sánchez',     pos:'Centre-Back',        from:'Ajax',           fromLeague:'Eredivisie',     to:'Tottenham',   window:'Summer',  year:2017, fee:42.00  },
+      { player:'Moussa Sissoko',       pos:'Central Midfield',   from:'Newcastle',      fromLeague:'Championship',   to:'Tottenham',   window:'Summer',  year:2016, fee:35.00  },
+      { player:'Heung-min Son',        pos:'Left Winger',        from:'Bayer Leverkusen',fromLeague:'Bundesliga',    to:'Tottenham',   window:'Summer',  year:2015, fee:30.00  },
+      { player:'Lucas Moura',          pos:'Right Winger',       from:'PSG',            fromLeague:'Ligue 1',        to:'Tottenham',   window:'January', year:2018, fee:28.40  },
+      { player:'Ryan Sessegnon',       pos:'Left-Back',          from:'Fulham',         fromLeague:'Championship',   to:'Tottenham',   window:'Summer',  year:2019, fee:27.00  },
+      { player:'Serge Aurier',         pos:'Right-Back',         from:'PSG',            fromLeague:'Ligue 1',        to:'Tottenham',   window:'Summer',  year:2017, fee:25.00  },
+      { player:'Vincent Janssen',      pos:'Centre-Forward',     from:'AZ Alkmaar',     fromLeague:'Eredivisie',     to:'Tottenham',   window:'Summer',  year:2016, fee:22.00  },
+      { player:'Toby Alderweireld',    pos:'Centre-Back',        from:'Atlético Madrid',fromLeague:'LaLiga',         to:'Tottenham',   window:'Summer',  year:2015, fee:16.00  },
+      { player:'Giovani Lo Celso',     pos:'Attacking Midfield', from:'Real Betis',     fromLeague:'LaLiga',         to:'Tottenham',   window:'Summer',  year:2019, fee:16.00  },
+      { player:'Fernando Llorente',    pos:'Centre-Forward',     from:'Swansea',        fromLeague:'Premier League', to:'Tottenham',   window:'Summer',  year:2017, fee:15.10  },
+
+      // ── Southampton (2013 – 2014) ──────────────────────────────────────────
+      { player:'Daniel Osvaldo',       pos:'Centre-Forward',     from:'Roma',           fromLeague:'Serie A',        to:'Southampton', window:'Summer',  year:2013, fee:15.10  },
+    ]
+  }
+
   // ── Future managers go here, same structure ──────────────────────────────
   // { id:'ferguson', manager:'Sir Alex Ferguson', transfers:[ ... ] },
 ];
