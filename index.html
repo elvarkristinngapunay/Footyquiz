@@ -30,7 +30,7 @@ body::before{display:none;}
     url('backround image for for higher and lower.png') center top / cover;
   opacity:0;
 }
-#landingScreen,#higherOrLowerSection,#elGrandeMenu,#elGrandeGame,#gameScreen,#sxiScreen{position:relative;z-index:2;}
+#landingScreen,#higherOrLowerSection,#elGrandeMenu,#elGrandeGame,#gameScreen,#sxiScreen,#mbScreen{position:relative;z-index:2;}
 
 /* ── HEADER ── */
 .header{
@@ -1292,6 +1292,14 @@ body::before{display:none;}
         <button class="game-pick-btn" style="background:#FFD700;color:#000;">Play Now ›</button>
       </div>
     </div>
+    <div class="game-pick-card" onclick="showMoneyball()" style="position:relative;background:linear-gradient(135deg,#0a2a0a 0%,#0d3d1a 50%,#071a07 100%);">
+      <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('mb')" title="How to play">i</div>
+      <div class="game-pick-content">
+        <div class="game-pick-badge" style="background:rgba(74,222,128,0.12);border:1px solid #2d6b3e;color:#4ade80;">Moneyball</div>
+        <div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#fff;line-height:1;letter-spacing:1px;">💰 MONEY<br>BALL</div>
+        <button class="game-pick-btn" style="background:#4ade80;color:#000;">Play Now ›</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1663,6 +1671,72 @@ body::before{display:none;}
 
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════════════════
+     MONEYBALL GAME
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div id="mbScreen" style="display:none;flex-direction:column;align-items:center;padding:20px 16px 60px;max-width:560px;margin:0 auto;">
+
+  <!-- Title -->
+  <div style="font-family:'Anton',sans-serif;font-size:0.75rem;color:#555;letter-spacing:4px;margin-bottom:2px;text-align:center;">WELCOME TO</div>
+  <div style="font-family:'Anton',sans-serif;font-size:clamp(2.4rem,10vw,4rem);color:#4ade80;letter-spacing:2px;line-height:1;text-align:center;margin-bottom:20px;">MONEYBALL</div>
+
+  <!-- Stats bar -->
+  <div style="display:flex;gap:20px;justify-content:center;margin-bottom:24px;width:100%;">
+    <div style="background:#111;border:1px solid #222;border-radius:12px;padding:10px 20px;text-align:center;">
+      <div style="font-size:0.6rem;color:#555;letter-spacing:2px;">STREAK</div>
+      <div id="mbStreak" style="font-family:'Anton',sans-serif;font-size:1.8rem;color:#4ade80;line-height:1;">0</div>
+    </div>
+    <div style="background:#111;border:1px solid #222;border-radius:12px;padding:10px 20px;text-align:center;">
+      <div style="font-size:0.6rem;color:#555;letter-spacing:2px;">BEST</div>
+      <div id="mbBest" style="font-family:'Anton',sans-serif;font-size:1.8rem;color:#fff;line-height:1;">0</div>
+    </div>
+    <div style="background:#111;border:1px solid #222;border-radius:12px;padding:10px 20px;text-align:center;">
+      <div style="font-size:0.6rem;color:#555;letter-spacing:2px;">GUESSES</div>
+      <div id="mbGuessesLeft" style="font-family:'Anton',sans-serif;font-size:1.8rem;color:#fff;line-height:1;">7</div>
+    </div>
+  </div>
+
+  <!-- Player card -->
+  <div id="mbCard" style="width:100%;background:#111;border:1px solid #222;border-radius:18px;padding:28px 20px;text-align:center;margin-bottom:20px;">
+    <div id="mbPlayerName" style="font-family:'Anton',sans-serif;font-size:clamp(1.6rem,6vw,2.4rem);color:#fff;line-height:1.1;margin-bottom:8px;"></div>
+    <div id="mbWindow" style="font-size:0.72rem;color:#555;letter-spacing:3px;margin-bottom:20px;"></div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;">
+      <div style="text-align:center;">
+        <img id="mbFromBadge" src="" alt="" style="width:56px;height:56px;object-fit:contain;" onerror="this.style.display='none';document.getElementById('mbFromName').style.display='block'">
+        <div id="mbFromName" style="display:none;font-size:0.7rem;color:#888;margin-top:4px;max-width:80px;"></div>
+      </div>
+      <div style="font-size:1.6rem;color:#444;">→</div>
+      <div style="text-align:center;">
+        <img id="mbToBadge" src="" alt="" style="width:56px;height:56px;object-fit:contain;" onerror="this.style.display='none';document.getElementById('mbToName').style.display='block'">
+        <div id="mbToName" style="display:none;font-size:0.7rem;color:#888;margin-top:4px;max-width:80px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guess input -->
+  <div id="mbInputArea" style="width:100%;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:10px;justify-content:center;">
+      <span style="font-family:'Anton',sans-serif;font-size:1.4rem;color:#4ade80;">€</span>
+      <input id="mbInput" type="number" min="0" max="300" step="0.5"
+        style="width:130px;background:#111;border:2px solid #333;border-radius:12px;padding:14px 16px;font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;text-align:center;outline:none;"
+        placeholder="0"
+        onkeydown="if(event.key==='Enter')mbSubmitGuess()"
+        oninput="this.style.borderColor='#555'">
+      <span style="font-family:'Anton',sans-serif;font-size:1.4rem;color:#888;">M</span>
+    </div>
+    <div style="text-align:center;margin-top:12px;">
+      <button onclick="mbSubmitGuess()" style="background:#4ade80;color:#000;border:none;padding:14px 40px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;">GUESS</button>
+    </div>
+  </div>
+
+  <!-- Feedback -->
+  <div id="mbFeedback" style="text-align:center;min-height:60px;width:100%;"></div>
+
+  <!-- Previous guesses -->
+  <div id="mbPrevGuesses" style="width:100%;margin-top:8px;"></div>
+
+</div>
+
 <!-- WELCOME OVERLAY -->
 <div id="gameWelcomeOverlay">
   <div class="gwo-label">WELCOME TO</div>
@@ -1860,6 +1934,10 @@ const GAME_INFO = {
     title: 'Football Under Pressure',
     body: `The clock is ticking — you've got 30 seconds. A category appears and you have to name as many players as possible before time runs out. Play solo and beat your record, or pass it to a mate and see who knows their football. No pressure... well, actually, loads of pressure.`
   },
+  mb: {
+    title: 'Moneyball',
+    body: `A transfer appears — player name, window, and the two clubs. Guess the fee in millions. You get 7 guesses and a higher/lower hint each time. Land within €2M to score the point and keep your streak alive. Miss all 7 and it's game over. How far can you go?`
+  },
   sxi: {
     title: 'Starting XI',
     body: `Can you name every player who started in some of football's greatest finals? Pick a tournament — World Cup, Champions League, Euros or Copa América — then choose a team. Type in the names and fill the pitch. Play solo or go head-to-head: one player on each side of the screen. First to complete the XI wins.`
@@ -1893,6 +1971,7 @@ function showLanding(){
   document.getElementById('elGrandeGame').style.display='none';
   document.getElementById('gameScreen').style.display='none';
   document.getElementById('sxiScreen').style.display='none';
+  document.getElementById('mbScreen').style.display='none';
   setBackBtn(null);
 }
 function showSxi(){
@@ -4276,5 +4355,161 @@ function updateFriendsNav(){
 <script src="data/club-logos.js"></script>
 <script src="data/sxi-teams.js"></script>
 <script src="data/trophies.js"></script>
+<script src="data/moneyball-transfers.js"></script>
+<script>
+// ══════════════════════════════════════════════════════════════════════════════
+//  MONEYBALL GAME
+// ══════════════════════════════════════════════════════════════════════════════
+
+let mbStreak = 0;
+let mbBest = parseInt(localStorage.getItem('mbBest') || '0');
+let mbGuesses = 0;
+let mbCurrentTransfer = null;
+let mbAllTransfers = [];
+let mbUsedIndices = [];
+let mbGameOver = false;
+
+function showMoneyball(){
+  document.getElementById('landingScreen').style.display = 'none';
+  document.getElementById('higherOrLowerSection').style.display = 'none';
+  document.getElementById('elGrandeMenu').style.display = 'none';
+  document.getElementById('elGrandeGame').style.display = 'none';
+  document.getElementById('gameScreen').style.display = 'none';
+  document.getElementById('sxiScreen').style.display = 'none';
+  document.getElementById('mbScreen').style.display = 'flex';
+  setBackBtn('← Back Home', showLanding);
+  mbInit();
+}
+
+function mbInit(){
+  // Flatten all transfers from all managers
+  mbAllTransfers = [];
+  MONEYBALL_MANAGERS.forEach(m => {
+    m.transfers.forEach(t => mbAllTransfers.push(t));
+  });
+  mbStreak = 0;
+  mbBest = parseInt(localStorage.getItem('mbBest') || '0');
+  mbUsedIndices = [];
+  mbGameOver = false;
+  document.getElementById('mbStreak').textContent = mbStreak;
+  document.getElementById('mbBest').textContent = mbBest;
+  mbNextTransfer();
+}
+
+function mbGetLogo(club){
+  if(!club) return '';
+  return CLUB_LOGOS[club] || '';
+}
+
+function mbNextTransfer(){
+  mbGuesses = 7;
+  mbGameOver = false;
+  document.getElementById('mbInput').value = '';
+  document.getElementById('mbInput').style.borderColor = '#333';
+  document.getElementById('mbFeedback').innerHTML = '';
+  document.getElementById('mbPrevGuesses').innerHTML = '';
+  document.getElementById('mbInputArea').style.display = 'block';
+  document.getElementById('mbGuessesLeft').textContent = mbGuesses;
+
+  // Pick a random unused transfer
+  if(mbUsedIndices.length >= mbAllTransfers.length) mbUsedIndices = [];
+  let idx;
+  do { idx = Math.floor(Math.random() * mbAllTransfers.length); }
+  while(mbUsedIndices.includes(idx));
+  mbUsedIndices.push(idx);
+  mbCurrentTransfer = mbAllTransfers[idx];
+
+  const t = mbCurrentTransfer;
+  document.getElementById('mbPlayerName').textContent = t.player;
+  document.getElementById('mbWindow').textContent = `${t.window.toUpperCase()} TRANSFER WINDOW · ${t.year}`;
+
+  // Badges
+  const fromLogo = mbGetLogo(t.from);
+  const toLogo   = mbGetLogo(t.to);
+
+  const fromImg = document.getElementById('mbFromBadge');
+  const toImg   = document.getElementById('mbToBadge');
+  const fromTxt = document.getElementById('mbFromName');
+  const toTxt   = document.getElementById('mbToName');
+
+  fromImg.style.display = 'block'; fromTxt.style.display = 'none';
+  toImg.style.display   = 'block'; toTxt.style.display   = 'none';
+
+  if(fromLogo){ fromImg.src = fromLogo; fromTxt.textContent = t.from; }
+  else { fromImg.style.display = 'none'; fromTxt.style.display = 'block'; fromTxt.textContent = t.from; }
+
+  if(toLogo){ toImg.src = toLogo; toTxt.textContent = t.to; }
+  else { toImg.style.display = 'none'; toTxt.style.display = 'block'; toTxt.textContent = t.to; }
+
+  setTimeout(()=>document.getElementById('mbInput').focus(), 100);
+}
+
+function mbSubmitGuess(){
+  if(mbGameOver) return;
+  const raw = parseFloat(document.getElementById('mbInput').value);
+  if(isNaN(raw) || raw < 0){
+    document.getElementById('mbInput').style.borderColor = '#ef4444';
+    return;
+  }
+
+  const guess = raw;
+  const correct = mbCurrentTransfer.fee;
+  const diff = Math.abs(guess - correct);
+  mbGuesses--;
+  document.getElementById('mbGuessesLeft').textContent = mbGuesses;
+
+  // Add to previous guesses list
+  const prevEl = document.getElementById('mbPrevGuesses');
+  const guessRow = document.createElement('div');
+  guessRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:6px 12px;margin-bottom:4px;background:#0d0d0d;border-radius:8px;font-size:0.82rem;';
+
+  if(diff <= 2){
+    // CORRECT
+    mbStreak++;
+    if(mbStreak > mbBest){
+      mbBest = mbStreak;
+      localStorage.setItem('mbBest', mbBest);
+    }
+    document.getElementById('mbStreak').textContent = mbStreak;
+    document.getElementById('mbBest').textContent = mbBest;
+    document.getElementById('mbInput').style.borderColor = '#4ade80';
+    document.getElementById('mbFeedback').innerHTML = `
+      <div style="font-family:'Anton',sans-serif;font-size:2rem;color:#4ade80;">✓ CORRECT!</div>
+      <div style="color:#555;font-size:0.8rem;margin:4px 0 12px;">The fee was <strong style="color:#fff;">€${correct}M</strong></div>
+      <button onclick="mbNextTransfer()" style="background:#4ade80;color:#000;border:none;padding:12px 32px;border-radius:12px;font-family:'Anton',sans-serif;font-size:0.9rem;letter-spacing:2px;cursor:pointer;">NEXT TRANSFER →</button>`;
+    document.getElementById('mbInputArea').style.display = 'none';
+    mbGameOver = true;
+
+  } else if(mbGuesses === 0){
+    // OUT OF GUESSES
+    mbGameOver = true;
+    const prevStreak = mbStreak;
+    mbStreak = 0;
+    document.getElementById('mbStreak').textContent = mbStreak;
+    document.getElementById('mbInput').style.borderColor = '#ef4444';
+    document.getElementById('mbFeedback').innerHTML = `
+      <div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:#ef4444;">GAME OVER</div>
+      <div style="color:#555;font-size:0.8rem;margin:4px 0 4px;">The fee was <strong style="color:#fff;">€${correct}M</strong></div>
+      <div style="color:#555;font-size:0.75rem;margin-bottom:12px;">Streak: ${prevStreak}</div>
+      <button onclick="mbNextTransfer()" style="background:#ef4444;color:#fff;border:none;padding:12px 32px;border-radius:12px;font-family:'Anton',sans-serif;font-size:0.9rem;letter-spacing:2px;cursor:pointer;">TRY AGAIN →</button>`;
+    document.getElementById('mbInputArea').style.display = 'none';
+
+  } else {
+    // HIGHER or LOWER
+    const dir = guess < correct ? '📈 HIGHER' : '📉 LOWER';
+    const col = guess < correct ? '#e8b923' : '#e8b923';
+    document.getElementById('mbInput').style.borderColor = col;
+    document.getElementById('mbFeedback').innerHTML = `
+      <div style="font-family:'Anton',sans-serif;font-size:1.5rem;color:${col};">${dir}</div>
+      <div style="color:#555;font-size:0.72rem;">${mbGuesses} guess${mbGuesses===1?'':'es'} remaining</div>`;
+    document.getElementById('mbInput').value = '';
+    document.getElementById('mbInput').focus();
+  }
+
+  // Log this guess
+  guessRow.innerHTML = `<span style="color:#888;">€${guess}M</span><span style="color:${diff<=2?'#4ade80':mbGuesses===0?'#ef4444':'#e8b923'}">${diff<=2?'✓ Correct':guess<correct?'↑ Higher':'↓ Lower'}</span>`;
+  prevEl.insertBefore(guessRow, prevEl.firstChild);
+}
+</script>
 </body>
 </html>

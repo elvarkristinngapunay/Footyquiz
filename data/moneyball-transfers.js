@@ -163,7 +163,52 @@ const MONEYBALL_MANAGERS = [
     ]
   }
 
+  ,
+
+  {
+    id: 'mourinho',
+    manager: 'José Mourinho',
+    transfers: [
+
+      // ── Manchester United (2016 – 2018) ───────────────────────────────────
+      { player:'Paul Pogba',             pos:'Central Midfield',  from:'Juventus',       fromLeague:'Serie A',        to:'Man Utd',     window:'Summer',  year:2016, fee:105.00 },
+      { player:'Romelu Lukaku',          pos:'Centre-Forward',    from:'Everton',        fromLeague:'Premier League', to:'Man Utd',     window:'Summer',  year:2017, fee:84.70  },
+      { player:'Fred',                   pos:'Central Midfield',  from:'Shakhtar Donetsk',fromLeague:'Premier Liga',  to:'Man Utd',     window:'Summer',  year:2018, fee:59.00  },
+      { player:'Nemanja Matić',          pos:'Defensive Midfield',from:'Chelsea',        fromLeague:'Premier League', to:'Man Utd',     window:'Summer',  year:2017, fee:44.70  },
+      { player:'Henrikh Mkhitaryan',     pos:'Central Midfield',  from:'Borussia Dortmund',fromLeague:'Bundesliga',   to:'Man Utd',     window:'Summer',  year:2016, fee:42.00  },
+      { player:'Eric Bailly',            pos:'Centre-Back',       from:'Villarreal',     fromLeague:'LaLiga',         to:'Man Utd',     window:'Summer',  year:2016, fee:38.00  },
+      { player:'Victor Lindelöf',        pos:'Centre-Back',       from:'Benfica',        fromLeague:'Liga Portugal',  to:'Man Utd',     window:'Summer',  year:2017, fee:35.00  },
+      { player:'Alexis Sánchez',         pos:'Second Striker',    from:'Arsenal',        fromLeague:'Premier League', to:'Man Utd',     window:'January', year:2018, fee:34.00  },
+
+      // ── Chelsea (2004 – 2007, 2013 – 2015) ────────────────────────────────
+      { player:'Andriy Shevchenko',      pos:'Centre-Forward',    from:'AC Milan',       fromLeague:'Serie A',        to:'Chelsea',     window:'Summer',  year:2006, fee:43.88  },
+      { player:'Didier Drogba',          pos:'Centre-Forward',    from:'Marseille',      fromLeague:'Ligue 1',        to:'Chelsea',     window:'Summer',  year:2004, fee:38.50  },
+      { player:'Michael Essien',         pos:'Defensive Midfield',from:'Lyon',           fromLeague:'Ligue 1',        to:'Chelsea',     window:'Summer',  year:2005, fee:38.00  },
+      { player:'Diego Costa',            pos:'Centre-Forward',    from:'Atlético Madrid',fromLeague:'LaLiga',         to:'Chelsea',     window:'Summer',  year:2014, fee:38.00  },
+      { player:'Willian',                pos:'Left Winger',       from:'Anzhi',          fromLeague:'Premier Liga',   to:'Chelsea',     window:'Summer',  year:2013, fee:35.50  },
+      { player:'Cesc Fàbregas',          pos:'Central Midfield',  from:'Barcelona',      fromLeague:'LaLiga',         to:'Chelsea',     window:'Summer',  year:2014, fee:33.00  },
+      { player:'Shaun Wright-Phillips',  pos:'Right Winger',      from:'Manchester City',fromLeague:'Premier League', to:'Chelsea',     window:'Summer',  year:2005, fee:31.50  },
+      { player:'Juan Cuadrado',          pos:'Right Midfield',    from:'Fiorentina',     fromLeague:'Serie A',        to:'Chelsea',     window:'January', year:2015, fee:31.00  },
+      { player:'Ricardo Carvalho',       pos:'Centre-Back',       from:'Porto',          fromLeague:'Liga Portugal',  to:'Chelsea',     window:'Summer',  year:2004, fee:30.00  },
+
+      // ── Real Madrid (2010 – 2013) ──────────────────────────────────────────
+      { player:'Luka Modrić',            pos:'Central Midfield',  from:'Tottenham',      fromLeague:'Premier League', to:'Real Madrid', window:'Summer',  year:2012, fee:35.00  },
+      { player:'Ángel Di María',         pos:'Right Winger',      from:'Benfica',        fromLeague:'Liga Portugal',  to:'Real Madrid', window:'Summer',  year:2010, fee:33.00  },
+      { player:'Fábio Coentrão',         pos:'Left-Back',         from:'Benfica',        fromLeague:'Liga Portugal',  to:'Real Madrid', window:'Summer',  year:2011, fee:30.00  },
+
+      // ── Tottenham (2019 – 2021) ────────────────────────────────────────────
+      { player:'Giovani Lo Celso',       pos:'Attacking Midfield',from:'Real Betis',     fromLeague:'LaLiga',         to:'Tottenham',   window:'Summer',  year:2020, fee:32.00  },
+      { player:'Steven Bergwijn',        pos:'Left Winger',       from:'PSV',            fromLeague:'Eredivisie',     to:'Tottenham',   window:'January', year:2020, fee:30.00  },
+      { player:'Sergio Reguilón',        pos:'Left-Back',         from:'Real Madrid',    fromLeague:'LaLiga',         to:'Tottenham',   window:'Summer',  year:2020, fee:30.00  },
+
+      // ── AS Roma (2021 – 2023) ──────────────────────────────────────────────
+      { player:'Tammy Abraham',          pos:'Centre-Forward',    from:'Chelsea',        fromLeague:'Premier League', to:'Roma',        window:'Summer',  year:2021, fee:41.00  },
+
+      // ── Inter Milan (2008 – 2010) ──────────────────────────────────────────
+      { player:'Diego Milito',           pos:'Centre-Forward',    from:'Genoa',          fromLeague:'Serie A',        to:'Inter Milan', window:'Summer',  year:2009, fee:28.00  },
+    ]
+  }
+
   // ── Future managers go here, same structure ──────────────────────────────
-  // { id:'mourinho',  manager:'José Mourinho',  transfers:[ ... ] },
-  // { id:'ferguson',  manager:'Sir Alex Ferguson', transfers:[ ... ] },
+  // { id:'ferguson', manager:'Sir Alex Ferguson', transfers:[ ... ] },
 ];
