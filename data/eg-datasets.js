@@ -318,5 +318,39 @@ const EG_DATASETS = {
       {name:'Harry Kane',        aliases:['kane'],                                  from:'Tottenham',       to:'Bayern Munich',   fee:'€100m', year:2023},
       {name:'Gareth Bale',       aliases:['bale'],                                  from:'Tottenham',       to:'Real Madrid',     fee:'€100m', year:2013},
     ]
+  },
+
+  wc_golden_boot: {
+    title: 'World Cup Golden Boot Winners',
+    missingLabel: 'golden boot winners',
+    players: [
+      {name:'Guillermo Stábile',   aliases:['stabile','guillermo stabile']},
+      {name:'Oldřich Nejedlý',     aliases:['nejedlý','nejedly','oldrich nejedlý','oldrich nejedly']},
+      {name:'Leônidas',            aliases:['leonidas']},
+      {name:'Ademir',              aliases:['ademir','ademir marques']},
+      {name:'Sándor Kocsis',       aliases:['kocsis','sandor kocsis']},
+      {name:'Just Fontaine',       aliases:['fontaine','just fontaine']},
+      {name:'Garrincha',           aliases:['garrincha','mane garrincha']},
+      {name:'Vavá',                aliases:['vava']},
+      {name:'Leonel Sánchez',      aliases:['sanchez','leonel sanchez']},
+      {name:'Flórián Albert',      aliases:['albert','florian albert']},
+      {name:'Valentin Ivanov',     aliases:['ivanov','valentin ivanov']},
+      {name:'Eusébio',             aliases:['eusebio','eusébio']},
+      {name:'Gerd Müller',         aliases:['muller','gerd muller','der bomber']},
+      {name:'Grzegorz Lato',       aliases:['lato','grzegorz lato']},
+      {name:'Mario Kempes',        aliases:['kempes','mario kempes']},
+      {name:'Paolo Rossi',         aliases:['rossi','paolo rossi']},
+      {name:'Gary Lineker',        aliases:['lineker','gary lineker']},
+      {name:'Salvatore Schillaci', aliases:['schillaci','salvatore schillaci','toto schillaci','toto']},
+      {name:'Oleg Salenko',        aliases:['salenko','oleg salenko']},
+      {name:'Hristo Stoichkov',    aliases:['stoichkov','hristo stoichkov']},
+      {name:'Davor Šuker',         aliases:['suker','šuker','davor suker']},
+      {name:'Ronaldo',             aliases:['ronaldo','r9','ronaldo nazario']},
+      {name:'Miroslav Klose',      aliases:['klose','miroslav klose']},
+      {name:'Thomas Müller',       aliases:['muller','thomas muller','müller']},
+      {name:'James Rodríguez',     aliases:['james','james rodriguez','james rodríguez']},
+      {name:'Harry Kane',          aliases:['kane','harry kane']},
+      {name:'Kylian Mbappé',       aliases:['mbappe','mbappé','kylian mbappe','kylian']},
+    ]
   }
 };
