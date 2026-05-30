@@ -1598,7 +1598,7 @@ body::before{display:none;}
       <input id="sxiP2Name" class="sxi-ne-input p2" placeholder="Player 2 name" />
     </div>
     <button onclick="sxiConfirmNames()" style="background:#4ade80;color:#000;border:none;padding:14px 36px;border-radius:12px;font-family:inherit;font-weight:800;font-size:0.9rem;cursor:pointer;letter-spacing:1px;">Kick Off →</button>
-    <br><button onclick="document.getElementById('sxiNameEntry').style.display='none';document.getElementById('sxiModeChoice').style.display='flex';setBackBtn('← Back',sxiModeBack);" style="margin-top:16px;background:none;border:none;color:#444;font-size:0.78rem;cursor:pointer;font-family:inherit;">← Back</button>
+    <br><button onclick="document.getElementById('sxiNameEntry').style.display='none';document.getElementById('sxiTypeChoice').style.display='flex';setBackBtn('← Back',()=>{document.getElementById('sxiTypeChoice').style.display='none';document.getElementById('sxiModeChoice').style.display='flex';setBackBtn('← Back',sxiModeBack);});" style="margin-top:16px;background:none;border:none;color:#444;font-size:0.78rem;cursor:pointer;font-family:inherit;">← Back</button>
   </div>
 
   <!-- Game Area -->
@@ -1717,23 +1717,20 @@ body::before{display:none;}
 
 <!-- SXI GAME TYPE CHOICE (2-player only) -->
 <div id="sxiTypeChoice">
-  <div class="eg-mc-icon">👥</div>
+  <div class="eg-mc-icon">⏱️</div>
   <div class="eg-mc-title" id="sxiTypeTitle"></div>
-  <div class="eg-mc-how">CHOOSE YOUR FORMAT</div>
-  <div class="eg-mc-btns" style="flex-direction:column;gap:12px;max-width:300px;">
-    <button class="eg-mc-btn" onclick="sxiChooseType('lives')" style="display:flex;align-items:center;gap:14px;text-align:left;padding:18px 20px;">
-      <div style="font-size:2rem;">❤️</div>
-      <div>
-        <div class="eg-mc-bl">3 Lives</div>
-        <div class="eg-mc-bs">Classic mode — 3 wrong answers and you're out</div>
-      </div>
+  <div class="eg-mc-how">FOOTBALL UNDER PRESSURE?</div>
+  <div style="color:#aaa;font-size:0.85rem;margin-bottom:20px;max-width:280px;">30 seconds per turn — name as many players as you can before time runs out</div>
+  <div class="eg-mc-btns" style="flex-direction:row;gap:16px;max-width:320px;">
+    <button class="eg-mc-btn" onclick="sxiChooseType('pressure')" style="flex:1;flex-direction:column;align-items:center;justify-content:center;padding:22px 16px;border-color:#e8b923;">
+      <div style="font-size:2rem;">✅</div>
+      <div class="eg-mc-bl" style="color:#e8b923;margin-top:8px;">Yes</div>
+      <div class="eg-mc-bs" style="text-align:center;">Under Pressure</div>
     </button>
-    <button class="eg-mc-btn" onclick="sxiChooseType('pressure')" style="display:flex;align-items:center;gap:14px;text-align:left;padding:18px 20px;border-color:#e8b923;">
-      <div style="font-size:2rem;">⏱️</div>
-      <div>
-        <div class="eg-mc-bl" style="color:#e8b923;">Football Under Pressure</div>
-        <div class="eg-mc-bs">30 seconds per turn — name as many as you can</div>
-      </div>
+    <button class="eg-mc-btn" onclick="sxiChooseType('lives')" style="flex:1;flex-direction:column;align-items:center;justify-content:center;padding:22px 16px;">
+      <div style="font-size:2rem;">❤️</div>
+      <div class="eg-mc-bl" style="margin-top:8px;">No</div>
+      <div class="eg-mc-bs" style="text-align:center;">3 Lives mode</div>
     </button>
   </div>
 </div>
@@ -3022,16 +3019,14 @@ async function sxiChooseMode(n){
     setBackBtn('← Back', ()=>{ if(confirm('Leave this game?')){ sxiRunning=false; clearInterval(sxiTimerInterval); document.getElementById('sxiGame').style.display='none'; document.getElementById('sxiEnd').style.display='none'; sxiShowTeamSelect(); setBackBtn('← Back Home', showLanding); } });
     sxiBegin();
   } else {
-    // Check if signed in
-    if(!currentUser){
-      alert('Sign in to play multiplayer! Create a free account to challenge friends.');
-      showAuthModal('signin');
-      document.getElementById('sxiModeChoice').style.display='none';
-      return;
-    }
-    // Load friends then show friend picker for online play
-    await loadFriends();
-    sxiShowFriendPick();
+    // Show Football Under Pressure? Yes/No prompt
+    document.getElementById('sxiTypeTitle').textContent=`${sxiTeam.flag} ${sxiTeam.name} ${sxiTeam.year}`;
+    document.getElementById('sxiTypeChoice').style.display='flex';
+    setBackBtn('← Back', ()=>{
+      document.getElementById('sxiTypeChoice').style.display='none';
+      document.getElementById('sxiModeChoice').style.display='flex';
+      setBackBtn('← Back', sxiModeBack);
+    });
   }
 }
 
