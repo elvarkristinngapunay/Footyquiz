@@ -132,7 +132,7 @@ const CLUB_LOGOS={
   'Aston Villa':        'https://en.wikipedia.org/wiki/Special:FilePath/Aston_Villa_FC_new_crest.svg',
   'Leicester City':     'https://en.wikipedia.org/wiki/Special:FilePath/Leicester_City_crest.svg',
   'Brentford':          'https://en.wikipedia.org/wiki/Special:FilePath/Brentford_FC_crest.svg',
-  'Lyon':               'https://en.wikipedia.org/wiki/Special:FilePath/Olympique_Lyonnais_logo_2022.svg',
+  'Lyon':               'https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Olympique_Lyonnais_%28logo%29.svg/200px-Olympique_Lyonnais_%28logo%29.svg.png',
   'Stade Rennais':      'https://en.wikipedia.org/wiki/Special:FilePath/Stade_Rennais_FC.svg',
   'Athletic Club':      'https://en.wikipedia.org/wiki/Special:FilePath/Athletic_Club_logo.svg',
   'Real Sociedad':      'https://en.wikipedia.org/wiki/Special:FilePath/Real_Sociedad_logo.svg',
