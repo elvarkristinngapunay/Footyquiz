@@ -896,6 +896,24 @@ const SXI_TEAMS = [
     ]
   },
   {
+    id:'psg-2026', name:'Paris Saint-Germain', year:2026, flag:'🇫🇷',
+    tournament:'Champions League Final', opponent:'Arsenal', score:'1-1 (4-3 pens)', formation:'4-3-3',
+    starters:[
+      {name:'Matvey Safonov',         short:'Safonov',     pos:'GK',  x:50, y:85, aliases:['safonov','matvey safonov']},
+      {name:'Achraf Hakimi',          short:'Hakimi',      pos:'RB',  x:78, y:70, aliases:['hakimi','achraf hakimi']},
+      {name:'Marquinhos',             short:'Marquinhos',  pos:'CB',  x:62, y:70, aliases:['marquinhos']},
+      {name:'Willian Pacho',          short:'Pacho',       pos:'CB',  x:38, y:70, aliases:['pacho','willian pacho']},
+      {name:'Nuno Mendes',            short:'N. Mendes',   pos:'LB',  x:22, y:70, aliases:['nuno mendes','mendes']},
+      {name:'João Neves',             short:'J. Neves',    pos:'CM',  x:65, y:52, aliases:['joao neves','neves','joão neves']},
+      {name:'Vitinha',                short:'Vitinha',     pos:'CDM', x:50, y:60, aliases:['vitinha']},
+      {name:'Fabián Ruiz',            short:'Fabián',      pos:'CM',  x:35, y:52, aliases:['fabian ruiz','fabian','fabián ruiz']},
+      {name:'Désiré Doué',            short:'Doué',        pos:'RW',  x:78, y:28, aliases:['doue','doué','desire doue']},
+      {name:'Ousmane Dembélé',        short:'Dembélé',     pos:'ST',  x:50, y:16, aliases:['dembele','dembélé','ousmane dembele']},
+      {name:'Khvicha Kvaratskhelia',  short:'Kvara',       pos:'LW',  x:22, y:28, aliases:['kvara','kvaratskhelia','khvicha']},
+    ],
+    subs:[]
+  },
+  {
     id:'denmark-1992', name:'Denmark', year:1992, flag:'🇩🇰',
     tournament:'European Championship Final', opponent:'Germany', score:'2-0', formation:'3-5-2',
     starters:[
