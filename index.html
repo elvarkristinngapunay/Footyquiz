@@ -1713,6 +1713,10 @@ body::before{display:none;}
   <!-- Guess input -->
   <div id="mbInputArea" style="width:100%;margin-bottom:16px;">
     <div style="display:flex;align-items:center;gap:10px;justify-content:center;">
+      <div style="text-align:center;min-width:44px;">
+        <div style="font-size:0.55rem;color:#555;letter-spacing:2px;">LEFT</div>
+        <div id="mbGuessesLeft" style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#e8b923;line-height:1;">4</div>
+      </div>
       <span style="font-family:'Anton',sans-serif;font-size:1.4rem;color:#4ade80;">€</span>
       <input id="mbInput" type="number" min="0" max="300" step="0.5"
         style="width:130px;background:#111;border:2px solid #333;border-radius:12px;padding:14px 16px;font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;text-align:center;outline:none;-webkit-appearance:none;-moz-appearance:textfield;appearance:textfield;"
@@ -1720,10 +1724,6 @@ body::before{display:none;}
         onkeydown="if(event.key==='Enter')mbSubmitGuess()"
         oninput="this.style.borderColor='#555'">
       <span style="font-family:'Anton',sans-serif;font-size:1.4rem;color:#888;">M</span>
-      <div style="text-align:center;min-width:36px;">
-        <div style="font-size:0.55rem;color:#555;letter-spacing:2px;">LEFT</div>
-        <div id="mbGuessesLeft" style="font-family:'Anton',sans-serif;font-size:1.6rem;color:#e8b923;line-height:1;">4</div>
-      </div>
     </div>
     <div style="text-align:center;margin-top:12px;">
       <button onclick="mbSubmitGuess()" style="background:#4ade80;color:#000;border:none;padding:14px 40px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;">GUESS</button>
