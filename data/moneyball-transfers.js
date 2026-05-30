@@ -43,6 +43,54 @@ const MONEYBALL_MANAGERS = [
     ]
   }
 
+  ,
+
+  {
+    id: 'ancelotti',
+    manager: 'Carlo Ancelotti',
+    transfers: [
+
+      // ── Real Madrid ────────────────────────────────────────────────────────
+      { player:'Jude Bellingham',       pos:'Attacking Midfield', from:'Borussia Dortmund', fromLeague:'Bundesliga',    to:'Real Madrid',    window:'Summer',  year:2023, fee:127.00 },
+      { player:'Gareth Bale',           pos:'Right Winger',       from:'Tottenham',         fromLeague:'Premier League',to:'Real Madrid',    window:'Summer',  year:2013, fee:101.00 },
+      { player:'Aurélien Tchouaméni',   pos:'Defensive Midfield', from:'Monaco',            fromLeague:'Ligue 1',       to:'Real Madrid',    window:'Summer',  year:2022, fee:80.00  },
+      { player:'James Rodríguez',       pos:'Attacking Midfield', from:'Monaco',            fromLeague:'Ligue 1',       to:'Real Madrid',    window:'Summer',  year:2014, fee:75.00  },
+      { player:'Endrick',               pos:'Centre-Forward',     from:'Palmeiras',         fromLeague:'Série A',       to:'Real Madrid',    window:'Summer',  year:2024, fee:47.50  },
+      { player:'Asier Illarramendi',    pos:'Defensive Midfield', from:'Real Sociedad',     fromLeague:'LaLiga',        to:'Real Madrid',    window:'Summer',  year:2013, fee:32.00  },
+      { player:'Eduardo Camavinga',     pos:'Central Midfield',   from:'Stade Rennais',     fromLeague:'Ligue 1',       to:'Real Madrid',    window:'Summer',  year:2021, fee:31.00  },
+      { player:'Isco',                  pos:'Attacking Midfield', from:'Málaga',            fromLeague:'LaLiga',        to:'Real Madrid',    window:'Summer',  year:2013, fee:30.00  },
+      { player:'Arda Güler',            pos:'Attacking Midfield', from:'Fenerbahçe',        fromLeague:'Süper Lig',     to:'Real Madrid',    window:'Summer',  year:2023, fee:28.00  },
+      { player:'Toni Kroos',            pos:'Central Midfield',   from:'Bayern Munich',     fromLeague:'Bundesliga',    to:'Real Madrid',    window:'Summer',  year:2014, fee:25.00  },
+
+      // ── Chelsea ────────────────────────────────────────────────────────────
+      { player:'Fernando Torres',       pos:'Centre-Forward',     from:'Liverpool',         fromLeague:'Premier League',to:'Chelsea',        window:'January', year:2011, fee:58.50  },
+      { player:'David Luiz',            pos:'Centre-Back',        from:'Benfica',           fromLeague:'Liga Portugal', to:'Chelsea',        window:'January', year:2011, fee:25.00  },
+
+      // ── Napoli ─────────────────────────────────────────────────────────────
+      { player:'Hirving Lozano',        pos:'Left Winger',        from:'PSV',               fromLeague:'Eredivisie',    to:'Napoli',         window:'Summer',  year:2019, fee:50.00  },
+      { player:'Konstantinos Manolas',  pos:'Centre-Back',        from:'Roma',              fromLeague:'Serie A',       to:'Napoli',         window:'Summer',  year:2019, fee:36.00  },
+      { player:'Fabián Ruiz',           pos:'Central Midfield',   from:'Real Betis',        fromLeague:'LaLiga',        to:'Napoli',         window:'Summer',  year:2018, fee:30.00  },
+      { player:'Alex Meret',            pos:'Goalkeeper',         from:'Udinese',           fromLeague:'Serie A',       to:'Napoli',         window:'Summer',  year:2019, fee:26.00  },
+
+      // ── PSG ────────────────────────────────────────────────────────────────
+      { player:'Thiago Silva',          pos:'Centre-Back',        from:'AC Milan',          fromLeague:'Serie A',       to:'PSG',            window:'Summer',  year:2012, fee:42.00  },
+      { player:'Lucas Moura',           pos:'Right Winger',       from:'São Paulo',         fromLeague:'Série A',       to:'PSG',            window:'January', year:2013, fee:40.00  },
+      { player:'Ezequiel Lavezzi',      pos:'Second Striker',     from:'Napoli',            fromLeague:'Serie A',       to:'PSG',            window:'Summer',  year:2012, fee:30.00  },
+
+      // ── Bayern Munich ──────────────────────────────────────────────────────
+      { player:'Corentin Tolisso',      pos:'Central Midfield',   from:'Lyon',              fromLeague:'Ligue 1',       to:'Bayern Munich',  window:'Summer',  year:2017, fee:41.50  },
+      { player:'Renato Sanches',        pos:'Central Midfield',   from:'Benfica',           fromLeague:'Liga Portugal', to:'Bayern Munich',  window:'Summer',  year:2016, fee:35.00  },
+      { player:'Mats Hummels',          pos:'Centre-Back',        from:'Borussia Dortmund', fromLeague:'Bundesliga',    to:'Bayern Munich',  window:'Summer',  year:2016, fee:35.00  },
+
+      // ── AC Milan ───────────────────────────────────────────────────────────
+      { player:'Alessandro Nesta',      pos:'Centre-Back',        from:'Lazio',             fromLeague:'Serie A',       to:'AC Milan',       window:'Summer',  year:2002, fee:31.00  },
+      { player:'Alberto Gilardino',     pos:'Centre-Forward',     from:'Parma',             fromLeague:'Serie A',       to:'AC Milan',       window:'Summer',  year:2005, fee:25.00  },
+
+      // ── Everton ────────────────────────────────────────────────────────────
+      { player:'Ben Godfrey',           pos:'Centre-Back',        from:'Norwich',           fromLeague:'Championship',  to:'Everton',        window:'Summer',  year:2020, fee:27.50  },
+    ]
+  }
+
   // ── Future managers go here, same structure ──────────────────────────────
   // { id:'guardiola', manager:'Pep Guardiola', transfers:[ ... ] },
   // { id:'mourinho',  manager:'José Mourinho',  transfers:[ ... ] },
