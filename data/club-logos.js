@@ -161,6 +161,26 @@ const CLUB_LOGOS={
   'Red Bull Salzburg':  'https://en.wikipedia.org/wiki/Special:FilePath/FC_Red_Bull_Salzburg_logo.svg',
   'Atlético':           'https://en.wikipedia.org/wiki/Special:FilePath/Atletico_Madrid_logo.svg',
 
+  // Moneyball clubs (additional)
+  'AZ Alkmaar':         'https://en.wikipedia.org/wiki/Special:FilePath/AZ_%28football_club%29_logo.svg',
+  'Atalanta':           'https://en.wikipedia.org/wiki/Special:FilePath/Atalanta_BC_logo_2017.svg',
+  'Bayer Leverkusen':   'https://en.wikipedia.org/wiki/Special:FilePath/Bayer_04_Leverkusen_logo.svg',
+  'Fulham':             'https://en.wikipedia.org/wiki/Special:FilePath/Fulham_FC_%28shield%29.svg',
+  'Hertha BSC':         'https://en.wikipedia.org/wiki/Special:FilePath/Hertha_BSC_Logo_2012.svg',
+  'Krasnodar':          'https://en.wikipedia.org/wiki/Special:FilePath/FC_Krasnodar_logo.svg',
+  'New England':        'https://en.wikipedia.org/wiki/Special:FilePath/New_England_Revolution_logo.svg',
+  'Newcastle United':   'https://en.wikipedia.org/wiki/Special:FilePath/Newcastle_United_Logo.svg',
+  'Norwich':            'https://en.wikipedia.org/wiki/Special:FilePath/Norwich_City_FC_logo.svg',
+  'RB Leipzig':         'https://en.wikipedia.org/wiki/Special:FilePath/RB_Leipzig_2014_logo.svg',
+  'RCD Mallorca':       'https://en.wikipedia.org/wiki/Special:FilePath/RCD_Mallorca_logo.svg',
+  'River Plate':        'https://en.wikipedia.org/wiki/Special:FilePath/Escudo_del_Club_Atl%C3%A9tico_River_Plate.svg',
+  'Sassuolo':           'https://en.wikipedia.org/wiki/Special:FilePath/US_Sassuolo_Calcio_logo.svg',
+  'Southampton':        'https://en.wikipedia.org/wiki/Special:FilePath/FC_Southampton.svg',
+  'Swansea':            'https://en.wikipedia.org/wiki/Special:FilePath/Swansea_City_AFC_logo.svg',
+  'Dortmund':           'https://en.wikipedia.org/wiki/Special:FilePath/Borussia_Dortmund_logo.svg',
+  'Manchester Utd':     'https://en.wikipedia.org/wiki/Special:FilePath/Manchester_United_FC_crest.svg',
+  'Leverkusen':         'https://en.wikipedia.org/wiki/Special:FilePath/Bayer_04_Leverkusen_logo.svg',
+
   // CL Starting XI clubs
   'Borussia Dortmund':  'https://en.wikipedia.org/wiki/Special:FilePath/Borussia_Dortmund_logo.svg',
   'Porto':              'https://en.wikipedia.org/wiki/Special:FilePath/FC_Porto.svg',
