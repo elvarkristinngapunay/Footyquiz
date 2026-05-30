@@ -997,6 +997,7 @@ body::before{display:none;}
 .friend-action-btn{padding:6px 12px;border-radius:8px;border:1px solid #333;background:none;color:#aaa;font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;white-space:nowrap;}
 .friend-action-btn:hover{border-color:#fff;color:#fff;}
 .notif-badge{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:0.6rem;font-weight:700;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+#mbInput::-webkit-inner-spin-button,#mbInput::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
 .bell-btn{font-size:1rem;line-height:1;}
 
 /* Back button — fixed top-left always, above all overlays */
@@ -1714,7 +1715,7 @@ body::before{display:none;}
     <div style="display:flex;align-items:center;gap:10px;justify-content:center;">
       <span style="font-family:'Anton',sans-serif;font-size:1.4rem;color:#4ade80;">€</span>
       <input id="mbInput" type="number" min="0" max="300" step="0.5"
-        style="width:130px;background:#111;border:2px solid #333;border-radius:12px;padding:14px 16px;font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;text-align:center;outline:none;"
+        style="width:130px;background:#111;border:2px solid #333;border-radius:12px;padding:14px 16px;font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;text-align:center;outline:none;-webkit-appearance:none;-moz-appearance:textfield;appearance:textfield;"
         placeholder="0"
         onkeydown="if(event.key==='Enter')mbSubmitGuess()"
         oninput="this.style.borderColor='#555'">
