@@ -999,6 +999,14 @@ body::before{display:none;}
 .notif-badge{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:0.6rem;font-weight:700;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
 .bell-btn{font-size:1rem;line-height:1;}
 
+/* Back button — fixed top-left always, above all overlays */
+#globalBackWrap{
+  position:fixed;
+  top:72px;
+  left:18px;
+  z-index:460;
+}
+
 /* ═══════════════════════════════════════════════
    MOBILE STYLES  (phones up to 640px wide)
    These rules ONLY apply on mobile — desktop is
