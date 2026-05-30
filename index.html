@@ -1680,19 +1680,15 @@ body::before{display:none;}
   <div style="font-family:'Anton',sans-serif;font-size:0.75rem;color:#555;letter-spacing:4px;margin-bottom:2px;text-align:center;">WELCOME TO</div>
   <div style="font-family:'Anton',sans-serif;font-size:clamp(2.4rem,10vw,4rem);color:#4ade80;letter-spacing:2px;line-height:1;text-align:center;margin-bottom:20px;">MONEYBALL</div>
 
-  <!-- Stats bar -->
-  <div style="display:flex;gap:20px;justify-content:center;margin-bottom:24px;width:100%;">
-    <div style="background:#111;border:1px solid #222;border-radius:12px;padding:10px 20px;text-align:center;">
+  <!-- Stats bar: Streak (big, centre) + Best (right) -->
+  <div style="display:flex;gap:12px;justify-content:center;align-items:stretch;margin-bottom:24px;width:100%;">
+    <div style="background:#111;border:1px solid #222;border-radius:12px;padding:12px 28px;text-align:center;flex:2;">
       <div style="font-size:0.6rem;color:#555;letter-spacing:2px;">STREAK</div>
-      <div id="mbStreak" style="font-family:'Anton',sans-serif;font-size:1.8rem;color:#4ade80;line-height:1;">0</div>
+      <div id="mbStreak" style="font-family:'Anton',sans-serif;font-size:2.8rem;color:#4ade80;line-height:1;">0</div>
     </div>
-    <div style="background:#111;border:1px solid #222;border-radius:12px;padding:10px 20px;text-align:center;">
+    <div style="background:#111;border:1px solid #222;border-radius:12px;padding:12px 20px;text-align:center;flex:1;">
       <div style="font-size:0.6rem;color:#555;letter-spacing:2px;">BEST</div>
-      <div id="mbBest" style="font-family:'Anton',sans-serif;font-size:1.8rem;color:#fff;line-height:1;">0</div>
-    </div>
-    <div style="background:#111;border:1px solid #222;border-radius:12px;padding:10px 20px;text-align:center;">
-      <div style="font-size:0.6rem;color:#555;letter-spacing:2px;">GUESSES</div>
-      <div id="mbGuessesLeft" style="font-family:'Anton',sans-serif;font-size:1.8rem;color:#fff;line-height:1;">4</div>
+      <div id="mbBest" style="font-family:'Anton',sans-serif;font-size:2.8rem;color:#fff;line-height:1;">0</div>
     </div>
   </div>
 
@@ -1723,6 +1719,10 @@ body::before{display:none;}
         onkeydown="if(event.key==='Enter')mbSubmitGuess()"
         oninput="this.style.borderColor='#555'">
       <span style="font-family:'Anton',sans-serif;font-size:1.4rem;color:#888;">M</span>
+      <div style="text-align:center;min-width:36px;">
+        <div style="font-size:0.55rem;color:#555;letter-spacing:2px;">LEFT</div>
+        <div id="mbGuessesLeft" style="font-family:'Anton',sans-serif;font-size:1.6rem;color:#e8b923;line-height:1;">4</div>
+      </div>
     </div>
     <div style="text-align:center;margin-top:12px;">
       <button onclick="mbSubmitGuess()" style="background:#4ade80;color:#000;border:none;padding:14px 40px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;">GUESS</button>
