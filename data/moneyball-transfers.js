@@ -293,6 +293,46 @@ const MONEYBALL_MANAGERS = [
     ]
   }
 
+  ,
+
+  {
+    id: 'luisenrique',
+    manager: 'Luis Enrique',
+    transfers: [
+
+      // ── PSG (2023 – present) ───────────────────────────────────────────────
+      { player:'Randal Kolo Muani',     pos:'Centre-Forward',    from:'Frankfurt',      fromLeague:'Bundesliga',     to:'PSG',        window:'Summer',  year:2023, fee:95.00  },
+      { player:'Khvicha Kvaratskhelia', pos:'Left Winger',       from:'Napoli',         fromLeague:'Serie A',        to:'PSG',        window:'January', year:2025, fee:80.00  },
+      { player:'João Neves',            pos:'Central Midfield',  from:'Benfica',        fromLeague:'Liga Portugal',  to:'PSG',        window:'Summer',  year:2024, fee:65.92  },
+      { player:'Gonçalo Ramos',         pos:'Centre-Forward',    from:'Benfica',        fromLeague:'Liga Portugal',  to:'PSG',        window:'January', year:2024, fee:65.00  },
+      { player:'Ilya Zabarnyi',         pos:'Centre-Back',       from:'Bournemouth',    fromLeague:'Premier League', to:'PSG',        window:'Summer',  year:2025, fee:63.00  },
+      { player:'Manuel Ugarte',         pos:'Defensive Midfield',from:'Sporting CP',    fromLeague:'Liga Portugal',  to:'PSG',        window:'Summer',  year:2023, fee:60.00  },
+      { player:'Ousmane Dembélé',       pos:'Centre-Forward',    from:'Barcelona',      fromLeague:'LaLiga',         to:'PSG',        window:'Summer',  year:2023, fee:50.00  },
+      { player:'Désiré Doué',           pos:'Right Winger',      from:'Stade Rennais',  fromLeague:'Ligue 1',        to:'PSG',        window:'Summer',  year:2024, fee:50.00  },
+      { player:'Lucas Hernández',       pos:'Left-Back',         from:'Bayern Munich',  fromLeague:'Bundesliga',     to:'PSG',        window:'Summer',  year:2023, fee:45.00  },
+      { player:'Bradley Barcola',       pos:'Left Winger',       from:'Lyon',           fromLeague:'Ligue 1',        to:'PSG',        window:'Summer',  year:2023, fee:45.00  },
+      { player:'Willian Pacho',         pos:'Centre-Back',       from:'Frankfurt',      fromLeague:'Bundesliga',     to:'PSG',        window:'Summer',  year:2024, fee:40.00  },
+      { player:'Lucas Chevalier',       pos:'Goalkeeper',        from:'Lille',          fromLeague:'Ligue 1',        to:'PSG',        window:'Summer',  year:2025, fee:40.00  },
+      { player:'Kang-in Lee',           pos:'Attacking Midfield',from:'RCD Mallorca',   fromLeague:'LaLiga',         to:'PSG',        window:'Summer',  year:2023, fee:22.00  },
+      { player:'Lucas Beraldo',         pos:'Centre-Back',       from:'São Paulo',      fromLeague:'Série A',        to:'PSG',        window:'January', year:2024, fee:20.00  },
+      { player:'Gabriel Moscardo',      pos:'Defensive Midfield',from:'Corinthians',    fromLeague:'Série A',        to:'PSG',        window:'January', year:2024, fee:20.00  },
+      { player:'Matvey Safonov',        pos:'Goalkeeper',        from:'Krasnodar',      fromLeague:'Premier Liga',   to:'PSG',        window:'Summer',  year:2024, fee:20.00  },
+
+      // ── Barcelona (2014 – 2017) ────────────────────────────────────────────
+      { player:'Luis Suárez',           pos:'Centre-Forward',    from:'Liverpool',      fromLeague:'Premier League', to:'Barcelona',  window:'Summer',  year:2014, fee:81.72  },
+      { player:'André Gomes',           pos:'Central Midfield',  from:'Valencia',       fromLeague:'LaLiga',         to:'Barcelona',  window:'Summer',  year:2016, fee:37.00  },
+      { player:'Arda Turan',            pos:'Left Winger',       from:'Atlético Madrid',fromLeague:'LaLiga',         to:'Barcelona',  window:'Summer',  year:2015, fee:34.00  },
+      { player:'Paco Alcácer',          pos:'Centre-Forward',    from:'Valencia',       fromLeague:'LaLiga',         to:'Barcelona',  window:'Summer',  year:2016, fee:30.00  },
+      { player:'Samuel Umtiti',         pos:'Centre-Back',       from:'Lyon',           fromLeague:'Ligue 1',        to:'Barcelona',  window:'Summer',  year:2016, fee:25.00  },
+      { player:'Jérémy Mathieu',        pos:'Left-Back',         from:'Valencia',       fromLeague:'LaLiga',         to:'Barcelona',  window:'Summer',  year:2014, fee:20.00  },
+      { player:'Thomas Vermaelen',      pos:'Centre-Back',       from:'Arsenal',        fromLeague:'Premier League', to:'Barcelona',  window:'Summer',  year:2014, fee:19.00  },
+      { player:'Ivan Rakitic',          pos:'Central Midfield',  from:'Sevilla',        fromLeague:'LaLiga',         to:'Barcelona',  window:'Summer',  year:2014, fee:18.00  },
+
+      // ── Roma (2011 – 2012) ─────────────────────────────────────────────────
+      { player:'Erik Lamela',           pos:'Right Winger',      from:'River Plate',    fromLeague:'Prim. B Nacional',to:'Roma',      window:'Summer',  year:2011, fee:17.00  },
+    ]
+  }
+
   // ── Future managers go here, same structure ──────────────────────────────
   // { id:'ferguson', manager:'Sir Alex Ferguson', transfers:[ ... ] },
 ];
