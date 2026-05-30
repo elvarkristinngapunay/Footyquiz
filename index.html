@@ -1692,7 +1692,7 @@ body::before{display:none;}
     </div>
     <div style="background:#111;border:1px solid #222;border-radius:12px;padding:10px 20px;text-align:center;">
       <div style="font-size:0.6rem;color:#555;letter-spacing:2px;">GUESSES</div>
-      <div id="mbGuessesLeft" style="font-family:'Anton',sans-serif;font-size:1.8rem;color:#fff;line-height:1;">7</div>
+      <div id="mbGuessesLeft" style="font-family:'Anton',sans-serif;font-size:1.8rem;color:#fff;line-height:1;">4</div>
     </div>
   </div>
 
@@ -1936,7 +1936,7 @@ const GAME_INFO = {
   },
   mb: {
     title: 'Moneyball',
-    body: `A transfer appears — player name, window, and the two clubs. Guess the fee in millions. You get 7 guesses and a higher/lower hint each time. Land within €2M to score the point and keep your streak alive. Miss all 7 and it's game over. How far can you go?`
+    body: `A transfer appears — player name, window, and the two clubs. Guess the fee in millions. You get 4 guesses and a higher/lower hint each time. Land within €2.5M to score the point and keep your streak alive. Miss all 4 and it's game over. How far can you go?`
   },
   sxi: {
     title: 'Starting XI',
@@ -4402,7 +4402,7 @@ function mbGetLogo(club){
 }
 
 function mbNextTransfer(){
-  mbGuesses = 7;
+  mbGuesses = 4;
   mbGameOver = false;
   document.getElementById('mbInput').value = '';
   document.getElementById('mbInput').style.borderColor = '#333';
@@ -4463,7 +4463,7 @@ function mbSubmitGuess(){
   const guessRow = document.createElement('div');
   guessRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:6px 12px;margin-bottom:4px;background:#0d0d0d;border-radius:8px;font-size:0.82rem;';
 
-  if(diff <= 2){
+  if(diff <= 2.5){
     // CORRECT
     mbStreak++;
     if(mbStreak > mbBest){
