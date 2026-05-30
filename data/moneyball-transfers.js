@@ -127,6 +127,42 @@ const MONEYBALL_MANAGERS = [
     ]
   }
 
+  ,
+
+  {
+    id: 'arteta',
+    manager: 'Mikel Arteta',
+    transfers: [
+
+      // ── Arsenal (2019 – present) ───────────────────────────────────────────
+      { player:'Declan Rice',           pos:'Central Midfield',   from:'West Ham',       fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2023, fee:116.60 },
+      { player:'Kai Havertz',           pos:'Centre-Forward',     from:'Chelsea',        fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2023, fee:75.00  },
+      { player:'Martín Zubimendi',      pos:'Defensive Midfield', from:'Real Sociedad',  fromLeague:'LaLiga',         to:'Arsenal', window:'Summer',  year:2025, fee:70.00  },
+      { player:'Eberechi Eze',          pos:'Attacking Midfield', from:'Crystal Palace', fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2025, fee:69.30  },
+      { player:'Viktor Gyökeres',       pos:'Centre-Forward',     from:'Sporting CP',    fromLeague:'Liga Portugal',  to:'Arsenal', window:'Summer',  year:2025, fee:66.90  },
+      { player:'Ben White',             pos:'Right-Back',         from:'Brighton',       fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2021, fee:58.50  },
+      { player:'Noni Madueke',          pos:'Right Winger',       from:'Chelsea',        fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2025, fee:56.00  },
+      { player:'Gabriel Jesus',         pos:'Centre-Forward',     from:'Manchester City',fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2022, fee:52.20  },
+      { player:'Thomas Partey',         pos:'Defensive Midfield', from:'Atlético Madrid',fromLeague:'LaLiga',         to:'Arsenal', window:'Summer',  year:2020, fee:50.00  },
+      { player:'Riccardo Calafiori',    pos:'Left-Back',          from:'Bologna',        fromLeague:'Serie A',        to:'Arsenal', window:'Summer',  year:2024, fee:43.70  },
+      { player:'Jurriën Timber',        pos:'Right-Back',         from:'Ajax',           fromLeague:'Eredivisie',     to:'Arsenal', window:'Summer',  year:2023, fee:40.00  },
+      { player:'Martin Ødegaard',       pos:'Attacking Midfield', from:'Real Madrid',    fromLeague:'LaLiga',         to:'Arsenal', window:'Summer',  year:2021, fee:35.00  },
+      { player:'Fábio Vieira',          pos:'Attacking Midfield', from:'Porto',          fromLeague:'Liga Portugal',  to:'Arsenal', window:'Summer',  year:2022, fee:35.00  },
+      { player:'Oleksandr Zinchenko',   pos:'Left-Back',          from:'Manchester City',fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2022, fee:35.00  },
+      { player:'Mikel Merino',          pos:'Central Midfield',   from:'Real Sociedad',  fromLeague:'LaLiga',         to:'Arsenal', window:'Summer',  year:2024, fee:32.00  },
+      { player:'David Raya',            pos:'Goalkeeper',         from:'Brentford',      fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2024, fee:31.90  },
+      { player:'Aaron Ramsdale',        pos:'Goalkeeper',         from:'Sheffield Utd',  fromLeague:'Championship',   to:'Arsenal', window:'Summer',  year:2021, fee:28.00  },
+      { player:'Gabriel',               pos:'Centre-Back',        from:'Lille',          fromLeague:'Ligue 1',        to:'Arsenal', window:'Summer',  year:2020, fee:26.00  },
+      { player:'Leandro Trossard',      pos:'Left Winger',        from:'Brighton',       fromLeague:'Premier League', to:'Arsenal', window:'January', year:2023, fee:24.00  },
+      { player:'Jakub Kiwior',          pos:'Centre-Back',        from:'Spezia',         fromLeague:'Serie A',        to:'Arsenal', window:'January', year:2023, fee:19.50  },
+      { player:'Takehiro Tomiyasu',     pos:'Right-Back',         from:'Bologna',        fromLeague:'Serie A',        to:'Arsenal', window:'Summer',  year:2021, fee:18.60  },
+      { player:'Albert Sambi Lokonga',  pos:'Central Midfield',   from:'Anderlecht',     fromLeague:'JPL',            to:'Arsenal', window:'Summer',  year:2021, fee:17.50  },
+      { player:'Cristhian Mosquera',    pos:'Centre-Back',        from:'Valencia',       fromLeague:'LaLiga',         to:'Arsenal', window:'Summer',  year:2025, fee:15.00  },
+      { player:'Christian Nørgaard',    pos:'Defensive Midfield', from:'Brentford',      fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2025, fee:11.60  },
+      { player:'Jorginho',              pos:'Defensive Midfield', from:'Chelsea',        fromLeague:'Premier League', to:'Arsenal', window:'January', year:2023, fee:11.30  },
+    ]
+  }
+
   // ── Future managers go here, same structure ──────────────────────────────
   // { id:'mourinho',  manager:'José Mourinho',  transfers:[ ... ] },
   // { id:'ferguson',  manager:'Sir Alex Ferguson', transfers:[ ... ] },
