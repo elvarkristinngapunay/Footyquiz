@@ -91,7 +91,43 @@ const MONEYBALL_MANAGERS = [
     ]
   }
 
+  ,
+
+  {
+    id: 'guardiola',
+    manager: 'Pep Guardiola',
+    transfers: [
+
+      // ── Manchester City (2016 – present) ──────────────────────────────────
+      { player:'Jack Grealish',        pos:'Left Winger',        from:'Aston Villa',    fromLeague:'Premier League', to:'Man City', window:'Summer',  year:2021, fee:117.50 },
+      { player:'Josko Gvardiol',       pos:'Centre-Back',        from:'RB Leipzig',     fromLeague:'Bundesliga',     to:'Man City', window:'Summer',  year:2023, fee:90.00  },
+      { player:'Omar Marmoush',        pos:'Centre-Forward',     from:'Frankfurt',      fromLeague:'Bundesliga',     to:'Man City', window:'January', year:2025, fee:75.00  },
+      { player:'Antoine Semenyo',      pos:'Right Winger',       from:'Bournemouth',    fromLeague:'Premier League', to:'Man City', window:'January', year:2026, fee:72.00  },
+      { player:'Rúben Dias',           pos:'Centre-Back',        from:'Benfica',        fromLeague:'Liga Portugal',  to:'Man City', window:'Summer',  year:2020, fee:71.60  },
+      { player:'Rodri',                pos:'Defensive Midfield', from:'Atlético Madrid',fromLeague:'LaLiga',         to:'Man City', window:'Summer',  year:2019, fee:70.00  },
+      { player:'Riyad Mahrez',         pos:'Right Winger',       from:'Leicester City', fromLeague:'Premier League', to:'Man City', window:'Summer',  year:2018, fee:67.80  },
+      { player:'Aymeric Laporte',      pos:'Centre-Back',        from:'Athletic Club',  fromLeague:'LaLiga',         to:'Man City', window:'January', year:2018, fee:65.00  },
+      { player:'João Cancelo',         pos:'Right-Back',         from:'Juventus',       fromLeague:'Serie A',        to:'Man City', window:'Summer',  year:2019, fee:65.00  },
+      { player:'Matheus Nunes',        pos:'Defensive Midfield', from:'Wolverhampton',  fromLeague:'Premier League', to:'Man City', window:'Summer',  year:2023, fee:62.00  },
+      { player:'Erling Haaland',       pos:'Centre-Forward',     from:'Borussia Dortmund',fromLeague:'Bundesliga',   to:'Man City', window:'Summer',  year:2022, fee:60.00  },
+      { player:'Jérémy Doku',          pos:'Left Winger',        from:'Stade Rennais',  fromLeague:'Ligue 1',        to:'Man City', window:'Summer',  year:2023, fee:60.00  },
+      { player:'Nico González',        pos:'Defensive Midfield', from:'Porto',          fromLeague:'Liga Portugal',  to:'Man City', window:'January', year:2025, fee:60.00  },
+      { player:'Benjamin Mendy',       pos:'Left-Back',          from:'Monaco',         fromLeague:'Ligue 1',        to:'Man City', window:'Summer',  year:2017, fee:57.50  },
+      { player:'John Stones',          pos:'Centre-Back',        from:'Everton',        fromLeague:'Premier League', to:'Man City', window:'Summer',  year:2016, fee:55.60  },
+      { player:'Tijjani Reijnders',    pos:'Central Midfield',   from:'AC Milan',       fromLeague:'Serie A',        to:'Man City', window:'Summer',  year:2025, fee:54.90  },
+      { player:'Kyle Walker',          pos:'Right-Back',         from:'Tottenham',      fromLeague:'Premier League', to:'Man City', window:'Summer',  year:2017, fee:52.70  },
+      { player:'Leroy Sané',           pos:'Right Winger',       from:'FC Schalke 04',  fromLeague:'Bundesliga',     to:'Man City', window:'Summer',  year:2016, fee:52.00  },
+      { player:'Bernardo Silva',       pos:'Attacking Midfield', from:'Monaco',         fromLeague:'Ligue 1',        to:'Man City', window:'Summer',  year:2017, fee:50.00  },
+      { player:'Kalvin Phillips',      pos:'Defensive Midfield', from:'Leeds United',   fromLeague:'Premier League', to:'Man City', window:'Summer',  year:2022, fee:49.00  },
+      { player:'Nathan Aké',           pos:'Centre-Back',        from:'Bournemouth',    fromLeague:'Championship',   to:'Man City', window:'Summer',  year:2020, fee:45.30  },
+      { player:'Ederson',              pos:'Goalkeeper',         from:'Benfica',        fromLeague:'Liga Portugal',  to:'Man City', window:'Summer',  year:2017, fee:40.00  },
+      { player:'Abdukodir Khusanov',   pos:'Centre-Back',        from:'Lens',           fromLeague:'Ligue 1',        to:'Man City', window:'January', year:2025, fee:40.00  },
+      { player:'Vitor Reis',           pos:'Centre-Back',        from:'Palmeiras',      fromLeague:'Série A',        to:'Man City', window:'January', year:2025, fee:37.00  },
+      { player:'Rayan Aït-Nouri',      pos:'Left-Back',          from:'Wolverhampton',  fromLeague:'Premier League', to:'Man City', window:'Summer',  year:2025, fee:36.80  },
+    ]
+  }
+
   // ── Future managers go here, same structure ──────────────────────────────
-  // { id:'guardiola', manager:'Pep Guardiola', transfers:[ ... ] },
   // { id:'mourinho',  manager:'José Mourinho',  transfers:[ ... ] },
+  // { id:'ferguson',  manager:'Sir Alex Ferguson', transfers:[ ... ] },
 ];
