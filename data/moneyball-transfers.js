@@ -251,6 +251,48 @@ const MONEYBALL_MANAGERS = [
     ]
   }
 
+  ,
+
+  {
+    id: 'conte',
+    manager: 'Antonio Conte',
+    transfers: [
+
+      // ── Inter Milan (2019 – 2021) ──────────────────────────────────────────
+      { player:'Romelu Lukaku',          pos:'Centre-Forward',    from:'Manchester Utd', fromLeague:'Premier League', to:'Inter Milan',  window:'Summer',  year:2019, fee:74.00  },
+      { player:'Achraf Hakimi',          pos:'Right-Back',        from:'Real Madrid',    fromLeague:'LaLiga',         to:'Inter Milan',  window:'Summer',  year:2020, fee:43.00  },
+      { player:'Nicolò Barella',         pos:'Central Midfield',  from:'Cagliari',       fromLeague:'Serie A',        to:'Inter Milan',  window:'Summer',  year:2020, fee:32.50  },
+      { player:'Christian Eriksen',      pos:'Attacking Midfield',from:'Tottenham',      fromLeague:'Premier League', to:'Inter Milan',  window:'January', year:2020, fee:27.00  },
+      { player:'Stefano Sensi',          pos:'Central Midfield',  from:'Sassuolo',       fromLeague:'Serie A',        to:'Inter Milan',  window:'Summer',  year:2020, fee:25.00  },
+      { player:'Valentino Lazaro',       pos:'Right Midfield',    from:'Hertha BSC',     fromLeague:'Bundesliga',     to:'Inter Milan',  window:'Summer',  year:2019, fee:22.40  },
+
+      // ── Chelsea (2016 – 2018) ──────────────────────────────────────────────
+      { player:'Álvaro Morata',          pos:'Centre-Forward',    from:'Real Madrid',    fromLeague:'LaLiga',         to:'Chelsea',      window:'Summer',  year:2017, fee:66.00  },
+      { player:'Tiémoué Bakayoko',       pos:'Defensive Midfield',from:'Monaco',         fromLeague:'Ligue 1',        to:'Chelsea',      window:'Summer',  year:2017, fee:40.00  },
+      { player:'Michy Batshuayi',        pos:'Centre-Forward',    from:'Marseille',      fromLeague:'Ligue 1',        to:'Chelsea',      window:'Summer',  year:2016, fee:39.00  },
+      { player:'Danny Drinkwater',       pos:'Central Midfield',  from:'Leicester City', fromLeague:'Premier League', to:'Chelsea',      window:'Summer',  year:2017, fee:37.90  },
+      { player:'N\'Golo Kanté',          pos:'Defensive Midfield',from:'Leicester City', fromLeague:'Premier League', to:'Chelsea',      window:'Summer',  year:2016, fee:35.80  },
+      { player:'David Luiz',             pos:'Centre-Back',       from:'PSG',            fromLeague:'Ligue 1',        to:'Chelsea',      window:'Summer',  year:2016, fee:35.00  },
+      { player:'Antonio Rüdiger',        pos:'Centre-Back',       from:'Roma',           fromLeague:'Serie A',        to:'Chelsea',      window:'Summer',  year:2017, fee:35.00  },
+      { player:'Davide Zappacosta',      pos:'Right Midfield',    from:'Torino',         fromLeague:'Serie A',        to:'Chelsea',      window:'Summer',  year:2017, fee:25.00  },
+      { player:'Marcos Alonso',          pos:'Centre-Back',       from:'Fiorentina',     fromLeague:'Serie A',        to:'Chelsea',      window:'Summer',  year:2016, fee:23.00  },
+
+      // ── Tottenham (2021 – 2023) ────────────────────────────────────────────
+      { player:'Richarlison',            pos:'Centre-Forward',    from:'Everton',        fromLeague:'Premier League', to:'Tottenham',    window:'Summer',  year:2022, fee:58.00  },
+      { player:'Cristian Romero',        pos:'Centre-Back',       from:'Atalanta',       fromLeague:'Serie A',        to:'Tottenham',    window:'Summer',  year:2022, fee:53.80  },
+      { player:'Yves Bissouma',          pos:'Defensive Midfield',from:'Brighton',       fromLeague:'Premier League', to:'Tottenham',    window:'Summer',  year:2022, fee:29.20  },
+
+      // ── Napoli (2023 – present) ────────────────────────────────────────────
+      { player:'Alessandro Buongiorno', pos:'Centre-Back',        from:'Torino',         fromLeague:'Serie A',        to:'Napoli',       window:'Summer',  year:2024, fee:36.50  },
+      { player:'Sam Beukema',           pos:'Centre-Back',        from:'Bologna',        fromLeague:'Serie A',        to:'Napoli',       window:'Summer',  year:2025, fee:31.00  },
+      { player:'Romelu Lukaku',         pos:'Centre-Forward',     from:'Chelsea',        fromLeague:'Premier League', to:'Napoli',       window:'Summer',  year:2024, fee:30.70  },
+      { player:'Scott McTominay',       pos:'Central Midfield',   from:'Manchester Utd', fromLeague:'Premier League', to:'Napoli',       window:'Summer',  year:2024, fee:30.50  },
+      { player:'David Neres',           pos:'Right Winger',       from:'Benfica',        fromLeague:'Liga Portugal',  to:'Napoli',       window:'Summer',  year:2024, fee:28.00  },
+      { player:'Lorenzo Lucca',         pos:'Centre-Forward',     from:'Udinese',        fromLeague:'Serie A',        to:'Napoli',       window:'January', year:2026, fee:26.00  },
+      { player:'Noa Lang',              pos:'Left Winger',        from:'PSV',            fromLeague:'Eredivisie',     to:'Napoli',       window:'Summer',  year:2025, fee:25.00  },
+    ]
+  }
+
   // ── Future managers go here, same structure ──────────────────────────────
   // { id:'ferguson', manager:'Sir Alex Ferguson', transfers:[ ... ] },
 ];
