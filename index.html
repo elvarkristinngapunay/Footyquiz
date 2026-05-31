@@ -3106,19 +3106,37 @@ function sxiPickCategory(key){
 
 function sxiRenderTeamGrid(){
   const g=document.getElementById('sxiTeamGrid');
-  const teams=SXI_TEAMS.filter(t=>t.tournament===sxiActiveCategory).sort((a,b)=>a.year-b.year);
-  g.innerHTML=`<div class="sxi-section-grid">${teams.map(t=>{
+  const all=SXI_TEAMS.filter(t=>t.tournament===sxiActiveCategory).sort((a,b)=>a.year-b.year);
+  const finals=all.filter(t=>t.opponent!=='Team of the Tournament');
+  const tott=all.filter(t=>t.opponent==='Team of the Tournament');
+
+  function makeCard(t){
     const badge=CLUB_LOGOS[t.name];
     const icon=badge
       ? `<img src="${badge}" alt="${t.name}" style="width:48px;height:48px;object-fit:contain;margin-bottom:6px;${CLUB_LOGO_BG[t.name]?'background:'+CLUB_LOGO_BG[t.name]+';border-radius:4px;padding:2px;':''}">`
       : `<div class="sxi-team-flag">${t.flag}</div>`;
+    const sub=t.opponent==='Team of the Tournament'?t.year:t.formation+' · vs '+t.opponent;
+    const third=t.opponent==='Team of the Tournament'?t.formation:t.score;
     return `<div class="sxi-team-card" onclick="sxiPickTeam('${t.id}')">
       ${icon}
-      <div class="sxi-team-name">${t.name} ${t.year}</div>
-      <div class="sxi-team-year">${t.formation} · vs ${t.opponent}</div>
-      <div class="sxi-team-opp">${t.score}</div>
+      <div class="sxi-team-name">${t.opponent==='Team of the Tournament'?'TOTT '+t.year:t.name+' '+t.year}</div>
+      <div class="sxi-team-year">${sub}</div>
+      <div class="sxi-team-opp">${third}</div>
     </div>`;
-  }).join('')}</div>`;
+  }
+
+  const sectionLabel=`<div style="font-size:0.6rem;color:#555;letter-spacing:3px;text-transform:uppercase;margin:18px 0 8px;width:100%;">`;
+  let html='';
+  if(finals.length){
+    html+=sectionLabel+'World Cup Finals</div><div class="sxi-section-grid">'+finals.map(makeCard).join('')+'</div>';
+  }
+  if(tott.length){
+    html+=sectionLabel+'Team of the Tournament</div><div class="sxi-section-grid">'+tott.map(makeCard).join('')+'</div>';
+  }
+  if(!finals.length&&!tott.length){
+    html=`<div class="sxi-section-grid">${all.map(makeCard).join('')}</div>`;
+  }
+  g.innerHTML=html;
 }
 
 function sxiPickTeam(id){
