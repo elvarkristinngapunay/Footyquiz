@@ -324,7 +324,7 @@ const PLAYERS = [
   },
   {
     name:"Mohamed Salah", pos:"Forward", nat:"Egypt",
-    career_goals:332, career_appearances:687, assists:170,
+    career_goals:332, career_appearances:687, assists:171,
     intl_caps:113, intl_goals:65, trophies:13,
     color:"#c8102e", tc:"#ff6666", initials:"MS",
     club_goals:[
