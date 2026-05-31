@@ -266,11 +266,9 @@ body::before{display:none;}
 .pcard.flash-wrong{border-color:var(--red);box-shadow:0 0 24px rgba(248,113,113,0.15);}
 
 .avatar{
-  width:76px;height:76px;border-radius:50%;
+  width:90px;height:95px;
+  margin:0 auto 8px;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1px;
-  margin:0 auto 12px;border:2px solid rgba(255,255,255,0.08);
-  font-weight:400;
 }
 .pname{font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:2px;line-height:1.2;}
 .ppos{color:var(--text3);font-size:0.75rem;margin-bottom:2px;}
@@ -2746,7 +2744,7 @@ function makeCard(p,val,isLeft){
   }
   return`
   <div class="pcard" id="${isLeft?"leftCard":"rightCard"}">
-    <div class="avatar" style="background:${p.color};color:${textColor};">${p.initials}</div>
+    <div class="avatar">${generateKitSVG(p.name) || `<div style="width:76px;height:76px;border-radius:50%;background:${p.color};color:${textColor};display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;">${p.initials}</div>`}</div>
     <div class="pname">${p.name}</div>
     <div class="ppos">${p.pos}</div>
     <div class="pnat">${p.nat}</div>
@@ -4363,6 +4361,7 @@ function updateFriendsNav(){
 </script>
 <script src="data/eg-datasets.js"></script>
 <script src="data/players.js"></script>
+<script src="data/kits.js"></script>
 <script src="data/club-logos.js"></script>
 <script src="data/sxi-teams.js"></script>
 <script src="data/trophies.js"></script>
