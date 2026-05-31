@@ -333,6 +333,32 @@ const MONEYBALL_MANAGERS = [
     ]
   }
 
-  // ── Future managers go here, same structure ──────────────────────────────
+,
+
+  // ─────────────────────────────────────────────────────────────────────────
+  //  CLUB TRANSFERS — Ajax Amsterdam (top sales)
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    id: 'ajax',
+    manager: 'Ajax Amsterdam',
+    transfers: [
+      { player:'Antony',               pos:'Right Winger',       from:'Ajax', fromLeague:'Eredivisie', to:'Manchester United', window:'Summer',  year:2022, fee:95.00  },
+      { player:'Frenkie de Jong',       pos:'Central Midfield',   from:'Ajax', fromLeague:'Eredivisie', to:'Barcelona',         window:'Summer',  year:2019, fee:86.00  },
+      { player:'Matthijs de Ligt',      pos:'Centre-Back',        from:'Ajax', fromLeague:'Eredivisie', to:'Juventus',          window:'Summer',  year:2019, fee:85.50  },
+      { player:'Lisandro Martínez',     pos:'Centre-Back',        from:'Ajax', fromLeague:'Eredivisie', to:'Manchester United', window:'Summer',  year:2022, fee:57.37  },
+      { player:'Jorrel Hato',           pos:'Left-Back',          from:'Ajax', fromLeague:'Eredivisie', to:'Chelsea',           window:'Summer',  year:2025, fee:44.18  },
+      { player:'Mohammed Kudus',        pos:'Right Winger',       from:'Ajax', fromLeague:'Eredivisie', to:'West Ham',          window:'Summer',  year:2023, fee:43.00  },
+      { player:'Davinson Sánchez',      pos:'Centre-Back',        from:'Ajax', fromLeague:'Eredivisie', to:'Tottenham',         window:'Summer',  year:2017, fee:42.00  },
+      { player:'Jurriën Timber',        pos:'Right-Back',         from:'Ajax', fromLeague:'Eredivisie', to:'Arsenal',           window:'Summer',  year:2023, fee:40.00  },
+      { player:'Hakim Ziyech',          pos:'Right Winger',       from:'Ajax', fromLeague:'Eredivisie', to:'Chelsea',           window:'Summer',  year:2020, fee:40.00  },
+      { player:'Donny van de Beek',     pos:'Central Midfield',   from:'Ajax', fromLeague:'Eredivisie', to:'Manchester United', window:'Summer',  year:2020, fee:39.00  },
+      { player:'Edson Álvarez',         pos:'Defensive Midfield', from:'Ajax', fromLeague:'Eredivisie', to:'West Ham',          window:'Summer',  year:2023, fee:38.00  },
+      { player:'Arkadiusz Milik',       pos:'Centre-Forward',     from:'Ajax', fromLeague:'Eredivisie', to:'Napoli',            window:'Summer',  year:2016, fee:32.00  },
+      { player:'Sébastien Haller',      pos:'Centre-Forward',     from:'Ajax', fromLeague:'Eredivisie', to:'Dortmund',          window:'Summer',  year:2022, fee:31.00  },
+      { player:'Klaas-Jan Huntelaar',   pos:'Centre-Forward',     from:'Ajax', fromLeague:'Eredivisie', to:'Real Madrid',       window:'Summer',  year:2008, fee:27.00  },
+    ]
+  }
+
+  // ── Future managers / clubs go here, same structure ──────────────────────
   // { id:'ferguson', manager:'Sir Alex Ferguson', transfers:[ ... ] },
 ];
