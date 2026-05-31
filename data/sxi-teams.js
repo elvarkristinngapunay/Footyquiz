@@ -1416,7 +1416,7 @@ const SXI_TEAMS = [
   // ── FIFA WORLD CUP TEAM OF THE TOURNAMENT ─────────────────────────────────
   {
     id:'tott-1994', name:'World Cup TOTT', year:1994, flag:'🌍',
-    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'3-4-3',
+    tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'3-4-3',
     starters:[
       {name:"Michel Preud'homme", short:"Preud'homme", pos:'GK', x:50, y:85, aliases:["preudhomme","preud'homme","michel preudhomme"]},
       {name:'Paolo Maldini',      short:'Maldini',     pos:'CB', x:25, y:68, aliases:['maldini','paolo maldini']},
@@ -1436,7 +1436,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-1998', name:'World Cup TOTT', year:1998, flag:'🌍',
-    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
+    tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
     starters:[
       {name:'Fabien Barthez',   short:'Barthez',    pos:'GK', x:50, y:85, aliases:['barthez','fabien barthez']},
       {name:'Frank de Boer',    short:'F. de Boer', pos:'RB', x:78, y:68, aliases:['frank de boer','de boer']},
@@ -1456,7 +1456,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2002', name:'World Cup TOTT', year:2002, flag:'🌍',
-    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
+    tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
     starters:[
       {name:'Oliver Kahn',      short:'Kahn',       pos:'GK', x:50, y:85, aliases:['kahn','oliver kahn']},
       {name:'Hong Myung-bo',    short:'Hong',       pos:'RB', x:78, y:68, aliases:['hong myung-bo','hong myung bo','hong']},
@@ -1476,7 +1476,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2006', name:'World Cup TOTT', year:2006, flag:'🌍',
-    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
+    tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
     starters:[
       {name:'Gianluigi Buffon',   short:'Buffon',    pos:'GK', x:50, y:85, aliases:['buffon','gianluigi buffon','gigi']},
       {name:'Gianluca Zambrotta', short:'Zambrotta', pos:'RB', x:78, y:68, aliases:['zambrotta','gianluca zambrotta']},
@@ -1496,7 +1496,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2010', name:'World Cup TOTT', year:2010, flag:'🌍',
-    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
+    tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
     starters:[
       {name:'Iker Casillas',          short:'Casillas',  pos:'GK', x:50, y:85, aliases:['casillas','iker casillas']},
       {name:'Maicon',                 short:'Maicon',    pos:'RB', x:78, y:68, aliases:['maicon']},
@@ -1516,7 +1516,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2014', name:'World Cup TOTT', year:2014, flag:'🌍',
-    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
+    tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
     starters:[
       {name:'Manuel Neuer',    short:'Neuer',    pos:'GK', x:50, y:85, aliases:['neuer','manuel neuer']},
       {name:'Philipp Lahm',    short:'Lahm',     pos:'RB', x:78, y:68, aliases:['lahm','philipp lahm']},
@@ -1538,7 +1538,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2018', name:'World Cup TOTT', year:2018, flag:'🌍',
-    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
+    tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
     starters:[
       {name:'Jordan Pickford',  short:'Pickford', pos:'GK', x:50, y:85, aliases:['pickford','jordan pickford']},
       {name:'Kieran Trippier',  short:'Trippier', pos:'RB', x:78, y:68, aliases:['trippier','kieran trippier']},
@@ -1558,7 +1558,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2022', name:'World Cup TOTT', year:2022, flag:'🌍',
-    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
+    tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
     starters:[
       {name:'Dominik Livaković', short:'Livaković',  pos:'GK', x:50, y:85, aliases:['livakovic','dominik livakovic','dominik livaković']},
       {name:'Achraf Hakimi',     short:'Hakimi',     pos:'RB', x:78, y:68, aliases:['hakimi','achraf hakimi']},
