@@ -4497,12 +4497,9 @@ function mbSubmitGuess(){
 
   } else {
     // HIGHER or LOWER
-    const dir = guess < correct ? '📈 HIGHER' : '📉 LOWER';
-    const col = guess < correct ? '#e8b923' : '#e8b923';
+    const col = '#e8b923';
     document.getElementById('mbInput').style.borderColor = col;
-    document.getElementById('mbFeedback').innerHTML = `
-      <div style="font-family:'Anton',sans-serif;font-size:1.5rem;color:${col};">${dir}</div>
-      <div style="color:#555;font-size:0.72rem;">${mbGuesses} guess${mbGuesses===1?'':'es'} remaining</div>`;
+    document.getElementById('mbFeedback').innerHTML = '';
     document.getElementById('mbInput').value = '';
     document.getElementById('mbInput').focus();
   }
