@@ -3073,19 +3073,43 @@ function sxiPickCategory(key){
 
 function sxiRenderTeamGrid(){
   const g=document.getElementById('sxiTeamGrid');
-  const teams=SXI_TEAMS.filter(t=>t.tournament===sxiActiveCategory).sort((a,b)=>a.year-b.year);
-  g.innerHTML=`<div class="sxi-section-grid">${teams.map(t=>{
-    const badge=CLUB_LOGOS[t.name];
-    const icon=badge
-      ? `<img src="${badge}" alt="${t.name}" style="width:48px;height:48px;object-fit:contain;margin-bottom:6px;${CLUB_LOGO_BG[t.name]?'background:'+CLUB_LOGO_BG[t.name]+';border-radius:4px;padding:2px;':''}">`
-      : `<div class="sxi-team-flag">${t.flag}</div>`;
+  const all=SXI_TEAMS.filter(t=>t.tournament===sxiActiveCategory).sort((a,b)=>a.year-b.year);
+  const finals=all.filter(t=>t.opponent!=='Team of the Tournament');
+  const tott=all.filter(t=>t.opponent==='Team of the Tournament');
+
+  function makeTeamCard(t){
+    const isTOTT=t.opponent==='Team of the Tournament';
+    let icon;
+    if(isTOTT && t.logo){
+      if(t.logoBg){
+        icon=`<div style="background:${t.logoBg};border-radius:10px;padding:5px 8px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:6px;"><img src="${t.logo}" alt="${t.year}" style="width:52px;height:40px;object-fit:contain;display:block;"></div>`;
+      } else {
+        icon=`<img src="${t.logo}" alt="${t.year}" style="width:60px;height:60px;object-fit:contain;margin-bottom:6px;">`;
+      }
+    } else {
+      const badge=CLUB_LOGOS[t.name];
+      const bg=CLUB_LOGO_BG[t.name];
+      icon=badge
+        ? `<img src="${badge}" alt="${t.name}" style="width:48px;height:48px;object-fit:contain;margin-bottom:6px;${bg?'background:'+bg+';border-radius:4px;padding:2px;':''}">`
+        : `<div class="sxi-team-flag">${t.flag}</div>`;
+    }
+    const label=isTOTT?`TOTT ${t.year}`:t.name+' '+t.year;
+    const sub=isTOTT?t.formation:`${t.formation} · vs ${t.opponent}`;
+    const third=isTOTT?'':t.score;
     return `<div class="sxi-team-card" onclick="sxiPickTeam('${t.id}')">
       ${icon}
-      <div class="sxi-team-name">${t.name} ${t.year}</div>
-      <div class="sxi-team-year">${t.formation} · vs ${t.opponent}</div>
-      <div class="sxi-team-opp">${t.score}</div>
+      <div class="sxi-team-name">${label}</div>
+      <div class="sxi-team-year">${sub}</div>
+      <div class="sxi-team-opp">${third}</div>
     </div>`;
-  }).join('')}</div>`;
+  }
+
+  const sectionHdr=txt=>`<div style="font-size:0.6rem;color:#555;letter-spacing:3px;text-transform:uppercase;margin:18px 0 8px;width:100%;">${txt}</div>`;
+  let html='';
+  if(finals.length) html+=sectionHdr('World Cup Finals')+`<div class="sxi-section-grid">${finals.map(makeTeamCard).join('')}</div>`;
+  if(tott.length)   html+=sectionHdr('Team of the Tournament')+`<div class="sxi-section-grid">${tott.map(makeTeamCard).join('')}</div>`;
+  if(!html)         html=`<div class="sxi-section-grid">${all.map(makeTeamCard).join('')}</div>`;
+  g.innerHTML=html;
 }
 
 function sxiPickTeam(id){

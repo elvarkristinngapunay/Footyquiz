@@ -1416,7 +1416,7 @@ const SXI_TEAMS = [
   // ── FIFA WORLD CUP TEAM OF THE TOURNAMENT ─────────────────────────────────
   {
     id:'tott-1994', name:'World Cup TOTT', year:1994, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/1994_FIFA_World_Cup.svg/150px-1994_FIFA_World_Cup.svg.png',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/d/dc/1994_FIFA_World_Cup.svg',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'3-4-3',
     starters:[
       {name:"Michel Preud'homme", short:"Preud'homme", pos:'GK', x:50, y:85, aliases:["preudhomme","preud'homme","michel preudhomme"]},
@@ -1437,7 +1437,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-1998', name:'World Cup TOTT', year:1998, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/1998_FIFA_World_Cup.svg/150px-1998_FIFA_World_Cup.svg.png',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/7/7a/1998_FIFA_World_Cup_France_%28Wordmark%29.svg', logoBg:'#fff',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
     starters:[
       {name:'Fabien Barthez',   short:'Barthez',    pos:'GK', x:50, y:85, aliases:['barthez','fabien barthez']},
@@ -1458,7 +1458,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2002', name:'World Cup TOTT', year:2002, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/2002_FIFA_World_Cup_%28Complete_Wordmark%29.svg/150px-2002_FIFA_World_Cup_%28Complete_Wordmark%29.svg.png',
+    logo:'https://upload.wikimedia.org/wikipedia/en/4/47/2002_FIFA_World_Cup_logo.svg', logoBg:'#f5c842',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
     starters:[
       {name:'Oliver Kahn',      short:'Kahn',       pos:'GK', x:50, y:85, aliases:['kahn','oliver kahn']},
@@ -1479,7 +1479,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2006', name:'World Cup TOTT', year:2006, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/2006_FIFA_World_Cup.svg/150px-2006_FIFA_World_Cup.svg.png',
+    logo:'https://upload.wikimedia.org/wikipedia/en/6/6b/2006_FIFA_World_Cup.svg',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
     starters:[
       {name:'Gianluigi Buffon',   short:'Buffon',    pos:'GK', x:50, y:85, aliases:['buffon','gianluigi buffon','gigi']},
@@ -1500,7 +1500,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2010', name:'World Cup TOTT', year:2010, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/en/thumb/0/0d/2010_FIFA_World_Cup.svg/150px-2010_FIFA_World_Cup.svg.png',
+    logo:'https://upload.wikimedia.org/wikipedia/en/0/0d/2010_FIFA_World_Cup.svg', logoBg:'#fff',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
     starters:[
       {name:'Iker Casillas',          short:'Casillas',  pos:'GK', x:50, y:85, aliases:['casillas','iker casillas']},
@@ -1521,7 +1521,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2014', name:'World Cup TOTT', year:2014, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/en/thumb/1/1d/2014_FIFA_World_Cup.svg/150px-2014_FIFA_World_Cup.svg.png',
+    logo:'https://upload.wikimedia.org/wikipedia/en/1/1d/2014_FIFA_World_Cup.svg',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
     starters:[
       {name:'Manuel Neuer',    short:'Neuer',    pos:'GK', x:50, y:85, aliases:['neuer','manuel neuer']},
@@ -1544,7 +1544,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2018', name:'World Cup TOTT', year:2018, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/en/thumb/6/67/2018_FIFA_World_Cup.svg/150px-2018_FIFA_World_Cup.svg.png',
+    logo:'https://upload.wikimedia.org/wikipedia/en/6/67/2018_FIFA_World_Cup.svg',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
     starters:[
       {name:'Jordan Pickford',  short:'Pickford', pos:'GK', x:50, y:85, aliases:['pickford','jordan pickford']},
@@ -1565,7 +1565,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2022', name:'World Cup TOTT', year:2022, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/2022_FIFA_World_Cup.svg/150px-2022_FIFA_World_Cup.svg.png',
+    logo:'https://upload.wikimedia.org/wikipedia/en/e/e3/2022_FIFA_World_Cup.svg',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
     starters:[
       {name:'Dominik Livaković', short:'Livaković',  pos:'GK', x:50, y:85, aliases:['livakovic','dominik livakovic','dominik livaković']},
