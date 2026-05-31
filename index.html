@@ -3111,7 +3111,7 @@ function sxiRenderTeamGrid(){
   const tott=all.filter(t=>t.opponent==='Team of the Tournament');
 
   function makeCard(t){
-    const badge=CLUB_LOGOS[t.name];
+    const badge=t.logo||CLUB_LOGOS[t.name];
     const icon=badge
       ? `<img src="${badge}" alt="${t.name}" style="width:48px;height:48px;object-fit:contain;margin-bottom:6px;${CLUB_LOGO_BG[t.name]?'background:'+CLUB_LOGO_BG[t.name]+';border-radius:4px;padding:2px;':''}">`
       : `<div class="sxi-team-flag">${t.flag}</div>`;
