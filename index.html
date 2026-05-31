@@ -1837,12 +1837,19 @@ body::before{display:none;}
 
 <!-- GAME -->
 <div id="gameScreen">
-  <div class="topbar">
-    <div class="pill">Score <strong id="scoreEl">0</strong></div>
-    <div class="pill pill-record">🏆 Record <strong id="bestEl">0</strong></div>
-    <div class="lives" id="livesEl"></div>
-    <div class="mode-badge" id="modeEl"></div>
+  <!-- Stats bar: Streak (big, centre) + Best (right) -->
+  <div style="display:flex;gap:12px;justify-content:center;align-items:stretch;margin-bottom:24px;width:100%;">
+    <div style="background:#111;border:1px solid #222;border-radius:12px;padding:12px 28px;text-align:center;flex:2;">
+      <div style="font-size:0.6rem;color:#555;letter-spacing:2px;">STREAK</div>
+      <div id="scoreEl" style="font-family:'Anton',sans-serif;font-size:2.8rem;color:#4ade80;line-height:1;">0</div>
+    </div>
+    <div style="background:#111;border:1px solid #222;border-radius:12px;padding:12px 20px;text-align:center;flex:1;">
+      <div style="font-size:0.6rem;color:#555;letter-spacing:2px;">BEST</div>
+      <div id="bestEl" style="font-family:'Anton',sans-serif;font-size:2.8rem;color:#fff;line-height:1;">0</div>
+    </div>
   </div>
+  <div class="mode-badge" id="modeEl" style="margin-bottom:12px;"></div>
+  <div id="livesEl" style="display:none;"></div>
   <div class="arena" id="arenaEl"></div>
   <div id="resultEl"></div>
 </div>
@@ -2613,7 +2620,7 @@ renderCatBests();
 const _savedBest=parseInt(localStorage.getItem('footballroyal_best')||'0');
 document.getElementById("menuRecordEl").textContent=_savedBest||0;
 
-let score=0,best=_savedBest||0,lives=2,category=null;
+let score=0,best=_savedBest||0,lives=1,category=null;
 let deck=[],deckIdx=0,leftPlayer=null,rightPlayer=null;
 let awaitingNext=false;
 
@@ -2650,7 +2657,7 @@ function startGame(cat){
   setBg(true);
   document.getElementById("higherOrLowerSection").style.display="none";
   document.getElementById("landingScreen").style.display="none";
-  category=cat;score=0;lives=2;
+  category=cat;score=0;lives=1;
   document.getElementById("scoreEl").textContent=0;
   document.getElementById("bestEl").textContent=best;
   document.getElementById("modeEl").textContent=catLabels[cat];
@@ -2896,7 +2903,7 @@ function showResult(correct,leftVal,rightVal){
       :correct?`
         <div class="result-score">${score}</div>
         <div class="result-score-lbl">Current Streak</div>`
-      :`<div style="color:var(--text2);font-size:0.85rem;margin:8px 0;">${lives} life${lives===1?"":" remaining"}</div>`
+      :``
       }
       ${breakdownHTML}
       <div class="result-btns">${nextBtns}</div>
