@@ -1411,5 +1411,171 @@ const SXI_TEAMS = [
     {name:'Lautaro Martínez', aliases:['lautaro','lautaro martinez']},
     {name:'Nicolás Otamendi', aliases:['otamendi','nicolas otamendi']},
   ]
-}
+},
+
+  // ── FIFA WORLD CUP TEAM OF THE TOURNAMENT ─────────────────────────────────
+  {
+    id:'tott-1994', name:'World Cup TOTT', year:1994, flag:'🌍',
+    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'3-4-3',
+    starters:[
+      {name:"Michel Preud'homme", short:"Preud'homme", pos:'GK', x:50, y:85, aliases:["preudhomme","preud'homme","michel preudhomme"]},
+      {name:'Paolo Maldini',      short:'Maldini',     pos:'CB', x:25, y:68, aliases:['maldini','paolo maldini']},
+      {name:'Márcio Santos',      short:'M. Santos',   pos:'CB', x:50, y:68, aliases:['marcio santos','márcio santos']},
+      {name:'Jorginho',           short:'Jorginho',    pos:'CB', x:75, y:68, aliases:['jorginho']},
+      {name:'Tomas Brolin',       short:'Brolin',      pos:'RM', x:85, y:50, aliases:['brolin','tomas brolin']},
+      {name:'Gheorghe Hagi',      short:'Hagi',        pos:'CM', x:62, y:50, aliases:['hagi','gheorghe hagi']},
+      {name:'Krasimir Balakov',   short:'Balakov',     pos:'CM', x:38, y:50, aliases:['balakov','krasimir balakov']},
+      {name:'Carlos Dunga',       short:'Dunga',       pos:'LM', x:15, y:50, aliases:['dunga','carlos dunga']},
+      {name:'Roberto Baggio',     short:'Baggio',      pos:'RW', x:82, y:20, aliases:['baggio','roberto baggio']},
+      {name:'Romário',            short:'Romário',     pos:'ST', x:50, y:16, aliases:['romario','romário']},
+      {name:'Hristo Stoichkov',   short:'Stoichkov',   pos:'LW', x:18, y:20, aliases:['stoichkov','hristo stoichkov']},
+    ],
+    subs:[
+      {name:'Carlos Alberto Parreira', aliases:['parreira','carlos alberto parreira','carlos parreira']},
+    ]
+  },
+  {
+    id:'tott-1998', name:'World Cup TOTT', year:1998, flag:'🌍',
+    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
+    starters:[
+      {name:'Fabien Barthez',   short:'Barthez',    pos:'GK', x:50, y:85, aliases:['barthez','fabien barthez']},
+      {name:'Frank de Boer',    short:'F. de Boer', pos:'RB', x:78, y:68, aliases:['frank de boer','de boer']},
+      {name:'Marcel Desailly',  short:'Desailly',   pos:'CB', x:58, y:68, aliases:['desailly','marcel desailly']},
+      {name:'Lilian Thuram',    short:'Thuram',     pos:'CB', x:38, y:68, aliases:['thuram','lilian thuram']},
+      {name:'Roberto Carlos',   short:'R. Carlos',  pos:'LB', x:22, y:68, aliases:['roberto carlos','roberto']},
+      {name:'Michael Laudrup',  short:'Laudrup',    pos:'RM', x:78, y:50, aliases:['laudrup','michael laudrup']},
+      {name:'Zinédine Zidane',  short:'Zidane',     pos:'CM', x:58, y:50, aliases:['zidane','zinedine zidane','zizou']},
+      {name:'Rivaldo',          short:'Rivaldo',    pos:'CM', x:38, y:50, aliases:['rivaldo']},
+      {name:'Carlos Dunga',     short:'Dunga',      pos:'LM', x:22, y:50, aliases:['dunga','carlos dunga']},
+      {name:'Ronaldo Nazário',  short:'Ronaldo',    pos:'ST', x:62, y:18, aliases:['ronaldo','ronaldo nazario','r9']},
+      {name:'Davor Šuker',      short:'Šuker',      pos:'ST', x:38, y:18, aliases:['suker','davor suker','davor šuker']},
+    ],
+    subs:[
+      {name:'Aimé Jacquet', aliases:['jacquet','aime jacquet','aimé jacquet']},
+    ]
+  },
+  {
+    id:'tott-2002', name:'World Cup TOTT', year:2002, flag:'🌍',
+    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
+    starters:[
+      {name:'Oliver Kahn',      short:'Kahn',       pos:'GK', x:50, y:85, aliases:['kahn','oliver kahn']},
+      {name:'Hong Myung-bo',    short:'Hong',       pos:'RB', x:78, y:68, aliases:['hong myung-bo','hong myung bo','hong']},
+      {name:'Fernando Hierro',  short:'Hierro',     pos:'CB', x:58, y:68, aliases:['hierro','fernando hierro']},
+      {name:'Sol Campbell',     short:'Campbell',   pos:'CB', x:38, y:68, aliases:['campbell','sol campbell']},
+      {name:'Roberto Carlos',   short:'R. Carlos',  pos:'LB', x:22, y:68, aliases:['roberto carlos','roberto']},
+      {name:'Ronaldinho',       short:'Ronaldinho', pos:'RM', x:78, y:50, aliases:['ronaldinho']},
+      {name:'Rivaldo',          short:'Rivaldo',    pos:'CM', x:58, y:50, aliases:['rivaldo']},
+      {name:'Michael Ballack',  short:'Ballack',    pos:'CM', x:38, y:50, aliases:['ballack','michael ballack']},
+      {name:'Claudio Reyna',    short:'Reyna',      pos:'LM', x:22, y:50, aliases:['reyna','claudio reyna']},
+      {name:'Ronaldo Nazário',  short:'Ronaldo',    pos:'ST', x:62, y:18, aliases:['ronaldo','ronaldo nazario','r9']},
+      {name:'Miroslav Klose',   short:'Klose',      pos:'ST', x:38, y:18, aliases:['klose','miroslav klose']},
+    ],
+    subs:[
+      {name:'Luiz Felipe Scolari', aliases:['scolari','luiz felipe scolari','big phil']},
+    ]
+  },
+  {
+    id:'tott-2006', name:'World Cup TOTT', year:2006, flag:'🌍',
+    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
+    starters:[
+      {name:'Gianluigi Buffon',   short:'Buffon',    pos:'GK', x:50, y:85, aliases:['buffon','gianluigi buffon','gigi']},
+      {name:'Gianluca Zambrotta', short:'Zambrotta', pos:'RB', x:78, y:68, aliases:['zambrotta','gianluca zambrotta']},
+      {name:'Fabio Cannavaro',    short:'Cannavaro', pos:'CB', x:62, y:68, aliases:['cannavaro','fabio cannavaro']},
+      {name:'Lilian Thuram',      short:'Thuram',    pos:'CB', x:38, y:68, aliases:['thuram','lilian thuram']},
+      {name:'Philipp Lahm',       short:'Lahm',      pos:'LB', x:22, y:68, aliases:['lahm','philipp lahm']},
+      {name:'Zinédine Zidane',    short:'Zidane',    pos:'RM', x:72, y:50, aliases:['zidane','zinedine zidane','zizou']},
+      {name:'Andrea Pirlo',       short:'Pirlo',     pos:'CM', x:50, y:50, aliases:['pirlo','andrea pirlo']},
+      {name:'Gennaro Gattuso',    short:'Gattuso',   pos:'LM', x:28, y:50, aliases:['gattuso','gennaro gattuso']},
+      {name:'Miroslav Klose',     short:'Klose',     pos:'RW', x:78, y:20, aliases:['klose','miroslav klose']},
+      {name:'Luís Figo',          short:'Figo',      pos:'ST', x:50, y:16, aliases:['figo','luis figo','luís figo']},
+      {name:'Thierry Henry',      short:'Henry',     pos:'LW', x:22, y:20, aliases:['henry','thierry henry']},
+    ],
+    subs:[
+      {name:'Marcello Lippi', aliases:['lippi','marcello lippi']},
+    ]
+  },
+  {
+    id:'tott-2010', name:'World Cup TOTT', year:2010, flag:'🌍',
+    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
+    starters:[
+      {name:'Iker Casillas',          short:'Casillas',  pos:'GK', x:50, y:85, aliases:['casillas','iker casillas']},
+      {name:'Maicon',                 short:'Maicon',    pos:'RB', x:78, y:68, aliases:['maicon']},
+      {name:'Sergio Ramos',           short:'S. Ramos',  pos:'CB', x:58, y:68, aliases:['ramos','sergio ramos']},
+      {name:'Carles Puyol',           short:'Puyol',     pos:'CB', x:38, y:68, aliases:['puyol','carles puyol']},
+      {name:'Philipp Lahm',           short:'Lahm',      pos:'LB', x:22, y:68, aliases:['lahm','philipp lahm']},
+      {name:'Wesley Sneijder',        short:'Sneijder',  pos:'RM', x:78, y:50, aliases:['sneijder','wesley sneijder']},
+      {name:'Bastian Schweinsteiger', short:'Schweini',  pos:'CM', x:58, y:50, aliases:['schweinsteiger','bastian schweinsteiger','schweini']},
+      {name:'Xavi',                   short:'Xavi',      pos:'CM', x:38, y:50, aliases:['xavi','xavi hernandez']},
+      {name:'Andrés Iniesta',         short:'Iniesta',   pos:'LM', x:22, y:50, aliases:['iniesta','andres iniesta','andrés iniesta']},
+      {name:'David Villa',            short:'Villa',     pos:'ST', x:62, y:18, aliases:['villa','david villa','el guaje']},
+      {name:'Diego Forlán',           short:'Forlán',    pos:'ST', x:38, y:18, aliases:['forlan','diego forlan','diego forlán']},
+    ],
+    subs:[
+      {name:'Vicente del Bosque', aliases:['del bosque','vicente del bosque']},
+    ]
+  },
+  {
+    id:'tott-2014', name:'World Cup TOTT', year:2014, flag:'🌍',
+    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
+    starters:[
+      {name:'Manuel Neuer',    short:'Neuer',    pos:'GK', x:50, y:85, aliases:['neuer','manuel neuer']},
+      {name:'Philipp Lahm',    short:'Lahm',     pos:'RB', x:78, y:68, aliases:['lahm','philipp lahm']},
+      {name:'Mats Hummels',    short:'Hummels',  pos:'CB', x:62, y:68, aliases:['hummels','mats hummels']},
+      {name:'Thiago Silva',    short:'T. Silva', pos:'CB', x:38, y:68, aliases:['thiago silva','t silva']},
+      {name:'David Luiz',      short:'D. Luiz',  pos:'LB', x:22, y:68, aliases:['david luiz','d luiz']},
+      {name:'Ángel Di María',  short:'Di María', pos:'RM', x:72, y:50, aliases:['di maria','angel di maria','fideo']},
+      {name:'Toni Kroos',      short:'Kroos',    pos:'CM', x:50, y:50, aliases:['kroos','toni kroos']},
+      {name:'James Rodríguez', short:'James',    pos:'LM', x:28, y:50, aliases:['james','james rodriguez','james rodríguez']},
+      {name:'Arjen Robben',    short:'Robben',   pos:'RW', x:78, y:20, aliases:['robben','arjen robben']},
+      {name:'Lionel Messi',    short:'Messi',    pos:'ST', x:50, y:16, aliases:['messi','lionel messi','leo messi']},
+      {name:'Thomas Müller',   short:'Müller',   pos:'LW', x:22, y:20, aliases:['muller','thomas muller','thomas müller']},
+    ],
+    subs:[
+      {name:'Marcelo',         aliases:['marcelo']},
+      {name:'Neymar',          aliases:['neymar','neymar jr']},
+      {name:'Joachim Löw',     aliases:['low','joachim low','joachim löw','jogi low']},
+    ]
+  },
+  {
+    id:'tott-2018', name:'World Cup TOTT', year:2018, flag:'🌍',
+    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
+    starters:[
+      {name:'Jordan Pickford',  short:'Pickford', pos:'GK', x:50, y:85, aliases:['pickford','jordan pickford']},
+      {name:'Kieran Trippier',  short:'Trippier', pos:'RB', x:78, y:68, aliases:['trippier','kieran trippier']},
+      {name:'Raphaël Varane',   short:'Varane',   pos:'CB', x:62, y:68, aliases:['varane','raphael varane']},
+      {name:'Harry Maguire',    short:'Maguire',  pos:'CB', x:38, y:68, aliases:['maguire','harry maguire']},
+      {name:'Benjamin Pavard',  short:'Pavard',   pos:'LB', x:22, y:68, aliases:['pavard','benjamin pavard']},
+      {name:'Paul Pogba',       short:'Pogba',    pos:'RM', x:72, y:50, aliases:['pogba','paul pogba']},
+      {name:'Luka Modrić',      short:'Modrić',   pos:'CM', x:50, y:50, aliases:['modric','luka modric','luka modrić']},
+      {name:"N'Golo Kanté",     short:'Kanté',    pos:'LM', x:28, y:50, aliases:["ngolo kante","n'golo kante","kante","kanté"]},
+      {name:'Eden Hazard',      short:'Hazard',   pos:'RW', x:78, y:20, aliases:['hazard','eden hazard']},
+      {name:'Harry Kane',       short:'Kane',     pos:'ST', x:50, y:16, aliases:['kane','harry kane']},
+      {name:'Kylian Mbappé',    short:'Mbappé',   pos:'LW', x:22, y:20, aliases:['mbappe','kylian mbappe','kylian mbappé','mbappé']},
+    ],
+    subs:[
+      {name:'Didier Deschamps', aliases:['deschamps','didier deschamps']},
+    ]
+  },
+  {
+    id:'tott-2022', name:'World Cup TOTT', year:2022, flag:'🌍',
+    tournament:'FIFA World Cup', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
+    starters:[
+      {name:'Dominik Livaković', short:'Livaković',  pos:'GK', x:50, y:85, aliases:['livakovic','dominik livakovic','dominik livaković']},
+      {name:'Achraf Hakimi',     short:'Hakimi',     pos:'RB', x:78, y:68, aliases:['hakimi','achraf hakimi']},
+      {name:'Joško Gvardiol',    short:'Gvardiol',   pos:'CB', x:62, y:68, aliases:['gvardiol','josko gvardiol','joško gvardiol']},
+      {name:'Nicolás Otamendi',  short:'Otamendi',   pos:'CB', x:38, y:68, aliases:['otamendi','nicolas otamendi']},
+      {name:'Marcos Acuña',      short:'Acuña',      pos:'LB', x:22, y:68, aliases:['acuna','marcos acuna','marcos acuña']},
+      {name:'Luka Modrić',       short:'Modrić',     pos:'RM', x:72, y:50, aliases:['modric','luka modric','luka modrić']},
+      {name:'Sofyan Amrabat',    short:'Amrabat',    pos:'CM', x:50, y:50, aliases:['amrabat','sofyan amrabat']},
+      {name:'Antoine Griezmann', short:'Griezmann',  pos:'LM', x:28, y:50, aliases:['griezmann','antoine griezmann']},
+      {name:'Kylian Mbappé',     short:'Mbappé',     pos:'RW', x:78, y:20, aliases:['mbappe','kylian mbappe','kylian mbappé','mbappé']},
+      {name:'Lionel Messi',      short:'Messi',      pos:'ST', x:50, y:16, aliases:['messi','lionel messi','leo messi']},
+      {name:'Olivier Giroud',    short:'Giroud',     pos:'LW', x:22, y:20, aliases:['giroud','olivier giroud']},
+    ],
+    subs:[
+      {name:'Harry Maguire',    aliases:['maguire','harry maguire']},
+      {name:'Azzedine Ounahi',  aliases:['ounahi','azzedine ounahi']},
+      {name:'Lionel Scaloni',   aliases:['scaloni','lionel scaloni']},
+    ]
+  }
 ];
