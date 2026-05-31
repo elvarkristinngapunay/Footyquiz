@@ -30,7 +30,7 @@ body::before{display:none;}
     url('backround image for for higher and lower.png') center top / cover;
   opacity:0;
 }
-#landingScreen,#higherOrLowerSection,#elGrandeMenu,#elGrandeGame,#gameScreen,#sxiScreen,#mbScreen,#top10Screen{position:relative;z-index:2;}
+#landingScreen,#higherOrLowerSection,#elGrandeMenu,#elGrandeGame,#gameScreen,#sxiScreen,#mbScreen{position:relative;z-index:2;}
 
 /* ── HEADER ── */
 .header{
@@ -266,11 +266,9 @@ body::before{display:none;}
 .pcard.flash-wrong{border-color:var(--red);box-shadow:0 0 24px rgba(248,113,113,0.15);}
 
 .avatar{
-  width:76px;height:76px;border-radius:50%;
+  width:90px;height:95px;
+  margin:0 auto 8px;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1px;
-  margin:0 auto 12px;border:2px solid rgba(255,255,255,0.08);
-  font-weight:400;
 }
 .pname{font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:2px;line-height:1.2;}
 .ppos{color:var(--text3);font-size:0.75rem;margin-bottom:2px;}
@@ -1301,13 +1299,6 @@ body::before{display:none;}
         <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showTop10()" style="position:relative;background:linear-gradient(135deg,#0a0a2a 0%,#0d1a3d 50%,#070714 100%);">
-      <div class="game-pick-content">
-        <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">Top 10</div>
-        <div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#fff;line-height:1;letter-spacing:1px;">TOP<br>10</div>
-        <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -1583,7 +1574,7 @@ body::before{display:none;}
         <div class="sxi-cat-card" onclick="sxiPickCategory('World Cup Final')">
           <img class="sxi-cat-trophy" src="" id="sxiTrophyWC" alt="">
           <div class="sxi-cat-name">World Cup</div>
-          <div class="sxi-cat-count">16 teams</div>
+          <div class="sxi-cat-count">8 teams</div>
         </div>
         <div class="sxi-cat-card" onclick="sxiPickCategory('Champions League Final')">
           <img class="sxi-cat-trophy" src="" id="sxiTrophyCL" alt="">
@@ -1743,17 +1734,6 @@ body::before{display:none;}
   <!-- Previous guesses -->
   <div id="mbPrevGuesses" style="width:100%;margin-top:8px;"></div>
 
-</div>
-
-<!-- TOP 10 SCREEN -->
-<div id="top10Screen" style="display:none;flex-direction:column;align-items:center;padding:20px 16px 60px;max-width:560px;margin:0 auto;">
-  <div style="font-family:'Anton',sans-serif;font-size:0.75rem;color:#555;letter-spacing:4px;margin-bottom:2px;text-align:center;">WELCOME TO</div>
-  <div style="font-family:'Anton',sans-serif;font-size:clamp(2.4rem,10vw,4rem);color:#e8b923;letter-spacing:2px;line-height:1;text-align:center;margin-bottom:32px;">TOP 10</div>
-  <div style="background:#111;border:1px solid #222;border-radius:18px;padding:40px 24px;text-align:center;width:100%;">
-    <div style="font-family:'Anton',sans-serif;font-size:3rem;color:#e8b923;margin-bottom:12px;">🏆</div>
-    <div style="font-family:'Anton',sans-serif;font-size:1.4rem;color:#fff;letter-spacing:2px;margin-bottom:10px;">COMING SOON</div>
-    <div style="color:#555;font-size:0.85rem;line-height:1.6;">Can you name the top 10?<br>Lists, rankings, records — the ultimate football trivia challenge.</div>
-  </div>
 </div>
 
 <!-- WELCOME OVERLAY -->
@@ -2001,20 +1981,7 @@ function showLanding(){
   document.getElementById('gameScreen').style.display='none';
   document.getElementById('sxiScreen').style.display='none';
   document.getElementById('mbScreen').style.display='none';
-  document.getElementById('top10Screen').style.display='none';
   setBackBtn(null);
-}
-function showTop10(){
-  setBg(false);
-  document.getElementById('landingScreen').style.display='none';
-  document.getElementById('higherOrLowerSection').style.display='none';
-  document.getElementById('elGrandeMenu').style.display='none';
-  document.getElementById('elGrandeGame').style.display='none';
-  document.getElementById('gameScreen').style.display='none';
-  document.getElementById('sxiScreen').style.display='none';
-  document.getElementById('mbScreen').style.display='none';
-  document.getElementById('top10Screen').style.display='flex';
-  setBackBtn('← Back Home', showLanding);
 }
 function showSxi(){
   setBg(false);
@@ -2777,7 +2744,7 @@ function makeCard(p,val,isLeft){
   }
   return`
   <div class="pcard" id="${isLeft?"leftCard":"rightCard"}">
-    <div class="avatar" style="background:${p.color};color:${textColor};">${p.initials}</div>
+    <div class="avatar">${generateKitSVG(p.name) || `<div style="width:76px;height:76px;border-radius:50%;background:${p.color};color:${textColor};display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;">${p.initials}</div>`}</div>
     <div class="pname">${p.name}</div>
     <div class="ppos">${p.pos}</div>
     <div class="pnat">${p.nat}</div>
@@ -3106,37 +3073,19 @@ function sxiPickCategory(key){
 
 function sxiRenderTeamGrid(){
   const g=document.getElementById('sxiTeamGrid');
-  const all=SXI_TEAMS.filter(t=>t.tournament===sxiActiveCategory).sort((a,b)=>a.year-b.year);
-  const finals=all.filter(t=>t.opponent!=='Team of the Tournament');
-  const tott=all.filter(t=>t.opponent==='Team of the Tournament');
-
-  function makeCard(t){
-    const badge=t.logo||CLUB_LOGOS[t.name];
+  const teams=SXI_TEAMS.filter(t=>t.tournament===sxiActiveCategory).sort((a,b)=>a.year-b.year);
+  g.innerHTML=`<div class="sxi-section-grid">${teams.map(t=>{
+    const badge=CLUB_LOGOS[t.name];
     const icon=badge
       ? `<img src="${badge}" alt="${t.name}" style="width:48px;height:48px;object-fit:contain;margin-bottom:6px;${CLUB_LOGO_BG[t.name]?'background:'+CLUB_LOGO_BG[t.name]+';border-radius:4px;padding:2px;':''}">`
       : `<div class="sxi-team-flag">${t.flag}</div>`;
-    const sub=t.opponent==='Team of the Tournament'?t.year:t.formation+' · vs '+t.opponent;
-    const third=t.opponent==='Team of the Tournament'?t.formation:t.score;
     return `<div class="sxi-team-card" onclick="sxiPickTeam('${t.id}')">
       ${icon}
-      <div class="sxi-team-name">${t.opponent==='Team of the Tournament'?'TOTT '+t.year:t.name+' '+t.year}</div>
-      <div class="sxi-team-year">${sub}</div>
-      <div class="sxi-team-opp">${third}</div>
+      <div class="sxi-team-name">${t.name} ${t.year}</div>
+      <div class="sxi-team-year">${t.formation} · vs ${t.opponent}</div>
+      <div class="sxi-team-opp">${t.score}</div>
     </div>`;
-  }
-
-  const sectionLabel=`<div style="font-size:0.6rem;color:#555;letter-spacing:3px;text-transform:uppercase;margin:18px 0 8px;width:100%;">`;
-  let html='';
-  if(finals.length){
-    html+=sectionLabel+'World Cup Finals</div><div class="sxi-section-grid">'+finals.map(makeCard).join('')+'</div>';
-  }
-  if(tott.length){
-    html+=sectionLabel+'Team of the Tournament</div><div class="sxi-section-grid">'+tott.map(makeCard).join('')+'</div>';
-  }
-  if(!finals.length&&!tott.length){
-    html=`<div class="sxi-section-grid">${all.map(makeCard).join('')}</div>`;
-  }
-  g.innerHTML=html;
+  }).join('')}</div>`;
 }
 
 function sxiPickTeam(id){
@@ -4410,12 +4359,13 @@ function updateFriendsNav(){
   }
 }
 </script>
-<script src="data/eg-datasets.js?v=2"></script>
-<script src="data/players.js?v=2"></script>
-<script src="data/club-logos.js?v=2"></script>
-<script src="data/sxi-teams.js?v=2"></script>
-<script src="data/trophies.js?v=2"></script>
-<script src="data/moneyball-transfers.js?v=2"></script>
+<script src="data/eg-datasets.js"></script>
+<script src="data/players.js"></script>
+<script src="data/kits.js"></script>
+<script src="data/club-logos.js"></script>
+<script src="data/sxi-teams.js"></script>
+<script src="data/trophies.js"></script>
+<script src="data/moneyball-transfers.js"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════════════
 //  MONEYBALL GAME
