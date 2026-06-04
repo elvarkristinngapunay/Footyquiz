@@ -1187,6 +1187,28 @@ body::before{display:none;}
   .eg-cd-num{font-size:clamp(6rem,28vw,10rem);}
   .eg-cd-kickoff{font-size:clamp(3rem,12vw,6rem);}
 }
+
+/* ── TOP 10 ── */
+.t10-league-card{background:#111;border:1px solid #222;border-radius:18px;padding:18px 20px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:16px;width:100%;}
+.t10-league-card:hover{border-color:#e8b923;transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,0.5);}
+.t10-badge{font-family:'Anton',sans-serif;font-size:0.7rem;letter-spacing:2px;padding:4px 10px;border-radius:8px;flex-shrink:0;}
+.t10-stat-btn{flex:1;background:#111;border:1px solid #333;border-radius:14px;padding:22px 12px;cursor:pointer;transition:all 0.2s;text-align:center;font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:1px;}
+.t10-stat-btn:hover{border-color:#e8b923;background:rgba(232,185,35,0.06);}
+.t10-mode-btn{flex:1;padding:10px;border-radius:10px;font-family:'Anton',sans-serif;font-size:0.8rem;letter-spacing:2px;cursor:pointer;border:1px solid #333;transition:all 0.2s;}
+.t10-slot{display:flex;align-items:center;background:#111;border:1px solid #1e1e1e;border-radius:12px;padding:12px 14px;gap:12px;transition:all 0.3s;}
+.t10-slot.found{border-color:#2a2a2a;background:#0d150d;}
+.t10-slot.revealed{border-color:#1a1a1a;background:#0a0a0a;}
+.t10-slot-num{font-family:'Anton',sans-serif;font-size:1.3rem;color:#2a2a2a;width:22px;text-align:center;flex-shrink:0;}
+.t10-slot.found .t10-slot-num,.t10-slot.revealed .t10-slot-num{color:#444;}
+.t10-slot-bar{flex:1;background:#1a1a1a;border-radius:6px;height:18px;}
+.t10-slot-name{flex:1;font-family:'Anton',sans-serif;font-size:0.95rem;color:#fff;letter-spacing:0.5px;}
+.t10-slot.revealed .t10-slot-name{color:#333;}
+.t10-slot-val{font-family:'Anton',sans-serif;font-size:0.95rem;color:#e8b923;flex-shrink:0;}
+.t10-slot.revealed .t10-slot-val{color:#2a2a2a;}
+@keyframes t10pop{from{opacity:0;transform:scale(0.94);}to{opacity:1;transform:scale(1);}}
+.t10-slot.found{animation:t10pop 0.25s ease-out;}
+@keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
+.t10-shake{animation:t10shake 0.35s ease-out;}
 </style>
 </head>
 <body>
@@ -1310,14 +1332,114 @@ body::before{display:none;}
 </div>
 
 <!-- TOP 10 SCREEN -->
-<div id="top10Screen" style="display:none;flex-direction:column;align-items:center;padding:20px 16px 60px;max-width:560px;margin:0 auto;">
-  <div style="font-family:'Anton',sans-serif;font-size:0.75rem;color:#555;letter-spacing:4px;margin-bottom:2px;text-align:center;">WELCOME TO</div>
-  <div style="font-family:'Anton',sans-serif;font-size:clamp(2.4rem,10vw,4rem);color:#e8b923;letter-spacing:2px;line-height:1;text-align:center;margin-bottom:32px;">TOP 10</div>
-  <div style="background:#111;border:1px solid #222;border-radius:18px;padding:40px 24px;text-align:center;width:100%;">
-    <div style="font-family:'Anton',sans-serif;font-size:3rem;color:#e8b923;margin-bottom:12px;">🏆</div>
-    <div style="font-family:'Anton',sans-serif;font-size:1.4rem;color:#fff;letter-spacing:2px;margin-bottom:10px;">COMING SOON</div>
-    <div style="color:#555;font-size:0.85rem;line-height:1.6;">Can you name the top 10?<br>Lists, rankings, records — the ultimate football trivia challenge.</div>
+<div id="top10Screen" style="display:none;flex-direction:column;align-items:center;padding:20px 16px 60px;max-width:560px;margin:0 auto;width:100%;">
+
+  <!-- LEAGUE PICKER -->
+  <div id="t10Home" style="width:100%;">
+    <div style="font-family:'Anton',sans-serif;font-size:0.75rem;color:#555;letter-spacing:4px;margin-bottom:2px;text-align:center;">WELCOME TO</div>
+    <div style="font-family:'Anton',sans-serif;font-size:clamp(2.4rem,10vw,4rem);color:#e8b923;letter-spacing:2px;line-height:1;text-align:center;margin-bottom:8px;">TOP 10</div>
+    <div style="color:#555;font-size:0.8rem;text-align:center;margin-bottom:28px;">Choose a competition</div>
+    <div style="display:flex;flex-direction:column;gap:12px;width:100%;">
+      <div class="t10-league-card" onclick="t10PickLeague('premier-league')">
+        <div class="t10-badge" style="background:rgba(100,0,200,0.15);border:1px solid #6400c8;color:#a855f7;">PL</div>
+        <div style="flex:1;">
+          <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">Premier League</div>
+          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists</div>
+        </div>
+        <div style="color:#333;font-size:1.4rem;">›</div>
+      </div>
+      <div class="t10-league-card" onclick="t10PickLeague('la-liga')">
+        <div class="t10-badge" style="background:rgba(255,105,0,0.15);border:1px solid #ff6900;color:#ff6900;">LaL</div>
+        <div style="flex:1;">
+          <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">La Liga</div>
+          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists</div>
+        </div>
+        <div style="color:#333;font-size:1.4rem;">›</div>
+      </div>
+      <div class="t10-league-card" onclick="t10PickLeague('world-cup')">
+        <div class="t10-badge" style="background:rgba(0,82,155,0.2);border:1px solid #00529b;color:#4da3ff;">WC</div>
+        <div style="flex:1;">
+          <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">World Cup</div>
+          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists</div>
+        </div>
+        <div style="color:#333;font-size:1.4rem;">›</div>
+      </div>
+    </div>
   </div>
+
+  <!-- STAT + MODE PICKER -->
+  <div id="t10Picker" style="display:none;width:100%;">
+    <div style="font-family:'Anton',sans-serif;font-size:0.75rem;color:#555;letter-spacing:4px;margin-bottom:4px;text-align:center;">TOP 10</div>
+    <div id="t10PickerTitle" style="font-family:'Anton',sans-serif;font-size:clamp(1.8rem,8vw,2.8rem);color:#fff;letter-spacing:1px;text-align:center;margin-bottom:28px;"></div>
+    <div style="color:#555;font-size:0.7rem;letter-spacing:3px;margin-bottom:12px;">WHAT STAT?</div>
+    <div style="display:flex;gap:12px;margin-bottom:28px;">
+      <button class="t10-stat-btn" onclick="t10PickStat('goals')">
+        <div style="font-size:1.8rem;margin-bottom:6px;">⚽</div>
+        <div>GOALS</div>
+      </button>
+      <button class="t10-stat-btn" onclick="t10PickStat('assists')">
+        <div style="font-size:1.8rem;margin-bottom:6px;">🎯</div>
+        <div>ASSISTS</div>
+      </button>
+    </div>
+    <div style="color:#555;font-size:0.7rem;letter-spacing:3px;margin-bottom:10px;">GAME MODE</div>
+    <div style="display:flex;gap:12px;">
+      <button class="t10-mode-btn" id="t10Mode1p" onclick="t10SetMode('1p')" style="background:#e8b923;color:#000;">1 PLAYER</button>
+      <button class="t10-mode-btn" id="t10Mode2p" onclick="t10SetMode('2p')" style="background:#111;color:#555;">2 PLAYERS</button>
+    </div>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="t10Game" style="display:none;width:100%;">
+    <!-- 1P score bar -->
+    <div id="t10Bar1p" style="display:flex;gap:12px;margin-bottom:20px;width:100%;">
+      <div style="flex:2;background:#111;border:1px solid #1e1e1e;border-radius:14px;padding:10px 16px;text-align:center;">
+        <div style="font-size:0.6rem;color:#555;letter-spacing:2px;margin-bottom:2px;">FOUND</div>
+        <div id="t10Found1p" style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#4ade80;line-height:1;">0</div>
+        <div style="font-size:0.6rem;color:#333;letter-spacing:1px;">/ 10</div>
+      </div>
+      <div style="flex:1;background:#111;border:1px solid #1e1e1e;border-radius:14px;padding:10px 16px;text-align:center;">
+        <div style="font-size:0.6rem;color:#555;letter-spacing:2px;margin-bottom:2px;">LEFT</div>
+        <div id="t10Left1p" style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#fff;line-height:1;">10</div>
+      </div>
+    </div>
+    <!-- 2P score bar -->
+    <div id="t10Bar2p" style="display:none;gap:12px;margin-bottom:20px;width:100%;">
+      <div style="flex:1;background:#111;border:1px solid #1e1e1e;border-radius:14px;padding:10px 14px;text-align:center;" id="t10P1Card">
+        <div style="font-size:0.6rem;color:#555;letter-spacing:2px;margin-bottom:2px;">PLAYER 1</div>
+        <div id="t10Score1" style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#4ade80;line-height:1;">0</div>
+      </div>
+      <div style="flex:1;background:#111;border:1px solid #1e1e1e;border-radius:14px;padding:10px 14px;text-align:center;">
+        <div style="font-size:0.55rem;color:#444;letter-spacing:2px;margin-bottom:4px;">TURN</div>
+        <div id="t10TurnEl" style="font-family:'Anton',sans-serif;font-size:0.85rem;color:#e8b923;line-height:1.2;">P1</div>
+      </div>
+      <div style="flex:1;background:#111;border:1px solid #1e1e1e;border-radius:14px;padding:10px 14px;text-align:center;" id="t10P2Card">
+        <div style="font-size:0.6rem;color:#555;letter-spacing:2px;margin-bottom:2px;">PLAYER 2</div>
+        <div id="t10Score2" style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#fff;line-height:1;">0</div>
+      </div>
+    </div>
+
+    <!-- League + stat title -->
+    <div id="t10GameTitle" style="text-align:center;margin-bottom:16px;"></div>
+
+    <!-- Input -->
+    <input id="t10Input" type="text" placeholder="Type a player name…"
+      style="width:100%;box-sizing:border-box;background:#111;border:2px solid #333;border-radius:14px;padding:14px 16px;color:#fff;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:0.5px;outline:none;margin-bottom:14px;"
+      onkeydown="if(event.key==='Enter'){t10Guess();event.preventDefault();}">
+
+    <!-- Slots -->
+    <div id="t10Slots" style="display:flex;flex-direction:column;gap:8px;width:100%;margin-bottom:16px;"></div>
+
+    <!-- Give Up -->
+    <button id="t10GiveUpBtn" onclick="t10GiveUp()"
+      style="background:none;border:1px solid #222;color:#444;padding:10px 24px;border-radius:10px;font-family:'Anton',sans-serif;font-size:0.75rem;letter-spacing:2px;cursor:pointer;width:100%;">
+      GIVE UP
+    </button>
+
+    <!-- End panel -->
+    <div id="t10End" style="display:none;text-align:center;margin-top:20px;"></div>
+  </div>
+
 </div>
 
 <!-- GAME INFO MODAL -->
@@ -2012,6 +2134,11 @@ function showTop10(){
   document.getElementById('sxiScreen').style.display='none';
   document.getElementById('mbScreen').style.display='none';
   document.getElementById('top10Screen').style.display='flex';
+  // Always start from league picker
+  t10Active = false;
+  document.getElementById('t10Home').style.display='block';
+  document.getElementById('t10Picker').style.display='none';
+  document.getElementById('t10Game').style.display='none';
   setBackBtn('← Back Home', showLanding);
 }
 function showSxi(){
@@ -4421,6 +4548,7 @@ function updateFriendsNav(){
 <script src="data/sxi-teams.js"></script>
 <script src="data/trophies.js"></script>
 <script src="data/moneyball-transfers.js"></script>
+<script src="data/top10.js"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════════════
 //  MONEYBALL GAME
@@ -4573,6 +4701,220 @@ function mbSubmitGuess(){
   const rowDir = diff<=2 ? {label:'✓ Correct', color:'#4ade80'} : guess<correct ? {label:'↑ Higher', color:'#4ade80'} : {label:'↓ Lower', color:'#ef4444'};
   guessRow.innerHTML = `<span style="color:#888;font-size:0.95rem;">€${guess}M</span><span style="color:${rowDir.color};font-size:1rem;font-family:'Anton',sans-serif;letter-spacing:1px;">${rowDir.label}</span>`;
   prevEl.insertBefore(guessRow, prevEl.firstChild);
+}
+</script>
+
+<script>
+// ====================== TOP 10 GAME ======================
+let t10League = null;
+let t10Stat = null;
+let t10Mode = '1p';
+let t10Found = new Set();
+let t10Scores = [0, 0];
+let t10Turn = 0; // 0=P1, 1=P2
+let t10Data = [];
+let t10Active = false;
+
+function t10Norm(s){
+  return s.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/[^a-z0-9 ]/g,'').trim();
+}
+
+function t10PickLeague(id){
+  t10League = id;
+  document.getElementById('t10Home').style.display = 'none';
+  document.getElementById('t10Picker').style.display = 'block';
+  document.getElementById('t10PickerTitle').textContent = TOP10_DATA[id].name.toUpperCase();
+}
+
+function t10SetMode(m){
+  t10Mode = m;
+  document.getElementById('t10Mode1p').style.cssText += m==='1p'
+    ? 'background:#e8b923;color:#000;' : 'background:#111;color:#555;';
+  document.getElementById('t10Mode2p').style.cssText += m==='2p'
+    ? 'background:#e8b923;color:#000;' : 'background:#111;color:#555;';
+}
+
+function t10PickStat(stat){
+  t10Stat = stat;
+  t10StartGame();
+}
+
+function t10StartGame(){
+  const cat = TOP10_DATA[t10League];
+  t10Data = cat[t10Stat].players;
+  t10Found = new Set();
+  t10Scores = [0, 0];
+  t10Turn = 0;
+  t10Active = true;
+
+  document.getElementById('t10Picker').style.display = 'none';
+  document.getElementById('t10Game').style.display = 'block';
+  document.getElementById('t10End').style.display = 'none';
+  document.getElementById('t10GiveUpBtn').style.display = 'block';
+  document.getElementById('t10Input').style.display = 'block';
+  document.getElementById('t10Input').value = '';
+  document.getElementById('t10Input').style.borderColor = '#333';
+
+  // Score bars
+  if(t10Mode === '2p'){
+    document.getElementById('t10Bar1p').style.display = 'none';
+    document.getElementById('t10Bar2p').style.display = 'flex';
+    t10UpdateScores();
+  } else {
+    document.getElementById('t10Bar1p').style.display = 'flex';
+    document.getElementById('t10Bar2p').style.display = 'none';
+    document.getElementById('t10Found1p').textContent = '0';
+    document.getElementById('t10Left1p').textContent = '10';
+  }
+
+  // Title
+  const label = cat[t10Stat].label;
+  document.getElementById('t10GameTitle').innerHTML =
+    `<div style="font-size:0.65rem;color:#555;letter-spacing:3px;margin-bottom:4px;">${cat.name.toUpperCase()}</div>
+     <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#888;letter-spacing:1px;">${label}</div>`;
+
+  t10RenderSlots();
+  setTimeout(() => document.getElementById('t10Input').focus(), 100);
+}
+
+function t10RenderSlots(){
+  const g = document.getElementById('t10Slots');
+  g.innerHTML = t10Data.map((p,i) => {
+    const found = t10Found.has(i);
+    return `<div class="t10-slot ${found?'found':''}" id="t10s${i}">
+      <div class="t10-slot-num">${i+1}</div>
+      ${found
+        ? `<div class="t10-slot-name">${p.name}</div><div class="t10-slot-val">${p.value}</div>`
+        : `<div class="t10-slot-bar"></div>`
+      }
+    </div>`;
+  }).join('');
+}
+
+function t10Guess(){
+  if(!t10Active) return;
+  const inp = document.getElementById('t10Input');
+  const val = inp.value.trim();
+  if(!val) return;
+  const norm = t10Norm(val);
+
+  let hit = -1;
+  for(let i=0; i<t10Data.length; i++){
+    if(t10Found.has(i)) continue;
+    const p = t10Data[i];
+    if(t10Norm(p.name) === norm || p.aliases.some(a => t10Norm(a) === norm)){
+      hit = i; break;
+    }
+  }
+
+  if(hit >= 0){
+    t10Found.add(hit);
+    // Reveal slot
+    const slot = document.getElementById(`t10s${hit}`);
+    const p = t10Data[hit];
+    slot.className = 't10-slot found';
+    slot.innerHTML = `<div class="t10-slot-num">${hit+1}</div>
+      <div class="t10-slot-name">${p.name}</div>
+      <div class="t10-slot-val">${p.value}</div>`;
+
+    // Update scores
+    if(t10Mode === '2p'){
+      t10Scores[t10Turn]++;
+      t10Turn = 1 - t10Turn;
+      t10UpdateScores();
+    } else {
+      document.getElementById('t10Found1p').textContent = t10Found.size;
+      document.getElementById('t10Left1p').textContent = 10 - t10Found.size;
+    }
+
+    inp.value = '';
+    inp.style.borderColor = '#4ade80';
+    setTimeout(() => { if(inp.style.borderColor==='rgb(74, 222, 128)') inp.style.borderColor='#333'; }, 600);
+
+    if(t10Found.size === 10) { t10Complete(); return; }
+  } else {
+    // Wrong
+    inp.classList.add('t10-shake');
+    inp.style.borderColor = '#ef4444';
+    setTimeout(() => {
+      inp.classList.remove('t10-shake');
+      inp.style.borderColor = '#333';
+    }, 400);
+    if(t10Mode === '2p'){
+      t10Turn = 1 - t10Turn;
+      t10UpdateScores();
+    }
+    inp.value = '';
+  }
+}
+
+function t10UpdateScores(){
+  document.getElementById('t10Score1').textContent = t10Scores[0];
+  document.getElementById('t10Score2').textContent = t10Scores[1];
+  document.getElementById('t10TurnEl').textContent = t10Turn===0 ? 'P1' : 'P2';
+  document.getElementById('t10P1Card').style.borderColor = t10Turn===0 ? '#e8b923' : '#1e1e1e';
+  document.getElementById('t10P2Card').style.borderColor = t10Turn===1 ? '#e8b923' : '#1e1e1e';
+  document.getElementById('t10Score1').style.color = t10Turn===0 ? '#4ade80' : '#555';
+  document.getElementById('t10Score2').style.color = t10Turn===1 ? '#4ade80' : '#555';
+}
+
+function t10GiveUp(){
+  t10Active = false;
+  // Reveal unfound in grey
+  for(let i=0; i<t10Data.length; i++){
+    if(t10Found.has(i)) continue;
+    const slot = document.getElementById(`t10s${i}`);
+    const p = t10Data[i];
+    slot.className = 't10-slot revealed';
+    slot.innerHTML = `<div class="t10-slot-num">${i+1}</div>
+      <div class="t10-slot-name">${p.name}</div>
+      <div class="t10-slot-val">${p.value}</div>`;
+  }
+  document.getElementById('t10GiveUpBtn').style.display = 'none';
+  document.getElementById('t10Input').style.display = 'none';
+  t10ShowEnd(false);
+}
+
+function t10Complete(){
+  t10Active = false;
+  document.getElementById('t10GiveUpBtn').style.display = 'none';
+  document.getElementById('t10Input').style.display = 'none';
+  t10ShowEnd(true);
+}
+
+function t10ShowEnd(won){
+  const end = document.getElementById('t10End');
+  end.style.display = 'block';
+  let headline, sub;
+  if(t10Mode === '2p'){
+    const [s1,s2] = t10Scores;
+    if(s1 > s2)      { headline = 'PLAYER 1 WINS'; sub = `${s1} – ${s2}`; }
+    else if(s2 > s1) { headline = 'PLAYER 2 WINS'; sub = `${s2} – ${s1}`; }
+    else             { headline = "IT'S A DRAW";   sub = `${s1} – ${s2}`; }
+  } else {
+    headline = won ? 'COMPLETE!' : `${t10Found.size} / 10`;
+    sub = won ? 'You found all 10! 🎉' : 'Better luck next time';
+  }
+  end.innerHTML = `
+    <div style="font-family:'Anton',sans-serif;font-size:2rem;color:${won?'#4ade80':'#e8b923'};margin-bottom:4px;">${headline}</div>
+    <div style="color:#555;font-size:0.85rem;margin-bottom:20px;">${sub}</div>
+    <div style="display:flex;gap:12px;justify-content:center;">
+      <button onclick="t10StartGame()" style="background:#e8b923;color:#000;border:none;padding:12px 28px;border-radius:12px;font-family:'Anton',sans-serif;font-size:0.85rem;letter-spacing:2px;cursor:pointer;">PLAY AGAIN</button>
+      <button onclick="t10BackToPicker()" style="background:none;border:1px solid #222;color:#555;padding:12px 28px;border-radius:12px;font-family:'Anton',sans-serif;font-size:0.85rem;cursor:pointer;">BACK</button>
+    </div>`;
+}
+
+function t10BackToPicker(){
+  document.getElementById('t10Game').style.display = 'none';
+  document.getElementById('t10Picker').style.display = 'block';
+}
+
+function t10BackToHome(){
+  document.getElementById('t10Game').style.display = 'none';
+  document.getElementById('t10Picker').style.display = 'none';
+  document.getElementById('t10Home').style.display = 'block';
 }
 </script>
 </body>
