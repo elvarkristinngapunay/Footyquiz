@@ -38,7 +38,7 @@ const EG_GROUPS = [
     desc:'Football’s biggest money moves',
     quizzes:[
       {key:'hundred_million', icon:'💰', desc:'Name every player transferred for €100M or more · 19 players'},
-      {key:'klopp_signings', icon:'🔴', desc:'Every permanent signing under Klopp who played a game · 33 players'},
+      {key:'klopp_signings', icon:'🔴', desc:'Every first-team signing under Klopp who played a game · 31 players'},
     ]
   },
   {
@@ -428,7 +428,6 @@ const EG_DATASETS = {
       {name:'Fabinho',                aliases:['fabinho'], from:'Monaco', year:2018},
       {name:'Xherdan Shaqiri',        aliases:['shaqiri','xherdan shaqiri'], from:'Stoke', year:2018},
       {name:'Alisson Becker',         aliases:['alisson','alisson becker','becker'], from:'Roma', year:2018},
-      {name:'Sepp van den Berg',      aliases:['van den berg','sepp van den berg','sepp'], from:'PEC Zwolle', year:2019},
       {name:'Adrián',                 aliases:['adrian','adrián'], from:'West Ham', year:2019},
       {name:'Harvey Elliott',         aliases:['elliott','harvey elliott'], from:'Fulham', year:2019},
       {name:'Takumi Minamino',        aliases:['minamino','takumi minamino'], from:'RB Salzburg', year:2020},
@@ -440,12 +439,17 @@ const EG_DATASETS = {
       {name:'Darwin Núñez',           aliases:['nunez','núñez','darwin','darwin nunez'], from:'Benfica', year:2022},
       {name:'Fábio Carvalho',         aliases:['carvalho','fabio carvalho','fábio carvalho'], from:'Fulham', year:2022},
       {name:'Calvin Ramsay',          aliases:['ramsay','calvin ramsay'], from:'Aberdeen', year:2022},
-      {name:'Ben Doak',               aliases:['doak','ben doak'], from:'Celtic', year:2022},
       {name:'Cody Gakpo',             aliases:['gakpo','cody gakpo'], from:'PSV', year:2023},
       {name:'Alexis Mac Allister',    aliases:['mac allister','macallister','alexis mac allister','alexis'], from:'Brighton', year:2023},
       {name:'Dominik Szoboszlai',     aliases:['szoboszlai','dominik szoboszlai'], from:'RB Leipzig', year:2023},
       {name:'Wataru Endo',            aliases:['endo','wataru endo'], from:'Stuttgart', year:2023},
       {name:'Ryan Gravenberch',       aliases:['gravenberch','ryan gravenberch'], from:'Bayern Munich', year:2023},
+    ],
+    // "Trap" names: recognised, but don't count. Typing one pops an info note
+    // instead of a right/wrong — they joined the youth setup, not the first team.
+    traps: [
+      {name:'Ben Doak',          aliases:['doak','ben doak'],                       note:'🔴 Ben Doak — signed for the <b>academy</b>, not a first-team transfer.'},
+      {name:'Sepp van den Berg', aliases:['van den berg','sepp van den berg','sepp'], note:'🔴 Sepp van den Berg — a <b>youth/academy</b> signing, not a first-team transfer.'},
     ]
   }
 };

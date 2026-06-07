@@ -730,6 +730,17 @@ body::before{display:none;}
 }
 #egYearToast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
 #egYearToast .yt-label{display:block;font-size:0.6rem;color:#aaa;letter-spacing:3px;margin-bottom:2px;}
+#egNoteToast{
+  position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(0.8);
+  background:rgba(5,5,10,0.96);border:2px solid #c01933;
+  color:#fff;font-family:inherit;font-weight:600;font-size:1.05rem;
+  padding:18px 28px;border-radius:14px;z-index:1000;max-width:80%;
+  pointer-events:none;opacity:0;text-align:center;line-height:1.4;
+  transition:opacity 0.2s ease,transform 0.2s ease;
+}
+#egNoteToast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+#egNoteToast b{color:#ff6b81;}
 
 /* ── FOOTER ── */
 .trophy-img{width:52px;height:52px;object-fit:contain;flex-shrink:0;}
@@ -1649,6 +1660,7 @@ body::before{display:none;}
   </div>
   <div id="egGameover" class="eg-gameover" style="display:none;"></div>
   <div id="egYearToast"></div>
+  <div id="egNoteToast"></div>
   <button onclick="showElGrandeMenu()" style="margin-top:16px;background:none;border:1px solid #333;color:#666;padding:10px 24px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.8rem;">← Categories</button>
 </div>
 
@@ -2464,12 +2476,32 @@ function egAlreadyNamed(player){
   return egNamed.some(n=>n.canonical===player.name);
 }
 
+function egFindTrap(input){
+  if(!egDataset.traps) return null;
+  const norm = egNormalize(input);
+  return egDataset.traps.find(t=>{
+    if(egNormalize(t.name)===norm) return true;
+    return (t.aliases||[]).some(a=>egNormalize(a)===norm);
+  });
+}
+
+let _egNoteToastTimer = null;
+function egShowNote(msg){
+  const toast = document.getElementById('egNoteToast');
+  if(!toast) return;
+  toast.innerHTML = msg;
+  clearTimeout(_egNoteToastTimer);
+  toast.classList.add('show');
+  _egNoteToastTimer = setTimeout(()=>toast.classList.remove('show'), 2400);
+}
+
 function egAutoSubmit(){
   if(!egRunning) return;
   const input = document.getElementById('egInput').value.trim();
   if(!input) return;
   const player = egFindPlayer(input);
-  if(player && !egAlreadyNamed(player)) egSubmit();
+  if(player && !egAlreadyNamed(player)){ egSubmit(); return; }
+  if(egFindTrap(input)) egSubmit();
 }
 function egSubmit(){
   if(!egRunning) return;
@@ -2478,6 +2510,16 @@ function egSubmit(){
   const player = egFindPlayer(input);
   const wrap = document.getElementById('egInputWrap');
   if(!player){
+    const trap = egFindTrap(input);
+    if(trap){
+      // Recognised but doesn't count — show an info note, no penalty, no turn switch
+      egShowNote(trap.note);
+      wrap.classList.add('wrong');
+      setTimeout(()=>wrap.classList.remove('wrong'),400);
+      playWrong();
+      document.getElementById('egInput').value='';
+      return;
+    }
     wrap.classList.add('wrong');
     setTimeout(()=>wrap.classList.remove('wrong'),400);
     playWrong();
@@ -4569,7 +4611,7 @@ function updateFriendsNav(){
   }
 }
 </script>
-<script src="data/eg-datasets.js?v=3"></script>
+<script src="data/eg-datasets.js?v=4"></script>
 <script src="data/players.js"></script>
 <script src="data/kits.js"></script>
 <script src="data/club-logos.js"></script>
