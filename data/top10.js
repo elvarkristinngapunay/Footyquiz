@@ -1,6 +1,45 @@
 // Top 10 quiz data — verified June 2026
-// Sources: premierleague.com, Opta Analyst, Wikipedia, La Liga official, FIFA
+// Sources: premierleague.com, Opta Analyst, Wikipedia, La Liga official, FIFA, uefa.com
 const TOP10_DATA = {
+  'champions-league': {
+    name: 'Champions League',
+    badge: 'UCL',
+    goals: {
+      label: 'All-Time Top Goal Scorers',
+      unit: 'Goals',
+      // UEFA convention: includes European Cup era. All sources agree.
+      players: [
+        { name:'Cristiano Ronaldo',     value:140, aliases:['ronaldo','cr7'] },
+        { name:'Lionel Messi',          value:129, aliases:['messi','leo messi'] },
+        { name:'Robert Lewandowski',    value:109, aliases:['lewandowski','lewa'] },
+        { name:'Karim Benzema',         value:90,  aliases:['benzema'] },
+        { name:'Raúl',                  value:71,  aliases:['raul','raul gonzalez'] },
+        { name:'Kylian Mbappé',         value:70,  aliases:['mbappe','kylian mbappe'] },
+        { name:'Erling Haaland',        value:57,  aliases:['haaland','erling haaland'] },
+        { name:'Thomas Müller',         value:57,  aliases:['muller','thomas muller'] },
+        { name:'Ruud van Nistelrooy',   value:56,  aliases:['van nistelrooy','nistelrooy','ruud'] },
+        { name:'Harry Kane',            value:54,  aliases:['kane'] }
+      ]
+    },
+    assists: {
+      label: 'All-Time Top Assist Providers',
+      unit: 'Assists',
+      // UEFA official figures (uefa.com). Note: an alternate Opta dataset ranks Giggs #1.
+      players: [
+        { name:'Cristiano Ronaldo',  value:42, aliases:['ronaldo','cr7'] },
+        { name:'Ángel Di María',     value:41, aliases:['di maria','angel di maria','dimaria'] },
+        { name:'Lionel Messi',       value:40, aliases:['messi','leo messi'] },
+        { name:'Neymar',             value:33, aliases:['neymar jr'] },
+        { name:'Ryan Giggs',         value:31, aliases:['giggs'] },
+        { name:'Xavi',               value:30, aliases:['xavi hernandez','xavi hernández'] },
+        { name:'Thomas Müller',      value:30, aliases:['muller','thomas muller'] },
+        { name:'Karim Benzema',      value:29, aliases:['benzema'] },
+        { name:'Andrés Iniesta',     value:29, aliases:['iniesta','andres iniesta'] },
+        { name:'Kevin De Bruyne',    value:29, aliases:['de bruyne','kdb'] }
+      ]
+    }
+  },
+
   'premier-league': {
     name: 'Premier League',
     badge: 'PL',
