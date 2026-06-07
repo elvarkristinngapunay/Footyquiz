@@ -168,7 +168,7 @@ const CLUB_LOGOS={
   'Fulham':             'https://en.wikipedia.org/wiki/Special:FilePath/Fulham_FC_%28shield%29.svg',
   'Hertha BSC':         'https://en.wikipedia.org/wiki/Special:FilePath/Hertha_BSC_Logo_2012.svg',
   'Krasnodar':          'https://en.wikipedia.org/wiki/Special:FilePath/FC_Krasnodar_logo.svg',
-  'New England':        'https://en.wikipedia.org/wiki/Special:FilePath/New_England_Revolution_logo.svg',
+  'New England':        'https://en.wikipedia.org/wiki/Special:FilePath/New_England_Revolution.svg',
   'Newcastle United':   'https://en.wikipedia.org/wiki/Special:FilePath/Newcastle_United_Logo.svg',
   'Norwich':            'https://en.wikipedia.org/wiki/Special:FilePath/Norwich_City_FC_logo.svg',
   'RB Leipzig':         'https://en.wikipedia.org/wiki/Special:FilePath/RB_Leipzig_2014_logo.svg',
