@@ -1610,63 +1610,9 @@ body::before{display:none;}
 <div id="elGrandeMenu">
   <div style="font-family:'Anton',sans-serif;font-size:clamp(1.6rem,6vw,2.8rem);color:#aaa;letter-spacing:4px;text-align:center;margin-bottom:8px;">WELCOME TO</div>
   <img src="Football under pressure font.png" alt="Football Under Pressure" style="max-width:min(460px,88vw);height:auto;display:block;margin:0 auto 12px;filter:drop-shadow(0 0 6px rgba(255,255,255,0.55)) drop-shadow(0 0 2px rgba(255,255,255,0.8));">
-  <div class="eg-sub">Choose a category — then take turns naming players before the clock runs out</div>
-  <div class="eg-category-card" onmouseenter="playTick()" onclick="startElGrande('cl_scorers')">
-    <div class="eg-cat-icon">🏆</div>
-    <div>
-      <div class="eg-cat-label">Champions League Final Goalscorers</div>
-      <div class="eg-cat-desc">1992/93 to present · 70 players</div>
-    </div>
-    <div class="eg-cat-arrow">›</div>
-  </div>
-  <div class="eg-category-card" onmouseenter="playTick()" onclick="startElGrande('wc_countries')">
-    <div class="eg-cat-icon">🌍</div>
-    <div>
-      <div class="eg-cat-label">Countries at the World Cup</div>
-      <div class="eg-cat-desc">Every nation to appear at a FIFA World Cup</div>
-    </div>
-    <div class="eg-cat-arrow">›</div>
-  </div>
-  <div class="eg-category-card" onmouseenter="playTick()" onclick="startElGrande('wc_semifinalists')">
-    <div class="eg-cat-icon">🏅</div>
-    <div>
-      <div class="eg-cat-label">World Cup Semi-Finalists</div>
-      <div class="eg-cat-desc">Every country to reach a World Cup top 4 · 25 nations</div>
-    </div>
-    <div class="eg-cat-arrow">›</div>
-  </div>
-  <div class="eg-category-card" onmouseenter="playTick()" onclick="startElGrande('wc_final_scorers')">
-    <div class="eg-cat-icon">🥇</div>
-    <div>
-      <div class="eg-cat-label">World Cup Final Goalscorers</div>
-      <div class="eg-cat-desc">1930 to 2022 · Every player who scored in a final</div>
-    </div>
-    <div class="eg-cat-arrow">›</div>
-  </div>
-  <div class="eg-category-card" onmouseenter="playTick()" onclick="startElGrande('wc_golden_boot')">
-    <div class="eg-cat-icon">👟</div>
-    <div>
-      <div class="eg-cat-label">World Cup Golden Boot Winners</div>
-      <div class="eg-cat-desc">1930 to 2022 · Every top scorer at the World Cup · 27 players</div>
-    </div>
-    <div class="eg-cat-arrow">›</div>
-  </div>
-  <div class="eg-category-card" onmouseenter="playTick()" onclick="startElGrande('hundred_million')">
-    <div class="eg-cat-icon">💰</div>
-    <div>
-      <div class="eg-cat-label">€100M Club</div>
-      <div class="eg-cat-desc">Name every player transferred for €100M or more · 19 players</div>
-    </div>
-    <div class="eg-cat-arrow">›</div>
-  </div>
-  <div class="eg-category-card" style="border-color:rgba(255,215,0,0.2);background:rgba(255,215,0,0.03);" onclick="openSlotMachine('eg')">
-    <div class="eg-cat-icon">🎰</div>
-    <div>
-      <div class="eg-cat-label" style="color:#FFD700;">Randomise Category</div>
-      <div class="eg-cat-desc">Spin the slot machine — let fate decide!</div>
-    </div>
-    <div class="eg-cat-arrow">›</div>
-  </div>
+  <div class="eg-sub" id="egMenuSub">Choose a category — then take turns naming players before the clock runs out</div>
+  <div id="egGroupList"></div>
+  <div id="egQuizList" style="display:none;"></div>
 </div>
 
 <!-- EL GRANDE GAME -->
@@ -2181,6 +2127,7 @@ function showElGrande(){
   document.getElementById('elGrandeMenu').style.display='block';
   document.getElementById('elGrandeGame').style.display='none';
   document.getElementById('gameScreen').style.display='none';
+  egRenderGroups();
   setBackBtn('← Back Home', showLanding);
 }
 function showElGrandeMenu(){
@@ -2189,8 +2136,71 @@ function showElGrandeMenu(){
   document.getElementById('slotMachineOverlay').style.display='none';
   document.getElementById('elGrandeMenu').style.display='block';
   document.getElementById('elGrandeGame').style.display='none';
+  egRenderGroups();
   setBackBtn('← Back Home', showLanding);
 }
+
+// ── FOOTBALL UNDER PRESSURE — TWO-LEVEL MENU ─────────────────────────────────
+function egRenderGroups(){
+  document.getElementById('egGroupList').style.display='';
+  document.getElementById('egQuizList').style.display='none';
+  const sub=document.getElementById('egMenuSub');
+  if(sub) sub.textContent='Choose a category — then take turns naming players before the clock runs out';
+  const groups = EG_GROUPS.map(g=>`
+    <div class="eg-category-card" onmouseenter="playTick()" onclick="egPickGroup('${g.id}')">
+      <div class="eg-cat-icon">${g.icon}</div>
+      <div>
+        <div class="eg-cat-label">${g.name}</div>
+        <div class="eg-cat-desc">${g.desc}</div>
+      </div>
+      <div class="eg-cat-arrow">›</div>
+    </div>`).join('');
+  const randomise = `
+    <div class="eg-category-card" style="border-color:rgba(255,215,0,0.2);background:rgba(255,215,0,0.03);" onclick="openSlotMachine('eg')">
+      <div class="eg-cat-icon">🎰</div>
+      <div>
+        <div class="eg-cat-label" style="color:#FFD700;">Randomise Quiz</div>
+        <div class="eg-cat-desc">Spin the slot machine — let fate decide!</div>
+      </div>
+      <div class="eg-cat-arrow">›</div>
+    </div>`;
+  document.getElementById('egGroupList').innerHTML = groups + randomise;
+}
+
+function egPickGroup(id){
+  const g = EG_GROUPS.find(x=>x.id===id);
+  if(!g) return;
+  document.getElementById('egGroupList').style.display='none';
+  const ql = document.getElementById('egQuizList');
+  ql.style.display='';
+  const sub=document.getElementById('egMenuSub');
+  if(sub) sub.textContent=g.icon+' '+g.name;
+  const cards = g.quizzes.map(q=>{
+    const title = q.title || (q.key && EG_DATASETS[q.key] ? EG_DATASETS[q.key].title : 'Quiz');
+    if(q.soon){
+      return `<div class="eg-category-card" style="opacity:0.5;cursor:default;">
+        <div class="eg-cat-icon">${q.icon||'⚽'}</div>
+        <div>
+          <div class="eg-cat-label">${title}</div>
+          <div class="eg-cat-desc">${q.desc||''}</div>
+        </div>
+        <div class="eg-cat-arrow" style="font-size:0.55rem;letter-spacing:1px;color:#FFD700;border:1px solid #7a5f00;border-radius:6px;padding:4px 8px;">SOON</div>
+      </div>`;
+    }
+    return `<div class="eg-category-card" onmouseenter="playTick()" onclick="startElGrande('${q.key}')">
+      <div class="eg-cat-icon">${q.icon||'⚽'}</div>
+      <div>
+        <div class="eg-cat-label">${title}</div>
+        <div class="eg-cat-desc">${q.desc||''}</div>
+      </div>
+      <div class="eg-cat-arrow">›</div>
+    </div>`;
+  }).join('');
+  const back = `<button onclick="egBackToGroups()" style="margin-top:14px;background:none;border:1px solid #333;color:#888;padding:10px 24px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.8rem;">← Categories</button>`;
+  ql.innerHTML = cards + back;
+}
+
+function egBackToGroups(){ egRenderGroups(); }
 
 function showWelcome(titleHTML, callback){
   const ov=document.getElementById('gameWelcomeOverlay');

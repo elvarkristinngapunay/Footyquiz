@@ -1,3 +1,54 @@
+// ── FOOTBALL UNDER PRESSURE — CATEGORY GROUPS ────────────────────────────────
+// Two-level menu: pick a group, then a quiz. Quizzes with a `key` are playable
+// (data lives in EG_DATASETS below). Quizzes with `soon:true` are placeholders
+// awaiting data.
+const EG_GROUPS = [
+  {
+    id:'world-cup', name:'World Cup', icon:'🌍',
+    desc:'Goals, nations & glory at the World Cup',
+    quizzes:[
+      {key:'wc_countries',     icon:'🌍', desc:'Every nation to appear at a FIFA World Cup'},
+      {key:'wc_semifinalists', icon:'🏅', desc:'Every country to reach a World Cup top 4 · 25 nations'},
+      {key:'wc_final_scorers', icon:'🥇', desc:'1930 to 2022 · Every player who scored in a final'},
+      {key:'wc_golden_boot',   icon:'👟', desc:'Every top scorer at the World Cup · 27 players'},
+      {title:'World Cup Winners', icon:'🏆', desc:'Every nation to lift the trophy', soon:true},
+      {title:'World Cup Winning Captains', icon:'🎖️', desc:'The men who lifted the World Cup', soon:true},
+    ]
+  },
+  {
+    id:'champions-league', name:'Champions League', icon:'🏆',
+    desc:'Europe’s biggest stage',
+    quizzes:[
+      {key:'cl_scorers', icon:'🏆', desc:'1992/93 to present · 70+ players'},
+      {title:'Clubs to win the European Cup', icon:'🏟️', desc:'Every club crowned champions of Europe', soon:true},
+      {title:'Champions League All-Time Top Scorers', icon:'⚽', desc:'Most goals in CL / European Cup history', soon:true},
+    ]
+  },
+  {
+    id:'premier-league', name:'Premier League', icon:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    desc:'England’s top flight',
+    quizzes:[
+      {title:'100+ Premier League Goals', icon:'⚽', desc:'Players with 100 or more PL goals', soon:true},
+      {title:'Premier League Golden Boot Winners', icon:'👟', desc:'Every PL season top scorer', soon:true},
+      {title:'Clubs to win the Premier League', icon:'🏆', desc:'Every PL-era champion', soon:true},
+    ]
+  },
+  {
+    id:'transfers', name:'Transfers', icon:'💰',
+    desc:'Football’s biggest money moves',
+    quizzes:[
+      {key:'hundred_million', icon:'💰', desc:'Name every player transferred for €100M or more · 19 players'},
+    ]
+  },
+  {
+    id:'ballon-dor', name:'Ballon d’Or', icon:'⭐',
+    desc:'Football’s individual greats',
+    quizzes:[
+      {title:'Ballon d’Or Winners', icon:'🥇', desc:'Every winner of the Ballon d’Or', soon:true},
+    ]
+  },
+];
+
 const EG_DATASETS = {
   cl_scorers: {
     title: 'Champions League Final Goalscorers',
