@@ -448,8 +448,11 @@ const EG_DATASETS = {
     // "Trap" names: recognised, but don't count. Typing one pops an info note
     // instead of a right/wrong — they joined the youth setup, not the first team.
     traps: [
-      {name:'Ben Doak',          aliases:['doak','ben doak'],                       note:'🔴 Ben Doak — signed for the <b>academy</b>, not a first-team transfer.'},
-      {name:'Sepp van den Berg', aliases:['van den berg','sepp van den berg','sepp'], note:'🔴 Sepp van den Berg — a <b>youth/academy</b> signing, not a first-team transfer.'},
+      {name:'Ben Doak',           aliases:['doak','ben doak'],                       note:'🔴 Ben Doak — signed for the <b>academy</b>, not a first-team transfer.'},
+      {name:'Sepp van den Berg',  aliases:['van den berg','sepp van den berg','sepp'], note:'🔴 Sepp van den Berg — a <b>youth/academy</b> signing, not a first-team transfer.'},
+      {name:'Alexander Manninger',aliases:['manninger','alex manninger','alexander manninger'], note:'🔴 Alex Manninger — signed as backup keeper but <b>never played</b> a game for Liverpool.'},
+      {name:'Andy Lonergan',      aliases:['lonergan','andy lonergan','andrew lonergan'], note:'🔴 Andy Lonergan — emergency backup keeper, <b>never played</b> a competitive game for Liverpool.'},
+      {name:'Marcelo Pitaluga',   aliases:['pitaluga','marcelo pitaluga'], note:'🔴 Marcelo Pitaluga — signed as a young keeper but <b>never played</b> a competitive game for Liverpool.'},
     ]
   }
 };
