@@ -38,6 +38,7 @@ const EG_GROUPS = [
     desc:'Football’s biggest money moves',
     quizzes:[
       {key:'hundred_million', icon:'💰', desc:'Name every player transferred for €100M or more · 19 players'},
+      {key:'klopp_signings', icon:'🔴', desc:'Every permanent signing under Klopp who played a game · 33 players'},
     ]
   },
   {
@@ -403,6 +404,48 @@ const EG_DATASETS = {
       {name:'James Rodríguez',     aliases:['james','james rodriguez','james rodríguez']},
       {name:'Harry Kane',          aliases:['kane','harry kane']},
       {name:'Kylian Mbappé',       aliases:['mbappe','mbappé','kylian mbappe','kylian']},
+    ]
+  },
+
+  klopp_signings: {
+    title: 'Liverpool Signings under Jürgen Klopp',
+    missingLabel: 'signings',
+    // Permanent / free transfers during Klopp's tenure (8 Oct 2015 → end of 2023-24)
+    // who made at least one competitive Liverpool appearance. No loans.
+    players: [
+      {name:'Marko Grujić',           aliases:['grujic','grujić','marko grujic'], from:'Red Star Belgrade', year:2016},
+      {name:'Joël Matip',             aliases:['matip','joel matip'], from:'Schalke', year:2016},
+      {name:'Loris Karius',           aliases:['karius','loris karius'], from:'Mainz', year:2016},
+      {name:'Sadio Mané',             aliases:['mane','mané','sadio mane'], from:'Southampton', year:2016},
+      {name:'Ragnar Klavan',          aliases:['klavan','ragnar klavan'], from:'Augsburg', year:2016},
+      {name:'Georginio Wijnaldum',    aliases:['wijnaldum','gini','gini wijnaldum','georginio'], from:'Newcastle', year:2016},
+      {name:'Mohamed Salah',          aliases:['salah','mo salah','mohamed salah'], from:'Roma', year:2017},
+      {name:'Dominic Solanke',        aliases:['solanke','dominic solanke'], from:'Chelsea', year:2017},
+      {name:'Andy Robertson',         aliases:['robertson','andy robertson','robbo'], from:'Hull', year:2017},
+      {name:'Alex Oxlade-Chamberlain',aliases:['oxlade chamberlain','oxlade-chamberlain','the ox','chamberlain','oxlade'], from:'Arsenal', year:2017},
+      {name:'Virgil van Dijk',        aliases:['van dijk','virgil','vvd','virgil van dijk'], from:'Southampton', year:2018},
+      {name:'Naby Keïta',             aliases:['keita','keïta','naby keita'], from:'RB Leipzig', year:2018},
+      {name:'Fabinho',                aliases:['fabinho'], from:'Monaco', year:2018},
+      {name:'Xherdan Shaqiri',        aliases:['shaqiri','xherdan shaqiri'], from:'Stoke', year:2018},
+      {name:'Alisson Becker',         aliases:['alisson','alisson becker','becker'], from:'Roma', year:2018},
+      {name:'Sepp van den Berg',      aliases:['van den berg','sepp van den berg','sepp'], from:'PEC Zwolle', year:2019},
+      {name:'Adrián',                 aliases:['adrian','adrián'], from:'West Ham', year:2019},
+      {name:'Harvey Elliott',         aliases:['elliott','harvey elliott'], from:'Fulham', year:2019},
+      {name:'Takumi Minamino',        aliases:['minamino','takumi minamino'], from:'RB Salzburg', year:2020},
+      {name:'Kostas Tsimikas',        aliases:['tsimikas','kostas tsimikas','the greek scouser'], from:'Olympiacos', year:2020},
+      {name:'Thiago Alcântara',       aliases:['thiago','thiago alcantara','alcantara','alcântara'], from:'Bayern Munich', year:2020},
+      {name:'Diogo Jota',             aliases:['jota','diogo jota'], from:'Wolves', year:2020},
+      {name:'Ibrahima Konaté',        aliases:['konate','konaté','ibrahima konate'], from:'RB Leipzig', year:2021},
+      {name:'Luis Díaz',              aliases:['diaz','díaz','luis diaz','lucho'], from:'Porto', year:2022},
+      {name:'Darwin Núñez',           aliases:['nunez','núñez','darwin','darwin nunez'], from:'Benfica', year:2022},
+      {name:'Fábio Carvalho',         aliases:['carvalho','fabio carvalho','fábio carvalho'], from:'Fulham', year:2022},
+      {name:'Calvin Ramsay',          aliases:['ramsay','calvin ramsay'], from:'Aberdeen', year:2022},
+      {name:'Ben Doak',               aliases:['doak','ben doak'], from:'Celtic', year:2022},
+      {name:'Cody Gakpo',             aliases:['gakpo','cody gakpo'], from:'PSV', year:2023},
+      {name:'Alexis Mac Allister',    aliases:['mac allister','macallister','alexis mac allister','alexis'], from:'Brighton', year:2023},
+      {name:'Dominik Szoboszlai',     aliases:['szoboszlai','dominik szoboszlai'], from:'RB Leipzig', year:2023},
+      {name:'Wataru Endo',            aliases:['endo','wataru endo'], from:'Stuttgart', year:2023},
+      {name:'Ryan Gravenberch',       aliases:['gravenberch','ryan gravenberch'], from:'Bayern Munich', year:2023},
     ]
   }
 };
