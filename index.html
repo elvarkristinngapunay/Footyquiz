@@ -1739,6 +1739,11 @@ body::before{display:none;}
           <div class="sxi-cat-name">Copa América</div>
           <div class="sxi-cat-count">14 teams</div>
         </div>
+        <div class="sxi-cat-card" onclick="sxiPickCategory('Premier League Winners')">
+          <img class="sxi-cat-trophy" src="" id="sxiTrophyPLW" alt="">
+          <div class="sxi-cat-name">Premier League Winners</div>
+          <div class="sxi-cat-count">20 teams</div>
+        </div>
       </div>
     </div>
 
@@ -3217,6 +3222,7 @@ function sxiShowTeamSelect(){
   document.getElementById('sxiTrophyCL').src=TROPHY_IMGS['Champions League']||'';
   document.getElementById('sxiTrophyEuros').src=TROPHY_IMGS['Euros']||'';
   document.getElementById('sxiTrophyCopa').src=TROPHY_IMGS['Copa América']||'';
+  document.getElementById('sxiTrophyPLW').src=TROPHY_IMGS['Premier League']||'';
   sxiBackToCategories();
 }
 
@@ -3229,7 +3235,7 @@ function sxiBackToCategories(){
 
 function sxiPickCategory(key){
   sxiActiveCategory=key;
-  const labels={'World Cup Final':'🌍 World Cup','Champions League Final':'🏆 Champions League','European Championship Final':'⭐ Euros','Copa América Final':'🏆 Copa América'};
+  const labels={'World Cup Final':'🌍 World Cup','Champions League Final':'🏆 Champions League','European Championship Final':'⭐ Euros','Copa América Final':'🏆 Copa América','Premier League Winners':'🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League Winners'};
   document.getElementById('sxiTeamPickerLabel').textContent=labels[key]||key;
   document.getElementById('sxiCatPicker').style.display='none';
   document.getElementById('sxiTeamPicker').style.display='block';
@@ -3239,7 +3245,8 @@ function sxiPickCategory(key){
 
 function sxiRenderTeamGrid(){
   const g=document.getElementById('sxiTeamGrid');
-  const all=SXI_TEAMS.filter(t=>t.tournament===sxiActiveCategory).sort((a,b)=>a.year-b.year);
+  const _plw=sxiActiveCategory==='Premier League Winners';
+  const all=SXI_TEAMS.filter(t=>t.tournament===sxiActiveCategory).sort((a,b)=>_plw?b.year-a.year:a.year-b.year);
   const finals=all.filter(t=>t.opponent!=='Team of the Tournament');
   const tott=all.filter(t=>t.opponent==='Team of the Tournament');
 
@@ -3259,9 +3266,10 @@ function sxiRenderTeamGrid(){
         ? `<img src="${badge}" alt="${t.name}" style="width:48px;height:48px;object-fit:contain;margin-bottom:6px;${bg?'background:'+bg+';border-radius:4px;padding:2px;':''}">`
         : `<div class="sxi-team-flag">${t.flag}</div>`;
     }
-    const label=isTOTT?`TOTT ${t.year}`:t.name+' '+t.year;
-    const sub=isTOTT?t.formation:`${t.formation} · vs ${t.opponent}`;
-    const third=isTOTT?'':t.score;
+    const isPLW=t.tournament==='Premier League Winners';
+    const label=isTOTT?`TOTT ${t.year}`:(isPLW?t.name:t.name+' '+t.year);
+    const sub=isTOTT?t.formation:(isPLW?t.season:`${t.formation} · vs ${t.opponent}`);
+    const third=isTOTT?'':(isPLW?t.formation:t.score);
     return `<div class="sxi-team-card" onclick="sxiPickTeam('${t.id}')">
       ${icon}
       <div class="sxi-team-name">${label}</div>
@@ -3272,8 +3280,10 @@ function sxiRenderTeamGrid(){
 
   const sectionHdr=txt=>`<div style="font-size:0.6rem;color:#555;letter-spacing:3px;text-transform:uppercase;margin:18px 0 8px;width:100%;">${txt}</div>`;
   let html='';
-  if(finals.length) html+=sectionHdr('World Cup Finals')+`<div class="sxi-section-grid">${finals.map(makeTeamCard).join('')}</div>`;
-  if(tott.length)   html+=sectionHdr('Team of the Tournament')+`<div class="sxi-section-grid">${tott.map(makeTeamCard).join('')}</div>`;
+  if(tott.length){
+    if(finals.length) html+=sectionHdr('World Cup Finals')+`<div class="sxi-section-grid">${finals.map(makeTeamCard).join('')}</div>`;
+    html+=sectionHdr('Team of the Tournament')+`<div class="sxi-section-grid">${tott.map(makeTeamCard).join('')}</div>`;
+  }
   if(!html)         html=`<div class="sxi-section-grid">${all.map(makeTeamCard).join('')}</div>`;
   g.innerHTML=html;
 }
@@ -3283,7 +3293,7 @@ function sxiPickTeam(id){
   if(!sxiTeam) return;
   // Show mode choice overlay (same as FUP flow)
   document.getElementById('sxiMcIcon').textContent=sxiTeam.flag||'🏆';
-  document.getElementById('sxiMcTitle').textContent=`${sxiTeam.name} ${sxiTeam.year}`;
+  document.getElementById('sxiMcTitle').textContent=`${sxiTeam.name} ${sxiTeam.season||sxiTeam.year}`;
   document.getElementById('sxiModeChoice').style.display='flex';
   setBackBtn('← Back', sxiModeBack);
 }
@@ -3303,7 +3313,7 @@ async function sxiChooseMode(n){
     sxiBegin();
   } else {
     // Show Football Under Pressure? Yes/No prompt
-    document.getElementById('sxiTypeTitle').textContent=`${sxiTeam.flag} ${sxiTeam.name} ${sxiTeam.year}`;
+    document.getElementById('sxiTypeTitle').textContent=`${sxiTeam.flag} ${sxiTeam.name} ${sxiTeam.season||sxiTeam.year}`;
     document.getElementById('sxiTypeChoice').style.display='flex';
     setBackBtn('← Back', ()=>{
       document.getElementById('sxiTypeChoice').style.display='none';
@@ -3409,7 +3419,7 @@ function sxiBegin(){
   const g=document.getElementById('sxiGame');
   g.style.display='flex';
   // Header
-  document.getElementById('sxiTeamBadge').textContent=`${sxiTeam.flag} ${sxiTeam.name.toUpperCase()} ${sxiTeam.year}`;
+  document.getElementById('sxiTeamBadge').textContent=`${sxiTeam.flag} ${sxiTeam.name.toUpperCase()} ${sxiTeam.season||sxiTeam.year}`;
   document.getElementById('sxiFormBadge').textContent=sxiTeam.formation;
   // Render pitch
   sxiRenderPitch();
@@ -4554,6 +4564,7 @@ function updateFriendsNav(){
 <script src="data/kits.js"></script>
 <script src="data/club-logos.js"></script>
 <script src="data/sxi-teams.js"></script>
+<script src="data/sxi-pl-winners.js"></script>
 <script src="data/trophies.js"></script>
 <script src="data/moneyball-transfers.js"></script>
 <script src="data/top10.js"></script>
