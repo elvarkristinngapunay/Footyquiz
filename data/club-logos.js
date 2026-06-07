@@ -163,7 +163,7 @@ const CLUB_LOGOS={
 
   // Moneyball clubs (additional)
   'AZ Alkmaar':         'https://en.wikipedia.org/wiki/Special:FilePath/AZ_%28football_club%29_logo.svg',
-  'Atalanta':           'https://en.wikipedia.org/wiki/Special:FilePath/Atalanta_BC_logo_2017.svg',
+  'Atalanta':           'https://en.wikipedia.org/wiki/Special:FilePath/AtalantaBC.svg',
   'Bayer Leverkusen':   'https://en.wikipedia.org/wiki/Special:FilePath/Bayer_04_Leverkusen_logo.svg',
   'Fulham':             'https://en.wikipedia.org/wiki/Special:FilePath/Fulham_FC_%28shield%29.svg',
   'Hertha BSC':         'https://en.wikipedia.org/wiki/Special:FilePath/Hertha_BSC_Logo_2012.svg',
