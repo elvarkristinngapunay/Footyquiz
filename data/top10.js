@@ -115,8 +115,8 @@ const TOP10_DATA = {
       // (Arsenal won 2025-26 → 14). PL era alone only has 8 distinct winners.
       // Sources: Wikipedia "List of English football champions", Opta Analyst.
       players: [
-        { name:'Manchester United',  value:20, aliases:['man utd','man united','manchester utd','united','mufc'] },
         { name:'Liverpool',          value:20, aliases:['liverpool','lfc','the reds'] },
+        { name:'Manchester United',  value:20, aliases:['man utd','man united','manchester utd','united','mufc'] },
         { name:'Arsenal',            value:14, aliases:['arsenal','gunners','afc'] },
         { name:'Manchester City',    value:10, aliases:['man city','mcfc','city','citizens'] },
         { name:'Everton',            value:9,  aliases:['everton','toffees','efc'] },
