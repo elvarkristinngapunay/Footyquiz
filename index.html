@@ -1218,6 +1218,17 @@ body::before{display:none;}
 .t10-slot.revealed .t10-slot-val{color:#2a2a2a;}
 .t10-slot-badge{width:28px;height:28px;object-fit:contain;flex-shrink:0;}
 .t10-slot.revealed .t10-slot-badge{opacity:0.35;filter:grayscale(0.6);}
+#t10NoteToast{
+  position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(0.8);
+  background:rgba(5,5,10,0.96);border:2px solid #c01933;
+  color:#fff;font-family:inherit;font-weight:600;font-size:1.05rem;
+  padding:18px 28px;border-radius:14px;z-index:1000;max-width:80%;
+  pointer-events:none;opacity:0;text-align:center;line-height:1.4;
+  transition:opacity 0.2s ease,transform 0.2s ease;
+}
+#t10NoteToast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+#t10NoteToast b{color:#ff6b81;}
 @keyframes t10pop{from{opacity:0;transform:scale(0.94);}to{opacity:1;transform:scale(1);}}
 .t10-slot.found{animation:t10pop 0.25s ease-out;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
@@ -1460,6 +1471,7 @@ body::before{display:none;}
     <div id="t10End" style="display:none;text-align:center;margin-top:20px;"></div>
   </div>
 
+  <div id="t10NoteToast"></div>
 </div>
 
 <!-- GAME INFO MODAL -->
@@ -4620,7 +4632,7 @@ function updateFriendsNav(){
 <script src="data/sxi-pl-winners.js"></script>
 <script src="data/trophies.js"></script>
 <script src="data/moneyball-transfers.js"></script>
-<script src="data/top10.js?v=4"></script>
+<script src="data/top10.js?v=5"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════════════
 //  MONEYBALL GAME
@@ -4785,7 +4797,25 @@ let t10Found = new Set();
 let t10Scores = [0, 0];
 let t10Turn = 0; // 0=P1, 1=P2
 let t10Data = [];
+let t10Traps = [];
 let t10Active = false;
+let _t10NoteToastTimer = null;
+
+function t10ShowNote(msg){
+  const toast = document.getElementById('t10NoteToast');
+  if(!toast) return;
+  toast.innerHTML = msg;
+  clearTimeout(_t10NoteToastTimer);
+  toast.classList.add('show');
+  _t10NoteToastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+}
+
+function t10FindTrap(norm){
+  return t10Traps.find(t => {
+    if(t10Norm(t.name) === norm) return true;
+    return (t.aliases || []).some(a => t10Norm(a) === norm);
+  });
+}
 
 function t10Norm(s){
   return s.toLowerCase()
@@ -4833,6 +4863,7 @@ function t10PickStat(stat){
 function t10StartGame(){
   const cat = TOP10_DATA[t10League];
   t10Data = cat[t10Stat].players;
+  t10Traps = cat[t10Stat].traps || [];
   t10Found = new Set();
   t10Scores = [0, 0];
   t10Turn = 0;
@@ -4933,6 +4964,20 @@ function t10Guess(){
 
     if(t10Found.size === t10Data.length) { t10Complete(); return; }
   } else {
+    // Check for a trap (recognised but not a valid answer)
+    const trap = t10FindTrap(norm);
+    if(trap){
+      t10ShowNote(trap.note);
+      inp.classList.add('t10-shake');
+      inp.style.borderColor = '#c01933';
+      setTimeout(() => {
+        inp.classList.remove('t10-shake');
+        inp.style.borderColor = '#333';
+      }, 400);
+      inp.value = '';
+      // No penalty, no turn switch — informational only
+      return;
+    }
     // Wrong
     inp.classList.add('t10-shake');
     inp.style.borderColor = '#ef4444';

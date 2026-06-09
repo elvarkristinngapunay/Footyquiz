@@ -42,20 +42,33 @@ const TOP10_DATA = {
       label: 'Most Successful Clubs (Titles Won)',
       unit: 'Titles',
       // European Cup + UCL combined, through 2025-26.
-      // Sources: UEFA.com, Wikipedia. 6 clubs tied at 2 — slots 9 & 10 cover them via aliases.
+      // 6 clubs tied at 2 → each gets its own slot (9-14). Sources: UEFA.com, Wikipedia.
       players: [
-        { name:'Real Madrid',        value:15, aliases:['madrid','real'] },
-        { name:'AC Milan',           value:7,  aliases:['milan','ac milan','rossoneri'] },
-        { name:'Liverpool',          value:6,  aliases:['liverpool','lfc','the reds'] },
-        { name:'Bayern Munich',      value:6,  aliases:['bayern','bayern münchen','fc bayern'] },
-        { name:'Barcelona',          value:5,  aliases:['barca','barça','fc barcelona'] },
-        { name:'Ajax',               value:4,  aliases:['ajax amsterdam','afc ajax'] },
-        { name:'Manchester United',  value:3,  aliases:['man utd','man united','manchester utd','united','mufc'] },
-        { name:'Inter Milan',        value:3,  aliases:['inter','internazionale','inter milano'] },
-        // Slot 9: Benfica (canonical) — first two-time winner
-        { name:'Benfica',            value:2,  aliases:['benfica','sl benfica','as benfica'] },
-        // Slot 10: 5 more clubs tied at 2 — accept any (Chelsea, Forest, Porto, Juventus, PSG)
-        { name:'Chelsea',            value:2,  aliases:['chelsea','cfc','nottingham forest','forest','nottm forest','porto','fc porto','juventus','juve','old lady','psg','paris saint-germain','paris','paris sg','paris saint germain'] }
+        { name:'Real Madrid',         value:15, aliases:['madrid','real'] },
+        { name:'AC Milan',            value:7,  aliases:['milan','ac milan','rossoneri'] },
+        { name:'Liverpool',           value:6,  aliases:['liverpool','lfc','the reds'] },
+        { name:'Bayern Munich',       value:6,  aliases:['bayern','bayern münchen','fc bayern'] },
+        { name:'Barcelona',           value:5,  aliases:['barca','barça','fc barcelona'] },
+        { name:'Ajax',                value:4,  aliases:['ajax amsterdam','afc ajax'] },
+        { name:'Manchester United',   value:3,  aliases:['man utd','man united','manchester utd','united','mufc'] },
+        { name:'Inter Milan',         value:3,  aliases:['inter','internazionale','inter milano'] },
+        // Slots 9-14: 6 clubs tied at 2 titles (ordered by year of first win)
+        { name:'Benfica',             value:2,  aliases:['benfica','sl benfica','as benfica'] },
+        { name:'Nottingham Forest',   value:2,  aliases:['nottingham forest','forest','nottm forest','nffc'] },
+        { name:'Juventus',            value:2,  aliases:['juve','old lady','vecchia signora','juventus fc'] },
+        { name:'Porto',               value:2,  aliases:['porto','fc porto','dragões'] },
+        { name:'Chelsea',             value:2,  aliases:['chelsea','cfc','blues'] },
+        { name:'Paris Saint-Germain', value:2,  aliases:['psg','paris','paris sg','paris saint germain'] }
+      ],
+      // Clubs just below the cutoff — recognised, but not in the top tier.
+      traps: [
+        { name:'Celtic',              aliases:['celtic','celtic fc','the bhoys'], note:'🔴 Celtic — <b>1 European Cup</b> (1967), just below the top tier.' },
+        { name:'Hamburg',             aliases:['hamburg','hamburger sv','hsv'],   note:'🔴 Hamburg — <b>1 European Cup</b> (1983), just below the top tier.' },
+        { name:'Steaua București',    aliases:['steaua','steaua bucharest','steaua bucuresti','fcsb'], note:'🔴 Steaua București — <b>1 European Cup</b> (1986), just below the top tier.' },
+        { name:'Marseille',           aliases:['marseille','olympique marseille','om'], note:'🔴 Marseille — <b>1 Champions League</b> (1993), just below the top tier.' },
+        { name:'Borussia Dortmund',   aliases:['dortmund','borussia dortmund','bvb'], note:'🔴 Borussia Dortmund — <b>1 Champions League</b> (1997), just below the top tier.' },
+        { name:'Feyenoord',           aliases:['feyenoord'], note:'🔴 Feyenoord — <b>1 European Cup</b> (1970), just below the top tier.' },
+        { name:'Aston Villa',         aliases:['aston villa','villa','avfc'], note:'🔴 Aston Villa — <b>1 European Cup</b> (1982), just below the top tier.' }
       ]
     }
   },
@@ -112,6 +125,13 @@ const TOP10_DATA = {
         { name:'Chelsea',            value:6,  aliases:['chelsea','cfc','blues'] },
         { name:'Newcastle United',   value:4,  aliases:['newcastle','toon','magpies','nufc'] },
         { name:'Sheffield Wednesday',value:4,  aliases:['sheff wed','sheffield wed','wednesday','owls'] }
+      ],
+      // 4 clubs tied at 3 titles, just outside the top 10
+      traps: [
+        { name:'Wolves',         aliases:['wolves','wolverhampton','wolverhampton wanderers','wwfc'], note:'🔴 Wolves — <b>3 titles</b>, just outside the top 10.' },
+        { name:'Huddersfield',   aliases:['huddersfield','huddersfield town','htafc'], note:'🔴 Huddersfield Town — <b>3 titles</b>, just outside the top 10.' },
+        { name:'Leeds United',   aliases:['leeds','leeds united','lufc'], note:'🔴 Leeds United — <b>3 titles</b>, just outside the top 10.' },
+        { name:'Blackburn Rovers',aliases:['blackburn','blackburn rovers','rovers','brfc'], note:'🔴 Blackburn Rovers — <b>3 titles</b>, just outside the top 10.' }
       ]
     }
   },
@@ -245,8 +265,17 @@ const TOP10_DATA = {
         { name:'Torino',         value:7,  aliases:['torino','toro','grande torino'] },
         { name:'Napoli',         value:4,  aliases:['napoli','partenopei','ssc napoli'] },
         { name:'Roma',           value:3,  aliases:['roma','as roma','giallorossi'] },
-        // 10th: tied at 2 — Fiorentina & Lazio. Accept either.
-        { name:'Fiorentina',     value:2,  aliases:['fiorentina','viola','acf fiorentina','lazio','ss lazio','biancocelesti'] }
+        // Slots 10 & 11: tied at 2 Scudetti — each gets its own slot
+        { name:'Fiorentina',     value:2,  aliases:['fiorentina','viola','acf fiorentina'] },
+        { name:'Lazio',          value:2,  aliases:['lazio','ss lazio','biancocelesti'] }
+      ],
+      // 5 clubs tied at 1 Scudetto, just outside the top tier
+      traps: [
+        { name:'Cagliari',       aliases:['cagliari','cagliari calcio','rossoblu'], note:'🔴 Cagliari — <b>1 Scudetto</b> (1970), just outside the top tier.' },
+        { name:'Hellas Verona',  aliases:['verona','hellas verona','gialloblù'], note:'🔴 Hellas Verona — <b>1 Scudetto</b> (1985), just outside the top tier.' },
+        { name:'Sampdoria',      aliases:['sampdoria','samp','blucerchiati'], note:'🔴 Sampdoria — <b>1 Scudetto</b> (1991), just outside the top tier.' },
+        { name:'Casale',         aliases:['casale','casale fbc'], note:'🔴 Casale — <b>1 Scudetto</b> (1914), just outside the top tier.' },
+        { name:'Novese',         aliases:['novese','us novese'], note:'🔴 Novese — <b>1 Scudetto</b> (1922), just outside the top tier.' }
       ]
     }
   }
