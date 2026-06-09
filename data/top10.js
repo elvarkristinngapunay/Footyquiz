@@ -41,8 +41,8 @@ const TOP10_DATA = {
     titles: {
       label: 'Most Successful Clubs (Titles Won)',
       unit: 'Titles',
-      // European Cup + UCL combined, through 2025-26 (PSG won 2024-25 & 2025-26).
-      // Sources: UEFA.com, Wikipedia. 5 clubs tied at 2 for the last slot — accepted via aliases.
+      // European Cup + UCL combined, through 2025-26.
+      // Sources: UEFA.com, Wikipedia. 6 clubs tied at 2 — slots 9 & 10 cover them via aliases.
       players: [
         { name:'Real Madrid',        value:15, aliases:['madrid','real'] },
         { name:'AC Milan',           value:7,  aliases:['milan','ac milan','rossoneri'] },
@@ -50,11 +50,12 @@ const TOP10_DATA = {
         { name:'Bayern Munich',      value:6,  aliases:['bayern','bayern münchen','fc bayern'] },
         { name:'Barcelona',          value:5,  aliases:['barca','barça','fc barcelona'] },
         { name:'Ajax',               value:4,  aliases:['ajax amsterdam','afc ajax'] },
-        { name:'Paris Saint-Germain',value:3,  aliases:['psg','paris','paris sg','paris saint germain'] },
         { name:'Manchester United',  value:3,  aliases:['man utd','man united','manchester utd','united','mufc'] },
         { name:'Inter Milan',        value:3,  aliases:['inter','internazionale','inter milano'] },
-        // 10th: 5 clubs tied at 2 (Chelsea, Benfica, Nottingham Forest, Porto, Juventus) — accept any
-        { name:'Chelsea',            value:2,  aliases:['chelsea','cfc','benfica','sl benfica','nottingham forest','forest','nottm forest','porto','fc porto','juventus','juve','old lady'] }
+        // Slot 9: Benfica (canonical) — first two-time winner
+        { name:'Benfica',            value:2,  aliases:['benfica','sl benfica','as benfica'] },
+        // Slot 10: 5 more clubs tied at 2 — accept any (Chelsea, Forest, Porto, Juventus, PSG)
+        { name:'Chelsea',            value:2,  aliases:['chelsea','cfc','nottingham forest','forest','nottm forest','porto','fc porto','juventus','juve','old lady','psg','paris saint-germain','paris','paris sg','paris saint germain'] }
       ]
     }
   },
