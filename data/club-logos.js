@@ -187,4 +187,12 @@ const CLUB_LOGOS={
   'Manchester United':  'https://en.wikipedia.org/wiki/Special:FilePath/Manchester_United_FC_crest.svg',
   'Manchester City':    'https://en.wikipedia.org/wiki/Special:FilePath/Manchester_City_FC_badge.svg',
   'Paris Saint-Germain':'https://en.wikipedia.org/wiki/Special:FilePath/Paris_Saint-Germain_F.C..svg',
+
+  // Top 10 "Titles" subcategory — extra clubs
+  'Sunderland':         'https://en.wikipedia.org/wiki/Special:FilePath/Logo_Sunderland.svg',
+  'Sheffield Wednesday':'https://en.wikipedia.org/wiki/Special:FilePath/Sheffield_Wednesday_FC.svg',
+  'Athletic Bilbao':    'https://en.wikipedia.org/wiki/Special:FilePath/Athletic_Club_logo.svg',
+  'Deportivo La Coruña':'https://en.wikipedia.org/wiki/Special:FilePath/RC_Deportivo_La_Coru%C3%B1a_logo.svg',
+  'Pro Vercelli':       'https://en.wikipedia.org/wiki/Special:FilePath/F.C._Pro_Vercelli_1892_logo.svg',
+  'Nottingham Forest':  'https://en.wikipedia.org/wiki/Special:FilePath/Nottingham_Forest_F.C._logo.svg',
 };

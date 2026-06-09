@@ -1216,6 +1216,8 @@ body::before{display:none;}
 .t10-slot.revealed .t10-slot-name{color:#333;}
 .t10-slot-val{font-family:'Anton',sans-serif;font-size:0.95rem;color:#e8b923;flex-shrink:0;}
 .t10-slot.revealed .t10-slot-val{color:#2a2a2a;}
+.t10-slot-badge{width:28px;height:28px;object-fit:contain;flex-shrink:0;}
+.t10-slot.revealed .t10-slot-badge{opacity:0.35;filter:grayscale(0.6);}
 @keyframes t10pop{from{opacity:0;transform:scale(0.94);}to{opacity:1;transform:scale(1);}}
 .t10-slot.found{animation:t10pop 0.25s ease-out;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
@@ -4613,12 +4615,12 @@ function updateFriendsNav(){
 <script src="data/eg-datasets.js?v=5"></script>
 <script src="data/players.js"></script>
 <script src="data/kits.js"></script>
-<script src="data/club-logos.js"></script>
+<script src="data/club-logos.js?v=2"></script>
 <script src="data/sxi-teams.js"></script>
 <script src="data/sxi-pl-winners.js"></script>
 <script src="data/trophies.js"></script>
 <script src="data/moneyball-transfers.js"></script>
-<script src="data/top10.js?v=3"></script>
+<script src="data/top10.js?v=4"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════════════
 //  MONEYBALL GAME
@@ -4866,15 +4868,26 @@ function t10StartGame(){
   setTimeout(() => document.getElementById('t10Input').focus(), 100);
 }
 
+function t10BadgeHtml(name){
+  const url = (typeof CLUB_LOGOS !== 'undefined') ? CLUB_LOGOS[name] : '';
+  return url ? `<img class="t10-slot-badge" src="${url}" alt="" onerror="this.style.display='none'">` : '';
+}
+
+function t10SlotRevealHtml(i, p){
+  return `<div class="t10-slot-num">${i+1}</div>
+    ${t10BadgeHtml(p.name)}
+    <div class="t10-slot-name">${p.name}</div>
+    <div class="t10-slot-val">${p.value}</div>`;
+}
+
 function t10RenderSlots(){
   const g = document.getElementById('t10Slots');
   g.innerHTML = t10Data.map((p,i) => {
     const found = t10Found.has(i);
     return `<div class="t10-slot ${found?'found':''}" id="t10s${i}">
-      <div class="t10-slot-num">${i+1}</div>
       ${found
-        ? `<div class="t10-slot-name">${p.name}</div><div class="t10-slot-val">${p.value}</div>`
-        : `<div class="t10-slot-bar"></div>`
+        ? t10SlotRevealHtml(i, p)
+        : `<div class="t10-slot-num">${i+1}</div><div class="t10-slot-bar"></div>`
       }
     </div>`;
   }).join('');
@@ -4902,9 +4915,7 @@ function t10Guess(){
     const slot = document.getElementById(`t10s${hit}`);
     const p = t10Data[hit];
     slot.className = 't10-slot found';
-    slot.innerHTML = `<div class="t10-slot-num">${hit+1}</div>
-      <div class="t10-slot-name">${p.name}</div>
-      <div class="t10-slot-val">${p.value}</div>`;
+    slot.innerHTML = t10SlotRevealHtml(hit, p);
 
     // Update scores
     if(t10Mode === '2p'){
@@ -4955,9 +4966,7 @@ function t10GiveUp(){
     const slot = document.getElementById(`t10s${i}`);
     const p = t10Data[i];
     slot.className = 't10-slot revealed';
-    slot.innerHTML = `<div class="t10-slot-num">${i+1}</div>
-      <div class="t10-slot-name">${p.name}</div>
-      <div class="t10-slot-val">${p.value}</div>`;
+    slot.innerHTML = t10SlotRevealHtml(i, p);
   }
   document.getElementById('t10GiveUpBtn').style.display = 'none';
   document.getElementById('t10Input').style.display = 'none';
