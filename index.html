@@ -1355,7 +1355,7 @@ body::before{display:none;}
         <div class="t10-badge" style="background:rgba(0,40,120,0.25);border:1px solid #1a3a8f;color:#7aa5ff;">UCL</div>
         <div style="flex:1;">
           <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">Champions League</div>
-          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists</div>
+          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists · Titles</div>
         </div>
         <div style="color:#333;font-size:1.4rem;">›</div>
       </div>
@@ -1363,7 +1363,7 @@ body::before{display:none;}
         <div class="t10-badge" style="background:rgba(100,0,200,0.15);border:1px solid #6400c8;color:#a855f7;">PL</div>
         <div style="flex:1;">
           <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">Premier League</div>
-          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists</div>
+          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists · Titles</div>
         </div>
         <div style="color:#333;font-size:1.4rem;">›</div>
       </div>
@@ -1371,7 +1371,15 @@ body::before{display:none;}
         <div class="t10-badge" style="background:rgba(255,105,0,0.15);border:1px solid #ff6900;color:#ff6900;">LaL</div>
         <div style="flex:1;">
           <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">La Liga</div>
-          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists</div>
+          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists · Titles</div>
+        </div>
+        <div style="color:#333;font-size:1.4rem;">›</div>
+      </div>
+      <div class="t10-league-card" onclick="t10PickLeague('serie-a')">
+        <div class="t10-badge" style="background:rgba(0,100,50,0.2);border:1px solid #0a6e3a;color:#4ade80;">SA</div>
+        <div style="flex:1;">
+          <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">Serie A</div>
+          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Titles</div>
         </div>
         <div style="color:#333;font-size:1.4rem;">›</div>
       </div>
@@ -1391,16 +1399,7 @@ body::before{display:none;}
     <div style="font-family:'Anton',sans-serif;font-size:0.75rem;color:#555;letter-spacing:4px;margin-bottom:4px;text-align:center;">TOP 10</div>
     <div id="t10PickerTitle" style="font-family:'Anton',sans-serif;font-size:clamp(1.8rem,8vw,2.8rem);color:#fff;letter-spacing:1px;text-align:center;margin-bottom:28px;"></div>
     <div style="color:#555;font-size:0.7rem;letter-spacing:3px;margin-bottom:12px;">WHAT STAT?</div>
-    <div style="display:flex;gap:12px;margin-bottom:28px;">
-      <button class="t10-stat-btn" onclick="t10PickStat('goals')">
-        <div style="font-size:1.8rem;margin-bottom:6px;">⚽</div>
-        <div>GOALS</div>
-      </button>
-      <button class="t10-stat-btn" onclick="t10PickStat('assists')">
-        <div style="font-size:1.8rem;margin-bottom:6px;">🎯</div>
-        <div>ASSISTS</div>
-      </button>
-    </div>
+    <div id="t10StatRow" style="display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap;"></div>
     <div style="color:#555;font-size:0.7rem;letter-spacing:3px;margin-bottom:10px;">GAME MODE</div>
     <div style="display:flex;gap:12px;">
       <button class="t10-mode-btn" id="t10Mode1p" onclick="t10SetMode('1p')" style="background:#e8b923;color:#000;">1 PLAYER</button>
@@ -4619,7 +4618,7 @@ function updateFriendsNav(){
 <script src="data/sxi-pl-winners.js"></script>
 <script src="data/trophies.js"></script>
 <script src="data/moneyball-transfers.js"></script>
-<script src="data/top10.js"></script>
+<script src="data/top10.js?v=2"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════════════
 //  MONEYBALL GAME
@@ -4792,11 +4791,28 @@ function t10Norm(s){
     .replace(/[^a-z0-9 ]/g,'').trim();
 }
 
+const T10_STAT_META = {
+  goals:   { label:'GOALS',   icon:'⚽' },
+  assists: { label:'ASSISTS', icon:'🎯' },
+  titles:  { label:'TITLES',  icon:'🏆' }
+};
+
 function t10PickLeague(id){
   t10League = id;
   document.getElementById('t10Home').style.display = 'none';
   document.getElementById('t10Picker').style.display = 'block';
   document.getElementById('t10PickerTitle').textContent = TOP10_DATA[id].name.toUpperCase();
+  // Render only the stat buttons that exist for this league
+  const cat = TOP10_DATA[id];
+  const row = document.getElementById('t10StatRow');
+  const stats = Object.keys(T10_STAT_META).filter(s => cat[s] && Array.isArray(cat[s].players));
+  row.innerHTML = stats.map(s => {
+    const m = T10_STAT_META[s];
+    return `<button class="t10-stat-btn" onclick="t10PickStat('${s}')">
+      <div style="font-size:1.8rem;margin-bottom:6px;">${m.icon}</div>
+      <div>${m.label}</div>
+    </button>`;
+  }).join('');
 }
 
 function t10SetMode(m){
@@ -4837,7 +4853,7 @@ function t10StartGame(){
     document.getElementById('t10Bar1p').style.display = 'flex';
     document.getElementById('t10Bar2p').style.display = 'none';
     document.getElementById('t10Found1p').textContent = '0';
-    document.getElementById('t10Left1p').textContent = '10';
+    document.getElementById('t10Left1p').textContent = String(t10Data.length);
   }
 
   // Title
@@ -4897,14 +4913,14 @@ function t10Guess(){
       t10UpdateScores();
     } else {
       document.getElementById('t10Found1p').textContent = t10Found.size;
-      document.getElementById('t10Left1p').textContent = 10 - t10Found.size;
+      document.getElementById('t10Left1p').textContent = t10Data.length - t10Found.size;
     }
 
     inp.value = '';
     inp.style.borderColor = '#4ade80';
     setTimeout(() => { if(inp.style.borderColor==='rgb(74, 222, 128)') inp.style.borderColor='#333'; }, 600);
 
-    if(t10Found.size === 10) { t10Complete(); return; }
+    if(t10Found.size === t10Data.length) { t10Complete(); return; }
   } else {
     // Wrong
     inp.classList.add('t10-shake');
@@ -4965,8 +4981,8 @@ function t10ShowEnd(won){
     else if(s2 > s1) { headline = 'PLAYER 2 WINS'; sub = `${s2} – ${s1}`; }
     else             { headline = "IT'S A DRAW";   sub = `${s1} – ${s2}`; }
   } else {
-    headline = won ? 'COMPLETE!' : `${t10Found.size} / 10`;
-    sub = won ? 'You found all 10! 🎉' : 'Better luck next time';
+    headline = won ? 'COMPLETE!' : `${t10Found.size} / ${t10Data.length}`;
+    sub = won ? `You found all ${t10Data.length}! 🎉` : 'Better luck next time';
   }
   end.innerHTML = `
     <div style="font-family:'Anton',sans-serif;font-size:2rem;color:${won?'#4ade80':'#e8b923'};margin-bottom:4px;">${headline}</div>
