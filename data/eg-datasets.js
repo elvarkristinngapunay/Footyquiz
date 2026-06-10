@@ -493,7 +493,6 @@ const EG_DATASETS = {
       {name:'Jurriën Timber',       aliases:['timber','jurrien timber','jurriën timber'], from:'Ajax', year:2023},
       {name:'Mikel Merino',         aliases:['merino','mikel merino'], from:'Real Sociedad', year:2024},
       {name:'Riccardo Calafiori',   aliases:['calafiori','riccardo calafiori'], from:'Bologna', year:2024},
-      {name:'Neto',                 aliases:['neto','norberto neto'], from:'Bournemouth', year:2024},
       {name:'Martín Zubimendi',     aliases:['zubimendi','martin zubimendi','martín zubimendi'], from:'Real Sociedad', year:2025},
       {name:'Viktor Gyökeres',      aliases:['gyokeres','gyökeres','viktor gyokeres'], from:'Sporting CP', year:2025},
       {name:'Noni Madueke',         aliases:['madueke','noni madueke'], from:'Chelsea', year:2025},
@@ -501,12 +500,13 @@ const EG_DATASETS = {
       {name:'Cristhian Mosquera',   aliases:['mosquera','cristhian mosquera'], from:'Valencia', year:2025},
       {name:'Kepa Arrizabalaga',    aliases:['kepa','kepa arrizabalaga','arrizabalaga'], from:'Chelsea', year:2025},
       {name:'Piero Hincapié',       aliases:['hincapie','hincapié','piero hincapie'], from:'Bayer Leverkusen', year:2025},
+      {name:'Christian Nørgaard',   aliases:['norgaard','nørgaard','christian norgaard'], from:'Brentford', year:2025},
     ],
     traps: [
       {name:'William Saliba',  aliases:['saliba','william saliba'], note:'🔴 William Saliba — signed under <b>Unai Emery</b> in 2019, not an Arteta signing (broke through under him).'},
       {name:'Raheem Sterling', aliases:['sterling','raheem sterling'], note:'🔴 Raheem Sterling — joined <b>on loan</b> from Chelsea in 2024, not a permanent signing.'},
-      {name:'Marcus Rashford', aliases:['rashford','marcus rashford'], note:'🔴 Marcus Rashford — joined <b>on loan</b> from Manchester United in 2025, not a permanent signing.'},
       {name:'Mat Ryan',        aliases:['mat ryan','matt ryan','mathew ryan'], note:'🔴 Mat Ryan — joined <b>on loan</b> from Brighton in Jan 2021, not a permanent signing.'},
+      {name:'Neto',            aliases:['neto','norberto neto'], note:'🔴 Neto — joined <b>on loan</b> from Bournemouth in 2024, not a permanent signing.'},
     ]
   }
 };
