@@ -40,6 +40,7 @@ const EG_GROUPS = [
       {key:'hundred_million', icon:'💰', desc:'Name every player transferred for €100M or more · 19 players'},
       {key:'klopp_signings',  icon:'🔴', desc:'Every first-team signing under Klopp who played a game · 31 players'},
       {key:'arteta_signings', icon:'🔴', desc:'Every first-team signing under Arteta who played a game · 35 players'},
+      {key:'pep_signings',    icon:'🩵', desc:'Every first-team signing under Pep at Man City who played a game · 50 players'},
     ]
   },
   {
@@ -507,6 +508,100 @@ const EG_DATASETS = {
       {name:'Raheem Sterling', aliases:['sterling','raheem sterling'], note:'🔴 Raheem Sterling — joined <b>on loan</b> from Chelsea in 2024, not a permanent signing.'},
       {name:'Mat Ryan',        aliases:['mat ryan','matt ryan','mathew ryan'], note:'🔴 Mat Ryan — joined <b>on loan</b> from Brighton in Jan 2021, not a permanent signing.'},
       {name:'Neto',            aliases:['neto','norberto neto'], note:'🔴 Neto — joined <b>on loan</b> from Bournemouth in 2024, not a permanent signing.'},
+    ]
+  },
+
+  pep_signings: {
+    title: 'Manchester City Signings under Pep Guardiola',
+    missingLabel: 'signings',
+    // Permanent signings since Pep took over (1 Jul 2016) through to Jan 2026 window
+    // who made at least one competitive Man City appearance. No loans.
+    players: [
+      // 2016 — Pep's first summer
+      {name:'Claudio Bravo',         aliases:['bravo','claudio bravo'], from:'Barcelona', year:2016},
+      {name:'John Stones',           aliases:['stones','john stones'], from:'Everton', year:2016},
+      {name:'Leroy Sané',            aliases:['sane','sané','leroy sane'], from:'Schalke', year:2016},
+      {name:'İlkay Gündoğan',        aliases:['gundogan','gündoğan','ilkay gundogan','ilkay'], from:'Dortmund', year:2016},
+      {name:'Nolito',                aliases:['nolito','manuel agudo'], from:'Celta Vigo', year:2016},
+      {name:'Oleksandr Zinchenko',   aliases:['zinchenko','oleks zinchenko','oleksandr zinchenko'], from:'Ufa', year:2016},
+      // 2017
+      {name:'Gabriel Jesus',         aliases:['jesus','gabriel jesus','gabby jesus'], from:'Palmeiras', year:2017},
+      {name:'Ederson',               aliases:['ederson','ederson moraes'], from:'Benfica', year:2017},
+      {name:'Bernardo Silva',        aliases:['bernardo','bernardo silva'], from:'Monaco', year:2017},
+      {name:'Kyle Walker',           aliases:['walker','kyle walker'], from:'Tottenham', year:2017},
+      {name:'Danilo',                aliases:['danilo'], from:'Real Madrid', year:2017},
+      {name:'Benjamin Mendy',        aliases:['mendy','benjamin mendy','ben mendy'], from:'Monaco', year:2017},
+      // 2018
+      {name:'Riyad Mahrez',          aliases:['mahrez','riyad mahrez'], from:'Leicester', year:2018},
+      {name:'Aymeric Laporte',       aliases:['laporte','aymeric laporte'], from:'Athletic Club', year:2018},
+      {name:'Philippe Sandler',      aliases:['sandler','philippe sandler'], from:'PEC Zwolle', year:2018},
+      // 2019
+      {name:'Rodri',                 aliases:['rodri','rodrigo hernandez','rodrigo'], from:'Atlético Madrid', year:2019},
+      {name:'João Cancelo',          aliases:['cancelo','joao cancelo'], from:'Juventus', year:2019},
+      {name:'Zack Steffen',          aliases:['steffen','zack steffen'], from:'Columbus Crew', year:2019},
+      {name:'Angeliño',              aliases:['angelino','angeliño'], from:'PSV', year:2019},
+      // 2020
+      {name:'Rúben Dias',            aliases:['dias','ruben dias','rúben dias'], from:'Benfica', year:2020},
+      {name:'Nathan Aké',            aliases:['ake','aké','nathan ake'], from:'Bournemouth', year:2020},
+      {name:'Ferran Torres',         aliases:['ferran','ferran torres'], from:'Valencia', year:2020},
+      // 2021
+      {name:'Jack Grealish',         aliases:['grealish','jack grealish'], from:'Aston Villa', year:2021},
+      {name:'Scott Carson',          aliases:['carson','scott carson'], from:'Derby', year:2021},
+      // 2022
+      {name:'Erling Haaland',        aliases:['haaland','erling haaland','erling'], from:'Dortmund', year:2022},
+      {name:'Julián Álvarez',        aliases:['alvarez','álvarez','julian alvarez','julián álvarez','la araña'], from:'River Plate', year:2022},
+      {name:'Kalvin Phillips',       aliases:['phillips','kalvin phillips'], from:'Leeds', year:2022},
+      {name:'Manuel Akanji',         aliases:['akanji','manuel akanji'], from:'Dortmund', year:2022},
+      {name:'Sergio Gómez',          aliases:['sergio gomez','sergio gómez'], from:'Anderlecht', year:2022},
+      {name:'Stefan Ortega',         aliases:['ortega','stefan ortega'], from:'Arminia Bielefeld', year:2022},
+      // 2023
+      {name:'Mateo Kovačić',         aliases:['kovacic','kovačić','mateo kovacic'], from:'Chelsea', year:2023},
+      {name:'Joško Gvardiol',        aliases:['gvardiol','jovsko gvardiol','josko gvardiol'], from:'RB Leipzig', year:2023},
+      {name:'Jérémy Doku',           aliases:['doku','jeremy doku','jérémy doku'], from:'Stade Rennais', year:2023},
+      {name:'Matheus Nunes',         aliases:['nunes','matheus nunes'], from:'Wolves', year:2023},
+      {name:'Máximo Perrone',        aliases:['perrone','maximo perrone','máximo perrone'], from:'Vélez Sarsfield', year:2023},
+      // 2024
+      {name:'Savinho',               aliases:['savinho','savio'], from:'Troyes', year:2024},
+      {name:'Claudio Echeverri',     aliases:['echeverri','claudio echeverri','el diablito'], from:'River Plate', year:2024},
+      // 2025 (calendar year)
+      {name:'Abdukodir Khusanov',    aliases:['khusanov','abdukodir khusanov'], from:'Lens', year:2025},
+      {name:'Vitor Reis',            aliases:['vitor reis','vítor reis'], from:'Palmeiras', year:2025},
+      {name:'Omar Marmoush',         aliases:['marmoush','omar marmoush'], from:'Eintracht Frankfurt', year:2025},
+      {name:'Nico González',         aliases:['nico gonzalez','nico gonzález','nicolas gonzalez'], from:'Porto', year:2025},
+      {name:'Rayan Aït-Nouri',       aliases:['ait nouri','aït-nouri','rayan ait nouri','rayan ait-nouri'], from:'Wolves', year:2025},
+      {name:'Marcus Bettinelli',     aliases:['bettinelli','marcus bettinelli'], from:'Chelsea', year:2025},
+      {name:'Rayan Cherki',          aliases:['cherki','rayan cherki'], from:'Lyon', year:2025},
+      {name:'Tijjani Reijnders',     aliases:['reijnders','tijjani reijnders'], from:'AC Milan', year:2025},
+      {name:'Sverre Nypan',          aliases:['nypan','sverre nypan'], from:'Rosenborg', year:2025},
+      {name:'James Trafford',        aliases:['trafford','james trafford'], from:'Burnley', year:2025},
+      {name:'Gianluigi Donnarumma',  aliases:['donnarumma','gigio','gigio donnarumma','gianluigi donnarumma'], from:'PSG', year:2025},
+      // 2026
+      {name:'Antoine Semenyo',       aliases:['semenyo','antoine semenyo'], from:'Bournemouth', year:2026},
+      {name:'Marc Guéhi',            aliases:['guehi','guéhi','marc guehi'], from:'Crystal Palace', year:2026},
+    ],
+    traps: [
+      // Classic misattribution — signed under Pellegrini, not Pep
+      {name:'Kevin De Bruyne',    aliases:['de bruyne','kdb','kevin de bruyne'], note:"🔴 Kevin De Bruyne — signed under <b>Manuel Pellegrini</b> in 2015, not a Pep signing."},
+      // Permanent buys who NEVER played a competitive game for City (loaned out immediately or sold)
+      {name:'Juma Bah',           aliases:['juma bah','bah'], note:'🔴 Juma Bah — signed Jan 2025 but loaned straight to Lens, has not yet played a competitive game for City.'},
+      {name:'Diego Rosa',         aliases:['diego rosa'], note:'🔴 Diego Rosa — signed from Grêmio U20 in 2021 but <b>never played</b> a competitive game for City.'},
+      {name:'Nahuel Bustos',      aliases:['bustos','nahuel bustos'], note:'🔴 Nahuel Bustos — signed in 2020 but loaned straight out, <b>never played</b> for City.'},
+      {name:'Issa Kaboré',        aliases:['kabore','kaboré','issa kabore'], note:'🔴 Issa Kaboré — signed in 2020 but loaned straight out, <b>never played</b> for City.'},
+      {name:'Yan Couto',          aliases:['couto','yan couto'], note:'🔴 Yan Couto — signed in 2020 but loaned straight out, <b>never played</b> for City.'},
+      {name:'Pedro Porro',        aliases:['porro','pedro porro'], note:'🔴 Pedro Porro — signed in 2019 but loaned straight out, <b>never played</b> for City.'},
+      {name:'Ryotaro Meshino',    aliases:['meshino','ryotaro meshino'], note:'🔴 Ryotaro Meshino — signed in 2019 but <b>never played</b> a competitive game for City.'},
+      {name:'Ante Palaversa',     aliases:['palaversa','ante palaversa'], note:'🔴 Ante Palaversa — signed in 2019 but <b>never played</b> a competitive game for City.'},
+      {name:'Ko Itakura',         aliases:['itakura','ko itakura'], note:'🔴 Ko Itakura — signed in 2019 but <b>never played</b> a competitive game for City.'},
+      {name:'Daniel Arzani',      aliases:['arzani','daniel arzani'], note:'🔴 Daniel Arzani — signed in 2018 but <b>never played</b> a competitive game for City.'},
+      {name:'Jack Harrison',      aliases:['jack harrison','harrison'], note:'🔴 Jack Harrison — signed in 2018 but loaned out and <b>never played</b> for City.'},
+      {name:'Olarenwaju Kayode',  aliases:['kayode','olarenwaju kayode'], note:'🔴 Olarenwaju Kayode — signed in 2017 but <b>never played</b> a competitive game for City.'},
+      {name:'Douglas Luiz',       aliases:['douglas luiz'], note:'🔴 Douglas Luiz — signed in 2017 but loaned out and <b>never played</b> for City.'},
+      {name:'Luka Ilić',          aliases:['luka ilic','luka ilić','ilic'], note:'🔴 Luka Ilić — signed in 2017 but <b>never played</b> a competitive game for City.'},
+      {name:'Yangel Herrera',     aliases:['yangel herrera','herrera'], note:'🔴 Yangel Herrera — signed in 2017 but <b>never played</b> a competitive game for City.'},
+      {name:'Pablo Marí',         aliases:['pablo mari','mari'], note:'🔴 Pablo Marí — signed in 2016 but <b>never played</b> for City (was loaned out, then sold to Flamengo).'},
+      {name:'Gerónimo Rulli',     aliases:['rulli','geronimo rulli','gerónimo rulli'], note:'🔴 Gerónimo Rulli — signed in 2016 but <b>never played</b> a competitive game for City.'},
+      {name:'Marlos Moreno',      aliases:['marlos moreno','marlos'], note:'🔴 Marlos Moreno — signed in 2016 but <b>never played</b> a competitive game for City.'},
+      {name:'Aaron Mooy',         aliases:['mooy','aaron mooy'], note:'🔴 Aaron Mooy — signed in 2016 but <b>never played</b> a competitive game for City (sold straight to Huddersfield).'},
     ]
   }
 };
