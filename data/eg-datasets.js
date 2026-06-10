@@ -39,7 +39,7 @@ const EG_GROUPS = [
     quizzes:[
       {key:'hundred_million', icon:'💰', desc:'Name every player transferred for €100M or more · 19 players'},
       {key:'klopp_signings',  icon:'🔴', desc:'Every first-team signing under Klopp who played a game · 31 players'},
-      {key:'arteta_signings', icon:'🔴', desc:'Every first-team signing under Arteta who played a game · 35 players'},
+      {key:'arteta_signings', icon:'🔴', desc:'Every first-team signing under Arteta who played a game · 34 players'},
       {key:'pep_signings',    icon:'🩵', desc:'Every first-team signing under Pep at Man City who played a game · 50 players'},
     ]
   },
@@ -479,7 +479,6 @@ const EG_DATASETS = {
       {name:'Takehiro Tomiyasu',    aliases:['tomiyasu','takehiro tomiyasu','tomi'], from:'Bologna', year:2021},
       {name:'Albert Sambi Lokonga', aliases:['lokonga','sambi','sambi lokonga','albert sambi lokonga'], from:'Anderlecht', year:2021},
       {name:'Nuno Tavares',         aliases:['tavares','nuno tavares'], from:'Benfica', year:2021},
-      {name:'Auston Trusty',        aliases:['trusty','auston trusty'], from:'Colorado Rapids', year:2022},
       {name:'Gabriel Jesus',        aliases:['jesus','gabriel jesus','gabby jesus'], from:'Manchester City', year:2022},
       {name:'Oleksandr Zinchenko',  aliases:['zinchenko','oleks zinchenko','oleksandr zinchenko'], from:'Manchester City', year:2022},
       {name:'Fábio Vieira',         aliases:['vieira','fabio vieira','fábio vieira'], from:'Porto', year:2022},
@@ -508,6 +507,7 @@ const EG_DATASETS = {
       {name:'Raheem Sterling', aliases:['sterling','raheem sterling'], note:'🔴 Raheem Sterling — joined <b>on loan</b> from Chelsea in 2024, not a permanent signing.'},
       {name:'Mat Ryan',        aliases:['mat ryan','matt ryan','mathew ryan'], note:'🔴 Mat Ryan — joined <b>on loan</b> from Brighton in Jan 2021, not a permanent signing.'},
       {name:'Neto',            aliases:['neto','norberto neto'], note:'🔴 Neto — joined <b>on loan</b> from Bournemouth in 2024, not a permanent signing.'},
+      {name:'Auston Trusty',   aliases:['trusty','auston trusty'], note:'🔴 Auston Trusty — signed in 2022 but loaned straight to Birmingham, <b>never played</b> a competitive game for Arsenal.'},
     ]
   },
 
