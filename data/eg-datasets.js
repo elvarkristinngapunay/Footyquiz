@@ -38,7 +38,8 @@ const EG_GROUPS = [
     desc:'Football’s biggest money moves',
     quizzes:[
       {key:'hundred_million', icon:'💰', desc:'Name every player transferred for €100M or more · 19 players'},
-      {key:'klopp_signings', icon:'🔴', desc:'Every first-team signing under Klopp who played a game · 31 players'},
+      {key:'klopp_signings',  icon:'🔴', desc:'Every first-team signing under Klopp who played a game · 31 players'},
+      {key:'arteta_signings', icon:'🔴', desc:'Every first-team signing under Arteta who played a game · 35 players'},
     ]
   },
   {
@@ -453,6 +454,59 @@ const EG_DATASETS = {
       {name:'Alexander Manninger',aliases:['manninger','alex manninger','alexander manninger'], note:'🔴 Alex Manninger — signed as backup keeper but <b>never played</b> a game for Liverpool.'},
       {name:'Andy Lonergan',      aliases:['lonergan','andy lonergan','andrew lonergan'], note:'🔴 Andy Lonergan — emergency backup keeper, <b>never played</b> a competitive game for Liverpool.'},
       {name:'Marcelo Pitaluga',   aliases:['pitaluga','marcelo pitaluga'], note:'🔴 Marcelo Pitaluga — signed as a young keeper but <b>never played</b> a competitive game for Liverpool.'},
+      {name:'Arthur Melo',        aliases:['arthur','arthur melo'], note:'🔴 Arthur Melo — joined <b>on loan</b> from Juventus in 2022, not a permanent signing.'},
+      {name:'Ozan Kabak',         aliases:['kabak','ozan kabak'], note:'🔴 Ozan Kabak — joined <b>on loan</b> from Schalke in 2021, not a permanent signing.'},
+      {name:'Steven Caulker',     aliases:['caulker','steven caulker'], note:'🔴 Steven Caulker — joined <b>on loan</b> from QPR in 2016, not a permanent signing.'},
+    ]
+  },
+
+  arteta_signings: {
+    title: 'Arsenal Signings under Mikel Arteta',
+    missingLabel: 'signings',
+    // Permanent / free transfers since Arteta took over (20 Dec 2019) through summer 2025
+    // who made at least one competitive Arsenal appearance. No loans.
+    players: [
+      {name:'Pablo Marí',           aliases:['mari','pablo mari'], from:'Flamengo', year:2020},
+      {name:'Cédric Soares',        aliases:['cedric','cédric','cedric soares'], from:'Southampton', year:2020},
+      {name:'Gabriel Magalhães',    aliases:['gabriel','gabriel magalhaes','gabriel magalhães','gabi'], from:'Lille', year:2020},
+      {name:'Willian',              aliases:['willian','willian borges'], from:'Chelsea', year:2020},
+      {name:'Thomas Partey',        aliases:['partey','thomas partey'], from:'Atlético Madrid', year:2020},
+      {name:'Alex Rúnarsson',       aliases:['runarsson','rúnarsson','alex runarsson'], from:'Dijon', year:2020},
+      {name:'Ben White',            aliases:['white','ben white'], from:'Brighton', year:2021},
+      {name:'Martin Ødegaard',      aliases:['odegaard','ødegaard','martin odegaard'], from:'Real Madrid', year:2021},
+      {name:'Aaron Ramsdale',       aliases:['ramsdale','aaron ramsdale'], from:'Sheffield United', year:2021},
+      {name:'Takehiro Tomiyasu',    aliases:['tomiyasu','takehiro tomiyasu','tomi'], from:'Bologna', year:2021},
+      {name:'Albert Sambi Lokonga', aliases:['lokonga','sambi','sambi lokonga','albert sambi lokonga'], from:'Anderlecht', year:2021},
+      {name:'Nuno Tavares',         aliases:['tavares','nuno tavares'], from:'Benfica', year:2021},
+      {name:'Auston Trusty',        aliases:['trusty','auston trusty'], from:'Colorado Rapids', year:2022},
+      {name:'Gabriel Jesus',        aliases:['jesus','gabriel jesus','gabby jesus'], from:'Manchester City', year:2022},
+      {name:'Oleksandr Zinchenko',  aliases:['zinchenko','oleks zinchenko','oleksandr zinchenko'], from:'Manchester City', year:2022},
+      {name:'Fábio Vieira',         aliases:['vieira','fabio vieira','fábio vieira'], from:'Porto', year:2022},
+      {name:'Matt Turner',          aliases:['turner','matt turner','matthew turner'], from:'New England Revolution', year:2022},
+      {name:'Marquinhos',           aliases:['marquinhos','marquinhos arsenal'], from:'São Paulo', year:2022},
+      {name:'Leandro Trossard',     aliases:['trossard','leandro trossard'], from:'Brighton', year:2023},
+      {name:'Jakub Kiwior',         aliases:['kiwior','jakub kiwior'], from:'Spezia', year:2023},
+      {name:'Jorginho',             aliases:['jorginho','jorge frello'], from:'Chelsea', year:2023},
+      {name:'Declan Rice',          aliases:['rice','declan rice'], from:'West Ham', year:2023},
+      {name:'Kai Havertz',          aliases:['havertz','kai havertz'], from:'Chelsea', year:2023},
+      {name:'David Raya',           aliases:['raya','david raya'], from:'Brentford', year:2023},
+      {name:'Jurriën Timber',       aliases:['timber','jurrien timber','jurriën timber'], from:'Ajax', year:2023},
+      {name:'Mikel Merino',         aliases:['merino','mikel merino'], from:'Real Sociedad', year:2024},
+      {name:'Riccardo Calafiori',   aliases:['calafiori','riccardo calafiori'], from:'Bologna', year:2024},
+      {name:'Neto',                 aliases:['neto','norberto neto'], from:'Bournemouth', year:2024},
+      {name:'Martín Zubimendi',     aliases:['zubimendi','martin zubimendi','martín zubimendi'], from:'Real Sociedad', year:2025},
+      {name:'Viktor Gyökeres',      aliases:['gyokeres','gyökeres','viktor gyokeres'], from:'Sporting CP', year:2025},
+      {name:'Noni Madueke',         aliases:['madueke','noni madueke'], from:'Chelsea', year:2025},
+      {name:'Eberechi Eze',         aliases:['eze','eberechi eze','ebs'], from:'Crystal Palace', year:2025},
+      {name:'Cristhian Mosquera',   aliases:['mosquera','cristhian mosquera'], from:'Valencia', year:2025},
+      {name:'Kepa Arrizabalaga',    aliases:['kepa','kepa arrizabalaga','arrizabalaga'], from:'Chelsea', year:2025},
+      {name:'Piero Hincapié',       aliases:['hincapie','hincapié','piero hincapie'], from:'Bayer Leverkusen', year:2025},
+    ],
+    traps: [
+      {name:'William Saliba',  aliases:['saliba','william saliba'], note:'🔴 William Saliba — signed under <b>Unai Emery</b> in 2019, not an Arteta signing (broke through under him).'},
+      {name:'Raheem Sterling', aliases:['sterling','raheem sterling'], note:'🔴 Raheem Sterling — joined <b>on loan</b> from Chelsea in 2024, not a permanent signing.'},
+      {name:'Marcus Rashford', aliases:['rashford','marcus rashford'], note:'🔴 Marcus Rashford — joined <b>on loan</b> from Manchester United in 2025, not a permanent signing.'},
+      {name:'Mat Ryan',        aliases:['mat ryan','matt ryan','mathew ryan'], note:'🔴 Mat Ryan — joined <b>on loan</b> from Brighton in Jan 2021, not a permanent signing.'},
     ]
   }
 };
