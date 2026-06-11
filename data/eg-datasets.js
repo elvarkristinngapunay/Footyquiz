@@ -48,7 +48,7 @@ const EG_GROUPS = [
     id:'ballon-dor', name:'Ballon d’Or', icon:'⭐',
     desc:'Football’s individual greats',
     quizzes:[
-      {title:'Ballon d’Or Winners', icon:'🥇', desc:'Every winner of the Ballon d’Or', soon:true},
+      {key:'ballon_dor_winners', icon:'🥇', desc:'Every winner from 1956 to today · 47 players'},
     ]
   },
 ];
@@ -631,6 +631,62 @@ const EG_DATASETS = {
       {name:'Casemiro',      aliases:['casemiro'], note:'🔴 Casemiro — signed under <b>Erik ten Hag</b> in 2022, not a Solskjær signing.'},
       {name:'Antony',        aliases:['antony','antony matheus'], note:'🔴 Antony — signed under <b>Erik ten Hag</b> in 2022, not a Solskjær signing.'},
       {name:'Paul Pogba',    aliases:['pogba','paul pogba'], note:'🔴 Paul Pogba — re-signed under <b>José Mourinho</b> in 2016, not a Solskjær signing.'},
+    ]
+  },
+
+  ballon_dor_winners: {
+    title: 'Ballon d’Or Winners',
+    missingLabel: 'winners',
+    // Every individual winner from 1956 to 2025. 2020 was not awarded.
+    // Source: Transfermarkt / topendsports.com winners list.
+    players: [
+      {name:'Stanley Matthews',     aliases:['matthews','stanley matthews','sir stanley matthews']},
+      {name:'Alfredo Di Stéfano',   aliases:['di stefano','di stéfano','alfredo di stefano']},
+      {name:'Raymond Kopa',         aliases:['kopa','raymond kopa']},
+      {name:'Luis Suárez',          aliases:['luis suarez','luis suárez','suarez','suárez']},
+      {name:'Omar Sívori',          aliases:['sivori','sívori','omar sivori']},
+      {name:'Josef Masopust',       aliases:['masopust','josef masopust']},
+      {name:'Lev Yashin',           aliases:['yashin','lev yashin','black spider']},
+      {name:'Denis Law',            aliases:['denis law','law']},
+      {name:'Eusébio',              aliases:['eusebio','eusébio','black panther']},
+      {name:'Bobby Charlton',       aliases:['charlton','bobby charlton','sir bobby charlton']},
+      {name:'Flórián Albert',       aliases:['albert','florian albert','flórián albert']},
+      {name:'George Best',          aliases:['best','george best']},
+      {name:'Gianni Rivera',        aliases:['rivera','gianni rivera']},
+      {name:'Gerd Müller',          aliases:['muller','müller','gerd muller','gerd müller','der bomber']},
+      {name:'Johan Cruyff',         aliases:['cruyff','johan cruyff','cruijff']},
+      {name:'Franz Beckenbauer',    aliases:['beckenbauer','franz beckenbauer','der kaiser','kaiser franz']},
+      {name:'Oleg Blokhin',         aliases:['blokhin','oleg blokhin']},
+      {name:'Allan Simonsen',       aliases:['simonsen','allan simonsen']},
+      {name:'Kevin Keegan',         aliases:['keegan','kevin keegan']},
+      {name:'Karl-Heinz Rummenigge',aliases:['rummenigge','karl heinz rummenigge','karl-heinz rummenigge','kalle']},
+      {name:'Paolo Rossi',          aliases:['paolo rossi','rossi']},
+      {name:'Michel Platini',       aliases:['platini','michel platini']},
+      {name:'Igor Belanov',         aliases:['belanov','igor belanov']},
+      {name:'Ruud Gullit',          aliases:['gullit','ruud gullit']},
+      {name:'Marco van Basten',     aliases:['van basten','marco van basten','basten']},
+      {name:'Lothar Matthäus',      aliases:['matthaus','matthäus','lothar matthaus','lothar matthäus']},
+      {name:'Jean-Pierre Papin',    aliases:['papin','jean pierre papin','jean-pierre papin']},
+      {name:'Roberto Baggio',       aliases:['baggio','roberto baggio','il divin codino']},
+      {name:'Hristo Stoichkov',     aliases:['stoichkov','hristo stoichkov']},
+      {name:'George Weah',          aliases:['weah','george weah']},
+      {name:'Matthias Sammer',      aliases:['sammer','matthias sammer']},
+      {name:'Ronaldo',              aliases:['ronaldo','r9','ronaldo nazario','ronaldo nazário','o fenomeno','o fenômeno','ronaldo brazil','brazilian ronaldo']},
+      {name:'Zinedine Zidane',      aliases:['zidane','zizou','zinedine zidane']},
+      {name:'Rivaldo',              aliases:['rivaldo','rivaldo borba ferreira']},
+      {name:'Luís Figo',            aliases:['figo','luis figo','luís figo']},
+      {name:'Michael Owen',         aliases:['owen','michael owen']},
+      {name:'Pavel Nedvěd',         aliases:['nedved','nedvěd','pavel nedved','pavel nedvěd','furia ceca']},
+      {name:'Andriy Shevchenko',    aliases:['shevchenko','andriy shevchenko','sheva']},
+      {name:'Ronaldinho',           aliases:['ronaldinho','ronaldinho gaúcho','ronaldinho gaucho','dinho']},
+      {name:'Fabio Cannavaro',      aliases:['cannavaro','fabio cannavaro']},
+      {name:'Kaká',                 aliases:['kaka','kaká','ricardo kaka']},
+      {name:'Cristiano Ronaldo',    aliases:['cristiano ronaldo','cristiano','cr7']},
+      {name:'Lionel Messi',         aliases:['messi','lionel messi','leo messi','la pulga']},
+      {name:'Luka Modrić',          aliases:['modric','modrić','luka modric','luka modrić']},
+      {name:'Karim Benzema',        aliases:['benzema','karim benzema']},
+      {name:'Rodri',                aliases:['rodri','rodrigo hernandez','rodri hernandez']},
+      {name:'Ousmane Dembélé',      aliases:['dembele','dembélé','ousmane dembele','ousmane dembélé']},
     ]
   }
 };
