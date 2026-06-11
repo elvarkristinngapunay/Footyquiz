@@ -38,9 +38,9 @@ const EG_GROUPS = [
     desc:'Football’s biggest money moves',
     quizzes:[
       {key:'hundred_million', icon:'💰', desc:'Name every player transferred for €100M or more · 19 players'},
-      {key:'klopp_signings',  icon:'🔴', desc:'Every first-team signing under Klopp who played a game · 31 players'},
-      {key:'arteta_signings', icon:'🔴', desc:'Every first-team signing under Arteta who played a game · 34 players'},
-      {key:'pep_signings',    icon:'🩵', desc:'Every first-team signing under Pep at Man City who played a game · 50 players'},
+      {key:'klopp_signings',  club:'Liverpool',        manager:'Jürgen Klopp',   desc:'Every first-team signing under Klopp who played a game · 31 players'},
+      {key:'arteta_signings', club:'Arsenal',          manager:'Mikel Arteta',   desc:'Every first-team signing under Arteta who played a game · 34 players'},
+      {key:'pep_signings',    club:'Manchester City',  manager:'Pep Guardiola',  desc:'Every first-team signing under Pep who played a game · 50 players'},
     ]
   },
   {

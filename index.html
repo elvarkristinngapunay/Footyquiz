@@ -491,7 +491,9 @@ body::before{display:none;}
 }
 .eg-category-card:hover{border-color:#e8b923;background:rgba(232,185,35,0.06);}
 .eg-cat-icon{font-size:2rem;flex-shrink:0;}
+.eg-cat-badge{width:56px;height:56px;object-fit:contain;flex-shrink:0;}
 .eg-cat-label{font-family:'Teko',sans-serif;font-size:1.6rem;color:#fff;line-height:1.1;}
+.eg-cat-label.eg-cat-manager{font-family:'Anton',sans-serif;font-size:2.1rem;letter-spacing:0.5px;color:#fff;}
 .eg-cat-desc{font-size:0.72rem;color:#666;margin-top:2px;}
 .eg-cat-arrow{margin-left:auto;color:#e8b923;font-size:1.4rem;font-weight:700;}
 
@@ -2212,10 +2214,17 @@ function egPickGroup(id){
         <div class="eg-cat-arrow" style="font-size:0.55rem;letter-spacing:1px;color:#FFD700;border:1px solid #7a5f00;border-radius:6px;padding:4px 8px;">SOON</div>
       </div>`;
     }
+    const badge = q.club && typeof CLUB_LOGOS!=='undefined' && CLUB_LOGOS[q.club];
+    const iconHtml = badge
+      ? `<img class="eg-cat-badge" src="${badge}" alt="" onerror="this.outerHTML='<div class=\\'eg-cat-icon\\'>${q.icon||'⚽'}</div>'">`
+      : `<div class="eg-cat-icon">${q.icon||'⚽'}</div>`;
+    const labelHtml = q.manager
+      ? `<div class="eg-cat-label eg-cat-manager">${q.manager}</div>`
+      : `<div class="eg-cat-label">${title}</div>`;
     return `<div class="eg-category-card" onmouseenter="playTick()" onclick="startElGrande('${q.key}')">
-      <div class="eg-cat-icon">${q.icon||'⚽'}</div>
+      ${iconHtml}
       <div>
-        <div class="eg-cat-label">${title}</div>
+        ${labelHtml}
         <div class="eg-cat-desc">${q.desc||''}</div>
       </div>
       <div class="eg-cat-arrow">›</div>
@@ -4624,7 +4633,7 @@ function updateFriendsNav(){
   }
 }
 </script>
-<script src="data/eg-datasets.js?v=9"></script>
+<script src="data/eg-datasets.js?v=10"></script>
 <script src="data/players.js"></script>
 <script src="data/kits.js"></script>
 <script src="data/club-logos.js?v=2"></script>
