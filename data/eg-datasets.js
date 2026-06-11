@@ -28,7 +28,7 @@ const EG_GROUPS = [
     id:'premier-league', name:'Premier League', icon:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',
     desc:'England’s top flight',
     quizzes:[
-      {title:'100+ Premier League Goals', icon:'⚽', desc:'Players with 100 or more PL goals', soon:true},
+      {key:'pl_100_goals', icon:'⚽', desc:'Every player with 100+ Premier League goals · 35 players'},
       {title:'Premier League Golden Boot Winners', icon:'👟', desc:'Every PL season top scorer', soon:true},
       {title:'Clubs to win the Premier League', icon:'🏆', desc:'Every PL-era champion', soon:true},
     ]
@@ -687,6 +687,59 @@ const EG_DATASETS = {
       {name:'Karim Benzema',        aliases:['benzema','karim benzema']},
       {name:'Rodri',                aliases:['rodri','rodrigo hernandez','rodri hernandez']},
       {name:'Ousmane Dembélé',      aliases:['dembele','dembélé','ousmane dembele','ousmane dembélé']},
+    ]
+  },
+
+  pl_100_goals: {
+    title: '100+ Premier League Goals',
+    missingLabel: 'goalscorers',
+    // All-time PL scorers with 100+ goals. Source: Wikipedia, current through 2025-26.
+    players: [
+      {name:'Alan Shearer',          aliases:['shearer','alan shearer'], value:260},
+      {name:'Harry Kane',            aliases:['kane','harry kane'], value:213},
+      {name:'Wayne Rooney',          aliases:['rooney','wayne rooney'], value:208},
+      {name:'Mohamed Salah',         aliases:['salah','mo salah','mohamed salah'], value:193},
+      {name:'Andy Cole',             aliases:['andy cole','andrew cole'], value:187},
+      {name:'Sergio Agüero',         aliases:['aguero','agüero','sergio aguero','kun aguero','kun'], value:184},
+      {name:'Frank Lampard',         aliases:['lampard','frank lampard','super frank'], value:177},
+      {name:'Thierry Henry',         aliases:['henry','thierry henry','titi'], value:175},
+      {name:'Robbie Fowler',         aliases:['fowler','robbie fowler','god'], value:163},
+      {name:'Jermain Defoe',         aliases:['defoe','jermain defoe'], value:162},
+      {name:'Michael Owen',          aliases:['owen','michael owen'], value:150},
+      {name:'Les Ferdinand',         aliases:['ferdinand','les ferdinand','sir les'], value:149},
+      {name:'Teddy Sheringham',      aliases:['sheringham','teddy sheringham','edward sheringham'], value:146},
+      {name:'Jamie Vardy',           aliases:['vardy','jamie vardy'], value:145},
+      {name:'Robin van Persie',      aliases:['van persie','robin van persie','rvp'], value:144},
+      {name:'Jimmy Floyd Hasselbaink',aliases:['hasselbaink','jimmy floyd hasselbaink','jimmy hasselbaink'], value:127},
+      {name:'Son Heung-min',         aliases:['son','son heung min','son heung-min','sonny','sonaldo'], value:127},
+      {name:'Robbie Keane',          aliases:['robbie keane','keano'], value:126},
+      {name:'Nicolas Anelka',        aliases:['anelka','nicolas anelka','le sulk'], value:125},
+      {name:'Dwight Yorke',          aliases:['yorke','dwight yorke'], value:123},
+      {name:'Raheem Sterling',       aliases:['sterling','raheem sterling'], value:123},
+      {name:'Romelu Lukaku',         aliases:['lukaku','romelu lukaku','big rom'], value:121},
+      {name:'Steven Gerrard',        aliases:['gerrard','steven gerrard','stevie g'], value:120},
+      {name:'Ian Wright',            aliases:['ian wright','wrighty'], value:113},
+      {name:'Erling Haaland',        aliases:['haaland','erling haaland','erling'], value:112},
+      {name:'Sadio Mané',            aliases:['mane','mané','sadio mane'], value:111},
+      {name:'Dion Dublin',           aliases:['dublin','dion dublin'], value:111},
+      {name:'Emile Heskey',          aliases:['heskey','emile heskey'], value:110},
+      {name:'Ryan Giggs',            aliases:['giggs','ryan giggs','giggsy'], value:109},
+      {name:'Peter Crouch',          aliases:['crouch','peter crouch'], value:108},
+      {name:'Paul Scholes',          aliases:['scholes','paul scholes'], value:107},
+      {name:'Darren Bent',           aliases:['bent','darren bent'], value:106},
+      {name:'Didier Drogba',         aliases:['drogba','didier drogba'], value:104},
+      {name:'Cristiano Ronaldo',     aliases:['cristiano','cristiano ronaldo','cr7'], value:103},
+      {name:'Matt Le Tissier',       aliases:['le tissier','matt le tissier','le god'], value:100},
+    ],
+    traps: [
+      // Stars whose PL totals fall just short — easy to misremember as 100+
+      {name:'Eden Hazard',           aliases:['hazard','eden hazard'], note:'🔴 Eden Hazard — finished on <b>85</b> Premier League goals, just short of 100.'},
+      {name:'Luis Suárez',           aliases:['luis suarez','luis suárez'], note:'🔴 Luis Suárez — left for Barcelona on <b>82</b> Premier League goals.'},
+      {name:'Diego Costa',           aliases:['costa','diego costa'], note:'🔴 Diego Costa — finished on <b>52</b> Premier League goals across his three Chelsea seasons.'},
+      {name:'Edin Džeko',            aliases:['dzeko','džeko','edin dzeko','edin džeko'], note:'🔴 Edin Džeko — finished on <b>50</b> Premier League goals at Manchester City.'},
+      {name:'Christian Benteke',     aliases:['benteke','christian benteke'], note:'🔴 Christian Benteke — finished his PL career on around <b>87</b> goals, short of 100.'},
+      {name:'Bobby Zamora',          aliases:['zamora','bobby zamora'], note:'🔴 Bobby Zamora — finished on <b>84</b> Premier League goals.'},
+      {name:'Marcus Rashford',       aliases:['rashford','marcus rashford'], note:'🔴 Marcus Rashford — close, but not yet at 100 Premier League goals.'},
     ]
   }
 };
