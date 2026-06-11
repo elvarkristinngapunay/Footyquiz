@@ -28,9 +28,9 @@ const EG_GROUPS = [
     id:'premier-league', name:'Premier League', icon:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',
     desc:'England’s top flight',
     quizzes:[
-      {key:'pl_100_goals', icon:'⚽', desc:'Every player with 100+ Premier League goals · 35 players'},
-      {title:'Premier League Golden Boot Winners', icon:'👟', desc:'Every PL season top scorer', soon:true},
-      {title:'Clubs to win the Premier League', icon:'🏆', desc:'Every PL-era champion', soon:true},
+      {key:'pl_100_goals',      icon:'⚽', desc:'Every player with 100+ Premier League goals · 35 players'},
+      {key:'pl_golden_boot',    icon:'👟', desc:'Every PL season top scorer · 26 players'},
+      {key:'pl_title_winners',  icon:'🏆', desc:'Every PL-era champion · 7 clubs'},
     ]
   },
   {
@@ -693,6 +693,7 @@ const EG_DATASETS = {
   pl_100_goals: {
     title: '100+ Premier League Goals',
     missingLabel: 'goalscorers',
+    unit: 'goals',
     // All-time PL scorers with 100+ goals. Source: Wikipedia, current through 2025-26.
     players: [
       {name:'Alan Shearer',          aliases:['shearer','alan shearer'], value:260},
@@ -740,6 +741,63 @@ const EG_DATASETS = {
       {name:'Christian Benteke',     aliases:['benteke','christian benteke'], note:'🔴 Christian Benteke — finished his PL career on around <b>87</b> goals, short of 100.'},
       {name:'Bobby Zamora',          aliases:['zamora','bobby zamora'], note:'🔴 Bobby Zamora — finished on <b>84</b> Premier League goals.'},
       {name:'Marcus Rashford',       aliases:['rashford','marcus rashford'], note:'🔴 Marcus Rashford — close, but not yet at 100 Premier League goals.'},
+    ]
+  },
+
+  pl_golden_boot: {
+    title: 'Premier League Golden Boot Winners',
+    missingLabel: 'winners',
+    // Every individual top scorer 1992-93 → 2025-26. Tied seasons (1997-98, 1998-99,
+    // 2010-11, 2018-19, 2021-22) list each player as a separate answer.
+    players: [
+      {name:'Teddy Sheringham',        aliases:['sheringham','teddy sheringham'], years:['1992-93']},
+      {name:'Andy Cole',               aliases:['cole','andy cole','andrew cole'], years:['1993-94']},
+      {name:'Alan Shearer',            aliases:['shearer','alan shearer'], years:['1994-95','1995-96','1996-97']},
+      {name:'Chris Sutton',            aliases:['sutton','chris sutton'], years:['1997-98']},
+      {name:'Michael Owen',            aliases:['owen','michael owen'], years:['1997-98','1998-99']},
+      {name:'Dion Dublin',             aliases:['dublin','dion dublin'], years:['1997-98']},
+      {name:'Jimmy Floyd Hasselbaink', aliases:['hasselbaink','jimmy floyd hasselbaink','jimmy hasselbaink'], years:['1998-99','2000-01']},
+      {name:'Dwight Yorke',            aliases:['yorke','dwight yorke'], years:['1998-99']},
+      {name:'Kevin Phillips',          aliases:['kevin phillips','phillips'], years:['1999-00']},
+      {name:'Thierry Henry',           aliases:['henry','thierry henry','titi','va va voom'], years:['2001-02','2003-04','2004-05','2005-06']},
+      {name:'Ruud van Nistelrooy',     aliases:['van nistelrooy','nistelrooy','ruud van nistelrooy','ruud'], years:['2002-03']},
+      {name:'Didier Drogba',           aliases:['drogba','didier drogba'], years:['2006-07','2009-10']},
+      {name:'Cristiano Ronaldo',       aliases:['cristiano','cristiano ronaldo','cr7'], years:['2007-08']},
+      {name:'Nicolas Anelka',          aliases:['anelka','nicolas anelka','le sulk'], years:['2008-09']},
+      {name:'Dimitar Berbatov',        aliases:['berbatov','dimitar berbatov'], years:['2010-11']},
+      {name:'Carlos Tévez',            aliases:['tevez','tévez','carlos tevez','carlitos'], years:['2010-11']},
+      {name:'Robin van Persie',        aliases:['van persie','robin van persie','rvp'], years:['2011-12','2012-13']},
+      {name:'Luis Suárez',             aliases:['luis suarez','luis suárez'], years:['2013-14']},
+      {name:'Sergio Agüero',           aliases:['aguero','agüero','sergio aguero','kun aguero','kun'], years:['2014-15']},
+      {name:'Harry Kane',              aliases:['kane','harry kane'], years:['2015-16','2016-17','2020-21']},
+      {name:'Mohamed Salah',           aliases:['salah','mo salah','mohamed salah'], years:['2017-18','2018-19','2021-22','2024-25']},
+      {name:'Sadio Mané',              aliases:['mane','mané','sadio mane'], years:['2018-19']},
+      {name:'Pierre-Emerick Aubameyang',aliases:['aubameyang','pierre emerick aubameyang','pierre-emerick aubameyang','auba'], years:['2018-19']},
+      {name:'Jamie Vardy',             aliases:['vardy','jamie vardy'], years:['2019-20']},
+      {name:'Son Heung-min',           aliases:['son','son heung min','son heung-min','sonny','sonaldo'], years:['2021-22']},
+      {name:'Erling Haaland',          aliases:['haaland','erling haaland','erling'], years:['2022-23','2023-24','2025-26']},
+    ]
+  },
+
+  pl_title_winners: {
+    title: 'Clubs to win the Premier League',
+    missingLabel: 'clubs',
+    // Every PL-era champion 1992-93 → 2025-26.
+    players: [
+      {name:'Manchester United', aliases:['man utd','man united','manchester utd','united','mufc'],
+        years:['1992-93','1993-94','1995-96','1996-97','1998-99','1999-00','2000-01','2002-03','2006-07','2007-08','2008-09','2010-11','2012-13']},
+      {name:'Blackburn Rovers',  aliases:['blackburn','blackburn rovers','rovers','brfc'],
+        years:['1994-95']},
+      {name:'Arsenal',           aliases:['arsenal','gunners','the gunners','afc'],
+        years:['1997-98','2001-02','2003-04','2025-26']},
+      {name:'Chelsea',           aliases:['chelsea','cfc','blues','the blues'],
+        years:['2004-05','2005-06','2009-10','2014-15','2016-17']},
+      {name:'Manchester City',   aliases:['man city','manchester city','city','mcfc','citizens'],
+        years:['2011-12','2013-14','2017-18','2018-19','2020-21','2021-22','2022-23','2023-24']},
+      {name:'Leicester City',    aliases:['leicester','leicester city','foxes','lcfc'],
+        years:['2015-16']},
+      {name:'Liverpool',         aliases:['liverpool','lfc','the reds','reds'],
+        years:['2019-20','2024-25']}
     ]
   }
 };
