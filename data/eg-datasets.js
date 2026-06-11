@@ -40,7 +40,8 @@ const EG_GROUPS = [
       {key:'hundred_million', icon:'💰', desc:'Name every player transferred for €100M or more · 19 players'},
       {key:'klopp_signings',  club:'Liverpool',        manager:'Jürgen Klopp',   desc:'Every first-team signing under Klopp who played a game · 31 players'},
       {key:'arteta_signings', club:'Arsenal',          manager:'Mikel Arteta',   desc:'Every first-team signing under Arteta who played a game · 34 players'},
-      {key:'pep_signings',    club:'Manchester City',  manager:'Pep Guardiola',  desc:'Every first-team signing under Pep who played a game · 50 players'},
+      {key:'pep_signings',       club:'Manchester City',   manager:'Pep Guardiola',          desc:'Every first-team signing under Pep who played a game · 50 players'},
+      {key:'solskjaer_signings', club:'Manchester United', manager:'Ole Gunnar Solskjær',    desc:'Every first-team signing under Solskjær who played a game · 13 players'},
     ]
   },
   {
@@ -602,6 +603,34 @@ const EG_DATASETS = {
       {name:'Gerónimo Rulli',     aliases:['rulli','geronimo rulli','gerónimo rulli'], note:'🔴 Gerónimo Rulli — signed in 2016 but <b>never played</b> a competitive game for City.'},
       {name:'Marlos Moreno',      aliases:['marlos moreno','marlos'], note:'🔴 Marlos Moreno — signed in 2016 but <b>never played</b> a competitive game for City.'},
       {name:'Aaron Mooy',         aliases:['mooy','aaron mooy'], note:'🔴 Aaron Mooy — signed in 2016 but <b>never played</b> a competitive game for City (sold straight to Huddersfield).'},
+    ]
+  },
+
+  solskjaer_signings: {
+    title: 'Manchester United Signings under Ole Gunnar Solskjær',
+    missingLabel: 'signings',
+    // Permanent signings during Solskjær's tenure (28 Mar 2019 → 21 Nov 2021)
+    // who made at least one competitive United appearance. No loans.
+    players: [
+      {name:'Daniel James',         aliases:['james','daniel james','dan james'], from:'Swansea', year:2019},
+      {name:'Aaron Wan-Bissaka',    aliases:['wan-bissaka','wan bissaka','awb','aaron wan-bissaka'], from:'Crystal Palace', year:2019},
+      {name:'Harry Maguire',        aliases:['maguire','harry maguire','slabhead'], from:'Leicester', year:2019},
+      {name:'Bruno Fernandes',      aliases:['bruno','fernandes','bruno fernandes'], from:'Sporting CP', year:2020},
+      {name:'Donny van de Beek',    aliases:['van de beek','donny','donny van de beek'], from:'Ajax', year:2020},
+      {name:'Alex Telles',          aliases:['telles','alex telles'], from:'Porto', year:2020},
+      {name:'Facundo Pellistri',    aliases:['pellistri','facundo pellistri'], from:'Peñarol', year:2020},
+      {name:'Edinson Cavani',       aliases:['cavani','edinson cavani','el matador'], from:'PSG', year:2020},
+      {name:'Amad Diallo',          aliases:['amad','amad diallo','diallo'], from:'Atalanta', year:2021},
+      {name:'Jadon Sancho',         aliases:['sancho','jadon sancho'], from:'Dortmund', year:2021},
+      {name:'Raphaël Varane',       aliases:['varane','raphael varane','raphaël varane'], from:'Real Madrid', year:2021},
+      {name:'Cristiano Ronaldo',    aliases:['cristiano','ronaldo','cr7','cristiano ronaldo'], from:'Juventus', year:2021},
+      {name:'Tom Heaton',           aliases:['heaton','tom heaton'], from:'Aston Villa', year:2021},
+    ],
+    traps: [
+      {name:'Odion Ighalo',  aliases:['ighalo','odion ighalo'], note:'🔴 Odion Ighalo — joined <b>on loan</b> from Shanghai Shenhua in Jan 2020, not a permanent signing.'},
+      {name:'Casemiro',      aliases:['casemiro'], note:'🔴 Casemiro — signed under <b>Erik ten Hag</b> in 2022, not a Solskjær signing.'},
+      {name:'Antony',        aliases:['antony','antony matheus'], note:'🔴 Antony — signed under <b>Erik ten Hag</b> in 2022, not a Solskjær signing.'},
+      {name:'Paul Pogba',    aliases:['pogba','paul pogba'], note:'🔴 Paul Pogba — re-signed under <b>José Mourinho</b> in 2016, not a Solskjær signing.'},
     ]
   }
 };
