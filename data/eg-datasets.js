@@ -20,8 +20,9 @@ const EG_GROUPS = [
     desc:'Europe’s biggest stage',
     quizzes:[
       {key:'cl_scorers', icon:'🏆', desc:'1992/93 to present · 70+ players'},
+      {key:'cl_top_scorers', icon:'⚽', desc:'All-time top 30 scorers in CL / European Cup history'},
+      {key:'el_winners', icon:'🏆', desc:'Every club to win the UEFA Cup / Europa League · 30 clubs'},
       {title:'Clubs to win the European Cup', icon:'🏟️', desc:'Every club crowned champions of Europe', soon:true},
-      {title:'Champions League All-Time Top Scorers', icon:'⚽', desc:'Most goals in CL / European Cup history', soon:true},
     ]
   },
   {
@@ -798,6 +799,85 @@ const EG_DATASETS = {
         years:['2015-16']},
       {name:'Liverpool',         aliases:['liverpool','lfc','the reds','reds'],
         years:['2019-20','2024-25']}
+    ]
+  },
+
+  cl_top_scorers: {
+    title: 'Champions League All-Time Top Scorers',
+    missingLabel: 'scorers',
+    unit: 'goals',
+    // Top 30 across European Cup + Champions League eras (UEFA convention).
+    // Source: Wikipedia, as of end of 2025-26 season.
+    players: [
+      {name:'Cristiano Ronaldo',     aliases:['cristiano','cristiano ronaldo','cr7','ronaldo'], value:140},
+      {name:'Lionel Messi',          aliases:['messi','lionel messi','leo messi','la pulga'], value:129},
+      {name:'Robert Lewandowski',    aliases:['lewandowski','robert lewandowski','lewa'], value:109},
+      {name:'Karim Benzema',         aliases:['benzema','karim benzema'], value:90},
+      {name:'Raúl',                  aliases:['raul','raúl','raul gonzalez'], value:71},
+      {name:'Kylian Mbappé',         aliases:['mbappe','mbappé','kylian mbappe','kylian'], value:70},
+      {name:'Erling Haaland',        aliases:['haaland','erling haaland','erling'], value:57},
+      {name:'Thomas Müller',         aliases:['muller','müller','thomas muller','thomas müller'], value:57},
+      {name:'Ruud van Nistelrooy',   aliases:['van nistelrooy','nistelrooy','ruud van nistelrooy','ruud'], value:56},
+      {name:'Harry Kane',            aliases:['kane','harry kane'], value:54},
+      {name:'Mohamed Salah',         aliases:['salah','mo salah','mohamed salah'], value:50},
+      {name:'Thierry Henry',         aliases:['henry','thierry henry','titi'], value:50},
+      {name:'Alfredo Di Stéfano',    aliases:['di stefano','di stéfano','alfredo di stefano'], value:49},
+      {name:'Andriy Shevchenko',     aliases:['shevchenko','andriy shevchenko','sheva'], value:48},
+      {name:'Zlatan Ibrahimović',    aliases:['ibrahimovic','ibrahimović','zlatan','zlatan ibrahimovic'], value:48},
+      {name:'Eusébio',               aliases:['eusebio','eusébio','black panther'], value:46},
+      {name:'Filippo Inzaghi',       aliases:['inzaghi','filippo inzaghi','pippo inzaghi'], value:46},
+      {name:'Didier Drogba',         aliases:['drogba','didier drogba'], value:44},
+      {name:'Antoine Griezmann',     aliases:['griezmann','antoine griezmann','grizi'], value:44},
+      {name:'Neymar',                aliases:['neymar','neymar jr','neymar junior'], value:43},
+      {name:'Alessandro Del Piero',  aliases:['del piero','delpiero','alessandro del piero'], value:42},
+      {name:'Sergio Agüero',         aliases:['aguero','agüero','sergio aguero','kun aguero','kun'], value:41},
+      {name:'Ferenc Puskás',         aliases:['puskas','puskás','ferenc puskas'], value:36},
+      {name:'Edinson Cavani',        aliases:['cavani','edinson cavani','el matador'], value:35},
+      {name:'Gerd Müller',           aliases:['gerd muller','gerd müller','der bomber'], value:34},
+      {name:'Vinícius Júnior',       aliases:['vinicius','vinícius','vini jr','vinicius junior','vinícius júnior'], value:34},
+      {name:'Fernando Morientes',    aliases:['morientes','fernando morientes'], value:33},
+      {name:'Arjen Robben',          aliases:['robben','arjen robben'], value:31},
+      {name:'Samuel Eto\'o',         aliases:['etoo','eto\'o','samuel etoo','samuel eto\'o'], value:30},
+      {name:'Wayne Rooney',          aliases:['rooney','wayne rooney'], value:30},
+    ]
+  },
+
+  el_winners: {
+    title: 'Clubs to win the UEFA Cup / Europa League',
+    missingLabel: 'clubs',
+    // Every winner of the UEFA Cup (1972–2009) and UEFA Europa League (2010–2025).
+    // Excludes the old Inter-Cities Fairs Cup (pre-1971).
+    players: [
+      {name:'Sevilla',                  club:'Sevilla',          aliases:['sevilla','sevilla fc'], years:['2006','2007','2014','2015','2016','2020','2023']},
+      {name:'Internazionale',           club:'Inter Milan',      aliases:['inter','internazionale','inter milan','inter milano'], years:['1991','1994','1998']},
+      {name:'Juventus',                 club:'Juventus',         aliases:['juventus','juve','old lady'], years:['1977','1990','1993']},
+      {name:'Liverpool',                club:'Liverpool',        aliases:['liverpool','lfc','the reds'], years:['1973','1976','2001']},
+      {name:'Tottenham Hotspur',        club:'Tottenham',        aliases:['tottenham','spurs','tottenham hotspur'], years:['1972','1984','2025']},
+      {name:'Atlético Madrid',          club:'Atlético Madrid',  aliases:['atletico','atlético','atletico madrid','atléti','atleti'], years:['2010','2012','2018']},
+      {name:'Borussia Mönchengladbach', club:'Mönchengladbach',  aliases:['monchengladbach','mönchengladbach','gladbach','borussia monchengladbach'], years:['1975','1979']},
+      {name:'Feyenoord',                club:'Feyenoord',        aliases:['feyenoord'], years:['1974','2002']},
+      {name:'Real Madrid',              club:'Real Madrid',      aliases:['real madrid','real','madrid'], years:['1985','1986']},
+      {name:'Parma',                    club:'Parma',            aliases:['parma'], years:['1995','1999']},
+      {name:'Porto',                    club:'Porto',            aliases:['porto','fc porto','dragões'], years:['2003','2011']},
+      {name:'IFK Göteborg',             aliases:['goteborg','göteborg','ifk goteborg','ifk göteborg'], years:['1982','1987']},
+      {name:'Eintracht Frankfurt',      club:'Frankfurt',        aliases:['frankfurt','eintracht frankfurt','eintracht'], years:['1980','2022']},
+      {name:'Chelsea',                  club:'Chelsea',          aliases:['chelsea','cfc','blues'], years:['2013','2019']},
+      {name:'PSV Eindhoven',            club:'PSV',              aliases:['psv','psv eindhoven'], years:['1978']},
+      {name:'Ipswich Town',             aliases:['ipswich','ipswich town'], years:['1981']},
+      {name:'Anderlecht',               aliases:['anderlecht','rsc anderlecht'], years:['1983']},
+      {name:'Bayer Leverkusen',         club:'Bayer Leverkusen', aliases:['leverkusen','bayer leverkusen','bayer 04'], years:['1988']},
+      {name:'Napoli',                   club:'Napoli',           aliases:['napoli','ssc napoli'], years:['1989']},
+      {name:'Ajax',                     club:'Ajax',             aliases:['ajax','afc ajax','ajax amsterdam'], years:['1992']},
+      {name:'Bayern Munich',            club:'Bayern Munich',    aliases:['bayern','bayern munich','bayern münchen','fc bayern'], years:['1996']},
+      {name:'Schalke 04',               club:'FC Schalke 04',    aliases:['schalke','schalke 04','fc schalke'], years:['1997']},
+      {name:'Galatasaray',              club:'Galatasaray',      aliases:['galatasaray','gala','cimbom'], years:['2000']},
+      {name:'Valencia',                 club:'Valencia',         aliases:['valencia','valencia cf'], years:['2004']},
+      {name:'CSKA Moscow',              aliases:['cska','cska moscow'], years:['2005']},
+      {name:'Zenit Saint Petersburg',   aliases:['zenit','zenit saint petersburg','zenit st petersburg'], years:['2008']},
+      {name:'Shakhtar Donetsk',         club:'Shakhtar Donetsk', aliases:['shakhtar','shakhtar donetsk'], years:['2009']},
+      {name:'Manchester United',        club:'Manchester United',aliases:['man utd','man united','manchester utd','united','mufc'], years:['2017']},
+      {name:'Villarreal',               aliases:['villarreal','villarreal cf','yellow submarine'], years:['2021']},
+      {name:'Atalanta',                 club:'Atalanta',         aliases:['atalanta','la dea'], years:['2024']},
     ]
   }
 };

@@ -2604,12 +2604,18 @@ function addEgChip(name, player){
       metaHtml = `${pd.fee} · ${pd.from} → ${pd.to}`;
     } else if(pd.value != null && egDataset.unit){
       metaHtml = `${pd.value} ${egDataset.unit}`;
+    } else if(pd.country && pd.years && pd.years.length){
+      metaHtml = `${pd.country} · ${pd.years.join(', ')}`;
     } else if(pd.years && pd.years.length){
       metaHtml = pd.years.join(', ');
     }
-    const logoKey = pd.club || name;
-    if(typeof CLUB_LOGOS !== 'undefined' && CLUB_LOGOS[logoKey]){
-      badgeHtml = `<img src="${CLUB_LOGOS[logoKey]}" alt="" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;margin-right:6px;" onerror="this.style.display='none'">`;
+    if(pd.flag){
+      badgeHtml = `<span style="margin-right:6px;font-size:1.1em;vertical-align:middle;">${pd.flag}</span>`;
+    } else {
+      const logoKey = pd.club || name;
+      if(typeof CLUB_LOGOS !== 'undefined' && CLUB_LOGOS[logoKey]){
+        badgeHtml = `<img src="${CLUB_LOGOS[logoKey]}" alt="" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;margin-right:6px;" onerror="this.style.display='none'">`;
+      }
     }
   }
   if(metaHtml || badgeHtml){
@@ -4648,7 +4654,7 @@ function updateFriendsNav(){
   }
 }
 </script>
-<script src="data/eg-datasets.js?v=14"></script>
+<script src="data/eg-datasets.js?v=15"></script>
 <script src="data/players.js"></script>
 <script src="data/kits.js"></script>
 <script src="data/club-logos.js?v=2"></script>
