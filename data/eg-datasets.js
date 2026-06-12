@@ -21,8 +21,7 @@ const EG_GROUPS = [
     quizzes:[
       {key:'cl_scorers', icon:'🏆', desc:'1992/93 to present · 70+ players'},
       {key:'cl_top_scorers', icon:'⚽', desc:'All-time top 30 scorers in CL / European Cup history'},
-      {key:'el_winners', icon:'🟠', desc:'Every club to win the UEFA Cup / Europa League · 31 clubs'},
-      {title:'Clubs to win the European Cup', icon:'🏟️', desc:'Every club crowned champions of Europe', soon:true},
+      {key:'el_winners', icon:'🟠', desc:'Every club to win the UEFA European League · 31 clubs'},
     ]
   },
   {
@@ -843,7 +842,7 @@ const EG_DATASETS = {
   },
 
   el_winners: {
-    title: 'Clubs to win the UEFA Cup / Europa League',
+    title: 'Clubs to win the UEFA European League',
     missingLabel: 'clubs',
     // Every winner of the UEFA Cup (1972–2009) and UEFA Europa League (2010–2025).
     // Excludes the old Inter-Cities Fairs Cup (pre-1971).
