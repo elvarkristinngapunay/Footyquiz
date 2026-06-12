@@ -129,7 +129,6 @@ const EG_DATASETS = {
       {name:'Désiré Doué', aliases:['doue','doué','desire doue']},
       {name:'Khvicha Kvaratskhelia', aliases:['kvara','kvaratskhelia']},
       {name:'Senny Mayulu', aliases:['mayulu']},
-      {name:'Ousmane Dembélé', aliases:['dembele','dembélé','ousmane dembele']},
     ]
   },
   wc_countries: {
