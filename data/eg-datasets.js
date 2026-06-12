@@ -11,7 +11,7 @@ const EG_GROUPS = [
       {key:'wc_semifinalists', icon:'🏅', desc:'Every country to reach a World Cup top 4 · 25 nations'},
       {key:'wc_final_scorers', icon:'🥇', desc:'1930 to 2022 · Every player who scored in a final'},
       {key:'wc_golden_boot',   icon:'👟', desc:'Every top scorer at the World Cup · 27 players'},
-      {title:'World Cup Winners', icon:'🏆', desc:'Every nation to lift the trophy', soon:true},
+      {key:'wc_winners',       icon:'🏆', desc:'Every nation to lift the trophy · 8 nations'},
       {title:'World Cup Winning Captains', icon:'🎖️', desc:'The men who lifted the World Cup', soon:true},
     ]
   },
@@ -878,6 +878,22 @@ const EG_DATASETS = {
       {name:'Villarreal',               aliases:['villarreal','villarreal cf','yellow submarine'], years:['2021']},
       {name:'Atalanta',                 club:'Atalanta',         aliases:['atalanta','la dea'], years:['2024']},
       {name:'Aston Villa',              club:'Aston Villa',      aliases:['aston villa','villa','avfc'], years:['2026']},
+    ]
+  },
+
+  wc_winners: {
+    title: 'FIFA World Cup Winners',
+    missingLabel: 'nations',
+    // Every nation to win a FIFA World Cup, 1930–2022.
+    players: [
+      {name:'Brazil',        flag:'🇧🇷', aliases:['brazil','brasil'], years:['1958','1962','1970','1994','2002']},
+      {name:'Germany',       flag:'🇩🇪', aliases:['germany','west germany','deutschland','germany/west germany'], years:['1954','1974','1990','2014']},
+      {name:'Italy',         flag:'🇮🇹', aliases:['italy','italia','azzurri'], years:['1934','1938','1982','2006']},
+      {name:'Argentina',     flag:'🇦🇷', aliases:['argentina','albiceleste'], years:['1978','1986','2022']},
+      {name:'France',        flag:'🇫🇷', aliases:['france','les bleus'], years:['1998','2018']},
+      {name:'Uruguay',       flag:'🇺🇾', aliases:['uruguay','la celeste'], years:['1930','1950']},
+      {name:'England',       flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', aliases:['england','the three lions'], years:['1966']},
+      {name:'Spain',         flag:'🇪🇸', aliases:['spain','espana','españa','la roja'], years:['2010']},
     ]
   }
 };
