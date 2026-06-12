@@ -12,7 +12,7 @@ const EG_GROUPS = [
       {key:'wc_final_scorers', icon:'🥇', desc:'1930 to 2022 · Every player who scored in a final'},
       {key:'wc_golden_boot',   icon:'👟', desc:'Every top scorer at the World Cup · 27 players'},
       {key:'wc_winners',       icon:'🏆', desc:'Every nation to lift the trophy · 8 nations'},
-      {title:'World Cup Winning Captains', icon:'🎖️', desc:'The men who lifted the World Cup', soon:true},
+      {key:'wc_captains',      icon:'🎖️', desc:'The men who lifted the World Cup · 22 captains'},
     ]
   },
   {
@@ -894,6 +894,36 @@ const EG_DATASETS = {
       {name:'Uruguay',       flag:'🇺🇾', aliases:['uruguay','la celeste'], years:['1930','1950']},
       {name:'England',       flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', aliases:['england','the three lions'], years:['1966']},
       {name:'Spain',         flag:'🇪🇸', aliases:['spain','espana','españa','la roja'], years:['2010']},
+    ]
+  },
+
+  wc_captains: {
+    title: 'World Cup Winning Captains',
+    missingLabel: 'captains',
+    // The captain who lifted the trophy at each World Cup, 1930–2022.
+    players: [
+      {name:'José Nasazzi',        flag:'🇺🇾', country:'Uruguay',      aliases:['nasazzi','jose nasazzi','josé nasazzi'], years:['1930']},
+      {name:'Gianpiero Combi',     flag:'🇮🇹', country:'Italy',        aliases:['combi','gianpiero combi','giampiero combi'], years:['1934']},
+      {name:'Giuseppe Meazza',     flag:'🇮🇹', country:'Italy',        aliases:['meazza','giuseppe meazza'], years:['1938']},
+      {name:'Obdulio Varela',      flag:'🇺🇾', country:'Uruguay',      aliases:['varela','obdulio varela'], years:['1950']},
+      {name:'Fritz Walter',        flag:'🇩🇪', country:'West Germany', aliases:['fritz walter','walter'], years:['1954']},
+      {name:'Hilderaldo Bellini',  flag:'🇧🇷', country:'Brazil',       aliases:['bellini','hilderaldo bellini'], years:['1958']},
+      {name:'Mauro Ramos',         flag:'🇧🇷', country:'Brazil',       aliases:['mauro ramos','mauro'], years:['1962']},
+      {name:'Bobby Moore',         flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', country:'England',      aliases:['bobby moore','moore'], years:['1966']},
+      {name:'Carlos Alberto',      flag:'🇧🇷', country:'Brazil',       aliases:['carlos alberto','carlos alberto torres'], years:['1970']},
+      {name:'Franz Beckenbauer',   flag:'🇩🇪', country:'West Germany', aliases:['beckenbauer','franz beckenbauer','der kaiser','kaiser'], years:['1974']},
+      {name:'Daniel Passarella',   flag:'🇦🇷', country:'Argentina',    aliases:['passarella','daniel passarella'], years:['1978']},
+      {name:'Dino Zoff',           flag:'🇮🇹', country:'Italy',        aliases:['zoff','dino zoff'], years:['1982']},
+      {name:'Diego Maradona',      flag:'🇦🇷', country:'Argentina',    aliases:['maradona','diego maradona','el diego','d10s'], years:['1986']},
+      {name:'Lothar Matthäus',     flag:'🇩🇪', country:'West Germany', aliases:['matthaus','matthäus','lothar matthaus','lothar matthäus'], years:['1990']},
+      {name:'Dunga',               flag:'🇧🇷', country:'Brazil',       aliases:['dunga','carlos dunga'], years:['1994']},
+      {name:'Didier Deschamps',    flag:'🇫🇷', country:'France',       aliases:['deschamps','didier deschamps','dd'], years:['1998']},
+      {name:'Cafu',                flag:'🇧🇷', country:'Brazil',       aliases:['cafu','marcos cafu'], years:['2002']},
+      {name:'Fabio Cannavaro',     flag:'🇮🇹', country:'Italy',        aliases:['cannavaro','fabio cannavaro'], years:['2006']},
+      {name:'Iker Casillas',       flag:'🇪🇸', country:'Spain',        aliases:['casillas','iker casillas','san iker'], years:['2010']},
+      {name:'Philipp Lahm',        flag:'🇩🇪', country:'Germany',      aliases:['lahm','philipp lahm'], years:['2014']},
+      {name:'Hugo Lloris',         flag:'🇫🇷', country:'France',       aliases:['lloris','hugo lloris'], years:['2018']},
+      {name:'Lionel Messi',        flag:'🇦🇷', country:'Argentina',    aliases:['messi','lionel messi','leo messi','la pulga'], years:['2022']},
     ]
   }
 };
