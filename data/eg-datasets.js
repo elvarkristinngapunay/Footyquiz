@@ -21,8 +21,14 @@ const EG_GROUPS = [
     quizzes:[
       {key:'cl_scorers', icon:'🏆', desc:'1992/93 to present · 70+ players'},
       {key:'cl_top_scorers', icon:'⚽', desc:'All-time top 30 scorers in CL / European Cup history'},
-      {key:'el_winners', icon:'🏆', desc:'Every club to win the UEFA Cup / Europa League · 30 clubs'},
       {title:'Clubs to win the European Cup', icon:'🏟️', desc:'Every club crowned champions of Europe', soon:true},
+    ]
+  },
+  {
+    id:'europa-league', name:'Europa League', icon:'🟠',
+    desc:'Europe’s second-tier competition',
+    quizzes:[
+      {key:'el_winners', icon:'🏆', desc:'Every club to win the UEFA Cup / Europa League · 31 clubs'},
     ]
   },
   {
@@ -878,6 +884,7 @@ const EG_DATASETS = {
       {name:'Manchester United',        club:'Manchester United',aliases:['man utd','man united','manchester utd','united','mufc'], years:['2017']},
       {name:'Villarreal',               aliases:['villarreal','villarreal cf','yellow submarine'], years:['2021']},
       {name:'Atalanta',                 club:'Atalanta',         aliases:['atalanta','la dea'], years:['2024']},
+      {name:'Aston Villa',              club:'Aston Villa',      aliases:['aston villa','villa','avfc'], years:['2026']},
     ]
   }
 };
