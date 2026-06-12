@@ -16,19 +16,13 @@ const EG_GROUPS = [
     ]
   },
   {
-    id:'champions-league', name:'Champions League', icon:'🏆',
-    desc:'Europe’s biggest stage',
+    id:'champions-league', name:'Champions League / European Football', icon:'🏆',
+    desc:'Europe’s biggest club stages',
     quizzes:[
       {key:'cl_scorers', icon:'🏆', desc:'1992/93 to present · 70+ players'},
       {key:'cl_top_scorers', icon:'⚽', desc:'All-time top 30 scorers in CL / European Cup history'},
+      {key:'el_winners', icon:'🟠', desc:'Every club to win the UEFA Cup / Europa League · 31 clubs'},
       {title:'Clubs to win the European Cup', icon:'🏟️', desc:'Every club crowned champions of Europe', soon:true},
-    ]
-  },
-  {
-    id:'europa-league', name:'Europa League', icon:'🟠',
-    desc:'Europe’s second-tier competition',
-    quizzes:[
-      {key:'el_winners', icon:'🏆', desc:'Every club to win the UEFA Cup / Europa League · 31 clubs'},
     ]
   },
   {
