@@ -133,6 +133,31 @@ const TOP10_DATA = {
         { name:'Leeds United',   aliases:['leeds','leeds united','lufc'], note:'🔴 Leeds United — <b>3 titles</b>, just outside the top 10.' },
         { name:'Blackburn Rovers',aliases:['blackburn','blackburn rovers','rovers','brfc'], note:'🔴 Blackburn Rovers — <b>3 titles</b>, just outside the top 10.' }
       ]
+    },
+    signings: {
+      label: 'Most Expensive Premier League Signings (Ever)',
+      unit: '€M',
+      // Total transfer package (base + all reported add-ons), incoming to PL clubs. Sources: Sky Sports, ESPN, Fabrizio Romano, official announcements. Verified Sep 2026.
+      players: [
+        { name:'Alexander Isak',   value:145,   aliases:['isak','alex isak','a isak'],               club:'Liverpool',   year:2025, from:'Newcastle' },
+        { name:'Enzo Fernández',   value:145,   aliases:['enzo fernandez','enzo','fernandez'],       club:'Man City',    year:2026, from:'Chelsea' },
+        { name:'Bradley Barcola',  value:142,   aliases:['barcola','bradley'],                       club:'Liverpool',   year:2026, from:'PSG' },
+        { name:'Morgan Rogers',    value:135,   aliases:['rogers','morgan'],                         club:'Chelsea',     year:2026, from:'Aston Villa' },
+        { name:'Florian Wirtz',    value:135,   aliases:['wirtz','florian wirtz','flo wirtz'],       club:'Liverpool',   year:2025, from:'Bayer Leverkusen' },
+        { name:'Elliot Anderson',  value:134,   aliases:['anderson','elliot'],                       club:'Man City',    year:2026, from:'Nottingham Forest' },
+        { name:'Moisés Caicedo',   value:133,   aliases:['caicedo','moises caicedo','moises'],       club:'Chelsea',     year:2023, from:'Brighton' },
+        { name:'Enzo Fernández',   value:121,   aliases:['enzo chelsea','enzo fernandez chelsea'],   club:'Chelsea',     year:2023, from:'Benfica', displayName:'Enzo Fernández (2023)' },
+        { name:'Jack Grealish',    value:117.5, aliases:['grealish','jack grealish'],                club:'Man City',    year:2021, from:'Aston Villa' },
+        { name:'Declan Rice',      value:117,   aliases:['rice','declan rice','decs'],               club:'Arsenal',     year:2023, from:'West Ham' }
+      ],
+      // Just outside the top 10
+      traps: [
+        { name:'Yan Diomandé',   aliases:['diomande','yan diomande','yan'],                          note:'🔴 Yan Diomandé — <b>€140m</b> to Real Madrid, not a Premier League signing.' },
+        { name:'Paul Pogba',     aliases:['pogba','paul pogba'],                                     note:'🔴 Paul Pogba — <b>€105m</b> to Man United (2016), just outside the top 10.' },
+        { name:'Antony',         aliases:['antony','antony matheus'],                                note:'🔴 Antony — <b>€95m</b> to Man United (2022), outside the top 10.' },
+        { name:'Neymar',         aliases:['neymar','neymar jr','ney'],                               note:'🔴 Neymar — <b>€222m</b> to PSG, not a Premier League signing.' },
+        { name:'Mbappé',         aliases:['mbappe','mbappé','kylian mbappe','kylian mbappé'],        note:'🔴 Kylian Mbappé — <b>€180m</b> to PSG, not a Premier League signing.' }
+      ]
     }
   },
 
@@ -195,36 +220,58 @@ const TOP10_DATA = {
     goals: {
       label: 'All-Time Top Goal Scorers',
       unit: 'Goals',
-      // Note: Messi and Mbappé may add to their totals in the 2026 WC — using pre-2026 figures
+      // Updated after the 2026 World Cup. Mbappé (10 goals, Golden Boot) overtook Klose;
+      // Messi added 8 to jump to 21; Cristiano Ronaldo added 3 to reach 11 (six different WCs).
+      // Sources: FIFA.com, Statista, foxsports, beIN, Al Jazeera. Verified Sep 2026.
       players: [
-        { name:'Miroslav Klose',    value:16, aliases:['klose'] },
-        { name:'Ronaldo',           value:15, aliases:['ronaldo nazario','r9','ronaldo brazil'] },
-        { name:'Gerd Müller',       value:14, aliases:['gerd muller','muller'] },
-        { name:'Just Fontaine',     value:13, aliases:['fontaine'] },
-        { name:'Lionel Messi',      value:13, aliases:['messi','leo messi'] },
-        { name:'Pelé',              value:12, aliases:['pele','edson arantes'] },
-        { name:'Kylian Mbappé',     value:12, aliases:['mbappe','kylian mbappe'] },
-        { name:'Sándor Kocsis',     value:11, aliases:['kocsis','sandor kocsis'] },
-        { name:'Jürgen Klinsmann',  value:11, aliases:['klinsmann','jurgen klinsmann'] },
-        // 10th: multiple players tied at 10 — accept any of them
-        { name:'Gary Lineker',      value:10, aliases:['lineker','gabriel batistuta','batistuta','teofilo cubillas','cubillas','helmut rahn','rahn','thomas muller','grzegorz lato','lato'] }
+        { name:'Kylian Mbappé',     value:22, aliases:['mbappe','kylian mbappe','mbappé'] },
+        { name:'Lionel Messi',      value:21, aliases:['messi','leo messi','lionel messi'] },
+        { name:'Miroslav Klose',    value:16, aliases:['klose','miroslav klose'] },
+        { name:'Ronaldo',           value:15, aliases:['ronaldo nazario','r9','ronaldo brazil','fenomeno'] },
+        { name:'Gerd Müller',       value:14, aliases:['gerd muller','gerd müller'] },
+        { name:'Just Fontaine',     value:13, aliases:['fontaine','just fontaine'] },
+        { name:'Pelé',              value:12, aliases:['pele','edson arantes','pelé'] },
+        // 8th–10th: three players tied on 11 — accept any
+        { name:'Sándor Kocsis',     value:11, aliases:['kocsis','sandor kocsis','sándor kocsis'] },
+        { name:'Jürgen Klinsmann',  value:11, aliases:['klinsmann','jurgen klinsmann','jürgen klinsmann'] },
+        { name:'Cristiano Ronaldo', value:11, aliases:['cristiano','cristiano ronaldo','cr7'] }
+      ],
+      // Just outside the top 10 — six players tied at 10 goals
+      traps: [
+        { name:'Gary Lineker',      aliases:['lineker','gary lineker'],                        note:'🔴 Gary Lineker — <b>10 goals</b>, just outside the top 10.' },
+        { name:'Gabriel Batistuta', aliases:['batistuta','gabriel batistuta','batigol'],       note:'🔴 Gabriel Batistuta — <b>10 goals</b>, just outside the top 10.' },
+        { name:'Thomas Müller',     aliases:['thomas muller','thomas müller','müller','mueller'], note:'🔴 Thomas Müller — <b>10 goals</b>, just outside the top 10.' },
+        { name:'Grzegorz Lato',     aliases:['lato','grzegorz lato'],                          note:'🔴 Grzegorz Lato — <b>10 goals</b>, just outside the top 10.' },
+        { name:'Teófilo Cubillas',  aliases:['cubillas','teofilo cubillas','teófilo cubillas'],note:'🔴 Teófilo Cubillas — <b>10 goals</b>, just outside the top 10.' },
+        { name:'Helmut Rahn',       aliases:['rahn','helmut rahn'],                            note:'🔴 Helmut Rahn — <b>10 goals</b>, just outside the top 10.' }
       ]
     },
     assists: {
       label: 'All-Time Top Assist Providers',
       unit: 'Assists',
-      // Note: pre-1994 data is retroactively compiled — less reliable than goals list
+      // Updated after 2026 WC. Messi added 4 assists (12 total, new all-time record). Michael
+      // Olise added 7 in a single tournament — new joint-3rd all-time. Note: pre-1994 assists
+      // are retroactively compiled; sources: planetfootball, Opta, FIFA.com, beIN, givemesport.
       players: [
-        { name:'Lionel Messi',            value:8, aliases:['messi','leo messi'] },
-        { name:'Diego Maradona',          value:8, aliases:['maradona'] },
-        { name:'Pierre Littbarski',       value:7, aliases:['littbarski'] },
-        { name:'Grzegorz Lato',           value:7, aliases:['lato'] },
-        { name:'David Beckham',           value:6, aliases:['beckham'] },
-        { name:'Francesco Totti',         value:6, aliases:['totti'] },
-        { name:'Pelé',                    value:6, aliases:['pele'] },
-        { name:'Thomas Häßler',           value:6, aliases:['hässler','hassler','thomas hassler'] },
-        { name:'Thomas Müller',           value:6, aliases:['muller','thomas muller'] },
-        { name:'Bastian Schweinsteiger',  value:6, aliases:['schweinsteiger'] }
+        { name:'Lionel Messi',            value:12, aliases:['messi','leo messi','lionel messi'] },
+        { name:'Diego Maradona',          value:8,  aliases:['maradona','diego maradona','d10s'] },
+        // 3rd–5th: three players tied on 7
+        { name:'Pierre Littbarski',       value:7,  aliases:['littbarski','pierre littbarski'] },
+        { name:'Grzegorz Lato',           value:7,  aliases:['lato','grzegorz lato'] },
+        { name:'Michael Olise',           value:7,  aliases:['olise','michael olise'] },
+        // 6th–10th: five players tied on 6
+        { name:'Pelé',                    value:6,  aliases:['pele','pelé','edson arantes'] },
+        { name:'David Beckham',           value:6,  aliases:['beckham','david beckham'] },
+        { name:'Thomas Häßler',           value:6,  aliases:['hässler','hassler','thomas hassler','thomas häßler'] },
+        { name:'Bastian Schweinsteiger',  value:6,  aliases:['schweinsteiger','bastian schweinsteiger'] },
+        { name:'Kylian Mbappé',           value:6,  aliases:['mbappe','kylian mbappe','mbappé'] }
+      ],
+      // Just outside the top 10 — also on 6 assists
+      traps: [
+        { name:'Thomas Müller',       aliases:['thomas muller','thomas müller','müller','mueller'], note:'🔴 Thomas Müller — <b>6 assists</b>, tied but just outside the top 10.' },
+        { name:'Francesco Totti',     aliases:['totti','francesco totti'],                       note:'🔴 Francesco Totti — <b>6 assists</b>, tied but just outside the top 10.' },
+        { name:'Ivan Perišić',        aliases:['perisic','ivan perisic','perišić','ivan perišić'],note:'🔴 Ivan Perišić — <b>6 assists</b>, tied but just outside the top 10.' },
+        { name:'Uwe Seeler',          aliases:['seeler','uwe seeler'],                           note:'🔴 Uwe Seeler — <b>6 assists</b>, tied but just outside the top 10.' }
       ]
     }
   },
@@ -276,6 +323,37 @@ const TOP10_DATA = {
         { name:'Sampdoria',      aliases:['sampdoria','samp','blucerchiati'], note:'🔴 Sampdoria — <b>1 Scudetto</b> (1991), just outside the top tier.' },
         { name:'Casale',         aliases:['casale','casale fbc'], note:'🔴 Casale — <b>1 Scudetto</b> (1914), just outside the top tier.' },
         { name:'Novese',         aliases:['novese','us novese'], note:'🔴 Novese — <b>1 Scudetto</b> (1922), just outside the top tier.' }
+      ]
+    }
+  },
+
+  'transfers': {
+    name: 'Transfers',
+    badge: '€',
+    signings: {
+      label: 'Most Expensive Transfers of All Time',
+      unit: '€M',
+      // Total package (base + all reported add-ons). Sources: Sky Sports, ESPN, Fabrizio Romano, Transfermarkt, official announcements. Verified Sep 2026.
+      players: [
+        { name:'Neymar',            value:222,   aliases:['neymar jr','ney'],                               club:'PSG',         year:2017, from:'Barcelona' },
+        { name:'Kylian Mbappé',     value:180,   aliases:['mbappe','mbappé','kylian mbappe'],               club:'PSG',         year:2018, from:'Monaco' },
+        { name:'Philippe Coutinho', value:160,   aliases:['coutinho','philippe','phil coutinho'],           club:'Barcelona',   year:2018, from:'Liverpool' },
+        { name:'Ousmane Dembélé',   value:147,   aliases:['dembele','dembélé','ousmane','ousmane dembele'], club:'Barcelona',   year:2017, from:'Dortmund' },
+        { name:'Alexander Isak',    value:145,   aliases:['isak','alex isak','a isak'],                     club:'Liverpool',   year:2025, from:'Newcastle' },
+        { name:'Enzo Fernández',    value:145,   aliases:['enzo','fernandez','enzo fernandez'],             club:'Man City',    year:2026, from:'Chelsea' },
+        { name:'Bradley Barcola',   value:142,   aliases:['barcola','bradley'],                             club:'Liverpool',   year:2026, from:'PSG' },
+        { name:'Yan Diomandé',      value:140,   aliases:['diomande','yan diomande','yan'],                 club:'Real Madrid', year:2026, from:'RB Leipzig' },
+        { name:'Morgan Rogers',     value:135,   aliases:['rogers','morgan','morgan rogers'],               club:'Chelsea',     year:2026, from:'Aston Villa' },
+        { name:'Florian Wirtz',     value:135,   aliases:['wirtz','florian','florian wirtz'],               club:'Liverpool',   year:2025, from:'Bayer Leverkusen' }
+      ],
+      // Just outside the top 10
+      traps: [
+        { name:'Elliot Anderson', aliases:['anderson','elliot','elliot anderson'],                          note:'🔴 Elliot Anderson — <b>€134m</b> Forest→Man City 2026, just outside the top 10.' },
+        { name:'Moisés Caicedo',  aliases:['caicedo','moises caicedo','moises'],                           note:'🔴 Moisés Caicedo — <b>€133m</b> Brighton→Chelsea 2023, just outside the top 10.' },
+        { name:'João Félix',      aliases:['joao felix','felix','joão félix'],                             note:'🔴 João Félix — <b>€127m</b> Benfica→Atlético 2019, just outside the top 10.' },
+        { name:'Jude Bellingham', aliases:['bellingham','jude','jude bellingham'],                         note:'🔴 Jude Bellingham — <b>€127m</b> Dortmund→Real Madrid 2023, just outside the top 10.' },
+        { name:'Antoine Griezmann',aliases:['griezmann','grizou'],                                         note:'🔴 Antoine Griezmann — <b>€120m</b> Atlético→Barcelona 2019, just outside the top 10.' },
+        { name:'Jack Grealish',   aliases:['grealish','jack','jack grealish'],                             note:'🔴 Jack Grealish — <b>€117.5m</b> Aston Villa→Man City 2021, just outside the top 10.' }
       ]
     }
   }

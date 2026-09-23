@@ -50,7 +50,7 @@ const CAREER_PATH_PLAYERS = [
 
   { name:'Mohamed Salah', aliases:['salah','mo salah','mohamed salah'], clubs:[
     {club:'Basel', years:'2012–2014'}, {club:'Chelsea', years:'2014–2016'}, {club:'Fiorentina', years:'2015'},
-    {club:'Roma', years:'2015–2017'}, {club:'Liverpool', years:'2017–'} ]},
+    {club:'Roma', years:'2015–2017'}, {club:'Liverpool', years:'2017–2026'}, {club:'Trabzonspor', years:'2026–'} ]},
 
   { name:'Romelu Lukaku', aliases:['lukaku','romelu lukaku','big rom'], clubs:[
     {club:'Anderlecht', years:'2009–2011'}, {club:'Chelsea', years:'2011–2014'}, {club:'Everton', years:'2014–2017'},
@@ -212,4 +212,16 @@ const CAREER_PATH_PLAYERS = [
   { name:'Gianfranco Zola', aliases:['zola','gianfranco zola'], clubs:[
     {club:'Napoli', years:'1989–1993'}, {club:'Parma', years:'1993–1996'}, {club:'Chelsea', years:'1996–2003'},
     {club:'Cagliari', years:'2003–2005'} ]},
+
+  { name:'Bruno Guimarães', aliases:['bruno','guimaraes','bruno guimaraes','bruno guimarães'], clubs:[
+    {club:'Athletico PR', years:'2017–2020'}, {club:'Lyon', years:'2020–2022'}, {club:'Newcastle', years:'2022–2026'},
+    {club:'Arsenal', years:'2026–'} ]},
+
+  { name:'Rodri', aliases:['rodri','rodrigo hernandez','rodrigo hernández'], clubs:[
+    {club:'Villarreal', years:'2015–2018'}, {club:'Atlético Madrid', years:'2018–2019'}, {club:'Manchester City', years:'2019–2026'},
+    {club:'Barcelona', years:'2026–'} ]},
+
+  { name:'Enzo Fernández', aliases:['enzo','enzo fernandez','fernandez','enzo fernández'], clubs:[
+    {club:'River Plate', years:'2019–2022'}, {club:'Benfica', years:'2022–2023'}, {club:'Chelsea', years:'2023–2026'},
+    {club:'Manchester City', years:'2026–'} ]},
 ];

@@ -68,7 +68,6 @@ const MONEYBALL_MANAGERS = [
 
       // ── Napoli ─────────────────────────────────────────────────────────────
       { player:'Hirving Lozano',        pos:'Left Winger',        from:'PSV',               fromLeague:'Eredivisie',    to:'Napoli',         window:'Summer',  year:2019, fee:50.00  },
-      { player:'Konstantinos Manolas',  pos:'Centre-Back',        from:'Roma',              fromLeague:'Serie A',       to:'Napoli',         window:'Summer',  year:2019, fee:36.00  },
       { player:'Fabián Ruiz',           pos:'Central Midfield',   from:'Real Betis',        fromLeague:'LaLiga',        to:'Napoli',         window:'Summer',  year:2018, fee:30.00  },
       { player:'Alex Meret',            pos:'Goalkeeper',         from:'Udinese',           fromLeague:'Serie A',       to:'Napoli',         window:'Summer',  year:2019, fee:26.00  },
 
@@ -356,6 +355,57 @@ const MONEYBALL_MANAGERS = [
       { player:'Arkadiusz Milik',       pos:'Centre-Forward',     from:'Ajax', fromLeague:'Eredivisie', to:'Napoli',            window:'Summer',  year:2016, fee:32.00  },
       { player:'Sébastien Haller',      pos:'Centre-Forward',     from:'Ajax', fromLeague:'Eredivisie', to:'Dortmund',          window:'Summer',  year:2022, fee:31.00  },
       { player:'Klaas-Jan Huntelaar',   pos:'Centre-Forward',     from:'Ajax', fromLeague:'Eredivisie', to:'Real Madrid',       window:'Summer',  year:2008, fee:27.00  },
+    ]
+  }
+
+  ,
+
+  {
+    id: 'summer2026',
+    manager: 'Summer 2026',
+    transfers: [
+
+      // ── Manchester City ────────────────────────────────────────────────────
+      { player:'Enzo Fernández',        pos:'Central Midfield',   from:'Chelsea',            fromLeague:'Premier League', to:'Man City',       window:'Summer',  year:2026, fee:145.00 },
+      { player:'Elliot Anderson',       pos:'Central Midfield',   from:'Nottingham Forest',  fromLeague:'Premier League', to:'Man City',       window:'Summer',  year:2026, fee:134.00 },
+      { player:'Iliman Ndiaye',         pos:'Left Winger',        from:'Everton',            fromLeague:'Premier League', to:'Man City',       window:'Summer',  year:2026, fee:75.00  },
+
+      // ── Real Madrid ────────────────────────────────────────────────────────
+      { player:'Yan Diomandé',          pos:'Left Winger',        from:'RB Leipzig',         fromLeague:'Bundesliga',     to:'Real Madrid',    window:'Summer',  year:2026, fee:140.00 },
+
+      // ── Chelsea ────────────────────────────────────────────────────────────
+      { player:'Morgan Rogers',         pos:'Attacking Midfield', from:'Aston Villa',        fromLeague:'Premier League', to:'Chelsea',        window:'Summer',  year:2026, fee:135.00 },
+
+      // ── Liverpool ──────────────────────────────────────────────────────────
+      { player:'Bradley Barcola',       pos:'Left Winger',        from:'PSG',                fromLeague:'Ligue 1',        to:'Liverpool',      window:'Summer',  year:2026, fee:142.00 },
+
+      // ── Tottenham ──────────────────────────────────────────────────────────
+      { player:'Sandro Tonali',         pos:'Central Midfield',   from:'Newcastle',          fromLeague:'Premier League', to:'Tottenham',      window:'Summer',  year:2026, fee:115.00 },
+      { player:'Mateus Fernandes',      pos:'Central Midfield',   from:'West Ham',           fromLeague:'Premier League', to:'Tottenham',      window:'Summer',  year:2026, fee:98.00  },
+
+      // ── Arsenal ────────────────────────────────────────────────────────────
+      { player:'Bruno Guimarães',       pos:'Central Midfield',   from:'Newcastle',          fromLeague:'Premier League', to:'Arsenal',        window:'Summer',  year:2026, fee:87.00  },
+
+      // ── Barcelona ──────────────────────────────────────────────────────────
+      { player:'Anthony Gordon',        pos:'Left Winger',        from:'Newcastle',          fromLeague:'Premier League', to:'Barcelona',      window:'Summer',  year:2026, fee:90.00  },
+      { player:'Rodri',                 pos:'Defensive Midfield', from:'Man City',           fromLeague:'Premier League', to:'Barcelona',      window:'Summer',  year:2026, fee:76.50  },
+
+      // ── AC Milan ───────────────────────────────────────────────────────────
+      { player:'Gonçalo Ramos',         pos:'Centre-Forward',     from:'PSG',                fromLeague:'Ligue 1',        to:'AC Milan',       window:'Summer',  year:2026, fee:74.00  },
+
+      // ── Bayern Munich ──────────────────────────────────────────────────────
+      { player:'Nathaniel Brown',       pos:'Left-Back',          from:'Frankfurt',          fromLeague:'Bundesliga',     to:'Bayern Munich',  window:'Summer',  year:2026, fee:55.00  },
+      { player:'Ismael Saibari',        pos:'Attacking Midfield', from:'PSV',                fromLeague:'Eredivisie',     to:'Bayern Munich',  window:'Summer',  year:2026, fee:50.00  },
+
+      // ── PSG ────────────────────────────────────────────────────────────────
+      { player:'Ferran Torres',         pos:'Centre-Forward',     from:'Barcelona',          fromLeague:'LaLiga',         to:'PSG',            window:'Summer',  year:2026, fee:50.00  },
+
+      // ── Juventus ───────────────────────────────────────────────────────────
+      { player:'Randal Kolo Muani',     pos:'Centre-Forward',     from:'PSG',                fromLeague:'Ligue 1',        to:'Juventus',       window:'Summer',  year:2026, fee:50.00  },
+
+      // ── Inter Milan ────────────────────────────────────────────────────────
+      { player:'Djed Spence',           pos:'Right-Back',         from:'Tottenham',          fromLeague:'Premier League', to:'Inter Milan',    window:'Summer',  year:2026, fee:35.00  },
+      { player:'Curtis Jones',          pos:'Central Midfield',   from:'Liverpool',          fromLeague:'Premier League', to:'Inter Milan',    window:'Summer',  year:2026, fee:35.00  },
     ]
   }
 
