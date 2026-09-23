@@ -400,13 +400,43 @@ body::before{display:none;}
   max-width:1100px;margin:0 auto;padding:60px 24px 40px;
   display:flex;flex-direction:column;align-items:center;
 }
+.landing-eyebrow{
+  font-family:'JetBrains Mono','SF Mono',ui-monospace,monospace;
+  font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;
+  color:#e8b923;margin-bottom:14px;display:inline-flex;align-items:center;gap:10px;
+  align-self:center;
+}
+.landing-eyebrow .dot{width:6px;height:6px;background:#e8b923;border-radius:50%;box-shadow:0 0 10px rgba(232,185,35,0.6);}
 .landing-title{
   font-family:'Anton',sans-serif;
-  font-size:clamp(2.5rem,7vw,5rem);
-  color:#fff;text-align:center;letter-spacing:2px;
-  margin-bottom:8px;
+  font-size:clamp(3rem,8.5vw,6.5rem);
+  color:#fff;text-align:center;letter-spacing:2px;line-height:0.95;
+  margin-bottom:14px;
 }
-.landing-sub{color:#666;font-size:0.9rem;margin-bottom:50px;text-align:center;letter-spacing:0.5px;}
+.landing-title em{font-style:normal;color:#e8b923;}
+.landing-sub{
+  color:#a8a8a8;font-size:1.02rem;margin:0 auto 46px;text-align:center;letter-spacing:0.2px;
+  max-width:560px;line-height:1.5;
+}
+.landing-sub em{color:#fff;font-style:normal;font-weight:600;}
+.game-pick-stat{
+  font-family:'JetBrains Mono','SF Mono',ui-monospace,monospace;
+  font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;color:#8a8a8a;
+  margin-bottom:10px;display:flex;align-items:baseline;gap:6px;
+}
+.game-pick-stat b{
+  font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:0.5px;color:#e8b923;font-weight:400;
+}
+.matchday-chip{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono','SF Mono',ui-monospace,monospace;
+  font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;color:#aaa;
+  padding:7px 12px;border-radius:20px;
+  background:rgba(232,185,35,0.08);border:1px solid rgba(232,185,35,0.28);
+}
+.matchday-chip b{color:#e8b923;font-weight:600;font-family:inherit;}
+.matchday-chip .dot{width:6px;height:6px;background:#e8b923;border-radius:50%;box-shadow:0 0 8px rgba(232,185,35,0.6);}
+@media(max-width:760px){.matchday-chip{display:none;}}
 .game-pick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:100%;}
 @media(max-width:640px){.game-pick-grid{grid-template-columns:1fr;}}
 .game-pick-card{
@@ -710,6 +740,87 @@ body::before{display:none;}
 .eg-ne-input.p1:focus{border-color:#FFD700;}.eg-ne-input.p2:focus{border-color:#60a5fa;}
 .eg-ne-go{margin-top:8px;background:#FFD700;color:#000;border:none;padding:15px 44px;border-radius:13px;font-weight:900;font-size:1rem;cursor:pointer;font-family:inherit;letter-spacing:1px;transition:transform 0.15s;}
 .eg-ne-go:hover{transform:scale(1.04);}
+
+/* ── CLOSEST WINS ── */
+#closestWinsScreen{display:none;flex-direction:column;align-items:center;padding:20px 16px 60px;max-width:560px;margin:0 auto;width:100%;}
+.cw-score-strip{display:flex;align-items:center;justify-content:center;gap:18px;width:100%;margin-bottom:22px;}
+.cw-score-name{font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:0.5px;}
+.cw-score-name.p1{color:#FFD700;}.cw-score-name.p2{color:#60a5fa;}
+.cw-score-num{font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;}
+.cw-score-sep{color:#333;font-size:1.2rem;}
+.cw-round-tag{font-size:0.65rem;color:#555;letter-spacing:3px;text-transform:uppercase;text-align:center;margin-bottom:10px;}
+.cw-question-card{width:100%;background:#111;border:1px solid #222;border-radius:18px;padding:28px 20px;text-align:center;margin-bottom:24px;}
+.cw-question-player{font-family:'Anton',sans-serif;font-size:clamp(1.6rem,6vw,2.2rem);color:#fff;line-height:1.1;margin-bottom:6px;}
+.cw-question-stat{color:#e8b923;font-size:0.9rem;letter-spacing:1px;}
+.cw-guesser-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:20px;font-family:'Anton',sans-serif;font-size:0.85rem;letter-spacing:1px;margin-bottom:20px;}
+.cw-guesser-badge.p1{background:rgba(255,215,0,0.1);color:#FFD700;border:1px solid rgba(255,215,0,0.3);}
+.cw-guesser-badge.p2{background:rgba(96,165,250,0.1);color:#60a5fa;border:1px solid rgba(96,165,250,0.3);}
+.cw-timer-wrap{display:flex;justify-content:center;margin-bottom:22px;}
+.cw-input-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px;}
+.cw-input{width:150px;background:#111;border:2px solid #333;border-radius:12px;padding:14px 16px;font-family:'Anton',sans-serif;font-size:1.8rem;color:#fff;text-align:center;outline:none;-webkit-appearance:none;-moz-appearance:textfield;appearance:textfield;}
+.cw-input:focus{border-color:#e8b923;}
+.cw-submit-btn{background:#e8b923;color:#000;border:none;padding:14px 40px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;}
+/* pass-the-device lock screen */
+.cw-pass-screen{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:50vh;width:100%;}
+.cw-pass-icon{font-size:3rem;margin-bottom:16px;}
+.cw-pass-title{font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;margin-bottom:8px;}
+.cw-pass-sub{color:#555;font-size:0.85rem;margin-bottom:28px;max-width:320px;}
+.cw-pass-btn{background:#fff;color:#000;border:none;padding:15px 40px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:1px;cursor:pointer;}
+/* reveal */
+.cw-reveal-answer{font-family:'Anton',sans-serif;font-size:0.85rem;color:#555;letter-spacing:2px;text-align:center;margin-bottom:4px;}
+.cw-reveal-num{font-family:'Anton',sans-serif;font-size:3rem;color:#fff;text-align:center;line-height:1;margin-bottom:20px;}
+.cw-reveal-row{display:flex;gap:12px;width:100%;margin-bottom:20px;}
+.cw-guess-card{flex:1;background:#111;border:2px solid #222;border-radius:16px;padding:18px 12px;text-align:center;transition:border-color 0.3s,box-shadow 0.3s;}
+.cw-guess-card.winner{border-color:#4ade80;box-shadow:0 0 24px rgba(74,222,128,0.15);}
+.cw-guess-card.perfect{border-color:#FFD700;box-shadow:0 0 24px rgba(255,215,0,0.25);}
+.cw-guess-name{font-family:'Anton',sans-serif;font-size:0.85rem;margin-bottom:8px;}
+.cw-guess-name.p1{color:#FFD700;}.cw-guess-name.p2{color:#60a5fa;}
+.cw-guess-num{font-family:'Anton',sans-serif;font-size:2.2rem;color:#fff;line-height:1;}
+.cw-guess-diff{font-size:0.68rem;color:#555;margin-top:6px;letter-spacing:1px;}
+.cw-round-result{text-align:center;font-family:'Anton',sans-serif;font-size:1.3rem;letter-spacing:1px;margin-bottom:22px;}
+.cw-round-result.perfect{color:#FFD700;}
+.cw-round-result.tie{color:#888;}
+/* end screen */
+.cw-end-title{font-family:'Anton',sans-serif;font-size:2.4rem;color:#fff;text-align:center;margin-bottom:6px;}
+.cw-end-sub{color:#555;font-size:0.85rem;text-align:center;margin-bottom:26px;}
+.cw-alltime{background:#0d0d0d;border:1px solid #222;border-radius:14px;padding:16px 20px;text-align:center;margin-bottom:26px;width:100%;max-width:320px;}
+.cw-alltime-label{font-size:0.6rem;color:#555;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.cw-end-btns{display:flex;flex-direction:column;gap:10px;width:100%;max-width:320px;}
+.cw-btn-primary{background:#e8b923;color:#000;border:none;padding:15px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:1px;cursor:pointer;}
+.cw-btn-secondary{background:none;border:1px solid #333;color:#888;padding:14px;border-radius:14px;font-family:inherit;font-size:0.85rem;cursor:pointer;}
+
+/* ── THE AUCTION ── */
+#auctionScreen{display:none;flex-direction:column;align-items:center;padding:20px 16px 60px;max-width:560px;margin:0 auto;width:100%;}
+.auc-category-banner{width:100%;background:rgba(232,185,35,0.06);border:1px solid rgba(232,185,35,0.25);border-radius:14px;padding:10px 16px;text-align:center;margin-bottom:18px;}
+.auc-category-banner .lbl{font-size:0.6rem;color:#888;letter-spacing:2px;text-transform:uppercase;}
+.auc-category-banner .val{font-family:'Anton',sans-serif;font-size:1.1rem;color:#e8b923;letter-spacing:1px;}
+.auc-coin-row{display:flex;align-items:flex-start;justify-content:space-between;width:100%;margin-bottom:18px;gap:12px;}
+.auc-coin-side{flex:1;text-align:center;}
+.auc-coin-side.p1{color:#FFD700;}.auc-coin-side.p2{color:#60a5fa;}
+.auc-coin-name{font-family:'Anton',sans-serif;font-size:0.9rem;letter-spacing:0.5px;}
+.auc-coin-amt{font-family:'Anton',sans-serif;font-size:1.7rem;color:#fff;line-height:1.1;}
+.auc-coin-amt small{font-size:0.6rem;color:#555;display:block;letter-spacing:1px;font-family:inherit;}
+.auc-squad-line{font-size:0.65rem;color:#666;margin-top:4px;min-height:14px;}
+.auc-player-avatar{width:140px;height:148px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;}
+.auc-player-meta{color:#555;font-size:0.75rem;text-align:center;margin-top:4px;}
+.auc-bid-hint{font-size:0.68rem;color:#666;text-align:center;margin-bottom:10px;}
+.auc-bid-hint b{color:#e8b923;}
+.auc-highbid-box{width:100%;max-width:320px;background:#0d0d0d;border:1px solid #222;border-radius:14px;padding:12px 16px;text-align:center;margin-bottom:16px;}
+.auc-highbid-label{font-size:0.6rem;color:#555;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+.auc-highbid-val{font-family:'Anton',sans-serif;font-size:1.4rem;color:#4ade80;letter-spacing:0.5px;}
+.auc-no-funds{color:#f87171;font-size:0.78rem;text-align:center;margin-bottom:16px;max-width:280px;}
+.auc-action-row{display:flex;gap:10px;width:100%;max-width:320px;}
+.auc-action-row .cw-submit-btn{flex:1;}
+.auc-pass-action-btn{flex:1;background:none;border:1px solid #333;color:#888;padding:14px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:1px;cursor:pointer;}
+.auc-pass-action-btn:hover{border-color:#f87171;color:#f87171;}
+.auc-winner-tag{display:inline-block;background:rgba(74,222,128,0.1);color:#4ade80;border:1px solid rgba(74,222,128,0.3);padding:4px 14px;border-radius:20px;font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;margin-top:8px;}
+.auc-squad-final{width:100%;display:flex;gap:12px;margin-bottom:20px;}
+.auc-squad-col{flex:1;background:#111;border:1px solid #222;border-radius:14px;padding:14px 12px;}
+.auc-squad-col.winner{border-color:#4ade80;box-shadow:0 0 20px rgba(74,222,128,0.12);}
+.auc-squad-col-name{font-family:'Anton',sans-serif;font-size:0.95rem;margin-bottom:8px;text-align:center;}
+.auc-squad-col-name.p1{color:#FFD700;}.auc-squad-col-name.p2{color:#60a5fa;}
+.auc-squad-player-row{display:flex;justify-content:space-between;font-size:0.75rem;color:#aaa;padding:4px 0;border-bottom:1px solid #1a1a1a;}
+.auc-squad-total{font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;text-align:center;margin-top:10px;padding-top:10px;border-top:1px solid #222;}
 
 /* ── COUNTDOWN OVERLAY ── */
 #egCountdownOverlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.98);display:none;align-items:center;justify-content:center;flex-direction:column;}
@@ -1089,10 +1200,24 @@ body::before{display:none;}
   }
 
   /* ── HOL game screen ── */
-  #gameScreen{padding:0 10px 20px;}
+  #gameScreen{padding:0 8px 20px;}
   .topbar{padding:8px 0 12px;gap:7px;}
   .pill{font-size:0.78rem;padding:5px 12px;}
   .back-btn{font-size:0.75rem;padding:5px 12px;}
+
+  /* Keep both players side-by-side on mobile — no wrap, no scroll */
+  .arena{flex-wrap:nowrap;gap:6px;max-width:100%;}
+  .pcard{width:auto;flex:1 1 0;min-width:0;padding:14px 8px;border-radius:14px;}
+  .avatar{width:88px;height:96px;margin-bottom:6px;}
+  .pname{font-size:0.88rem;line-height:1.15;min-height:2.2em;}
+  .ppos{font-size:0.62rem;}
+  .pnat{font-size:0.6rem;margin-bottom:8px;}
+  .stat-num{font-size:2.6rem;}
+  .stat-lbl{font-size:0.55rem;letter-spacing:1.5px;}
+  .vs{padding-top:60px;font-size:0.9rem;letter-spacing:2px;flex-shrink:0;}
+  .btns{gap:6px;margin-top:8px;}
+  .btn{padding:9px 6px;font-size:0.8rem;letter-spacing:0.3px;}
+  .question-marks{font-size:2.2rem;}
 
   /* ── El Grande ── */
   #elGrandeMenu{padding:24px 14px;}
@@ -1252,6 +1377,7 @@ body::before{display:none;}
   </div>
   <!-- Right nav -->
   <nav style="display:flex;align-items:center;gap:8px;justify-content:flex-start;">
+    <div class="matchday-chip" title="Today's daily challenge is live"><span class="dot"></span>Daily · <b>Higher or Lower</b></div>
     <div style="position:relative;display:inline-block;">
       <button class="auth-btn bell-btn" id="bellBtn" onclick="toggleFriendsPanel('notifications')">🔔</button>
       <span class="notif-badge" id="notifBadge" style="display:none;">0</span>
@@ -1309,16 +1435,19 @@ body::before{display:none;}
 
 <!-- LANDING SCREEN -->
 <div id="landingScreen">
-  <div class="landing-title">Choose Your Game</div>
-  <div class="landing-sub">Football Royal — pick a mode and prove your knowledge</div>
+  <div class="landing-eyebrow"><span class="dot"></span>Matchday · Six modes live</div>
+  <div class="landing-title">Choose Your <em>Game</em></div>
+  <div class="landing-sub">Six modes. Every era. Every league. Prove you <em>actually</em> know football.</div>
   <div class="game-pick-grid">
     <div class="game-pick-card" onclick="showHigherOrLower()" style="position:relative;">
       <img class="game-pick-bg" src="Higher or lower card image.png?v=3" alt="">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('hol')" title="How to play">i</div>
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">Higher or Lower</div>
-        <div></div>
-        <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
+        <div>
+          <div class="game-pick-stat"><b>280</b>questions · every era</div>
+          <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
+        </div>
       </div>
     </div>
     <div class="game-pick-card" onclick="showElGrande()" style="position:relative;">
@@ -1326,43 +1455,317 @@ body::before{display:none;}
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('fup')" title="How to play">i</div>
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">Football Under Pressure</div>
-        <div></div>
-        <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
+        <div>
+          <div class="game-pick-stat"><b>39</b>categories · 60-second sprint</div>
+          <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
+        </div>
       </div>
     </div>
     <div class="game-pick-card" onclick="showSxi()" style="position:relative;">
       <img class="game-pick-bg" src="Starting XI card image.png" alt="">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('sxi')" title="How to play">i</div>
       <div class="game-pick-content">
-        <div class="game-pick-badge" style="background:rgba(0,0,0,0.55);border:1px solid rgba(255,215,0,0.5);color:#FFD700;text-shadow:0 1px 4px rgba(0,0,0,0.9);">Starting XI</div>
-        <div></div>
-        <button class="game-pick-btn" style="background:#FFD700;color:#000;">Play Now ›</button>
+        <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;text-shadow:0 1px 4px rgba(0,0,0,0.9);">Starting XI</div>
+        <div>
+          <div class="game-pick-stat"><b>120</b>teams · challenge a friend</div>
+          <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
+        </div>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showMoneyball()" style="position:relative;background:linear-gradient(135deg,#0a2a0a 0%,#0d3d1a 50%,#071a07 100%);">
+    <div class="game-pick-card" onclick="showMoneyball()" style="position:relative;">
+      <img class="game-pick-bg" src="moneyball-transfer.jpg?v=2" alt="">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('mb')" title="How to play">i</div>
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">Moneyball</div>
-        <div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#fff;line-height:1;letter-spacing:1px;">MONEY<br>BALL</div>
-        <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
+        <div>
+          <div class="game-pick-stat"><b>364</b>deals · guess the fee</div>
+          <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
+        </div>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showTop10()" style="position:relative;background:linear-gradient(135deg,#0a0a2a 0%,#0d1a3d 50%,#070714 100%);">
+    <div class="game-pick-card" onclick="showTop10()" style="position:relative;">
+      <img class="game-pick-bg" src="top10-trophy.jpg" alt="">
+      <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('top10')" title="How to play">i</div>
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">Top 10</div>
-        <div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#fff;line-height:1;letter-spacing:1px;">TOP<br>10</div>
-        <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
+        <div>
+          <div class="game-pick-stat"><b>28</b>boards · rank the greats</div>
+          <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
+        </div>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showCareer()" style="position:relative;background:linear-gradient(135deg,#062a30 0%,#0a3d44 50%,#04181c 100%);">
+    <div class="game-pick-card" onclick="showCareer()" style="position:relative;">
+      <img class="game-pick-bg" src="career-jerseys.jpg" alt="">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('cp')" title="How to play">i</div>
       <div class="game-pick-content">
-        <div class="game-pick-badge" style="background:rgba(34,211,238,0.12);border:1px solid #155e6b;color:#22d3ee;">Career Path</div>
-        <div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#fff;line-height:1;letter-spacing:1px;">CAREER<br>PATH</div>
-        <button class="game-pick-btn" style="background:#22d3ee;color:#000;">Play Now ›</button>
+        <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">Career Path</div>
+        <div>
+          <div class="game-pick-stat"><b>39</b>players · follow the clubs</div>
+          <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
+        </div>
+      </div>
+    </div>
+    <div class="game-pick-card" onclick="showClosestWins()" style="position:relative;background:linear-gradient(135deg,#1a1400 0%,#241d00 50%,#0d0a00 100%);">
+      <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('cw')" title="How to play">i</div>
+      <div class="game-pick-content">
+        <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">Closest Wins</div>
+        <div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#fff;line-height:1;letter-spacing:1px;">CLOSEST<br>WINS</div>
+        <div>
+          <div class="game-pick-stat"><b>1v1</b>pass &amp; play · same device</div>
+          <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
+        </div>
+      </div>
+    </div>
+    <div class="game-pick-card" onclick="showAuction()" style="position:relative;background:linear-gradient(135deg,#001a14 0%,#00241d 50%,#000d0a 100%);">
+      <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('auc')" title="How to play">i</div>
+      <div class="game-pick-content">
+        <div class="game-pick-badge" style="background:rgba(74,222,128,0.12);border:1px solid #1a6b2d;color:#4ade80;">The Auction</div>
+        <div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#fff;line-height:1;letter-spacing:1px;">THE<br>AUCTION</div>
+        <div>
+          <div class="game-pick-stat"><b>1v1</b>20 coins · outbid to win</div>
+          <button class="game-pick-btn" style="background:#4ade80;color:#000;">Play Now ›</button>
+        </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- CLOSEST WINS SCREEN -->
+<div id="closestWinsScreen">
+
+  <!-- NAME ENTRY -->
+  <div id="cwNameEntry" style="width:100%;display:flex;flex-direction:column;align-items:center;">
+    <div class="eg-ne-title">Closest Wins</div>
+    <div class="eg-ne-sub">Pass-and-play — enter both names to kick off</div>
+    <div class="eg-ne-field">
+      <div class="eg-ne-label p1">Player 1</div>
+      <input class="eg-ne-input p1" id="cwNameInput1" type="text" placeholder="Player 1" maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('cwNameInput2').focus()">
+    </div>
+    <div class="eg-ne-field">
+      <div class="eg-ne-label p2">Player 2</div>
+      <input class="eg-ne-input p2" id="cwNameInput2" type="text" placeholder="Player 2" maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')cwConfirmNames()">
+    </div>
+    <button class="eg-ne-go" onclick="cwConfirmNames()">Start Match →</button>
+  </div>
+
+  <!-- ROUND VIEW (guessing) -->
+  <div id="cwRoundView" style="width:100%;display:none;flex-direction:column;align-items:center;">
+    <div class="cw-score-strip">
+      <span class="cw-score-name p1" id="cwScoreP1Name"></span>
+      <span class="cw-score-num" id="cwScoreP1Num">0</span>
+      <span class="cw-score-sep">–</span>
+      <span class="cw-score-num" id="cwScoreP2Num">0</span>
+      <span class="cw-score-name p2" id="cwScoreP2Name"></span>
+    </div>
+    <div class="cw-round-tag" id="cwRoundTag">ROUND 1</div>
+    <div class="cw-question-card">
+      <div class="cw-question-player" id="cwQuestionPlayer"></div>
+      <div class="cw-question-stat" id="cwQuestionStat"></div>
+    </div>
+    <div class="cw-guesser-badge" id="cwGuesserBadge"></div>
+    <div class="cw-timer-wrap">
+      <div class="eg-timer-ring">
+        <svg class="eg-timer-svg" viewBox="0 0 90 90">
+          <circle class="eg-timer-track" cx="45" cy="45" r="36"/>
+          <circle class="eg-timer-fill" id="cwTimerFill" cx="45" cy="45" r="36"/>
+        </svg>
+        <div class="eg-timer-num" id="cwTimerNum">12</div>
+      </div>
+    </div>
+    <div class="cw-input-row">
+      <input class="cw-input" id="cwGuessInput" type="number" inputmode="numeric" placeholder="0" onkeydown="if(event.key==='Enter')cwSubmitGuess()">
+    </div>
+    <button class="cw-submit-btn" onclick="cwSubmitGuess()">Lock In Guess</button>
+  </div>
+
+  <!-- PASS-THE-DEVICE SCREEN -->
+  <div class="cw-pass-screen" id="cwPassScreen">
+    <div class="cw-pass-icon">🔒</div>
+    <div class="cw-pass-title" id="cwPassTitle">Pass to Player 2</div>
+    <div class="cw-pass-sub">Hand over the device — your guess is locked and hidden until the reveal.</div>
+    <button class="cw-pass-btn" onclick="cwPassContinue()">I'm Ready →</button>
+  </div>
+
+  <!-- REVEAL VIEW -->
+  <div id="cwRevealView" style="width:100%;display:none;flex-direction:column;align-items:center;">
+    <div class="cw-round-tag" id="cwRevealRoundTag">ROUND 1</div>
+    <div class="cw-question-card" style="margin-bottom:16px;">
+      <div class="cw-question-player" id="cwRevealPlayer"></div>
+      <div class="cw-question-stat" id="cwRevealStat"></div>
+    </div>
+    <div class="cw-reveal-answer">THE REAL NUMBER</div>
+    <div class="cw-reveal-num" id="cwRevealAnswer"></div>
+    <div class="cw-reveal-row">
+      <div class="cw-guess-card" id="cwRevealCardP1">
+        <div class="cw-guess-name p1" id="cwRevealNameP1"></div>
+        <div class="cw-guess-num" id="cwRevealGuessP1"></div>
+        <div class="cw-guess-diff" id="cwRevealDiffP1"></div>
+      </div>
+      <div class="cw-guess-card" id="cwRevealCardP2">
+        <div class="cw-guess-name p2" id="cwRevealNameP2"></div>
+        <div class="cw-guess-num" id="cwRevealGuessP2"></div>
+        <div class="cw-guess-diff" id="cwRevealDiffP2"></div>
+      </div>
+    </div>
+    <div class="cw-round-result" id="cwRoundResult"></div>
+    <button class="cw-submit-btn" id="cwNextRoundBtn" onclick="cwNextRound()">Next Round →</button>
+  </div>
+
+  <!-- END SCREEN -->
+  <div id="cwEndView" style="width:100%;display:none;flex-direction:column;align-items:center;">
+    <div class="cw-end-title" id="cwEndTitle">🏆</div>
+    <div class="cw-end-sub" id="cwEndSub"></div>
+    <div class="cw-alltime">
+      <div class="cw-alltime-label">All-Time Record</div>
+      <div class="cw-score-strip" style="margin-bottom:0;">
+        <span class="cw-score-name p1" id="cwAllTimeP1Name"></span>
+        <span class="cw-score-num" id="cwAllTimeP1Num">0</span>
+        <span class="cw-score-sep">–</span>
+        <span class="cw-score-num" id="cwAllTimeP2Num">0</span>
+        <span class="cw-score-name p2" id="cwAllTimeP2Name"></span>
+      </div>
+    </div>
+    <div class="cw-end-btns">
+      <button class="cw-btn-primary" onclick="cwPlayAgain()">🔄 Rematch (Same Players)</button>
+      <button class="cw-btn-secondary" onclick="showClosestWins()">New Players</button>
+      <button class="cw-btn-secondary" onclick="showLanding()">← Back Home</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- THE AUCTION SCREEN -->
+<div id="auctionScreen">
+
+  <!-- NAME ENTRY -->
+  <div id="aucNameEntry" style="width:100%;display:flex;flex-direction:column;align-items:center;">
+    <div class="eg-ne-title">The Auction</div>
+    <div class="eg-ne-sub">Pass-and-play — 100 coins each, build your squad</div>
+    <div class="eg-ne-field">
+      <div class="eg-ne-label p1">Player 1</div>
+      <input class="eg-ne-input p1" id="aucNameInput1" type="text" placeholder="Player 1" maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('aucNameInput2').focus()">
+    </div>
+    <div class="eg-ne-field">
+      <div class="eg-ne-label p2">Player 2</div>
+      <input class="eg-ne-input p2" id="aucNameInput2" type="text" placeholder="Player 2" maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')aucConfirmNames()">
+    </div>
+    <button class="eg-ne-go" onclick="aucConfirmNames()">Start Auction →</button>
+  </div>
+
+  <!-- ROUND VIEW (bidding) -->
+  <div id="aucRoundView" style="width:100%;display:none;flex-direction:column;align-items:center;">
+    <div class="auc-category-banner">
+      <div class="lbl">This match is decided by</div>
+      <div class="val" id="aucCategoryLabel"></div>
+    </div>
+    <div class="auc-coin-row">
+      <div class="auc-coin-side p1">
+        <div class="auc-coin-name" id="aucCoinP1Name"></div>
+        <div class="auc-coin-amt" id="aucCoinP1Amt">20<small>COINS</small></div>
+        <div class="auc-squad-line" id="aucSquadP1"></div>
+      </div>
+      <div class="auc-coin-side p2">
+        <div class="auc-coin-name" id="aucCoinP2Name"></div>
+        <div class="auc-coin-amt" id="aucCoinP2Amt">20<small>COINS</small></div>
+        <div class="auc-squad-line" id="aucSquadP2"></div>
+      </div>
+    </div>
+    <div class="cw-round-tag" id="aucPoolTag">PLAYER 1 OF 5</div>
+    <div class="cw-question-card">
+      <div class="auc-player-avatar" id="aucPlayerAvatar"></div>
+      <div class="cw-question-player" id="aucPlayerName"></div>
+      <div class="auc-player-meta" id="aucPlayerMeta"></div>
+    </div>
+    <div class="auc-highbid-box">
+      <div class="auc-highbid-label">CURRENT HIGH BID</div>
+      <div class="auc-highbid-val" id="aucHighBidVal">No bids yet</div>
+    </div>
+    <div class="cw-guesser-badge" id="aucBidderBadge"></div>
+    <div class="cw-timer-wrap">
+      <div class="eg-timer-ring">
+        <svg class="eg-timer-svg" viewBox="0 0 90 90">
+          <circle class="eg-timer-track" cx="45" cy="45" r="36"/>
+          <circle class="eg-timer-fill" id="aucTimerFill" cx="45" cy="45" r="36"/>
+        </svg>
+        <div class="eg-timer-num" id="aucTimerNum">12</div>
+      </div>
+    </div>
+    <div class="auc-bid-hint" id="aucBidHint">You have <b>20</b> coins left</div>
+    <div class="cw-input-row" id="aucRaiseRow">
+      <input class="cw-input" id="aucBidInput" type="number" inputmode="numeric" min="0" onkeydown="if(event.key==='Enter')aucRaise()">
+    </div>
+    <div class="auc-no-funds" id="aucNoFundsMsg" style="display:none;">You can't afford to raise — you'll have to pass.</div>
+    <div class="auc-action-row">
+      <button class="cw-submit-btn" id="aucRaiseBtn" onclick="aucRaise()">Raise ▲</button>
+      <button class="auc-pass-action-btn" onclick="aucPass()">Pass ✕</button>
+    </div>
+  </div>
+
+  <!-- TURN HANDOFF SCREEN -->
+  <div class="cw-pass-screen" id="aucPassScreen">
+    <div class="cw-pass-icon">🎤</div>
+    <div class="cw-pass-title" id="aucPassTitle">Pass to Player 2</div>
+    <div class="cw-pass-sub" id="aucPassSub">No bids yet.</div>
+    <button class="cw-pass-btn" onclick="aucTurnContinue()">I'm Ready →</button>
+  </div>
+
+  <!-- REVEAL VIEW -->
+  <div id="aucRevealView" style="width:100%;display:none;flex-direction:column;align-items:center;">
+    <div class="cw-round-tag" id="aucRevealPoolTag">PLAYER 1 OF 5</div>
+    <div class="cw-question-card" style="margin-bottom:16px;">
+      <div class="auc-player-avatar" id="aucRevealAvatar"></div>
+      <div class="cw-question-player" id="aucRevealPlayerName"></div>
+      <div class="auc-player-meta" id="aucRevealPlayerMeta"></div>
+    </div>
+    <div class="cw-reveal-row">
+      <div class="cw-guess-card" id="aucRevealCardP1">
+        <div class="cw-guess-name p1" id="aucRevealNameP1"></div>
+        <div class="cw-guess-num" id="aucRevealBidP1"></div>
+        <div class="cw-guess-diff">coins</div>
+      </div>
+      <div class="cw-guess-card" id="aucRevealCardP2">
+        <div class="cw-guess-name p2" id="aucRevealNameP2"></div>
+        <div class="cw-guess-num" id="aucRevealBidP2"></div>
+        <div class="cw-guess-diff">coins</div>
+      </div>
+    </div>
+    <div class="cw-round-result" id="aucRoundResult"></div>
+    <button class="cw-submit-btn" id="aucNextBtn" onclick="aucNextPlayer()">Next Player →</button>
+  </div>
+
+  <!-- END SCREEN -->
+  <div id="aucEndView" style="width:100%;display:none;flex-direction:column;align-items:center;">
+    <div class="cw-end-title" id="aucEndTitle">🏆</div>
+    <div class="cw-end-sub" id="aucEndSub"></div>
+    <div class="auc-squad-final">
+      <div class="auc-squad-col" id="aucFinalColP1">
+        <div class="auc-squad-col-name p1" id="aucFinalNameP1"></div>
+        <div id="aucFinalListP1"></div>
+        <div class="auc-squad-total" id="aucFinalTotalP1"></div>
+      </div>
+      <div class="auc-squad-col" id="aucFinalColP2">
+        <div class="auc-squad-col-name p2" id="aucFinalNameP2"></div>
+        <div id="aucFinalListP2"></div>
+        <div class="auc-squad-total" id="aucFinalTotalP2"></div>
+      </div>
+    </div>
+    <div class="cw-alltime">
+      <div class="cw-alltime-label">All-Time Record</div>
+      <div class="cw-score-strip" style="margin-bottom:0;">
+        <span class="cw-score-name p1" id="aucAllTimeP1Name"></span>
+        <span class="cw-score-num" id="aucAllTimeP1Num">0</span>
+        <span class="cw-score-sep">–</span>
+        <span class="cw-score-num" id="aucAllTimeP2Num">0</span>
+        <span class="cw-score-name p2" id="aucAllTimeP2Name"></span>
+      </div>
+    </div>
+    <div class="cw-end-btns">
+      <button class="cw-btn-primary" onclick="aucPlayAgain()">🔄 Rematch (Same Players)</button>
+      <button class="cw-btn-secondary" onclick="showAuction()">New Players</button>
+      <button class="cw-btn-secondary" onclick="showLanding()">← Back Home</button>
+    </div>
+  </div>
+
 </div>
 
 <!-- TOP 10 SCREEN -->
@@ -1386,7 +1789,7 @@ body::before{display:none;}
         <div class="t10-badge" style="background:rgba(100,0,200,0.15);border:1px solid #6400c8;color:#a855f7;">PL</div>
         <div style="flex:1;">
           <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">Premier League</div>
-          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists · Titles</div>
+          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists · Titles · Signings</div>
         </div>
         <div style="color:#333;font-size:1.4rem;">›</div>
       </div>
@@ -1411,6 +1814,14 @@ body::before{display:none;}
         <div style="flex:1;">
           <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">World Cup</div>
           <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists</div>
+        </div>
+        <div style="color:#333;font-size:1.4rem;">›</div>
+      </div>
+      <div class="t10-league-card" onclick="t10PickLeague('transfers')">
+        <div class="t10-badge" style="background:rgba(232,185,35,0.15);border:1px solid #7a5f00;color:#e8b923;">€</div>
+        <div style="flex:1;">
+          <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">Transfers</div>
+          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Most expensive of all time</div>
         </div>
         <div style="color:#333;font-size:1.4rem;">›</div>
       </div>
@@ -1877,7 +2288,13 @@ body::before{display:none;}
         <div id="mbToName" style="display:none;font-size:0.7rem;color:#888;margin-top:4px;max-width:80px;"></div>
       </div>
     </div>
+    <div style="margin-top:18px;padding-top:14px;border-top:1px dashed #222;font-size:0.62rem;color:#666;letter-spacing:2px;text-transform:uppercase;">
+      Total fee <span style="color:#e8b923;">·</span> including add-ons
+    </div>
   </div>
+
+  <!-- Feedback (above input so it's visible when the mobile keyboard is open) -->
+  <div id="mbFeedback" style="text-align:center;min-height:78px;width:100%;margin-bottom:14px;display:flex;align-items:center;justify-content:center;"></div>
 
   <!-- Guess input -->
   <div id="mbInputArea" style="width:100%;margin-bottom:16px;">
@@ -1898,9 +2315,6 @@ body::before{display:none;}
       <button onclick="mbSubmitGuess()" style="background:#4ade80;color:#000;border:none;padding:14px 40px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;">GUESS</button>
     </div>
   </div>
-
-  <!-- Feedback -->
-  <div id="mbFeedback" style="text-align:center;min-height:60px;width:100%;"></div>
 
   <!-- Previous guesses -->
   <div id="mbPrevGuesses" style="width:100%;margin-top:8px;"></div>
@@ -2125,6 +2539,14 @@ const GAME_INFO = {
   cp: {
     title: 'Career Path',
     body: `A mystery player's clubs are revealed one at a time, oldest first. Guess who it is as early as you can — the fewer clubs shown, the more points you score. Stuck? Reveal the next club for a clue, but it costs you. Ten players per round. How sharp is your transfer knowledge?`
+  },
+  cw: {
+    title: 'Closest Wins',
+    body: `Pass-and-play head to head. Both of you get the same question — like "How many Premier League goals did Wayne Rooney score?" — and secretly lock in a number before the 12-second clock runs out. Reveal together, closest guess wins the round, exact hits are worth double. First to 3 points wins the match. Tied round? Sudden death.`
+  },
+  auc: {
+    title: 'The Auction',
+    body: `Pass-and-play head to head. One stat category decides the match — say, Career Goals. Both of you start with 20 coins. Five players come up one at a time and you take turns bidding — Player A goes 5, Player B goes 6, back and forth until one of you passes. The other wins the player for their last bid. Don't know who's coming next, so spend early at your own risk. After 5 players, squads' stat totals go head to head — highest total wins.`
   }
 };
 function openGameInfo(key){
@@ -2158,6 +2580,8 @@ function showLanding(){
   document.getElementById('mbScreen').style.display='none';
   document.getElementById('top10Screen').style.display='none';
   document.getElementById('careerScreen').style.display='none';
+  document.getElementById('closestWinsScreen').style.display='none';
+  document.getElementById('auctionScreen').style.display='none';
   setBackBtn(null);
 }
 function showTop10(){
@@ -4859,12 +5283,12 @@ function updateFriendsNav(){
 <script src="data/players.js"></script>
 <script src="data/kits.js"></script>
 <script src="data/club-logos.js?v=2"></script>
-<script src="data/career-path.js?v=2"></script>
+<script src="data/career-path.js?v=3"></script>
 <script src="data/sxi-teams.js"></script>
 <script src="data/sxi-pl-winners.js"></script>
 <script src="data/trophies.js"></script>
 <script src="data/moneyball-transfers.js"></script>
-<script src="data/top10.js?v=6"></script>
+<script src="data/top10.js?v=10"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════════════
 //  MONEYBALL GAME
@@ -4877,6 +5301,27 @@ let mbCurrentTransfer = null;
 let mbAllTransfers = [];
 let mbUsedIndices = [];
 let mbGameOver = false;
+let mbBadgeCache = []; // hold Image refs so browser keeps them cached
+let mbBadgesPreloaded = false;
+
+function mbPreloadBadges(){
+  if(mbBadgesPreloaded) return;
+  const seen = new Set();
+  mbAllTransfers.forEach(t => {
+    [t.from, t.to].forEach(club => {
+      if(club && !seen.has(club)){
+        seen.add(club);
+        const url = mbGetLogo(club);
+        if(url){
+          const img = new Image();
+          img.src = url;
+          mbBadgeCache.push(img);
+        }
+      }
+    });
+  });
+  mbBadgesPreloaded = true;
+}
 
 function showMoneyball(){
   document.getElementById('landingScreen').style.display = 'none';
@@ -4896,6 +5341,8 @@ function mbInit(){
   MONEYBALL_MANAGERS.forEach(m => {
     m.transfers.forEach(t => mbAllTransfers.push(t));
   });
+  // Warm the browser cache with every club badge so next-transfer swaps are instant
+  mbPreloadBadges();
   mbStreak = 0;
   mbBest = parseInt(localStorage.getItem('mbBest') || '0');
   mbUsedIndices = [];
@@ -5005,17 +5452,30 @@ function mbSubmitGuess(){
     document.getElementById('mbInputArea').style.display = 'none';
 
   } else {
-    // HIGHER or LOWER
-    const col = '#e8b923';
+    // WRONG but still have guesses — show BIG, obvious direction feedback
+    const goHigher = guess < correct;
+    const arrow = goHigher ? '▲' : '▼';
+    const word  = goHigher ? 'HIGHER' : 'LOWER';
+    const cmp   = goHigher ? 'more than' : 'less than';
+    const col   = goHigher ? '#4ade80' : '#ef4444';
+    const bg    = goHigher ? 'rgba(74,222,128,0.10)' : 'rgba(239,68,68,0.10)';
     document.getElementById('mbInput').style.borderColor = col;
-    document.getElementById('mbFeedback').innerHTML = '';
+    document.getElementById('mbFeedback').innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:14px 22px;background:${bg};border:2px solid ${col};border-radius:16px;margin-bottom:4px;width:100%;">
+        <div style="font-family:'Anton',sans-serif;font-size:3rem;color:${col};line-height:1;">${arrow}</div>
+        <div style="text-align:left;">
+          <div style="font-family:'Anton',sans-serif;font-size:1.9rem;color:${col};letter-spacing:2px;line-height:1;">GO ${word}</div>
+          <div style="color:#fff;font-size:0.95rem;margin-top:5px;font-weight:600;">Try <b style="color:${col};">${cmp} €${guess}M</b></div>
+        </div>
+      </div>`;
     document.getElementById('mbInput').value = '';
     document.getElementById('mbInput').focus();
   }
 
-  // Log this guess
-  const rowDir = diff<=2 ? {label:'✓ Correct', color:'#4ade80'} : guess<correct ? {label:'↑ Higher', color:'#4ade80'} : {label:'↓ Lower', color:'#ef4444'};
-  guessRow.innerHTML = `<span style="color:#888;font-size:0.95rem;">€${guess}M</span><span style="color:${rowDir.color};font-size:1rem;font-family:'Anton',sans-serif;letter-spacing:1px;">${rowDir.label}</span>`;
+  // Log this guess (history log below)
+  const isCorrect = diff <= 2.5;
+  const rowDir = isCorrect ? {label:'✓ Correct', color:'#4ade80'} : guess<correct ? {label:'↑ Higher', color:'#4ade80'} : {label:'↓ Lower', color:'#ef4444'};
+  guessRow.innerHTML = `<span style="color:#aaa;font-size:0.95rem;font-family:'Anton',sans-serif;letter-spacing:.5px;">€${guess}M</span><span style="color:${rowDir.color};font-size:1rem;font-family:'Anton',sans-serif;letter-spacing:1px;">${rowDir.label}</span>`;
   prevEl.insertBefore(guessRow, prevEl.firstChild);
 }
 </script>
@@ -5056,9 +5516,10 @@ function t10Norm(s){
 }
 
 const T10_STAT_META = {
-  goals:   { label:'GOALS',   icon:'⚽' },
-  assists: { label:'ASSISTS', icon:'🎯' },
-  titles:  { label:'TITLES',  icon:'🏆' }
+  goals:    { label:'GOALS',    icon:'⚽' },
+  assists:  { label:'ASSISTS',  icon:'🎯' },
+  titles:   { label:'TITLES',   icon:'🏆' },
+  signings: { label:'SIGNINGS', icon:'💰' }
 };
 
 function t10PickLeague(id){
@@ -5137,10 +5598,14 @@ function t10BadgeHtml(name){
 }
 
 function t10SlotRevealHtml(i, p){
+  const isFee = t10Stat === 'signings';
+  const val = isFee ? `€${p.value}M` : p.value;
+  const sub = isFee && p.club ? `<div class="t10-slot-sub" style="font-size:0.62rem;color:#666;letter-spacing:1px;margin-top:2px;">→ ${p.club} · ${p.year}</div>` : '';
   return `<div class="t10-slot-num">${i+1}</div>
-    ${t10BadgeHtml(p.name)}
+    ${t10BadgeHtml(p.club || p.name)}
     <div class="t10-slot-name">${p.name}</div>
-    <div class="t10-slot-val">${p.value}</div>`;
+    ${sub}
+    <div class="t10-slot-val">${val}</div>`;
 }
 
 function t10RenderSlots(){
@@ -5288,6 +5753,573 @@ function t10BackToHome(){
   document.getElementById('t10Game').style.display = 'none';
   document.getElementById('t10Picker').style.display = 'none';
   document.getElementById('t10Home').style.display = 'block';
+}
+</script>
+
+<script>
+// ====================== CLOSEST WINS (local pass-and-play) ======================
+const CW_TIME = 12;
+const CW_TARGET = 3;
+const CW_MAX_ROUNDS = 5;
+const CW_CIRCUMFERENCE = 226;
+
+let cwP1Name = '', cwP2Name = '';
+let cwQuestions = [], cwUsedKeys = new Set();
+let cwRoundIdx = 0;
+let cwPoints = {p1:0, p2:0};
+let cwCurrentGuesser = 1;
+let cwGuesses = {p1:null, p2:null};
+let cwTimer = null, cwSeconds = CW_TIME;
+
+function showClosestWins(){
+  setBg(false);
+  document.getElementById('landingScreen').style.display='none';
+  document.getElementById('higherOrLowerSection').style.display='none';
+  document.getElementById('elGrandeMenu').style.display='none';
+  document.getElementById('elGrandeGame').style.display='none';
+  document.getElementById('gameScreen').style.display='none';
+  document.getElementById('sxiScreen').style.display='none';
+  document.getElementById('mbScreen').style.display='none';
+  document.getElementById('top10Screen').style.display='none';
+  document.getElementById('careerScreen').style.display='none';
+  document.getElementById('closestWinsScreen').style.display='flex';
+
+  clearInterval(cwTimer);
+  document.getElementById('cwNameEntry').style.display='flex';
+  document.getElementById('cwRoundView').style.display='none';
+  document.getElementById('cwPassScreen').style.display='none';
+  document.getElementById('cwRevealView').style.display='none';
+  document.getElementById('cwEndView').style.display='none';
+  document.getElementById('cwNameInput1').value='';
+  document.getElementById('cwNameInput2').value='';
+
+  setBackBtn('← Back Home', showLanding);
+  setTimeout(()=>document.getElementById('cwNameInput1').focus(), 100);
+}
+
+function cwDrawQuestions(n){
+  const cats = Object.keys(catLabels);
+  const used = new Set(cwUsedKeys);
+  const qs = [];
+  let attempts = 0;
+  while(qs.length < n && attempts < 400){
+    attempts++;
+    const p = PLAYERS[Math.floor(Math.random()*PLAYERS.length)];
+    const cat = cats[Math.floor(Math.random()*cats.length)];
+    const key = p.name+'|'+cat;
+    if(used.has(key)) continue;
+    const val = catValue(p, cat);
+    if(val===undefined || val===null || isNaN(val)) continue;
+    used.add(key);
+    cwUsedKeys.add(key);
+    qs.push({playerName:p.name, category:cat, label:catLabels[cat], answer:val});
+  }
+  return qs;
+}
+
+function cwConfirmNames(){
+  cwP1Name = (document.getElementById('cwNameInput1').value||'').trim() || 'Player 1';
+  cwP2Name = (document.getElementById('cwNameInput2').value||'').trim() || 'Player 2';
+  cwStartMatch();
+}
+
+function cwStartMatch(){
+  cwUsedKeys = new Set();
+  cwQuestions = cwDrawQuestions(CW_MAX_ROUNDS);
+  cwRoundIdx = 0;
+  cwPoints = {p1:0, p2:0};
+  document.getElementById('cwNameEntry').style.display='none';
+  document.getElementById('cwEndView').style.display='none';
+  cwStartRound();
+}
+
+function cwStartRound(){
+  document.getElementById('cwRevealView').style.display='none';
+  document.getElementById('cwPassScreen').style.display='none';
+  document.getElementById('cwScoreP1Name').textContent = cwP1Name;
+  document.getElementById('cwScoreP2Name').textContent = cwP2Name;
+  document.getElementById('cwScoreP1Num').textContent = cwPoints.p1;
+  document.getElementById('cwScoreP2Num').textContent = cwPoints.p2;
+  document.getElementById('cwRoundTag').textContent = 'ROUND '+(cwRoundIdx+1)+' · FIRST TO '+CW_TARGET;
+  const q = cwQuestions[cwRoundIdx];
+  document.getElementById('cwQuestionPlayer').textContent = q.playerName;
+  document.getElementById('cwQuestionStat').textContent = 'HOW MANY ' + q.label.toUpperCase() + '?';
+  cwGuesses = {p1:null, p2:null};
+  cwShowGuesser(1);
+}
+
+function cwShowGuesser(n){
+  cwCurrentGuesser = n;
+  const name = n===1 ? cwP1Name : cwP2Name;
+  const badge = document.getElementById('cwGuesserBadge');
+  badge.className = 'cw-guesser-badge ' + (n===1?'p1':'p2');
+  badge.textContent = name + "'s guess";
+  document.getElementById('cwGuessInput').value = '';
+  document.getElementById('cwPassScreen').style.display='none';
+  document.getElementById('cwRoundView').style.display='flex';
+  cwStartTimer();
+  setTimeout(()=>document.getElementById('cwGuessInput').focus(), 100);
+}
+
+function cwStartTimer(){
+  cwSeconds = CW_TIME;
+  cwUpdateTimer();
+  clearInterval(cwTimer);
+  cwTimer = setInterval(()=>{
+    cwSeconds--;
+    cwUpdateTimer();
+    if(cwSeconds<=0){ clearInterval(cwTimer); cwTimeOut(); }
+  }, 1000);
+}
+
+function cwUpdateTimer(){
+  const pct = Math.max(cwSeconds,0) / CW_TIME;
+  const offset = CW_CIRCUMFERENCE * (1 - pct);
+  const fill = document.getElementById('cwTimerFill');
+  const num = document.getElementById('cwTimerNum');
+  fill.style.strokeDashoffset = offset;
+  num.textContent = Math.max(cwSeconds,0);
+  fill.classList.remove('warning','danger');
+  if(cwSeconds <= 4) fill.classList.add('danger');
+  else if(cwSeconds <= 8) fill.classList.add('warning');
+}
+
+function cwSubmitGuess(){
+  clearInterval(cwTimer);
+  const raw = document.getElementById('cwGuessInput').value;
+  const val = raw==='' ? null : parseFloat(raw);
+  cwRecordGuess((val===null||isNaN(val)) ? null : val);
+}
+
+function cwTimeOut(){
+  cwRecordGuess(null);
+}
+
+function cwRecordGuess(val){
+  if(cwCurrentGuesser===1){
+    cwGuesses.p1 = val;
+    document.getElementById('cwPassTitle').textContent = 'Pass to ' + cwP2Name;
+    document.getElementById('cwRoundView').style.display='none';
+    document.getElementById('cwPassScreen').style.display='flex';
+  } else {
+    cwGuesses.p2 = val;
+    cwReveal();
+  }
+}
+
+function cwPassContinue(){
+  cwShowGuesser(2);
+}
+
+function cwReveal(){
+  clearInterval(cwTimer);
+  const q = cwQuestions[cwRoundIdx];
+  document.getElementById('cwRevealRoundTag').textContent = 'ROUND '+(cwRoundIdx+1);
+  document.getElementById('cwRevealPlayer').textContent = q.playerName;
+  document.getElementById('cwRevealStat').textContent = q.label.toUpperCase();
+  document.getElementById('cwRevealAnswer').textContent = q.answer;
+
+  const g1 = cwGuesses.p1, g2 = cwGuesses.p2;
+  const d1 = g1===null ? Infinity : Math.abs(g1-q.answer);
+  const d2 = g2===null ? Infinity : Math.abs(g2-q.answer);
+
+  document.getElementById('cwRevealNameP1').textContent = cwP1Name;
+  document.getElementById('cwRevealGuessP1').textContent = g1===null ? '—' : g1;
+  document.getElementById('cwRevealDiffP1').textContent = g1===null ? 'No answer' : (d1===0?'Exact!':('off by '+d1));
+  document.getElementById('cwRevealNameP2').textContent = cwP2Name;
+  document.getElementById('cwRevealGuessP2').textContent = g2===null ? '—' : g2;
+  document.getElementById('cwRevealDiffP2').textContent = g2===null ? 'No answer' : (d2===0?'Exact!':('off by '+d2));
+
+  const cardP1 = document.getElementById('cwRevealCardP1');
+  const cardP2 = document.getElementById('cwRevealCardP2');
+  cardP1.className = 'cw-guess-card';
+  cardP2.className = 'cw-guess-card';
+
+  const resultEl = document.getElementById('cwRoundResult');
+  let isReplay = false;
+
+  if(g1===null && g2===null){
+    resultEl.className = 'cw-round-result tie';
+    resultEl.textContent = '⏱ Nobody answered — replaying this round';
+    isReplay = true;
+  } else if(d1 === d2){
+    resultEl.className = 'cw-round-result tie';
+    resultEl.textContent = '🤝 Tied! Sudden death — new question';
+    isReplay = true;
+  } else {
+    const winner = d1 < d2 ? 1 : 2;
+    const isExact = Math.min(d1,d2) === 0;
+    const pts = isExact ? 2 : 1;
+    if(winner===1){ cwPoints.p1 += pts; cardP1.classList.add(isExact?'perfect':'winner'); }
+    else { cwPoints.p2 += pts; cardP2.classList.add(isExact?'perfect':'winner'); }
+    const winnerName = winner===1?cwP1Name:cwP2Name;
+    if(isExact){
+      resultEl.className = 'cw-round-result perfect';
+      resultEl.textContent = '🎯 PERFECT! ' + winnerName + ' nails it (+2)';
+    } else {
+      resultEl.className = 'cw-round-result';
+      resultEl.textContent = winnerName + ' wins the round (+1)';
+    }
+  }
+
+  document.getElementById('cwRoundView').style.display='none';
+  document.getElementById('cwPassScreen').style.display='none';
+  document.getElementById('cwRevealView').style.display='flex';
+  document.getElementById('cwNextRoundBtn').dataset.replay = isReplay ? '1' : '0';
+  document.getElementById('cwNextRoundBtn').textContent = isReplay ? 'Replay Round →' : 'Next Round →';
+}
+
+function cwNextRound(){
+  const isReplay = document.getElementById('cwNextRoundBtn').dataset.replay === '1';
+
+  if(isReplay){
+    const extra = cwDrawQuestions(1);
+    if(extra.length) cwQuestions[cwRoundIdx] = extra[0];
+    cwStartRound();
+    return;
+  }
+
+  if(cwPoints.p1 >= CW_TARGET || cwPoints.p2 >= CW_TARGET){
+    cwEndMatch();
+    return;
+  }
+
+  cwRoundIdx++;
+  if(cwRoundIdx >= cwQuestions.length){
+    const extra = cwDrawQuestions(1);
+    if(extra.length) cwQuestions.push(extra[0]);
+    else { cwEndMatch(); return; }
+  }
+  cwStartRound();
+}
+
+function cwEndMatch(){
+  clearInterval(cwTimer);
+  document.getElementById('cwRevealView').style.display='none';
+
+  const isDraw = cwPoints.p1 === cwPoints.p2;
+  const p1Won = cwPoints.p1 > cwPoints.p2;
+  const winnerName = isDraw ? null : (p1Won ? cwP1Name : cwP2Name);
+
+  document.getElementById('cwEndTitle').textContent = isDraw ? '🤝 Draw!' : ('🏆 ' + winnerName + ' Wins!');
+  document.getElementById('cwEndSub').textContent = cwP1Name + ' ' + cwPoints.p1 + ' – ' + cwPoints.p2 + ' ' + cwP2Name;
+
+  const key = 'cw_record_' + [cwP1Name, cwP2Name].map(n=>n.toLowerCase()).sort().join('_vs_');
+  const record = JSON.parse(localStorage.getItem(key) || '{}');
+  if(!isDraw){
+    record[cwP1Name] = (record[cwP1Name]||0) + (p1Won?1:0);
+    record[cwP2Name] = (record[cwP2Name]||0) + (p1Won?0:1);
+    localStorage.setItem(key, JSON.stringify(record));
+  }
+
+  document.getElementById('cwAllTimeP1Name').textContent = cwP1Name;
+  document.getElementById('cwAllTimeP2Name').textContent = cwP2Name;
+  document.getElementById('cwAllTimeP1Num').textContent = record[cwP1Name]||0;
+  document.getElementById('cwAllTimeP2Num').textContent = record[cwP2Name]||0;
+
+  document.getElementById('cwEndView').style.display='flex';
+}
+
+function cwPlayAgain(){
+  cwStartMatch();
+}
+
+// ====================== THE AUCTION (local pass-and-play) ======================
+const AUC_TIME = 12;
+const AUC_START_COINS = 20;
+const AUC_POOL_SIZE = 5;
+const AUC_CIRCUMFERENCE = 226;
+
+let aucP1Name = '', aucP2Name = '';
+let aucPool = [], aucCategory = '';
+let aucPlayerIdx = 0;
+let aucCoins = {p1:AUC_START_COINS, p2:AUC_START_COINS};
+let aucSquads = {p1:[], p2:[]};
+let aucHighBid = 0, aucHighBidder = null; // null = no bids yet this player
+let aucTurn = 1, aucOpener = 1; // whose turn to act; opener alternates each player
+let aucTimer = null, aucSeconds = AUC_TIME;
+
+function showAuction(){
+  setBg(false);
+  document.getElementById('landingScreen').style.display='none';
+  document.getElementById('higherOrLowerSection').style.display='none';
+  document.getElementById('elGrandeMenu').style.display='none';
+  document.getElementById('elGrandeGame').style.display='none';
+  document.getElementById('gameScreen').style.display='none';
+  document.getElementById('sxiScreen').style.display='none';
+  document.getElementById('mbScreen').style.display='none';
+  document.getElementById('top10Screen').style.display='none';
+  document.getElementById('careerScreen').style.display='none';
+  document.getElementById('closestWinsScreen').style.display='none';
+  document.getElementById('auctionScreen').style.display='flex';
+
+  clearInterval(aucTimer);
+  document.getElementById('aucNameEntry').style.display='flex';
+  document.getElementById('aucRoundView').style.display='none';
+  document.getElementById('aucPassScreen').style.display='none';
+  document.getElementById('aucRevealView').style.display='none';
+  document.getElementById('aucEndView').style.display='none';
+  document.getElementById('aucNameInput1').value='';
+  document.getElementById('aucNameInput2').value='';
+
+  setBackBtn('← Back Home', showLanding);
+  setTimeout(()=>document.getElementById('aucNameInput1').focus(), 100);
+}
+
+function aucAvatarHTML(p){
+  return generateKitSVG(p.name) || `<div style="width:76px;height:76px;border-radius:50%;background:${p.color};color:${p.tc||'#fff'};display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;">${p.initials}</div>`;
+}
+
+function aucConfirmNames(){
+  aucP1Name = (document.getElementById('aucNameInput1').value||'').trim() || 'Player 1';
+  aucP2Name = (document.getElementById('aucNameInput2').value||'').trim() || 'Player 2';
+  aucStartMatch();
+}
+
+function aucStartMatch(){
+  const cats = Object.keys(catLabels);
+  aucCategory = cats[Math.floor(Math.random()*cats.length)];
+
+  // draw AUC_POOL_SIZE unique players that have a valid value for aucCategory
+  const pool = [], used = new Set();
+  let attempts = 0;
+  while(pool.length < AUC_POOL_SIZE && attempts < 400){
+    attempts++;
+    const p = PLAYERS[Math.floor(Math.random()*PLAYERS.length)];
+    if(used.has(p.name)) continue;
+    const val = catValue(p, aucCategory);
+    if(val===undefined || val===null || isNaN(val)) continue;
+    used.add(p.name);
+    pool.push(p);
+  }
+  aucPool = pool;
+  aucPlayerIdx = 0;
+  aucCoins = {p1:AUC_START_COINS, p2:AUC_START_COINS};
+  aucSquads = {p1:[], p2:[]};
+
+  document.getElementById('aucNameEntry').style.display='none';
+  document.getElementById('aucEndView').style.display='none';
+  aucStartRound();
+}
+
+function aucRenderCoinsAndSquads(){
+  document.getElementById('aucCoinP1Name').textContent = aucP1Name;
+  document.getElementById('aucCoinP2Name').textContent = aucP2Name;
+  document.getElementById('aucCoinP1Amt').innerHTML = aucCoins.p1 + '<small>COINS</small>';
+  document.getElementById('aucCoinP2Amt').innerHTML = aucCoins.p2 + '<small>COINS</small>';
+  document.getElementById('aucSquadP1').textContent = aucSquads.p1.length ? aucSquads.p1.map(p=>p.name).join(', ') : 'No players yet';
+  document.getElementById('aucSquadP2').textContent = aucSquads.p2.length ? aucSquads.p2.map(p=>p.name).join(', ') : 'No players yet';
+}
+
+function aucStartRound(){
+  document.getElementById('aucRevealView').style.display='none';
+  document.getElementById('aucPassScreen').style.display='none';
+  document.getElementById('aucCategoryLabel').textContent = catLabels[aucCategory].toUpperCase();
+  aucRenderCoinsAndSquads();
+  document.getElementById('aucPoolTag').textContent = 'PLAYER ' + (aucPlayerIdx+1) + ' OF ' + aucPool.length;
+
+  const p = aucPool[aucPlayerIdx];
+  document.getElementById('aucPlayerAvatar').innerHTML = aucAvatarHTML(p);
+  document.getElementById('aucPlayerName').textContent = p.name;
+  document.getElementById('aucPlayerMeta').textContent = p.pos + ' · ' + p.nat;
+
+  aucHighBid = 0;
+  aucHighBidder = null;
+  aucOpener = (aucPlayerIdx % 2 === 0) ? 1 : 2; // alternate who opens bidding each player
+  aucTurn = aucOpener;
+  aucRenderTurn();
+}
+
+function aucRenderTurn(){
+  const name = aucTurn===1 ? aucP1Name : aucP2Name;
+  const remaining = aucTurn===1 ? aucCoins.p1 : aucCoins.p2;
+
+  const badge = document.getElementById('aucBidderBadge');
+  badge.className = 'cw-guesser-badge ' + (aucTurn===1?'p1':'p2');
+  badge.textContent = name + "'s turn";
+
+  const highBidVal = document.getElementById('aucHighBidVal');
+  if(aucHighBidder === null){
+    highBidVal.textContent = 'No bids yet';
+  } else {
+    highBidVal.textContent = aucHighBid + ' coins — ' + (aucHighBidder===1?aucP1Name:aucP2Name);
+  }
+
+  document.getElementById('aucBidHint').innerHTML = 'You have <b>' + remaining + '</b> coins left';
+
+  const canRaise = remaining > aucHighBid;
+  const input = document.getElementById('aucBidInput');
+  document.getElementById('aucRaiseRow').style.display = canRaise ? 'flex' : 'none';
+  document.getElementById('aucRaiseBtn').style.display = canRaise ? 'block' : 'none';
+  document.getElementById('aucNoFundsMsg').style.display = canRaise ? 'none' : 'block';
+  if(canRaise){
+    const suggested = Math.min(aucHighBid+1, remaining);
+    input.value = suggested;
+    input.max = remaining;
+    document.getElementById('aucRaiseBtn').textContent = aucHighBidder===null ? 'Open Bid' : 'Raise ▲';
+  }
+
+  document.getElementById('aucPassScreen').style.display='none';
+  document.getElementById('aucRoundView').style.display='flex';
+  aucStartTimer();
+  if(canRaise) setTimeout(()=>input.focus(), 100);
+}
+
+function aucStartTimer(){
+  aucSeconds = AUC_TIME;
+  aucUpdateTimer();
+  clearInterval(aucTimer);
+  aucTimer = setInterval(()=>{
+    aucSeconds--;
+    aucUpdateTimer();
+    if(aucSeconds<=0){ clearInterval(aucTimer); aucTimeOut(); }
+  }, 1000);
+}
+
+function aucUpdateTimer(){
+  const pct = Math.max(aucSeconds,0) / AUC_TIME;
+  const offset = AUC_CIRCUMFERENCE * (1 - pct);
+  const fill = document.getElementById('aucTimerFill');
+  const num = document.getElementById('aucTimerNum');
+  fill.style.strokeDashoffset = offset;
+  num.textContent = Math.max(aucSeconds,0);
+  fill.classList.remove('warning','danger');
+  if(aucSeconds <= 4) fill.classList.add('danger');
+  else if(aucSeconds <= 8) fill.classList.add('warning');
+}
+
+function aucTimeOut(){
+  // no action in time — forced pass
+  aucPass();
+}
+
+function aucRaise(){
+  clearInterval(aucTimer);
+  const remaining = aucTurn===1 ? aucCoins.p1 : aucCoins.p2;
+  const raw = document.getElementById('aucBidInput').value;
+  let val = raw==='' ? 0 : parseInt(raw, 10);
+  if(isNaN(val)) val = 0;
+  if(val > remaining) val = remaining;
+  if(val <= aucHighBid) val = Math.min(aucHighBid+1, remaining);
+  if(val <= aucHighBid){ aucPass(); return; } // can't produce a valid raise — forced pass
+
+  aucHighBid = val;
+  aucHighBidder = aucTurn;
+  aucTurn = aucTurn===1 ? 2 : 1;
+  aucShowTurnTransition();
+}
+
+function aucPass(){
+  clearInterval(aucTimer);
+  aucResolveAuction();
+}
+
+function aucShowTurnTransition(){
+  const name = aucTurn===1 ? aucP1Name : aucP2Name;
+  document.getElementById('aucPassTitle').textContent = 'Pass to ' + name;
+  document.getElementById('aucPassSub').textContent = aucHighBidder===null
+    ? 'No bids yet — ' + name + ' can open the bidding.'
+    : 'Current high: ' + aucHighBid + ' coins by ' + (aucHighBidder===1?aucP1Name:aucP2Name) + '. Can ' + name + ' beat it?';
+  document.getElementById('aucRoundView').style.display='none';
+  document.getElementById('aucPassScreen').style.display='flex';
+}
+
+function aucTurnContinue(){
+  aucRenderTurn();
+}
+
+function aucResolveAuction(){
+  const p = aucPool[aucPlayerIdx];
+  document.getElementById('aucRevealPoolTag').textContent = 'PLAYER ' + (aucPlayerIdx+1) + ' OF ' + aucPool.length;
+  document.getElementById('aucRevealAvatar').innerHTML = aucAvatarHTML(p);
+  document.getElementById('aucRevealPlayerName').textContent = p.name;
+  document.getElementById('aucRevealPlayerMeta').textContent = p.pos + ' · ' + p.nat;
+
+  document.getElementById('aucRevealNameP1').textContent = aucP1Name;
+  document.getElementById('aucRevealNameP2').textContent = aucP2Name;
+
+  const cardP1 = document.getElementById('aucRevealCardP1');
+  const cardP2 = document.getElementById('aucRevealCardP2');
+  cardP1.className = 'cw-guess-card';
+  cardP2.className = 'cw-guess-card';
+
+  const resultEl = document.getElementById('aucRoundResult');
+
+  if(aucHighBidder === null){
+    document.getElementById('aucRevealBidP1').textContent = '—';
+    document.getElementById('aucRevealBidP2').textContent = '—';
+    resultEl.className = 'cw-round-result tie';
+    resultEl.textContent = '🤷 Nobody wanted ' + p.name + ' — moving on';
+  } else {
+    const winner = aucHighBidder;
+    const price = aucHighBid;
+    document.getElementById('aucRevealBidP1').textContent = winner===1 ? price : '—';
+    document.getElementById('aucRevealBidP2').textContent = winner===2 ? price : '—';
+    if(winner===1){ aucCoins.p1 -= price; aucSquads.p1.push(p); cardP1.classList.add('winner'); }
+    else { aucCoins.p2 -= price; aucSquads.p2.push(p); cardP2.classList.add('winner'); }
+    const winnerName = winner===1?aucP1Name:aucP2Name;
+    resultEl.className = 'cw-round-result perfect';
+    resultEl.textContent = '🔨 SOLD! ' + winnerName + ' wins ' + p.name + ' for ' + price;
+  }
+
+  document.getElementById('aucRoundView').style.display='none';
+  document.getElementById('aucPassScreen').style.display='none';
+  document.getElementById('aucRevealView').style.display='flex';
+  document.getElementById('aucNextBtn').textContent = (aucPlayerIdx+1 >= aucPool.length) ? 'See Final Squads →' : 'Next Player →';
+}
+
+function aucNextPlayer(){
+  aucPlayerIdx++;
+  if(aucPlayerIdx >= aucPool.length){
+    aucEndMatch();
+    return;
+  }
+  aucStartRound();
+}
+
+function aucSquadListHTML(squad){
+  if(!squad.length) return '<div class="auc-squad-player-row" style="color:#444;">No players won</div>';
+  return squad.map(p => `<div class="auc-squad-player-row"><span>${p.name}</span><span>${catValue(p, aucCategory)}</span></div>`).join('');
+}
+
+function aucEndMatch(){
+  clearInterval(aucTimer);
+  document.getElementById('aucRevealView').style.display='none';
+
+  const total1 = aucSquads.p1.reduce((s,p)=>s+catValue(p,aucCategory), 0);
+  const total2 = aucSquads.p2.reduce((s,p)=>s+catValue(p,aucCategory), 0);
+  const isDraw = total1 === total2;
+  const p1Won = total1 > total2;
+
+  document.getElementById('aucEndTitle').textContent = isDraw ? '🤝 Draw!' : ('🏆 ' + (p1Won?aucP1Name:aucP2Name) + ' Wins!');
+  document.getElementById('aucEndSub').textContent = catLabels[aucCategory] + ': ' + aucP1Name + ' ' + total1 + ' – ' + total2 + ' ' + aucP2Name;
+
+  document.getElementById('aucFinalNameP1').textContent = aucP1Name;
+  document.getElementById('aucFinalNameP2').textContent = aucP2Name;
+  document.getElementById('aucFinalListP1').innerHTML = aucSquadListHTML(aucSquads.p1);
+  document.getElementById('aucFinalListP2').innerHTML = aucSquadListHTML(aucSquads.p2);
+  document.getElementById('aucFinalTotalP1').textContent = total1;
+  document.getElementById('aucFinalTotalP2').textContent = total2;
+  document.getElementById('aucFinalColP1').className = 'auc-squad-col' + (!isDraw && p1Won ? ' winner' : '');
+  document.getElementById('aucFinalColP2').className = 'auc-squad-col' + (!isDraw && !p1Won ? ' winner' : '');
+
+  const key = 'auc_record_' + [aucP1Name, aucP2Name].map(n=>n.toLowerCase()).sort().join('_vs_');
+  const record = JSON.parse(localStorage.getItem(key) || '{}');
+  if(!isDraw){
+    record[aucP1Name] = (record[aucP1Name]||0) + (p1Won?1:0);
+    record[aucP2Name] = (record[aucP2Name]||0) + (p1Won?0:1);
+    localStorage.setItem(key, JSON.stringify(record));
+  }
+  document.getElementById('aucAllTimeP1Name').textContent = aucP1Name;
+  document.getElementById('aucAllTimeP2Name').textContent = aucP2Name;
+  document.getElementById('aucAllTimeP1Num').textContent = record[aucP1Name]||0;
+  document.getElementById('aucAllTimeP2Num').textContent = record[aucP2Name]||0;
+
+  document.getElementById('aucEndView').style.display='flex';
+}
+
+function aucPlayAgain(){
+  aucStartMatch();
 }
 </script>
 </body>
