@@ -3,6 +3,8 @@
 //  Read by: the "€100M Club" quiz (eg-datasets.js) and the Top 10 "Transfers" +
 //  Premier League "Signings" lists (top10.js). Change a fee HERE and all stay in sync.
 //
+//  Membership rule: only deals whose GUARANTEED fee is €100m+ are listed (so Núñez €75m+€25m,
+//  Antony €95m+€5m and Mudryk €70m+€30m are NOT here — they only reach €100m if every add-on is hit).
 //  fee  = headline total in € millions INCLUDING add-ons announced with the deal.
 //         £ deals converted at the rate on the day (≈1.15–1.18), rounded to the nearest €1m.
 //  Sources: club statements, Sky Sports, ESPN, Goal, Wikipedia "List of most expensive
@@ -35,10 +37,7 @@ const BIG_TRANSFERS = [
   { key:'kane-2023',      name:'Harry Kane',        aliases:['kane','harry kane'],                                        from:'Tottenham',       to:'Bayern Munich',   year:2023, fee:114, note:'€98m + add-ons (fixed fee ~€100m)' },
   { key:'pogba-2016',     name:'Paul Pogba',        aliases:['pogba','la pioche','paul pogba'],                           from:'Juventus',        to:'Man United',      year:2016, fee:105, note:'€105m (+€5m conditional)' },
   { key:'bale-2013',      name:'Gareth Bale',       aliases:['bale','gareth bale'],                                       from:'Tottenham',       to:'Real Madrid',     year:2013, fee:101, note:'€91m + instalment costs' },
-  { key:'ronaldo-2018',   name:'Cristiano Ronaldo', aliases:['ronaldo','cr7','cristiano','cristiano ronaldo'],            from:'Real Madrid',     to:'Juventus',        year:2018, fee:100, note:'€100m (+€12m ancillary costs)' },
-  { key:'nunez-2022',     name:'Darwin Núñez',      aliases:['nunez','núñez','darwin nunez','darwin','darwin núñez'],     from:'Benfica',         to:'Liverpool',       year:2022, fee:100, note:'€75m + €25m add-ons' },
-  { key:'antony-2022',    name:'Antony',            aliases:['antony','antony matheus','antony santos'],                  from:'Ajax',            to:'Man United',      year:2022, fee:100, note:'€95m + €5m add-ons' },
-  { key:'mudryk-2023',    name:'Mykhailo Mudryk',   aliases:['mudryk','mykhailo mudryk','misha mudryk'],                  from:'Shakhtar Donetsk',to:'Chelsea',         year:2023, fee:100, note:'€70m + €30m add-ons' }
+  { key:'ronaldo-2018',   name:'Cristiano Ronaldo', aliases:['ronaldo','cr7','cristiano','cristiano ronaldo'],            from:'Real Madrid',     to:'Juventus',        year:2018, fee:100, note:'€100m (+€12m ancillary costs)' }
 ];
 
 // Clubs counted as "Premier League signings" for the PL Top 10 list
