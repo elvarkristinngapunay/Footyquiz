@@ -791,9 +791,15 @@ body::before{display:none;}
 
 /* ── THE AUCTION ── */
 #auctionScreen{display:none;flex-direction:column;align-items:center;padding:20px 16px 60px;max-width:560px;margin:0 auto;width:100%;}
-.auc-category-banner{width:100%;background:rgba(232,185,35,0.06);border:1px solid rgba(232,185,35,0.25);border-radius:14px;padding:10px 16px;text-align:center;margin-bottom:18px;}
-.auc-category-banner .lbl{font-size:0.6rem;color:#888;letter-spacing:2px;text-transform:uppercase;}
-.auc-category-banner .val{font-family:'Anton',sans-serif;font-size:1.1rem;color:#e8b923;letter-spacing:1px;}
+.auc-category-banner{width:100%;display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(232,185,35,0.16),rgba(232,185,35,0.04));border:2px solid #e8b923;border-radius:16px;padding:14px 16px;margin-bottom:18px;box-shadow:0 0 28px rgba(232,185,35,0.15);}
+.auc-cb-icon{font-size:2.6rem;line-height:1;flex-shrink:0;}
+.auc-cb-text{flex:1;text-align:left;min-width:0;}
+.auc-category-banner .lbl{font-size:0.62rem;color:#d4a82a;letter-spacing:2px;text-transform:uppercase;font-weight:800;}
+.auc-category-banner .val{font-family:'Anton',sans-serif;font-size:2rem;color:#fff;letter-spacing:1px;line-height:1.05;}
+.auc-category-banner .desc{font-size:0.75rem;color:#aaa;margin-top:3px;}
+.auc-cat-chip{display:inline-flex;align-items:center;gap:8px;background:rgba(232,185,35,0.12);border:1px solid #e8b923;color:#e8b923;border-radius:20px;padding:6px 16px;font-family:'Anton',sans-serif;font-size:0.95rem;letter-spacing:1px;margin-bottom:12px;}
+.auc-player-stat-line{margin-top:8px;font-family:'Anton',sans-serif;font-size:0.95rem;color:#e8b923;letter-spacing:1px;}
+.auc-reveal-stat{font-family:'Anton',sans-serif;font-size:1.1rem;color:#e8b923;letter-spacing:1px;text-align:center;margin-bottom:14px;}
 .auc-coin-row{display:flex;align-items:flex-start;justify-content:space-between;width:100%;margin-bottom:18px;gap:12px;}
 .auc-coin-side{flex:1;text-align:center;}
 .auc-coin-side.p1{color:#FFD700;}.auc-coin-side.p2{color:#60a5fa;}
@@ -821,6 +827,28 @@ body::before{display:none;}
 .auc-squad-col-name.p1{color:#FFD700;}.auc-squad-col-name.p2{color:#60a5fa;}
 .auc-squad-player-row{display:flex;justify-content:space-between;font-size:0.75rem;color:#aaa;padding:4px 0;border-bottom:1px solid #1a1a1a;}
 .auc-squad-total{font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;text-align:center;margin-top:10px;padding-top:10px;border-top:1px solid #222;}
+.auc-reveal-eyebrow{font-size:0.78rem;color:#d4a82a;font-weight:800;letter-spacing:3px;text-transform:uppercase;text-align:center;max-width:340px;line-height:1.5;margin-bottom:10px;animation:aucFadeIn 0.5s ease both;}
+.auc-reveal-icon{font-size:clamp(4rem,18vw,6.5rem);line-height:1;margin-bottom:6px;animation:aucRevealPop 0.7s cubic-bezier(0.34,1.56,0.64,1) 1.1s both;}
+.auc-reveal-category{
+  font-family:'Anton',sans-serif;font-size:clamp(3rem,14vw,5.5rem);color:#e8b923;letter-spacing:2px;
+  text-align:center;line-height:1;margin-bottom:14px;text-shadow:0 0 48px rgba(232,185,35,0.55);
+  animation:aucRevealPop 0.7s cubic-bezier(0.34,1.56,0.64,1) 1.3s both;
+}
+.auc-reveal-desc{color:#fff;font-size:1.05rem;font-weight:700;text-align:center;margin-bottom:10px;max-width:320px;animation:aucFadeIn 0.5s ease 1.9s both;}
+.auc-reveal-rule{color:#999;font-size:0.82rem;text-align:center;line-height:1.5;margin-bottom:30px;max-width:320px;padding:10px 14px;border:1px solid #2a2a2a;border-radius:12px;background:rgba(255,255,255,0.03);animation:aucFadeIn 0.5s ease 2.2s both;}
+#aucAnnounceOverlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.98);display:none;align-items:center;justify-content:center;flex-direction:column;padding:20px;cursor:pointer;}
+#aucAnnounceOverlay .auc-reveal-icon{animation-delay:0.5s;}
+#aucAnnounceOverlay .auc-reveal-category{animation-delay:0.7s;}
+#aucAnnounceOverlay .auc-reveal-desc{animation-delay:1.2s;}
+#aucAnnounceOverlay .auc-reveal-rule{animation-delay:1.5s;margin-bottom:18px;}
+.auc-ann-skip{font-size:0.65rem;color:#555;letter-spacing:2px;text-transform:uppercase;animation:aucFadeIn 0.5s ease 2s both;}
+.auc-ann-pill{font-family:'Anton',sans-serif;font-size:1.3rem;letter-spacing:1px;color:#e8b923;border:2px solid #e8b923;border-radius:30px;padding:8px 24px;margin-bottom:6px;box-shadow:0 0 28px rgba(232,185,35,0.25);}
+@keyframes aucFadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+@keyframes aucRevealPop{0%{opacity:0;transform:scale(0.6);}60%{opacity:1;transform:scale(1.08);}100%{opacity:1;transform:scale(1);}}
+
+.eg-giveup-btn{display:none;margin:18px auto 0;background:none;border:1px solid #3a3a3a;color:#888;padding:11px 26px;border-radius:12px;cursor:pointer;font-family:'Anton',sans-serif;font-size:0.9rem;letter-spacing:1px;transition:all 0.2s;}
+.eg-giveup-btn:hover{border-color:#f87171;color:#f87171;}
+.eg-giveup-btn.armed{background:rgba(248,113,113,0.12);border-color:#f87171;color:#f87171;}
 
 /* ── COUNTDOWN OVERLAY ── */
 #egCountdownOverlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.98);display:none;align-items:center;justify-content:center;flex-direction:column;}
@@ -1640,7 +1668,7 @@ body::before{display:none;}
   <!-- NAME ENTRY -->
   <div id="aucNameEntry" style="width:100%;display:flex;flex-direction:column;align-items:center;">
     <div class="eg-ne-title">The Auction</div>
-    <div class="eg-ne-sub">Pass-and-play — 100 coins each, build your squad</div>
+    <div class="eg-ne-sub">Pass-and-play — 20 coins each, build a 4-player squad</div>
     <div class="eg-ne-field">
       <div class="eg-ne-label p1">Player 1</div>
       <input class="eg-ne-input p1" id="aucNameInput1" type="text" placeholder="Player 1" maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('aucNameInput2').focus()">
@@ -1652,11 +1680,15 @@ body::before{display:none;}
     <button class="eg-ne-go" onclick="aucConfirmNames()">Start Auction →</button>
   </div>
 
-  <!-- ROUND VIEW (bidding) -->
-  <div id="aucRoundView" style="width:100%;display:none;flex-direction:column;align-items:center;">
+  <!-- PERSISTENT HEADER: category, coins, squad progress, current player, high bid — always visible -->
+  <div id="aucPersistentHeader" style="width:100%;display:none;flex-direction:column;align-items:center;">
     <div class="auc-category-banner">
-      <div class="lbl">This match is decided by</div>
-      <div class="val" id="aucCategoryLabel"></div>
+      <div class="auc-cb-icon" id="aucCatIcon"></div>
+      <div class="auc-cb-text">
+        <div class="lbl">We're hunting for the most</div>
+        <div class="val" id="aucCategoryLabel"></div>
+        <div class="desc" id="aucCategoryDesc"></div>
+      </div>
     </div>
     <div class="auc-coin-row">
       <div class="auc-coin-side p1">
@@ -1670,17 +1702,23 @@ body::before{display:none;}
         <div class="auc-squad-line" id="aucSquadP2"></div>
       </div>
     </div>
-    <div class="cw-round-tag" id="aucPoolTag">PLAYER 1 OF 5</div>
+    <div class="cw-round-tag" id="aucPoolTag">SQUAD PROGRESS: 0/4 · 0/4</div>
     <div class="cw-question-card">
       <div class="auc-player-avatar" id="aucPlayerAvatar"></div>
       <div class="cw-question-player" id="aucPlayerName"></div>
       <div class="auc-player-meta" id="aucPlayerMeta"></div>
+      <div class="auc-player-stat-line" id="aucPlayerStatLine"></div>
     </div>
     <div class="auc-highbid-box">
       <div class="auc-highbid-label">CURRENT HIGH BID</div>
       <div class="auc-highbid-val" id="aucHighBidVal">No bids yet</div>
     </div>
+  </div>
+
+  <!-- ROUND VIEW (bidding controls only — header above stays visible) -->
+  <div id="aucRoundView" style="width:100%;display:none;flex-direction:column;align-items:center;">
     <div class="cw-guesser-badge" id="aucBidderBadge"></div>
+    <div class="auc-cat-chip" id="aucCatChip"></div>
     <div class="cw-timer-wrap">
       <div class="eg-timer-ring">
         <svg class="eg-timer-svg" viewBox="0 0 90 90">
@@ -1701,7 +1739,7 @@ body::before{display:none;}
     </div>
   </div>
 
-  <!-- TURN HANDOFF SCREEN -->
+  <!-- TURN HANDOFF SCREEN (header above stays visible, so the incoming player already sees category/coins/current bid) -->
   <div class="cw-pass-screen" id="aucPassScreen">
     <div class="cw-pass-icon">🎤</div>
     <div class="cw-pass-title" id="aucPassTitle">Pass to Player 2</div>
@@ -1709,14 +1747,8 @@ body::before{display:none;}
     <button class="cw-pass-btn" onclick="aucTurnContinue()">I'm Ready →</button>
   </div>
 
-  <!-- REVEAL VIEW -->
+  <!-- REVEAL VIEW (header above stays visible) -->
   <div id="aucRevealView" style="width:100%;display:none;flex-direction:column;align-items:center;">
-    <div class="cw-round-tag" id="aucRevealPoolTag">PLAYER 1 OF 5</div>
-    <div class="cw-question-card" style="margin-bottom:16px;">
-      <div class="auc-player-avatar" id="aucRevealAvatar"></div>
-      <div class="cw-question-player" id="aucRevealPlayerName"></div>
-      <div class="auc-player-meta" id="aucRevealPlayerMeta"></div>
-    </div>
     <div class="cw-reveal-row">
       <div class="cw-guess-card" id="aucRevealCardP1">
         <div class="cw-guess-name p1" id="aucRevealNameP1"></div>
@@ -1730,6 +1762,7 @@ body::before{display:none;}
       </div>
     </div>
     <div class="cw-round-result" id="aucRoundResult"></div>
+    <div class="auc-reveal-stat" id="aucRevealStat"></div>
     <button class="cw-submit-btn" id="aucNextBtn" onclick="aucNextPlayer()">Next Player →</button>
   </div>
 
@@ -2132,6 +2165,7 @@ body::before{display:none;}
   <div id="egGameover" class="eg-gameover" style="display:none;"></div>
   <div id="egYearToast"></div>
   <div id="egNoteToast"></div>
+  <button id="egGiveUpBtn" class="eg-giveup-btn" onclick="egGiveUp()">🏳️ Give up</button>
   <button onclick="showElGrandeMenu()" style="margin-top:16px;background:none;border:1px solid #333;color:#666;padding:10px 24px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.8rem;">← Categories</button>
 </div>
 
@@ -2294,7 +2328,7 @@ body::before{display:none;}
   </div>
 
   <!-- Feedback (above input so it's visible when the mobile keyboard is open) -->
-  <div id="mbFeedback" style="text-align:center;min-height:78px;width:100%;margin-bottom:14px;display:flex;align-items:center;justify-content:center;"></div>
+  <div id="mbFeedback" style="text-align:center;min-height:78px;width:100%;margin-bottom:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;"></div>
 
   <!-- Guess input -->
   <div id="mbInputArea" style="width:100%;margin-bottom:16px;">
@@ -2414,6 +2448,22 @@ body::before{display:none;}
 </div>
 
 <!-- COUNTDOWN OVERLAY -->
+<!-- AUCTION ANNOUNCEMENT + COUNTDOWN OVERLAY -->
+<div id="aucAnnounceOverlay" onclick="aucSkipAnnounce()">
+  <div id="aucAnnStageA" style="display:flex;flex-direction:column;align-items:center;">
+    <div class="auc-reveal-eyebrow">This match, you're hunting for the squad with the most…</div>
+    <div class="auc-reveal-icon" id="aucRevealIcon">🌍</div>
+    <div class="auc-reveal-category" id="aucRevealCategoryText"></div>
+    <div class="auc-reveal-desc" id="aucRevealDesc"></div>
+    <div class="auc-reveal-rule" id="aucRevealRule"></div>
+    <div class="auc-ann-skip">tap to skip</div>
+  </div>
+  <div id="aucAnnStageB" style="display:none;flex-direction:column;align-items:center;">
+    <div class="auc-ann-pill" id="aucAnnPill"></div>
+    <div id="aucAnnCountText" style="font-family:'Anton',sans-serif;text-align:center;line-height:1;"></div>
+  </div>
+</div>
+
 <div id="egCountdownOverlay">
   <div id="egCountdownText"></div>
 </div>
@@ -2518,6 +2568,7 @@ function closeAllOverlays(){
   ['gameWelcomeOverlay','slotMachineOverlay','egModeChoice','egNameEntry','egCountdownOverlay','sxiModeChoice','sxiTypeChoice'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
+  if(typeof aucClearAnnounce==='function') aucClearAnnounce();
 }
 const GAME_INFO = {
   hol: {
@@ -2546,7 +2597,7 @@ const GAME_INFO = {
   },
   auc: {
     title: 'The Auction',
-    body: `Pass-and-play head to head. One stat category decides the match — say, Career Goals. Both of you start with 20 coins. Five players come up one at a time and you take turns bidding — Player A goes 5, Player B goes 6, back and forth until one of you passes. The other wins the player for their last bid. Don't know who's coming next, so spend early at your own risk. After 5 players, squads' stat totals go head to head — highest total wins.`
+    body: `Pass-and-play head to head. One stat category decides the match — say, Career Goals. Both of you start with 20 coins and build a 4-player squad. Players come up one at a time and you take turns bidding — Player A goes 5, Player B goes 6, back and forth until one of you passes. The other wins the player for their last bid. Don't know who's coming next, so spend early at your own risk. Once your squad is full you're done bidding — anything left goes to your opponent for free until theirs is full too. Then it's squad totals head to head — highest wins.`
   }
 };
 function openGameInfo(key){
@@ -3052,6 +3103,8 @@ function egBegin(){
   document.getElementById('egGameover').style.display='none';
   document.getElementById('egInputWrap').style.display='flex';
   document.getElementById('egInput').value='';
+  egResetGiveUp();
+  document.getElementById('egGiveUpBtn').style.display='block';
   document.getElementById('egPlayerLabel1').textContent=egPlayerNames[0];
   const s2box=document.getElementById('egScore2Box');
   if(egPlayerCount===1){
@@ -3273,8 +3326,37 @@ function egShowYearToast(years){
   _egYearToastTimer = setTimeout(()=>toast.classList.remove('show'), 1700);
 }
 
-function egShowResult(type, winner){
+let egGiveUpTimer = null;
+function egResetGiveUp(){
+  clearTimeout(egGiveUpTimer);
+  const b = document.getElementById('egGiveUpBtn');
+  if(b){ b.classList.remove('armed'); b.textContent = '🏳️ Give up'; }
+}
+
+// First tap arms the button (so a stray tap can't end the game), second tap within 3s gives up
+function egGiveUp(){
+  if(!egRunning) return;
+  const b = document.getElementById('egGiveUpBtn');
+  if(!b.classList.contains('armed')){
+    b.classList.add('armed');
+    b.textContent = 'Tap again to give up';
+    clearTimeout(egGiveUpTimer);
+    egGiveUpTimer = setTimeout(egResetGiveUp, 3000);
+    return;
+  }
+  egResetGiveUp();
+  clearInterval(egTimer);
   egRunning = false;
+  playWrong();
+  if(egPlayerCount===1){ egShowResult('solo', 1, true); return; }
+  const other = egCurrentPlayer===1 ? 2 : 1;
+  egShowResult('win', other, true);
+}
+
+function egShowResult(type, winner, gaveUp){
+  egRunning = false;
+  egResetGiveUp();
+  document.getElementById('egGiveUpBtn').style.display='none';
   const go = document.getElementById('egGameover');
   go.style.display='block';
   document.getElementById('egInputWrap').style.display='none';
@@ -3286,7 +3368,7 @@ function egShowResult(type, winner){
   const seeMissingBtn=missingCount>0?`<div><button class="eg-see-missing-btn" id="egSeeMissingBtn" onclick="egShowMissing()">👁 See missing ${label} (${missingCount})</button></div>`:'';
   if(type==='solo'){
     // 1-player end screen
-    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">⏱️</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#FFD700;margin-bottom:8px;">TIME'S UP!</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">You named ${egScores[0]} answer${egScores[0]!==1?'s':''}</div><div style="font-family:'Anton',sans-serif;font-size:2.4rem;color:#FFD700;margin-bottom:20px;">${egScores[0]}</div>${btns}${seeMissingBtn}`;
+    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">${gaveUp?'🏳️':'⏱️'}</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#FFD700;margin-bottom:8px;">${gaveUp?'YOU GAVE UP':"TIME'S UP!"}</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">You named ${egScores[0]} answer${egScores[0]!==1?'s':''}</div><div style="font-family:'Anton',sans-serif;font-size:2.4rem;color:#FFD700;margin-bottom:20px;">${egScores[0]}</div>${btns}${seeMissingBtn}`;
   } else if(type==='draw'){
     const scores=`<div style="display:flex;gap:20px;justify-content:center;margin-bottom:20px;"><div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">${egPlayerNames[0].toUpperCase()}</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p1col};">${egScores[0]}</div></div><div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">${egPlayerNames[1].toUpperCase()}</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p2col};">${egScores[1]}</div></div></div>`;
     go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🤝</div><div style="font-family:'Anton',sans-serif;font-size:2rem;color:#fbbf24;margin-bottom:8px;">IT'S A DRAW!</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">Neither player could break the tie</div>${scores}${btns}${seeMissingBtn}`;
@@ -3294,7 +3376,7 @@ function egShowResult(type, winner){
     const scores=`<div style="display:flex;gap:20px;justify-content:center;margin-bottom:20px;"><div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">${egPlayerNames[0].toUpperCase()}</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p1col};">${egScores[0]}</div></div><div style="text-align:center;"><div style="font-size:0.7rem;color:#555;margin-bottom:2px;">${egPlayerNames[1].toUpperCase()}</div><div style="font-family:'Anton',sans-serif;font-size:1.6rem;color:${p2col};">${egScores[1]}</div></div></div>`;
     const winCol=winner===1?p1col:p2col;
     const winName=egPlayerNames[winner-1].toUpperCase();
-    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🏆</div><div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:${winCol};margin-bottom:4px;">${winName} WINS!</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">${egScores[winner-1]} – ${egScores[winner===1?1:0]}</div>${scores}${btns}${seeMissingBtn}`;
+    go.innerHTML=`<div style="font-size:2.5rem;margin-bottom:8px;">🏆</div><div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:${winCol};margin-bottom:4px;">${winName} WINS!</div><div style="color:#666;font-size:0.85rem;margin-bottom:16px;">${gaveUp?egPlayerNames[winner===1?1:0]+' gave up · ':''}${egScores[winner-1]} – ${egScores[winner===1?1:0]}</div>${scores}${btns}${seeMissingBtn}`;
   }
 }
 
@@ -5279,7 +5361,8 @@ function updateFriendsNav(){
   }
 }
 </script>
-<script src="data/eg-datasets.js?v=23"></script>
+<script src="data/transfer-fees.js?v=2"></script>
+<script src="data/eg-datasets.js?v=24"></script>
 <script src="data/players.js"></script>
 <script src="data/kits.js"></script>
 <script src="data/club-logos.js?v=2"></script>
@@ -5287,8 +5370,8 @@ function updateFriendsNav(){
 <script src="data/sxi-teams.js"></script>
 <script src="data/sxi-pl-winners.js"></script>
 <script src="data/trophies.js"></script>
-<script src="data/moneyball-transfers.js"></script>
-<script src="data/top10.js?v=10"></script>
+<script src="data/moneyball-transfers.js?v=3"></script>
+<script src="data/top10.js?v=12"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════════════
 //  MONEYBALL GAME
@@ -5768,6 +5851,7 @@ let cwQuestions = [], cwUsedKeys = new Set();
 let cwRoundIdx = 0;
 let cwPoints = {p1:0, p2:0};
 let cwCurrentGuesser = 1;
+let cwPassNextGuesser = 2;
 let cwGuesses = {p1:null, p2:null};
 let cwTimer = null, cwSeconds = CW_TIME;
 
@@ -5845,7 +5929,7 @@ function cwStartRound(){
   document.getElementById('cwQuestionPlayer').textContent = q.playerName;
   document.getElementById('cwQuestionStat').textContent = 'HOW MANY ' + q.label.toUpperCase() + '?';
   cwGuesses = {p1:null, p2:null};
-  cwShowGuesser(1);
+  cwShowGuesser(Math.random() < 0.5 ? 1 : 2);
 }
 
 function cwShowGuesser(n){
@@ -5896,19 +5980,23 @@ function cwTimeOut(){
 }
 
 function cwRecordGuess(val){
-  if(cwCurrentGuesser===1){
-    cwGuesses.p1 = val;
-    document.getElementById('cwPassTitle').textContent = 'Pass to ' + cwP2Name;
-    document.getElementById('cwRoundView').style.display='none';
-    document.getElementById('cwPassScreen').style.display='flex';
-  } else {
-    cwGuesses.p2 = val;
+  if(cwCurrentGuesser===1) cwGuesses.p1 = val; else cwGuesses.p2 = val;
+
+  const bothIn = cwGuesses.p1 !== null && cwGuesses.p2 !== null;
+  if(bothIn){
     cwReveal();
+    return;
   }
+
+  const nextGuesser = cwCurrentGuesser===1 ? 2 : 1;
+  document.getElementById('cwPassTitle').textContent = 'Pass to ' + (nextGuesser===1?cwP1Name:cwP2Name);
+  document.getElementById('cwRoundView').style.display='none';
+  document.getElementById('cwPassScreen').style.display='flex';
+  cwPassNextGuesser = nextGuesser;
 }
 
 function cwPassContinue(){
-  cwShowGuesser(2);
+  cwShowGuesser(cwPassNextGuesser);
 }
 
 function cwReveal(){
@@ -6027,16 +6115,30 @@ function cwPlayAgain(){
 // ====================== THE AUCTION (local pass-and-play) ======================
 const AUC_TIME = 12;
 const AUC_START_COINS = 20;
-const AUC_POOL_SIZE = 5;
+const AUC_SQUAD_TARGET = 4;
 const AUC_CIRCUMFERENCE = 226;
+const AUC_CATEGORY_INFO = {
+  career_goals:       {icon:'⚽', desc:'Goals scored over their whole career'},
+  career_appearances: {icon:'👟', desc:'Games played over their whole career'},
+  assists:            {icon:'🎯', desc:'Assists over their whole career'},
+  intl_caps:          {icon:'🌍', desc:'Appearances for their country'},
+  intl_goals:         {icon:'🥅', desc:'Goals scored for their country'},
+  trophies:           {icon:'🏆', desc:'Major trophies won'}
+};
+function aucCatInfo(){
+  const info = AUC_CATEGORY_INFO[aucCategory] || {icon:'⭐', desc:''};
+  return {icon:info.icon, desc:info.desc, name:catLabels[aucCategory].toUpperCase()};
+}
 
 let aucP1Name = '', aucP2Name = '';
-let aucPool = [], aucCategory = '';
-let aucPlayerIdx = 0;
+let aucCategory = '';
+let aucUsedNames = new Set();
+let aucCurrentPlayer = null;
 let aucCoins = {p1:AUC_START_COINS, p2:AUC_START_COINS};
 let aucSquads = {p1:[], p2:[]};
 let aucHighBid = 0, aucHighBidder = null; // null = no bids yet this player
 let aucTurn = 1, aucOpener = 1; // whose turn to act; opener alternates each player
+let aucPassStreak = 0; // consecutive passes with no standing bid — 2 means both declined
 let aucTimer = null, aucSeconds = AUC_TIME;
 
 function showAuction(){
@@ -6055,6 +6157,8 @@ function showAuction(){
 
   clearInterval(aucTimer);
   document.getElementById('aucNameEntry').style.display='flex';
+  aucClearAnnounce();
+  document.getElementById('aucPersistentHeader').style.display='none';
   document.getElementById('aucRoundView').style.display='none';
   document.getElementById('aucPassScreen').style.display='none';
   document.getElementById('aucRevealView').style.display='none';
@@ -6079,54 +6183,156 @@ function aucConfirmNames(){
 function aucStartMatch(){
   const cats = Object.keys(catLabels);
   aucCategory = cats[Math.floor(Math.random()*cats.length)];
-
-  // draw AUC_POOL_SIZE unique players that have a valid value for aucCategory
-  const pool = [], used = new Set();
-  let attempts = 0;
-  while(pool.length < AUC_POOL_SIZE && attempts < 400){
-    attempts++;
-    const p = PLAYERS[Math.floor(Math.random()*PLAYERS.length)];
-    if(used.has(p.name)) continue;
-    const val = catValue(p, aucCategory);
-    if(val===undefined || val===null || isNaN(val)) continue;
-    used.add(p.name);
-    pool.push(p);
-  }
-  aucPool = pool;
-  aucPlayerIdx = 0;
+  aucUsedNames = new Set();
   aucCoins = {p1:AUC_START_COINS, p2:AUC_START_COINS};
   aucSquads = {p1:[], p2:[]};
+  aucOpener = Math.random() < 0.5 ? 1 : 2;
 
   document.getElementById('aucNameEntry').style.display='none';
   document.getElementById('aucEndView').style.display='none';
+  document.getElementById('aucPersistentHeader').style.display='none';
+
+  aucRunAnnouncement();
+}
+
+// ── Full-screen announcement + 3-2-1 countdown (same feel as the Football Under Pressure kick-off) ──
+let aucAnnTimers = [];
+let aucAnnStage = null; // 'A' announcement, 'B' countdown, null idle
+
+function aucClearAnnounce(){
+  aucAnnTimers.forEach(clearTimeout);
+  aucAnnTimers = [];
+  aucAnnStage = null;
+  const o = document.getElementById('aucAnnounceOverlay');
+  if(o) o.style.display = 'none';
+}
+
+function aucRunAnnouncement(){
+  aucClearAnnounce();
+  const ci = aucCatInfo();
+  document.getElementById('aucRevealIcon').textContent = ci.icon;
+  document.getElementById('aucRevealCategoryText').textContent = ci.name;
+  document.getElementById('aucRevealDesc').textContent = ci.desc;
+  document.getElementById('aucRevealRule').innerHTML =
+    'Win <b style="color:#fff;">' + AUC_SQUAD_TARGET + ' players</b> with your ' + AUC_START_COINS + ' coins. ' +
+    'The squad with the highest combined <b style="color:#e8b923;">' + ci.name + '</b> wins the match.';
+
+  const overlay = document.getElementById('aucAnnounceOverlay');
+  const stageA = document.getElementById('aucAnnStageA');
+  document.getElementById('aucAnnStageB').style.display = 'none';
+  stageA.style.display = 'flex';
+  overlay.style.display = 'flex';
+  Array.from(stageA.children).forEach(el=>{ // restart the pop-in animations on every match
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = '';
+  });
+  setBackBtn(null);
+  aucAnnStage = 'A';
+  aucAnnTimers.push(setTimeout(aucAnnounceCountdown, 3800));
+}
+
+function aucSkipAnnounce(){
+  if(aucAnnStage === 'A') aucAnnounceCountdown();
+}
+
+function aucAnnounceCountdown(){
+  aucAnnTimers.forEach(clearTimeout);
+  aucAnnTimers = [];
+  aucAnnStage = 'B';
+  const ci = aucCatInfo();
+  document.getElementById('aucAnnStageA').style.display = 'none';
+  document.getElementById('aucAnnStageB').style.display = 'flex';
+  document.getElementById('aucAnnPill').textContent = ci.icon + ' ' + ci.name;
+
+  const text = document.getElementById('aucAnnCountText');
+  const steps = ['3','2','1','BID!'];
+  let i = 0;
+  function next(){
+    if(i >= steps.length){ aucFinishAnnouncement(); return; }
+    const isGo = steps[i] === 'BID!';
+    text.className = ''; void text.offsetWidth;
+    text.textContent = steps[i];
+    text.className = (isGo ? 'eg-cd-kickoff' : 'eg-cd-num') + ' go';
+    if(isGo) playWhistle();
+    i++;
+    aucAnnTimers.push(setTimeout(next, isGo ? 1000 : 820));
+  }
+  next();
+}
+
+function aucFinishAnnouncement(){
+  aucClearAnnounce();
+  setBackBtn('← Back Home', showLanding);
+  document.getElementById('aucPersistentHeader').style.display = 'flex';
   aucStartRound();
 }
 
-function aucRenderCoinsAndSquads(){
+// Draws a random not-yet-used player with a valid value for aucCategory
+function aucDrawPlayer(){
+  const candidates = PLAYERS.filter(p => !aucUsedNames.has(p.name) && !isNaN(catValue(p, aucCategory)) && catValue(p, aucCategory) != null);
+  if(!candidates.length) return null;
+  const p = candidates[Math.floor(Math.random()*candidates.length)];
+  aucUsedNames.add(p.name);
+  return p;
+}
+
+function aucRenderHeader(){
+  const ci = aucCatInfo();
+  document.getElementById('aucCatIcon').textContent = ci.icon;
+  document.getElementById('aucCategoryLabel').textContent = ci.name;
+  document.getElementById('aucCategoryDesc').textContent = ci.desc + ' · highest squad total wins';
+  document.getElementById('aucPlayerStatLine').textContent = ci.icon + ' Judged on: ' + ci.name;
+  document.getElementById('aucCatChip').textContent = ci.icon + ' Bidding for ' + ci.name;
   document.getElementById('aucCoinP1Name').textContent = aucP1Name;
   document.getElementById('aucCoinP2Name').textContent = aucP2Name;
   document.getElementById('aucCoinP1Amt').innerHTML = aucCoins.p1 + '<small>COINS</small>';
   document.getElementById('aucCoinP2Amt').innerHTML = aucCoins.p2 + '<small>COINS</small>';
   document.getElementById('aucSquadP1').textContent = aucSquads.p1.length ? aucSquads.p1.map(p=>p.name).join(', ') : 'No players yet';
   document.getElementById('aucSquadP2').textContent = aucSquads.p2.length ? aucSquads.p2.map(p=>p.name).join(', ') : 'No players yet';
+  document.getElementById('aucPoolTag').textContent =
+    'SQUAD PROGRESS — ' + aucP1Name.toUpperCase() + ' ' + aucSquads.p1.length + '/' + AUC_SQUAD_TARGET +
+    ' · ' + aucP2Name.toUpperCase() + ' ' + aucSquads.p2.length + '/' + AUC_SQUAD_TARGET;
+
+  const p = aucCurrentPlayer;
+  document.getElementById('aucPlayerAvatar').innerHTML = aucAvatarHTML(p);
+  document.getElementById('aucPlayerName').textContent = p.name;
+  document.getElementById('aucPlayerMeta').textContent = p.pos + ' · ' + p.nat;
+
+  const highBidVal = document.getElementById('aucHighBidVal');
+  highBidVal.textContent = aucHighBidder === null
+    ? 'No bids yet'
+    : aucHighBid + ' coins — ' + (aucHighBidder===1?aucP1Name:aucP2Name);
 }
 
 function aucStartRound(){
   document.getElementById('aucRevealView').style.display='none';
   document.getElementById('aucPassScreen').style.display='none';
-  document.getElementById('aucCategoryLabel').textContent = catLabels[aucCategory].toUpperCase();
-  aucRenderCoinsAndSquads();
-  document.getElementById('aucPoolTag').textContent = 'PLAYER ' + (aucPlayerIdx+1) + ' OF ' + aucPool.length;
 
-  const p = aucPool[aucPlayerIdx];
-  document.getElementById('aucPlayerAvatar').innerHTML = aucAvatarHTML(p);
-  document.getElementById('aucPlayerName').textContent = p.name;
-  document.getElementById('aucPlayerMeta').textContent = p.pos + ' · ' + p.nat;
+  if(aucSquads.p1.length >= AUC_SQUAD_TARGET && aucSquads.p2.length >= AUC_SQUAD_TARGET){
+    aucEndMatch();
+    return;
+  }
+
+  const p = aucDrawPlayer();
+  if(!p){ aucEndMatch(); return; } // pool exhausted — end with whatever squads exist
+  aucCurrentPlayer = p;
+
+  const p1Full = aucSquads.p1.length >= AUC_SQUAD_TARGET;
+  const p2Full = aucSquads.p2.length >= AUC_SQUAD_TARGET;
+
+  if(p1Full || p2Full){
+    aucRenderHeader();
+    aucResolveWalkover(p1Full ? 2 : 1, p);
+    return;
+  }
 
   aucHighBid = 0;
   aucHighBidder = null;
-  aucOpener = (aucPlayerIdx % 2 === 0) ? 1 : 2; // alternate who opens bidding each player
+  aucPassStreak = 0;
+  aucOpener = aucOpener===1 ? 2 : 1; // mix up who opens each player
   aucTurn = aucOpener;
+  aucRenderHeader();
   aucRenderTurn();
 }
 
@@ -6137,13 +6343,6 @@ function aucRenderTurn(){
   const badge = document.getElementById('aucBidderBadge');
   badge.className = 'cw-guesser-badge ' + (aucTurn===1?'p1':'p2');
   badge.textContent = name + "'s turn";
-
-  const highBidVal = document.getElementById('aucHighBidVal');
-  if(aucHighBidder === null){
-    highBidVal.textContent = 'No bids yet';
-  } else {
-    highBidVal.textContent = aucHighBid + ' coins — ' + (aucHighBidder===1?aucP1Name:aucP2Name);
-  }
 
   document.getElementById('aucBidHint').innerHTML = 'You have <b>' + remaining + '</b> coins left';
 
@@ -6205,13 +6404,25 @@ function aucRaise(){
 
   aucHighBid = val;
   aucHighBidder = aucTurn;
+  aucPassStreak = 0;
   aucTurn = aucTurn===1 ? 2 : 1;
-  aucShowTurnTransition();
+  document.getElementById('aucHighBidVal').textContent = aucHighBid + ' coins — ' + (aucHighBidder===1?aucP1Name:aucP2Name);
+  aucRenderTurn();
 }
 
 function aucPass(){
   clearInterval(aucTimer);
-  aucResolveAuction();
+  aucPassStreak++;
+
+  if(aucHighBidder !== null || aucPassStreak >= 2){
+    // someone already has a standing bid to win at, or both sides declined in a row
+    aucResolveAuction();
+    return;
+  }
+
+  // nobody has bid yet and only one side has declined so far — give the other side a chance
+  aucTurn = aucTurn===1 ? 2 : 1;
+  aucRenderTurn();
 }
 
 function aucShowTurnTransition(){
@@ -6228,13 +6439,13 @@ function aucTurnContinue(){
   aucRenderTurn();
 }
 
-function aucResolveAuction(){
-  const p = aucPool[aucPlayerIdx];
-  document.getElementById('aucRevealPoolTag').textContent = 'PLAYER ' + (aucPlayerIdx+1) + ' OF ' + aucPool.length;
-  document.getElementById('aucRevealAvatar').innerHTML = aucAvatarHTML(p);
-  document.getElementById('aucRevealPlayerName').textContent = p.name;
-  document.getElementById('aucRevealPlayerMeta').textContent = p.pos + ' · ' + p.nat;
+function aucShowRevealStat(p){
+  const ci = aucCatInfo();
+  document.getElementById('aucRevealStat').textContent = ci.icon + ' ' + p.name + ': ' + catValue(p, aucCategory) + ' ' + ci.name;
+}
 
+function aucResolveAuction(){
+  const p = aucCurrentPlayer;
   document.getElementById('aucRevealNameP1').textContent = aucP1Name;
   document.getElementById('aucRevealNameP2').textContent = aucP2Name;
 
@@ -6262,18 +6473,42 @@ function aucResolveAuction(){
     resultEl.textContent = '🔨 SOLD! ' + winnerName + ' wins ' + p.name + ' for ' + price;
   }
 
+  aucShowRevealStat(p);
+  aucRenderHeader();
   document.getElementById('aucRoundView').style.display='none';
   document.getElementById('aucPassScreen').style.display='none';
   document.getElementById('aucRevealView').style.display='flex';
-  document.getElementById('aucNextBtn').textContent = (aucPlayerIdx+1 >= aucPool.length) ? 'See Final Squads →' : 'Next Player →';
+  const bothFull = aucSquads.p1.length >= AUC_SQUAD_TARGET && aucSquads.p2.length >= AUC_SQUAD_TARGET;
+  document.getElementById('aucNextBtn').textContent = bothFull ? 'See Final Squads →' : 'Next Player →';
+}
+
+function aucResolveWalkover(winnerSlot, p){
+  const winnerName = winnerSlot===1 ? aucP1Name : aucP2Name;
+  if(winnerSlot===1) aucSquads.p1.push(p); else aucSquads.p2.push(p);
+
+  document.getElementById('aucRevealNameP1').textContent = aucP1Name;
+  document.getElementById('aucRevealNameP2').textContent = aucP2Name;
+  document.getElementById('aucRevealBidP1').textContent = winnerSlot===1 ? 'FREE' : '—';
+  document.getElementById('aucRevealBidP2').textContent = winnerSlot===2 ? 'FREE' : '—';
+  const cardP1 = document.getElementById('aucRevealCardP1');
+  const cardP2 = document.getElementById('aucRevealCardP2');
+  cardP1.className = 'cw-guess-card' + (winnerSlot===1?' winner':'');
+  cardP2.className = 'cw-guess-card' + (winnerSlot===2?' winner':'');
+
+  const resultEl = document.getElementById('aucRoundResult');
+  resultEl.className = 'cw-round-result perfect';
+  resultEl.textContent = '🎁 ' + (winnerSlot===1?aucP2Name:aucP1Name) + "'s squad is full — " + p.name + ' joins ' + winnerName + ' for free';
+
+  aucShowRevealStat(p);
+  aucRenderHeader();
+  document.getElementById('aucRoundView').style.display='none';
+  document.getElementById('aucPassScreen').style.display='none';
+  document.getElementById('aucRevealView').style.display='flex';
+  const bothFull = aucSquads.p1.length >= AUC_SQUAD_TARGET && aucSquads.p2.length >= AUC_SQUAD_TARGET;
+  document.getElementById('aucNextBtn').textContent = bothFull ? 'See Final Squads →' : 'Next Player →';
 }
 
 function aucNextPlayer(){
-  aucPlayerIdx++;
-  if(aucPlayerIdx >= aucPool.length){
-    aucEndMatch();
-    return;
-  }
   aucStartRound();
 }
 

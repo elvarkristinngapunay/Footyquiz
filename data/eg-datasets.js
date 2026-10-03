@@ -354,27 +354,33 @@ const EG_DATASETS = {
   hundred_million: {
     title: '€100M Club',
     missingLabel: 'transfers',
-    players: [
-      {name:'Neymar',            aliases:['neymar jr','neymar da silva'],           from:'Barcelona',       to:'PSG',             fee:'€222m', year:2017},
-      {name:'Kylian Mbappé',     aliases:['mbappe','kylian mbappe','km7'],          from:'Monaco',          to:'PSG',             fee:'€180m', year:2018},
-      {name:'Alexander Isak',    aliases:['isak'],                                  from:'Newcastle',       to:'Liverpool',       fee:'€147m', year:2025},
-      {name:'João Félix',        aliases:['joao felix','felix','joao felix'],        from:'Benfica',         to:'Atlético Madrid', fee:'€126m', year:2019},
-      {name:'Enzo Fernández',    aliases:['enzo fernandez','enzo'],                  from:'Benfica',         to:'Chelsea',         fee:'€121m', year:2023},
-      {name:'Antoine Griezmann', aliases:['griezmann','grizou'],                    from:'Atlético Madrid', to:'Barcelona',       fee:'€120m', year:2019},
-      {name:'Philippe Coutinho', aliases:['coutinho','phil coutinho'],              from:'Liverpool',       to:'Barcelona',       fee:'€118m', year:2018},
-      {name:'Jack Grealish',     aliases:['grealish'],                              from:'Aston Villa',     to:'Man City',        fee:'€118m', year:2021},
-      {name:'Florian Wirtz',     aliases:['wirtz'],                                 from:'Leverkusen',      to:'Liverpool',       fee:'€117m', year:2025},
-      {name:'Declan Rice',       aliases:['rice'],                                  from:'West Ham',        to:'Arsenal',         fee:'€116m', year:2023},
-      {name:'Moisés Caicedo',    aliases:['caicedo','moises caicedo'],              from:'Brighton',        to:'Chelsea',         fee:'€116m', year:2023},
-      {name:'Romelu Lukaku',     aliases:['lukaku','big rom'],                      from:'Inter Milan',     to:'Chelsea',         fee:'€115m', year:2021},
-      {name:'Ousmane Dembélé',   aliases:['dembele','dembélé','ousmane dembele'],   from:'Dortmund',        to:'Barcelona',       fee:'€105m', year:2017},
-      {name:'Paul Pogba',        aliases:['pogba','la pioche'],                     from:'Juventus',        to:'Man United',      fee:'€105m', year:2016},
-      {name:'Jude Bellingham',   aliases:['bellingham'],                            from:'Dortmund',        to:'Real Madrid',     fee:'€103m', year:2023},
-      {name:'Eden Hazard',       aliases:['hazard'],                                from:'Chelsea',         to:'Real Madrid',     fee:'€100m', year:2019},
-      {name:'Cristiano Ronaldo', aliases:['ronaldo','cr7','cristiano'],             from:'Real Madrid',     to:'Juventus',        fee:'€100m', year:2018},
-      {name:'Harry Kane',        aliases:['kane'],                                  from:'Tottenham',       to:'Bayern Munich',   fee:'€100m', year:2023},
-      {name:'Gareth Bale',       aliases:['bale'],                                  from:'Tottenham',       to:'Real Madrid',     fee:'€100m', year:2013},
-    ]
+    // Generated from the shared BIG_TRANSFERS table (data/transfer-fees.js) so fees match Top 10 + Moneyball.
+    // A player with two €100m+ moves (Enzo Fernández) is one answer showing both fees.
+    players: (function(){
+      if(typeof BIG_TRANSFERS === 'undefined') return [];
+      const byName = {}, out = [];
+      BIG_TRANSFERS.slice().sort((a,b)=>b.fee-a.fee || a.year-b.year).forEach(t=>{
+        const fee = '€' + t.fee + 'm';
+        const seen = byName[t.name];
+        if(seen){
+          seen.moves.push(t);
+          return;
+        }
+        const e = {name:t.name, aliases:t.aliases.slice(), from:t.from, to:t.to, fee, year:t.year, moves:[t]};
+        byName[t.name] = e; out.push(e);
+      });
+      out.forEach(e=>{
+        if(e.moves.length > 1){
+          const ms = e.moves.slice().sort((a,b)=>a.year-b.year);
+          e.fee  = ms.map(m=>'€'+m.fee+'m ('+m.year+')').join(' & ');
+          e.from = ms.map(m=>m.from).join(' / ');
+          e.to   = ms.map(m=>m.to).join(' / ');
+          e.aliases = [].concat.apply([], ms.map(m=>m.aliases));
+        }
+        delete e.moves;
+      });
+      return out;
+    })()
   },
 
   wc_golden_boot: {
@@ -1099,3 +1105,12 @@ const EG_DATASETS = {
     ]
   }
 };
+
+// Keep the €100M Club menu blurb in step with the shared transfer table
+(function(){
+  const n = EG_DATASETS.hundred_million && EG_DATASETS.hundred_million.players.length;
+  if(!n) return;
+  EG_GROUPS.forEach(g=>(g.quizzes||[]).forEach(q=>{
+    if(q.key==='hundred_million') q.desc = 'Name every player transferred for €100M or more (fees incl. add-ons) · ' + n + ' players';
+  }));
+})();

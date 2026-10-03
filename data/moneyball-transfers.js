@@ -13,7 +13,7 @@ const MONEYBALL_MANAGERS = [
     transfers: [
 
       // ── Liverpool (2015 – 2024) ────────────────────────────────────────────
-      { player:'Darwin Núñez',            pos:'Centre-Forward',    from:'Benfica',          fromLeague:'Liga Portugal', to:'Liverpool', window:'Summer',  year:2022, fee:85.00  },
+      { player:'Darwin Núñez',            pos:'Centre-Forward',    from:'Benfica',          fromLeague:'Liga Portugal', to:'Liverpool', window:'Summer',  year:2022, fee:100.00  },
       { player:'Virgil van Dijk',          pos:'Centre-Back',       from:'Southampton',      fromLeague:'Premier League',to:'Liverpool', window:'January', year:2018, fee:84.65  },
       { player:'Alisson',                  pos:'Goalkeeper',        from:'Roma',             fromLeague:'Serie A',       to:'Liverpool', window:'Summer',  year:2018, fee:72.50  },
       { player:'Dominik Szoboszlai',       pos:'Attacking Midfield',from:'RB Leipzig',       fromLeague:'Bundesliga',    to:'Liverpool', window:'Summer',  year:2023, fee:70.00  },
@@ -51,7 +51,7 @@ const MONEYBALL_MANAGERS = [
     transfers: [
 
       // ── Real Madrid ────────────────────────────────────────────────────────
-      { player:'Jude Bellingham',       pos:'Attacking Midfield', from:'Borussia Dortmund', fromLeague:'Bundesliga',    to:'Real Madrid',    window:'Summer',  year:2023, fee:127.00 },
+      { player:'Jude Bellingham',       pos:'Attacking Midfield', from:'Borussia Dortmund', fromLeague:'Bundesliga',    to:'Real Madrid',    window:'Summer',  year:2023, fee:133.00 },
       { player:'Gareth Bale',           pos:'Right Winger',       from:'Tottenham',         fromLeague:'Premier League',to:'Real Madrid',    window:'Summer',  year:2013, fee:101.00 },
       { player:'Aurélien Tchouaméni',   pos:'Defensive Midfield', from:'Monaco',            fromLeague:'Ligue 1',       to:'Real Madrid',    window:'Summer',  year:2022, fee:80.00  },
       { player:'James Rodríguez',       pos:'Attacking Midfield', from:'Monaco',            fromLeague:'Ligue 1',       to:'Real Madrid',    window:'Summer',  year:2014, fee:75.00  },
@@ -98,7 +98,7 @@ const MONEYBALL_MANAGERS = [
     transfers: [
 
       // ── Manchester City (2016 – present) ──────────────────────────────────
-      { player:'Jack Grealish',        pos:'Left Winger',        from:'Aston Villa',    fromLeague:'Premier League', to:'Man City', window:'Summer',  year:2021, fee:117.50 },
+      { player:'Jack Grealish',        pos:'Left Winger',        from:'Aston Villa',    fromLeague:'Premier League', to:'Man City', window:'Summer',  year:2021, fee:118.00 },
       { player:'Josko Gvardiol',       pos:'Centre-Back',        from:'RB Leipzig',     fromLeague:'Bundesliga',     to:'Man City', window:'Summer',  year:2023, fee:90.00  },
       { player:'Omar Marmoush',        pos:'Centre-Forward',     from:'Frankfurt',      fromLeague:'Bundesliga',     to:'Man City', window:'January', year:2025, fee:75.00  },
       { player:'Antoine Semenyo',      pos:'Right Winger',       from:'Bournemouth',    fromLeague:'Premier League', to:'Man City', window:'January', year:2026, fee:72.00  },
@@ -134,7 +134,7 @@ const MONEYBALL_MANAGERS = [
     transfers: [
 
       // ── Arsenal (2019 – present) ───────────────────────────────────────────
-      { player:'Declan Rice',           pos:'Central Midfield',   from:'West Ham',       fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2023, fee:116.60 },
+      { player:'Declan Rice',           pos:'Central Midfield',   from:'West Ham',       fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2023, fee:122.00 },
       { player:'Kai Havertz',           pos:'Centre-Forward',     from:'Chelsea',        fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2023, fee:75.00  },
       { player:'Martín Zubimendi',      pos:'Defensive Midfield', from:'Real Sociedad',  fromLeague:'LaLiga',         to:'Arsenal', window:'Summer',  year:2025, fee:70.00  },
       { player:'Eberechi Eze',          pos:'Attacking Midfield', from:'Crystal Palace', fromLeague:'Premier League', to:'Arsenal', window:'Summer',  year:2025, fee:69.30  },
@@ -216,7 +216,7 @@ const MONEYBALL_MANAGERS = [
     transfers: [
 
       // ── Chelsea (2023 – 2024) ──────────────────────────────────────────────
-      { player:'Moisés Caicedo',       pos:'Defensive Midfield', from:'Brighton',       fromLeague:'Premier League', to:'Chelsea',     window:'Summer',  year:2023, fee:116.00 },
+      { player:'Moisés Caicedo',       pos:'Defensive Midfield', from:'Brighton',       fromLeague:'Premier League', to:'Chelsea',     window:'Summer',  year:2023, fee:134.00 },
       { player:'Roméo Lavia',          pos:'Defensive Midfield', from:'Southampton',    fromLeague:'Championship',   to:'Chelsea',     window:'Summer',  year:2023, fee:62.10  },
       { player:'Christopher Nkunku',   pos:'Centre-Forward',     from:'RB Leipzig',     fromLeague:'Bundesliga',     to:'Chelsea',     window:'Summer',  year:2023, fee:60.00  },
       { player:'Cole Palmer',          pos:'Attacking Midfield', from:'Manchester City',fromLeague:'Premier League', to:'Chelsea',     window:'Summer',  year:2023, fee:47.00  },
@@ -341,7 +341,7 @@ const MONEYBALL_MANAGERS = [
     id: 'ajax',
     manager: 'Ajax Amsterdam',
     transfers: [
-      { player:'Antony',               pos:'Right Winger',       from:'Ajax', fromLeague:'Eredivisie', to:'Manchester United', window:'Summer',  year:2022, fee:95.00  },
+      { player:'Antony',               pos:'Right Winger',       from:'Ajax', fromLeague:'Eredivisie', to:'Manchester United', window:'Summer',  year:2022, fee:100.00  },
       { player:'Frenkie de Jong',       pos:'Central Midfield',   from:'Ajax', fromLeague:'Eredivisie', to:'Barcelona',         window:'Summer',  year:2019, fee:86.00  },
       { player:'Matthijs de Ligt',      pos:'Centre-Back',        from:'Ajax', fromLeague:'Eredivisie', to:'Juventus',          window:'Summer',  year:2019, fee:85.50  },
       { player:'Lisandro Martínez',     pos:'Centre-Back',        from:'Ajax', fromLeague:'Eredivisie', to:'Manchester United', window:'Summer',  year:2022, fee:57.37  },
@@ -367,20 +367,20 @@ const MONEYBALL_MANAGERS = [
 
       // ── Manchester City ────────────────────────────────────────────────────
       { player:'Enzo Fernández',        pos:'Central Midfield',   from:'Chelsea',            fromLeague:'Premier League', to:'Man City',       window:'Summer',  year:2026, fee:145.00 },
-      { player:'Elliot Anderson',       pos:'Central Midfield',   from:'Nottingham Forest',  fromLeague:'Premier League', to:'Man City',       window:'Summer',  year:2026, fee:134.00 },
+      { player:'Elliot Anderson',       pos:'Central Midfield',   from:'Nottingham Forest',  fromLeague:'Premier League', to:'Man City',       window:'Summer',  year:2026, fee:135.50 },
       { player:'Iliman Ndiaye',         pos:'Left Winger',        from:'Everton',            fromLeague:'Premier League', to:'Man City',       window:'Summer',  year:2026, fee:75.00  },
 
       // ── Real Madrid ────────────────────────────────────────────────────────
       { player:'Yan Diomandé',          pos:'Left Winger',        from:'RB Leipzig',         fromLeague:'Bundesliga',     to:'Real Madrid',    window:'Summer',  year:2026, fee:140.00 },
 
       // ── Chelsea ────────────────────────────────────────────────────────────
-      { player:'Morgan Rogers',         pos:'Attacking Midfield', from:'Aston Villa',        fromLeague:'Premier League', to:'Chelsea',        window:'Summer',  year:2026, fee:135.00 },
+      { player:'Morgan Rogers',         pos:'Attacking Midfield', from:'Aston Villa',        fromLeague:'Premier League', to:'Chelsea',        window:'Summer',  year:2026, fee:137.00 },
 
       // ── Liverpool ──────────────────────────────────────────────────────────
-      { player:'Bradley Barcola',       pos:'Left Winger',        from:'PSG',                fromLeague:'Ligue 1',        to:'Liverpool',      window:'Summer',  year:2026, fee:142.00 },
+      { player:'Bradley Barcola',       pos:'Left Winger',        from:'PSG',                fromLeague:'Ligue 1',        to:'Liverpool',      window:'Summer',  year:2026, fee:144.00 },
 
       // ── Tottenham ──────────────────────────────────────────────────────────
-      { player:'Sandro Tonali',         pos:'Central Midfield',   from:'Newcastle',          fromLeague:'Premier League', to:'Tottenham',      window:'Summer',  year:2026, fee:115.00 },
+      { player:'Sandro Tonali',         pos:'Central Midfield',   from:'Newcastle',          fromLeague:'Premier League', to:'Tottenham',      window:'Summer',  year:2026, fee:117.00 },
       { player:'Mateus Fernandes',      pos:'Central Midfield',   from:'West Ham',           fromLeague:'Premier League', to:'Tottenham',      window:'Summer',  year:2026, fee:98.00  },
 
       // ── Arsenal ────────────────────────────────────────────────────────────
