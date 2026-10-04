@@ -2,10 +2,14 @@
 // two <link>/<script> lines in index.html when a direction is picked (then fold it into the main CSS).
 (function(){
   const THEMES = [
-    {id:'original',  label:'Original (current)'},
-    {id:'broadcast', label:'1 · Broadcast'},
-    {id:'sticker',   label:'2 · Sticker album'},
-    {id:'chalk',     label:'3 · Chalk / tactics board'}
+    {id:'original',        label:'Original (current)'},
+    {id:'blend-floodlight', label:'A · Floodlight'},
+    {id:'blend-mowpop',     label:'B · Mow Pop'},
+    {id:'blend-neon',       label:'C · Neon Night'},
+    {id:'blend-foil',       label:'D · Foil Card'},
+    {id:'broadcast',        label:'(old) Broadcast'},
+    {id:'sticker',          label:'(old) Sticker album'},
+    {id:'chalk',            label:'(old) Chalk'}
   ];
   const KEY = 'fr-theme';
   function get(){ try{ return localStorage.getItem(KEY) || 'original'; }catch(e){ return 'original'; } }
