@@ -313,6 +313,22 @@ html[data-theme="chalk"] .mb-guess-btn{background:var(--ch-yellow) !important;co
 html[data-theme="chalk"] #mbInput{background:rgba(4,20,12,0.7) !important;border:2px dashed var(--ch-line) !important;border-radius:8px !important;}
 
 
+/* sticker: the app's greys were picked for a near-black page — on blue they vanish, so lift them */
+html[data-theme="sticker"] [style*="color:#555"],html[data-theme="sticker"] [style*="color:#666"],
+html[data-theme="sticker"] [style*="color:#444"],html[data-theme="sticker"] [style*="color:#777"],
+html[data-theme="sticker"] [style*="color:#888"],html[data-theme="sticker"] [style*="color:#aaa"]{color:#d6dbff !important;}
+html[data-theme="sticker"] .eg-sub,html[data-theme="sticker"] .eg-ne-sub,html[data-theme="sticker"] .cw-round-tag,
+html[data-theme="sticker"] .auc-player-meta,html[data-theme="sticker"] .auc-highbid-label,html[data-theme="sticker"] .auc-squad-line,
+html[data-theme="sticker"] .auc-bid-hint,html[data-theme="sticker"] .footer,html[data-theme="sticker"] .auc-coin-amt small,
+html[data-theme="sticker"] .t10-league-card div[style*="color"]{color:#d6dbff !important;}
+html[data-theme="sticker"] .footer{color:#aeb7ff !important;}
+html[data-theme="sticker"] .eg-ne-input,html[data-theme="sticker"] .cw-input,html[data-theme="sticker"] .auth-input{
+  background:var(--st-ink);border:3px solid #fff;border-radius:16px;color:#fff;
+}
+html[data-theme="sticker"] .auc-pass-action-btn{background:var(--st-ink);border:3px solid #fff;color:#fff;border-radius:999px;box-shadow:4px 4px 0 rgba(0,0,12,0.5);}
+html[data-theme="sticker"] .auc-coin-side.p1{color:var(--st-yellow);}
+html[data-theme="sticker"] .auc-coin-side.p2{color:var(--st-cyan);}
+
 /* back button on every game screen */
 html[data-theme="broadcast"] #globalBackBtn{background:var(--bc-ink) !important;border:2px solid var(--bc-green) !important;color:var(--bc-green) !important;border-radius:2px !important;font-family:'Anton',sans-serif;letter-spacing:1px;}
 html[data-theme="sticker"] #globalBackBtn{background:#fff !important;border:3px solid var(--st-ink) !important;color:var(--st-ink) !important;border-radius:999px !important;font-family:'Anton',sans-serif;letter-spacing:1px;box-shadow:3px 3px 0 rgba(0,0,12,0.5);}

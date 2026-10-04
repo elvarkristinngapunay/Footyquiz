@@ -21,6 +21,23 @@
   const q = new URLSearchParams(location.search).get('theme');
   if(q && THEMES.some(t => t.id === q)) set(q); else set(get());
 
+
+  // ?go=showMoneyball opens a screen straight away (handy for screenshots and for sharing a look at one screen)
+  const go = new URLSearchParams(location.search).get('go');
+  const OK_SCREENS = ['showMoneyball','showTop10','showAuction','showClosestWins','showHigherOrLower','showSxi','showCareer','showElGrande'];
+  if(go && OK_SCREENS.indexOf(go) !== -1){
+    window.addEventListener('load', () => setTimeout(() => {
+      try{
+        window[go]();
+        // &demo=1 on the Auction: fill in names and jump past the announcement so the bidding screen is on show
+        if(go === 'showAuction' && new URLSearchParams(location.search).get('demo') === '1'){
+          document.getElementById('aucNameInput1').value = 'Elvar'; document.getElementById('aucNameInput2').value = 'Jack';
+          aucConfirmNames(); setTimeout(() => { try{ aucSkipAnnounce(); }catch(e){} }, 500);
+        }
+      }catch(e){}
+    }, 400));
+  }
+
   function render(){
     let box = document.getElementById('themeLab');
     if(!box){
