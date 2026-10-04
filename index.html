@@ -1486,9 +1486,9 @@ body::before{display:none;}
 
 <!-- LANDING SCREEN -->
 <div id="landingScreen">
-  <div class="landing-eyebrow"><span class="dot"></span>Matchday · Six modes live</div>
+  <div class="landing-eyebrow"><span class="dot"></span>Matchday · Eight modes live</div>
   <div class="landing-title">Choose Your <em>Game</em></div>
-  <div class="landing-sub">Six modes. Every era. Every league. Prove you <em>actually</em> know football.</div>
+  <div class="landing-sub">Eight modes. Every era. Every league. Prove you <em>actually</em> know football.</div>
   <div class="game-pick-grid">
     <div class="game-pick-card" onclick="showHigherOrLower()" style="position:relative;">
       <img class="game-pick-bg" src="Higher or lower card image.png?v=3" alt="">
@@ -1529,7 +1529,7 @@ body::before{display:none;}
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">Moneyball</div>
         <div>
-          <div class="game-pick-stat"><b>364</b>deals · guess the fee</div>
+          <div class="game-pick-stat"><b id="mbDealCount">240</b>deals · guess the fee</div>
           <button class="game-pick-btn" style="background:#e8b923;color:#000;">Play Now ›</button>
         </div>
       </div>
@@ -5407,6 +5407,8 @@ let mbBest = parseInt(localStorage.getItem('mbBest') || '0');
 let mbGuesses = 0;
 let mbCurrentTransfer = null;
 let mbAllTransfers = [];
+// Landing card shows the real number of deals so it can never drift from the data
+(function(){ const el = document.getElementById('mbDealCount'); if(el && typeof MONEYBALL_MANAGERS !== 'undefined') el.textContent = MONEYBALL_MANAGERS.reduce((n,g)=>n+g.transfers.length, 0); })();
 let mbUsedIndices = [];
 let mbGameOver = false;
 let mbBadgeCache = []; // hold Image refs so browser keeps them cached
