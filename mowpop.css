@@ -1,0 +1,261 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   FOOTBALL ROYAL — "Mow Pop" look.
+   Bright striped pitch, white die-cut borders, hard shadows, tilted stickers and
+   slanted broadcast labels. Loaded after the main <style>, so it overrides it.
+   Palette lives in the variables on :root below.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ═════════════════════════ components ═════════════════════════ */
+html{
+  --bl-skew:-8deg; --bl-tilt:0deg;
+  --bl-nav:#bfe9d0; --bl-incard:#cfe9db;
+}
+html,html body{background:var(--bl-bg) !important;background-attachment:fixed !important;}
+html #hol-bg-overlay{display:none;}
+
+/* header */
+html .header{background:var(--bl-ink);border-bottom:var(--bl-hb);height:84px;}
+html .header img{height:66px !important;filter:drop-shadow(2px 2px 0 rgba(0,0,0,0.5));}
+html .nav-link{font-family:'Anton',sans-serif;font-size:0.9rem;letter-spacing:2px;color:var(--bl-nav);transform:skewX(var(--bl-skew));}
+html .nav-link.active{
+  color:var(--bl-ink);background:var(--bl-a);border:3px solid var(--bl-line);padding:4px 14px;border-radius:4px;box-shadow:3px 3px 0 rgba(0,0,0,0.45);
+}
+html .auth-btn{
+  background:var(--bl-chip-bg);color:var(--bl-chip-fg);border:var(--bl-chip-bd);border-radius:4px;font-family:'Anton',sans-serif;
+  letter-spacing:1px;text-transform:uppercase;transform:skewX(var(--bl-skew));box-shadow:3px 3px 0 rgba(0,0,0,0.4);
+}
+html .matchday-chip{background:var(--bl-b);color:#fff;border:3px solid var(--bl-line);border-radius:4px;transform:skewX(var(--bl-skew));}
+html .matchday-chip b{color:#fff;}
+html .matchday-chip .dot{background:#fff;box-shadow:none;animation:bcLive 1.1s ease-in-out infinite;}
+
+/* landing hero */
+html .landing-eyebrow{
+  background:var(--bl-b);color:#fff;border:3px solid var(--bl-line);padding:4px 16px 4px 12px;border-radius:4px;transform:skewX(var(--bl-skew)) rotate(-1deg);
+  font-family:'Anton',sans-serif;font-size:0.82rem;letter-spacing:3px;box-shadow:4px 4px 0 rgba(0,0,0,0.45);
+}
+html .landing-eyebrow .dot{background:#fff;box-shadow:none;animation:bcLive 1.1s ease-in-out infinite;}
+html .landing-title{
+  font-style:italic;transform:skewX(var(--bl-skew)) rotate(-1.2deg);text-transform:uppercase;letter-spacing:1px;
+  color:#fff;-webkit-text-stroke:3px var(--bl-ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--bl-ink);
+}
+html .landing-title em{
+  color:var(--bl-ink);-webkit-text-stroke:0;background:var(--bl-a);padding:0 14px;display:inline-block;margin-left:4px;border-radius:4px;
+  text-shadow:none;box-shadow:5px 5px 0 var(--bl-ink);
+}
+html .landing-sub{color:var(--bl-loose);font-weight:600;}
+html .landing-sub em{color:var(--bl-a);}
+
+/* cards */
+html .game-pick-card{
+  border:var(--bl-bw) solid var(--bl-line);border-radius:var(--bl-r);box-shadow:var(--bl-shadow);transform:rotate(var(--bl-tilt));
+}
+html .game-pick-card:nth-child(even){transform:rotate(calc(var(--bl-tilt) * -1));}
+html .game-pick-card:hover{transform:rotate(0) translateY(-6px) scale(1.02);}
+html .game-pick-card::after{
+  background:linear-gradient(to top,var(--bl-veil) 0%,rgba(0,0,0,0.22) 52%,rgba(0,0,0,0) 100%);
+}
+html .game-pick-bg{filter:saturate(1.3) contrast(1.05);}
+html .game-pick-badge{
+  color:var(--bl-ink) !important;border:3px solid var(--bl-line) !important;border-radius:4px;text-shadow:none !important;
+  font-family:'Anton',sans-serif;font-weight:400;font-size:0.95rem;letter-spacing:2px;padding:3px 14px;margin-left:6px;
+  background:var(--bl-a) !important;transform:skewX(var(--bl-skew));box-shadow:3px 3px 0 rgba(0,0,0,0.5);
+}
+html .game-pick-card:nth-child(4n+2) .game-pick-badge{background:var(--bl-c) !important;}
+html .game-pick-card:nth-child(4n+3) .game-pick-badge{background:#fff !important;}
+html .game-pick-card:nth-child(4n) .game-pick-badge{background:var(--bl-b) !important;color:#fff !important;}
+html .game-pick-stat{color:#fff;font-weight:700;text-shadow:0 2px 6px rgba(0,0,0,0.7);}
+html .game-pick-stat b{color:var(--bl-a);font-size:1.6rem;}
+html .game-info-btn{background:#fff;color:var(--bl-ink);border:2px solid var(--bl-ink);}
+
+/* the one primary button everywhere */
+html .game-pick-btn,html .cw-submit-btn,html .eg-ne-go,
+html .cw-pass-btn,html .mb-guess-btn{
+  background:var(--bl-btn-bg) !important;color:var(--bl-btn-fg) !important;border:var(--bl-btn-bd) !important;border-radius:var(--bl-btn-r) !important;
+  font-family:'Anton',sans-serif;font-weight:400;font-size:1rem;letter-spacing:2px;transform:skewX(var(--bl-skew));box-shadow:var(--bl-btn-sh);
+}
+html .auc-pass-action-btn{
+  background:var(--bl-ink);border:3px solid var(--bl-line);color:#fff;border-radius:var(--bl-btn-r);transform:skewX(var(--bl-skew));box-shadow:4px 4px 0 rgba(0,0,0,0.45);
+}
+
+/* panels */
+html .cw-question-card,html .auc-highbid-box,html .t10-league-card,
+html .eg-category-card,html .game-info-box,html .mb-statbox,
+html #mbCard{
+  background:var(--bl-panel) !important;border:var(--bl-bw) solid var(--bl-line) !important;border-radius:var(--bl-r) !important;box-shadow:var(--bl-shadow);
+}
+html .auc-category-banner{
+  background:var(--bl-banner-bg);border:var(--bl-bw) solid var(--bl-line);border-radius:var(--bl-r);box-shadow:var(--bl-shadow);
+}
+html .auc-category-banner .val{color:var(--bl-banner-fg);}
+html .auc-category-banner .lbl{color:var(--bl-banner-lbl);}
+html .auc-category-banner .desc{color:var(--bl-banner-fg);opacity:0.8;}
+html .auc-coin-side.p1{color:var(--bl-a);}
+html .auc-coin-side.p2{color:var(--bl-c);}
+html .auc-coin-amt{color:#fff;text-shadow:3px 3px 0 var(--bl-ink);}
+html .auc-coin-name{text-shadow:2px 2px 0 var(--bl-ink);}
+html .auc-coin-amt small{text-shadow:none;}
+html .eg-title,html .eg-ne-title{
+  font-style:italic;text-transform:uppercase;color:#fff;-webkit-text-stroke:2px var(--bl-ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--bl-ink);
+}
+html .eg-ne-input,html .cw-input,html .auth-input,html #mbInput{
+  background:var(--bl-ink) !important;border:3px solid var(--bl-line) !important;border-radius:12px !important;color:#fff;
+}
+html #globalBackBtn{
+  background:#fff !important;border:3px solid var(--bl-ink) !important;color:var(--bl-ink) !important;border-radius:4px !important;
+  font-family:'Anton',sans-serif;letter-spacing:1px;transform:skewX(var(--bl-skew));box-shadow:3px 3px 0 rgba(0,0,0,0.45);
+}
+
+/* Moneyball */
+html .mb-eyebrow{color:var(--bl-loose) !important;}
+html .mb-title{
+  color:#fff !important;font-style:italic;text-transform:uppercase;transform:skewX(var(--bl-skew)) rotate(-1deg);
+  -webkit-text-stroke:2px var(--bl-ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--bl-ink);
+}
+html #mbStreak{color:var(--bl-c) !important;}
+html #mbGuessesLeft{color:var(--bl-a) !important;text-shadow:3px 3px 0 var(--bl-ink);}
+
+/* small greys: the app's #555/#666 text was picked for near-black. Most of it sits inside dark panels, so greys default to LIGHT;
+   the few that sit straight on the bright green are listed in the DARK group right after. */
+html [style*="color:#555"],html [style*="color:#666"],html [style*="color:#444"],
+html [style*="color:#777"],html [style*="color:#888"],html [style*="color:#aaa"],
+html .eg-cat-desc,html .hol-rand-sub,html .sxi-cat-count,html .streak-label-txt,html .milestone-name{color:var(--bl-incard) !important;}
+html .mp-eyebrow,html .mp-sub,html .sxi-title-pre,html .sxi-sub,html .hero-sub,html .eg-sub,html .eg-ne-sub,html .cw-round-tag,
+html .auc-coin-amt small,html .auc-squad-line,html .auc-bid-hint,html .footer,html .mb-eyebrow{color:var(--bl-loose) !important;font-weight:700;}
+html .game-info-title{color:#fff !important;}
+html #mbCard #mbPlayerName{color:#fff !important;}
+html .mb-statbox #mbStreak{color:var(--bl-c) !important;}
+html .mb-statbox #mbBest{color:#fff !important;}
+
+
+/* ───────────── palette: loud striped pitch, tilted stickers, ink text on bright green ───────────── */
+:root{
+  --bl-ink:#06160d; --bl-panel:#0a2415; --bl-line:#ffffff; --bl-bw:5px; --bl-r:22px; --bl-tilt:-1.3deg;
+  --bl-a:#ffe14d; --bl-b:#e11d74; --bl-c:#2de2ff; --bl-loose:#04290f; --bl-incard:#d6f5e2; --bl-veil:rgba(6,22,13,0.92);
+  --bl-hb:5px solid #fff; --bl-shadow:7px 7px 0 rgba(2,50,22,0.75); --bl-nav:#d6f5e2;
+  --bl-chip-bg:#fff; --bl-chip-fg:#06160d; --bl-chip-bd:3px solid #06160d;
+  --bl-btn-bg:#ffe14d; --bl-btn-fg:#06160d; --bl-btn-bd:4px solid #fff; --bl-btn-r:999px; --bl-btn-sh:5px 5px 0 #06160d;
+  --bl-banner-bg:#ffe14d; --bl-banner-fg:#06160d; --bl-banner-lbl:#d6006f;
+  --bl-bg:
+    radial-gradient(rgba(255,255,255,0.22) 2px,transparent 2.6px) 0 0/30px 30px,
+    radial-gradient(120% 80% at 50% 0%,transparent 55%,rgba(0,70,28,0.55) 100%),
+    repeating-linear-gradient(90deg,#17c75c 0 62px,#11b24f 62px 124px);
+}
+html .landing-title{color:#fff;text-shadow:5px 5px 0 var(--bl-ink);}
+html .landing-title em{box-shadow:5px 5px 0 var(--bl-ink);border:3px solid #fff;}
+html .landing-sub,html .landing-sub em{color:#04290f;}
+html .landing-sub em{background:#fff;padding:0 6px;border-radius:4px;}
+html .nav-link{color:#d6f5e2;}
+html .game-pick-badge{border-radius:999px;transform:none;margin-left:0;}
+html .game-pick-btn,html .cw-submit-btn,html .eg-ne-go,
+html .cw-pass-btn,html .mb-guess-btn,html .auc-pass-action-btn{transform:none;}
+html .auc-coin-amt{text-shadow:3px 3px 0 var(--bl-ink);}
+html .auc-coin-name{background:var(--bl-ink);display:inline-block;padding:2px 14px;border-radius:999px;text-shadow:none;margin-bottom:4px;}
+html .auc-bid-hint{color:#04290f !important;font-size:0.78rem;}
+html .auc-bid-hint b{color:#06160d;background:#ffe14d;padding:0 7px;border-radius:5px;}
+html #mbInputArea [style*="font-size:0.55rem"]{font-size:0.72rem !important;font-weight:800;}
+html #mbInputArea span[style*="color:#888"],html #mbInputArea span[style*="color:#4ade80"]{color:#06160d !important;}
+html .cw-round-tag,html .auc-bid-hint,html .auc-squad-line{font-weight:700;}
+html .auc-coin-amt small{color:#04290f !important;}
+html .eg-sub,html .eg-ne-sub{color:#04290f !important;font-weight:600;}
+
+
+
+/* ───────────── phones ───────────── */
+@media(max-width:640px){
+  html .header{height:64px;}
+  html .header img{height:48px !important;}
+  html .auth-btn{padding:5px 10px;font-size:0.72rem;}
+  html .landing-title{font-size:clamp(2.4rem,11vw,3.4rem);}
+}
+
+
+/* ───────────── per-screen fixes ───────────── */
+/* big screen titles that were coloured for a black page: keep the colour, give them the sticker outline */
+html .mp-title,html .sxi-title,html .sxi-title span,html .hero-title{
+  -webkit-text-stroke:2.5px var(--bl-ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--bl-ink);
+}
+html .mp-title,html .sxi-title,html .hero-title{font-style:italic;transform:skewX(var(--bl-skew)) rotate(-1deg);text-transform:uppercase;}
+html .hero-title .green,html .hero-title .red{display:inline-block;background:var(--bl-ink);padding:0 12px;border-radius:6px;-webkit-text-stroke:0;text-shadow:none;}
+html .hero-title .green{color:#4ade80;}
+html .hero-title .red{color:#f87171;}
+html .hero-pill{background:#fff;color:var(--bl-ink);border:3px solid var(--bl-ink);border-radius:999px;font-weight:800;box-shadow:3px 3px 0 rgba(2,50,22,0.6);}
+html .hol-rand-btn,html .streak-section,html .sxi-cat-card,html .sxi-team-card{
+  background:var(--bl-panel) !important;border:var(--bl-bw) solid var(--bl-line) !important;border-radius:var(--bl-r) !important;box-shadow:var(--bl-shadow);
+}
+html .sxi-cat-name,html .sxi-team-card *{color:#fff;}
+html .milestone-circle{color:#cfe9db;}
+html .milestone-dot.done .milestone-circle{color:#4ade80;}
+html .milestone-dot.gold .milestone-circle{color:#FFD700;}
+html .milestone-dot.done .milestone-name{color:#4ade80 !important;}
+html .milestone-dot.gold .milestone-name{color:#FFD700 !important;}
+html .eg-ne-label{background:var(--bl-ink);display:inline-block;padding:2px 12px;border-radius:999px;margin-bottom:6px;}
+html #mbGuessesLeft{background:var(--bl-ink);padding:0 12px;border-radius:12px;text-shadow:none;}
+
+/* Career Path */
+html #cpRevealBtn{background:#fff !important;color:var(--bl-ink) !important;border:3px solid var(--bl-ink) !important;border-radius:999px !important;box-shadow:3px 3px 0 rgba(2,50,22,0.6);}
+html #cpInputArea button[onclick="cpSubmit()"]{
+  background:var(--bl-btn-bg) !important;color:var(--bl-btn-fg) !important;border:var(--bl-btn-bd) !important;border-radius:var(--bl-btn-r) !important;box-shadow:var(--bl-btn-sh);
+}
+html #cpInput{border:3px solid #fff !important;}
+html #cpClubs > div{background:var(--bl-panel) !important;border:3px solid rgba(255,255,255,0.35) !important;border-radius:14px !important;}
+html #cpClubs [style*="color:#333"],html #cpClubs [style*="color:#2c2c2c"],html #cpClubs [style*="color:#3a3a3a"]{color:rgba(255,255,255,0.45) !important;}
+html .mp-loose-btn{color:var(--bl-loose) !important;font-weight:700;}
+html #mbInputArea [style*="font-size:0.55rem"]{color:var(--bl-loose) !important;font-weight:800;}
+html .t10-league-card div[style*="color:#333"]{color:rgba(255,255,255,0.65) !important;}
+
+/* page-level small headings that sit directly on the green */
+html .mp-label,html .section-label,html .sxi-section-header{color:var(--bl-loose) !important;font-weight:800;}
+html .mp-hilo{font-style:italic;transform:skewX(var(--bl-skew)) rotate(-1deg);text-transform:uppercase;}
+html .mp-hilo span{display:inline-block;background:var(--bl-ink);padding:0 12px;border-radius:6px;}
+html .mp-hilo span[style*="color:#888"],html .mp-hilo span[style*="color:#aaa"]{background:none;padding:0 6px;color:#fff !important;-webkit-text-stroke:2px var(--bl-ink);paint-order:stroke fill;}
+html .t10-slot-num{color:rgba(255,255,255,0.28) !important;}
+
+/* Higher or Lower play field */
+html .pcard{
+  background:var(--bl-panel);border:var(--bl-bw) solid var(--bl-line);border-radius:var(--bl-r);box-shadow:var(--bl-shadow);
+  transform:rotate(-0.8deg);
+}
+html .pcard + .vs + .pcard,html .arena .pcard:last-child{transform:rotate(0.8deg);}
+html .pcard.flash-correct{border-color:#4ade80;box-shadow:0 0 0 4px rgba(74,222,128,0.5),var(--bl-shadow);}
+html .pcard.flash-wrong{border-color:#f87171;box-shadow:0 0 0 4px rgba(248,113,113,0.5),var(--bl-shadow);}
+html .vs{color:var(--bl-ink);font-size:1.5rem;-webkit-text-stroke:0;font-style:italic;font-weight:900;text-shadow:2px 2px 0 rgba(255,255,255,0.6);}
+html .ppos,html .pnat,html .stat-lbl{color:var(--bl-incard);}
+html .stat-num{text-shadow:3px 3px 0 var(--bl-ink);}
+html .stat-num.hidden-num,html .question-marks{color:rgba(255,255,255,0.28);text-shadow:none;}
+html .btn{font-family:'Anton',sans-serif;letter-spacing:2px;font-weight:400;font-size:1.05rem;border-radius:var(--bl-btn-r);box-shadow:4px 4px 0 rgba(0,0,0,0.5);}
+html .btn-higher{background:#4ade80;color:var(--bl-ink);border:3px solid #fff;}
+html .btn-lower{background:#f87171;color:var(--bl-ink);border:3px solid #fff;}
+html .mode-badge{background:var(--bl-ink);color:#fff;border:3px solid #fff;border-radius:999px;font-family:'Anton',sans-serif;letter-spacing:2px;box-shadow:3px 3px 0 rgba(0,0,0,0.4);}
+html .result-panel{border:var(--bl-bw) solid var(--bl-line) !important;border-radius:var(--bl-r) !important;box-shadow:var(--bl-shadow);}
+
+/* phones: the floating "Back" button sits over the top-left of every game screen — leave it room instead of letting it cover titles */
+@media(max-width:640px){
+  html #gameScreen,html #mbScreen,html #top10Screen,html #careerScreen,html #closestWinsScreen,html #auctionScreen,
+  html #sxiScreen,html #elGrandeMenu,html #elGrandeGame,html #higherOrLowerSection{padding-top:56px !important;}
+}
+
+/* ───────────── text that lands straight on the green in the pass-and-play modes + Moneyball feedback ───────────── */
+html .cw-pass-title,html .cw-end-title,html .cw-reveal-num,html .cw-score-num,html .cw-question-player{
+  -webkit-text-stroke:2px var(--bl-ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--bl-ink);
+}
+html .cw-question-card .cw-question-player,html .auc-player-text .cw-question-player{-webkit-text-stroke:0;text-shadow:none;}
+html .cw-pass-sub,html .cw-end-sub,html .cw-reveal-answer{color:var(--bl-loose) !important;font-weight:700;}
+html .cw-round-result,html .auc-reveal-stat{
+  display:inline-block;background:var(--bl-ink);border:3px solid #fff;border-radius:14px;padding:8px 18px;box-shadow:3px 3px 0 rgba(2,50,22,0.6);
+}
+html .cw-round-result.tie{color:#cfe9db;}
+html .cw-score-name{background:var(--bl-ink);padding:2px 12px;border-radius:999px;}
+html .cw-score-sep{color:var(--bl-ink);}
+html .cw-guess-card,html .cw-alltime{
+  background:var(--bl-panel) !important;border:var(--bl-bw) solid var(--bl-line) !important;border-radius:var(--bl-r);box-shadow:var(--bl-shadow);
+}
+html .cw-guess-card.winner{box-shadow:0 0 0 4px rgba(74,222,128,0.6),var(--bl-shadow);}
+html .cw-guess-card.perfect{box-shadow:0 0 0 4px rgba(255,225,77,0.8),var(--bl-shadow);}
+html .cw-alltime-label{color:var(--bl-incard);}
+
+/* Moneyball: the hint / game-over block needs a panel of its own, it used to float on near-black */
+html #mbFeedback:not(:empty){
+  background:var(--bl-panel);border:var(--bl-bw) solid var(--bl-line);border-radius:var(--bl-r);box-shadow:var(--bl-shadow);padding:14px 16px;
+}
+html #mbFeedback [style*="color:#aaa"],html #mbFeedback [style*="color:#888"]{color:var(--bl-incard) !important;}
+html #gameScreen div:has(> .mb-statbox){max-width:560px;margin-left:auto;margin-right:auto;}
