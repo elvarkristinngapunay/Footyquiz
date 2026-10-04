@@ -814,6 +814,29 @@ body::before{display:none;}
 .auc-highbid-box{width:100%;max-width:320px;background:#0d0d0d;border:1px solid #222;border-radius:14px;padding:12px 16px;text-align:center;margin-bottom:16px;}
 .auc-highbid-label{font-size:0.6rem;color:#555;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
 .auc-highbid-val{font-family:'Anton',sans-serif;font-size:1.4rem;color:#4ade80;letter-spacing:0.5px;}
+/* Auction: numbers first — the player card is a compact strip, coins and the high bid are the big things on screen */
+#auctionScreen .cw-question-card{display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:10px;text-align:left;}
+#auctionScreen .auc-player-avatar{width:48px;height:52px;margin:0;flex-shrink:0;}
+#auctionScreen .auc-player-avatar svg,#auctionScreen .auc-player-avatar div{max-width:100%;max-height:100%;}
+#auctionScreen .auc-player-avatar svg{width:100%;height:100%;}
+#auctionScreen .auc-player-text{flex:1;min-width:0;}
+#auctionScreen .cw-question-player{font-size:1.05rem;margin-bottom:1px;text-align:left;}
+#auctionScreen .auc-player-meta{text-align:left;margin-top:0;font-size:0.68rem;}
+#auctionScreen .auc-player-stat-line{display:none;} /* category is already in the banner + chip */
+#auctionScreen .auc-category-banner{padding:10px 14px;margin-bottom:10px;}
+#auctionScreen .auc-coin-row{margin-bottom:8px;}
+#auctionScreen .auc-coin-amt{font-size:2.8rem;}
+#auctionScreen .cw-round-tag{margin-bottom:8px;}
+#auctionScreen .auc-highbid-box{max-width:none;padding:8px 14px;margin-bottom:10px;border-color:#2f6b47;}
+#auctionScreen .auc-highbid-val{line-height:1.05;}
+#auctionScreen .auc-hb-num{font-size:2.6rem;}
+#auctionScreen .auc-hb-who{font-size:0.9rem;color:#9ae6b4;letter-spacing:0.5px;margin-left:6px;}
+#auctionScreen .cw-guesser-badge{margin-bottom:8px;}
+#auctionScreen .auc-cat-chip{margin-bottom:8px;}
+#auctionScreen .cw-timer-wrap{margin-bottom:8px;}
+#auctionScreen .auc-bid-hint{margin-bottom:6px;}
+#auctionScreen .cw-input-row{margin-bottom:10px;}
+#auctionScreen .cw-input{padding:8px 12px;}
 .auc-no-funds{color:#f87171;font-size:0.78rem;text-align:center;margin-bottom:16px;max-width:280px;}
 .auc-action-row{display:flex;gap:10px;width:100%;max-width:320px;}
 .auc-action-row .cw-submit-btn{flex:1;}
@@ -1705,8 +1728,10 @@ body::before{display:none;}
     <div class="cw-round-tag" id="aucPoolTag">SQUAD PROGRESS: 0/4 · 0/4</div>
     <div class="cw-question-card">
       <div class="auc-player-avatar" id="aucPlayerAvatar"></div>
-      <div class="cw-question-player" id="aucPlayerName"></div>
-      <div class="auc-player-meta" id="aucPlayerMeta"></div>
+      <div class="auc-player-text">
+        <div class="cw-question-player" id="aucPlayerName"></div>
+        <div class="auc-player-meta" id="aucPlayerMeta"></div>
+      </div>
       <div class="auc-player-stat-line" id="aucPlayerStatLine"></div>
     </div>
     <div class="auc-highbid-box">
@@ -5361,7 +5386,7 @@ function updateFriendsNav(){
   }
 }
 </script>
-<script src="data/transfer-fees.js?v=3"></script>
+<script src="data/transfer-fees.js?v=5"></script>
 <script src="data/eg-datasets.js?v=24"></script>
 <script src="data/players.js"></script>
 <script src="data/kits.js"></script>
@@ -5370,7 +5395,7 @@ function updateFriendsNav(){
 <script src="data/sxi-teams.js"></script>
 <script src="data/sxi-pl-winners.js"></script>
 <script src="data/trophies.js"></script>
-<script src="data/moneyball-transfers.js?v=3"></script>
+<script src="data/moneyball-transfers.js?v=5"></script>
 <script src="data/top10.js?v=12"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════════════
@@ -6299,10 +6324,18 @@ function aucRenderHeader(){
   document.getElementById('aucPlayerName').textContent = p.name;
   document.getElementById('aucPlayerMeta').textContent = p.pos + ' · ' + p.nat;
 
-  const highBidVal = document.getElementById('aucHighBidVal');
-  highBidVal.textContent = aucHighBidder === null
-    ? 'No bids yet'
-    : aucHighBid + ' coins — ' + (aucHighBidder===1?aucP1Name:aucP2Name);
+  aucRenderHighBid();
+}
+
+// Big number + small "coins · who" — names are typed by players, so build with textContent (no innerHTML)
+function aucRenderHighBid(){
+  const el = document.getElementById('aucHighBidVal');
+  el.textContent = '';
+  if(aucHighBidder === null){ el.textContent = 'No bids yet'; return; }
+  const num = document.createElement('span'); num.className = 'auc-hb-num'; num.textContent = aucHighBid;
+  const who = document.createElement('span'); who.className = 'auc-hb-who';
+  who.textContent = 'coins · ' + (aucHighBidder===1 ? aucP1Name : aucP2Name);
+  el.appendChild(num); el.appendChild(who);
 }
 
 function aucStartRound(){
@@ -6406,7 +6439,7 @@ function aucRaise(){
   aucHighBidder = aucTurn;
   aucPassStreak = 0;
   aucTurn = aucTurn===1 ? 2 : 1;
-  document.getElementById('aucHighBidVal').textContent = aucHighBid + ' coins — ' + (aucHighBidder===1?aucP1Name:aucP2Name);
+  aucRenderHighBid();
   aucRenderTurn();
 }
 
