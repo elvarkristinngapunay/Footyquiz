@@ -1412,7 +1412,7 @@ body::before{display:none;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
 .t10-shake{animation:t10shake 0.35s ease-out;}
 </style>
-<link rel="stylesheet" href="mowpop.css?v=11">
+<link rel="stylesheet" href="mowpop.css?v=12">
 </head>
 <body>
 
@@ -6592,6 +6592,14 @@ function aucEndMatch(){
 function aucPlayAgain(){
   aucStartMatch();
 }
+</script>
+<script>
+// Tall crests (Tottenham's cockerel is roughly 1:2) shrink to a sliver inside a round disc — give them a taller rounded tile instead
+document.addEventListener('load', function(e){
+  const t = e.target;
+  if(t && t.tagName === 'IMG' && t.naturalWidth && t.matches('#mbFromBadge,#mbToBadge,#cpClubs img,.t10-slot-badge,.eg-cat-badge'))
+    t.classList.toggle('crest-tall', t.naturalHeight / t.naturalWidth > 1.35);
+}, true);
 </script>
 </body>
 </html>
