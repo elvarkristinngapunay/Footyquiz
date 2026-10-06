@@ -1412,7 +1412,7 @@ body::before{display:none;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
 .t10-shake{animation:t10shake 0.35s ease-out;}
 </style>
-<link rel="stylesheet" href="mowpop.css?v=12">
+<link rel="stylesheet" href="mowpop.css?v=13">
 </head>
 <body>
 
@@ -1625,7 +1625,7 @@ body::before{display:none;}
       </div>
     </div>
     <div class="cw-input-row">
-      <input class="cw-input" id="cwGuessInput" type="number" inputmode="numeric" placeholder="0" onkeydown="if(event.key==='Enter')cwSubmitGuess()">
+      <input class="cw-input" id="cwGuessInput" type="number" inputmode="numeric" enterkeyhint="go" placeholder="0" onkeydown="if(event.key==='Enter')cwSubmitGuess()">
     </div>
     <button class="cw-submit-btn" onclick="cwSubmitGuess()">Lock In Guess</button>
   </div>
@@ -1756,7 +1756,7 @@ body::before{display:none;}
     </div>
     <div class="auc-bid-hint" id="aucBidHint">You have <b>20</b> coins left</div>
     <div class="cw-input-row" id="aucRaiseRow">
-      <input class="cw-input" id="aucBidInput" type="number" inputmode="numeric" min="0" onkeydown="if(event.key==='Enter')aucRaise()">
+      <input class="cw-input" id="aucBidInput" type="number" inputmode="numeric" enterkeyhint="go" min="0" onkeydown="if(event.key==='Enter')aucRaise()">
     </div>
     <div class="auc-no-funds" id="aucNoFundsMsg" style="display:none;">You can't afford to raise — you'll have to pass.</div>
     <div class="auc-action-row">
@@ -2364,7 +2364,7 @@ body::before{display:none;}
         <div id="mbGuessesLeft" style="font-family:'Anton',sans-serif;font-size:2.8rem;color:#e8b923;line-height:1;">4</div>
       </div>
       <span style="font-family:'Anton',sans-serif;font-size:1.4rem;color:#4ade80;">€</span>
-      <input id="mbInput" type="number" inputmode="decimal" min="0" max="300" step="0.5"
+      <input id="mbInput" type="number" inputmode="decimal" enterkeyhint="go" min="0" max="300" step="0.5"
         style="width:130px;background:#111;border:2px solid #333;border-radius:12px;padding:14px 16px;font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;text-align:center;outline:none;-webkit-appearance:none;-moz-appearance:textfield;appearance:textfield;"
         placeholder="0"
         onkeydown="if(event.key==='Enter')mbSubmitGuess()"
@@ -6336,7 +6336,7 @@ function aucRenderHighBid(){
   el.textContent = '';
   if(aucHighBidder === null){ el.textContent = 'No bids yet'; return; }
   const num = document.createElement('span'); num.className = 'auc-hb-num'; num.textContent = aucHighBid;
-  const who = document.createElement('span'); who.className = 'auc-hb-who';
+  const who = document.createElement('span'); who.className = 'auc-hb-who p' + aucHighBidder;
   who.textContent = 'coins · ' + (aucHighBidder===1 ? aucP1Name : aucP2Name);
   el.appendChild(num); el.appendChild(who);
 }
@@ -6372,15 +6372,34 @@ function aucStartRound(){
   aucRenderTurn();
 }
 
+// Lights up the coin panel of whoever is bidding (n = 1 or 2) and dims the other; 0 clears both
+function aucMarkTurn(n){
+  document.querySelectorAll('#auctionScreen .auc-coin-side').forEach(el => {
+    const mine = el.classList.contains('p1') ? 1 : 2;
+    el.classList.toggle('is-turn', n === mine);
+    el.classList.toggle('not-turn', n !== 0 && n !== mine);
+  });
+}
+
 function aucRenderTurn(){
   const name = aucTurn===1 ? aucP1Name : aucP2Name;
   const remaining = aucTurn===1 ? aucCoins.p1 : aucCoins.p2;
 
+  // Big banner in the bidder's colour (names are typed by players, so build with textContent)
   const badge = document.getElementById('aucBidderBadge');
   badge.className = 'cw-guesser-badge ' + (aucTurn===1?'p1':'p2');
-  badge.textContent = name + "'s turn";
+  badge.textContent = '';
+  const who = document.createElement('span'); who.className = 'who'; who.textContent = name;
+  const what = document.createElement('span'); what.className = 'what';
+  what.textContent = aucHighBidder===null ? 'opens the bidding' : 'your bid';
+  badge.appendChild(who); badge.appendChild(what);
+  aucMarkTurn(aucTurn);
 
-  document.getElementById('aucBidHint').innerHTML = 'You have <b>' + remaining + '</b> coins left';
+  const hint = document.getElementById('aucBidHint');
+  hint.textContent = '';
+  hint.appendChild(document.createTextNode('You have '));
+  const b = document.createElement('b'); b.textContent = remaining; hint.appendChild(b);
+  hint.appendChild(document.createTextNode(' coins left'));
 
   const canRaise = remaining > aucHighBid;
   const input = document.getElementById('aucBidInput');
@@ -6511,6 +6530,7 @@ function aucResolveAuction(){
 
   aucShowRevealStat(p);
   aucRenderHeader();
+  aucMarkTurn(0);
   document.getElementById('aucRoundView').style.display='none';
   document.getElementById('aucPassScreen').style.display='none';
   document.getElementById('aucRevealView').style.display='flex';
@@ -6537,6 +6557,7 @@ function aucResolveWalkover(winnerSlot, p){
 
   aucShowRevealStat(p);
   aucRenderHeader();
+  aucMarkTurn(0);
   document.getElementById('aucRoundView').style.display='none';
   document.getElementById('aucPassScreen').style.display='none';
   document.getElementById('aucRevealView').style.display='flex';
@@ -6600,6 +6621,49 @@ document.addEventListener('load', function(e){
   if(t && t.tagName === 'IMG' && t.naturalWidth && t.matches('#mbFromBadge,#mbToBadge,#cpClubs img,.t10-slot-badge,.eg-cat-badge'))
     t.classList.toggle('crest-tall', t.naturalHeight / t.naturalWidth > 1.35);
 }, true);
+</script>
+<script>
+// Keyboard action bar. Number keypads on iPhone have no Return/Go key, so after typing a guess you had to dismiss the keyboard
+// to reach the button. While one of these inputs is focused, mirror its action button(s) in a bar riding just above the keyboard.
+(function(){
+  const touch = (window.matchMedia && matchMedia('(pointer:coarse)').matches) || navigator.maxTouchPoints > 0;
+  if(!touch) return;
+  const txt = id => ((document.getElementById(id) || {}).textContent || '').trim();
+  const SETS = {
+    mbInput:      () => [{label:'GUESS',   run:() => mbSubmitGuess(), primary:true}],
+    cwGuessInput: () => [{label:'LOCK IN', run:() => cwSubmitGuess(), primary:true}],
+    aucBidInput:  () => [{label:(txt('aucRaiseBtn') || 'Raise').toUpperCase(), run:() => aucRaise(), primary:true},
+                         {label:'PASS ✕', run:() => aucPass()}]
+  };
+  const bar = document.createElement('div'); bar.id = 'kbBar'; document.body.appendChild(bar);
+  const vv = window.visualViewport;
+  let sig = '';
+  function place(){ bar.style.bottom = vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) + 'px' : '0px'; }
+  function sync(){
+    const a = document.activeElement;
+    if(a && SETS[a.id] && a.offsetParent !== null){
+      const items = SETS[a.id]();
+      const s = items.map(i => i.label).join('|');
+      if(s !== sig){
+        sig = s; bar.textContent = '';
+        items.forEach(i => {
+          const b = document.createElement('button'); b.type = 'button'; b.textContent = i.label; if(i.primary) b.className = 'primary';
+          b.addEventListener('pointerdown', e => e.preventDefault());   // keep the input focused so the keyboard stays up
+          b.addEventListener('click', () => { i.run(); setTimeout(sync, 60); });
+          bar.appendChild(b);
+        });
+      }
+      place(); bar.classList.add('on'); document.body.classList.add('kb-open');
+    } else { bar.classList.remove('on'); document.body.classList.remove('kb-open'); sig = ''; }
+  }
+  document.addEventListener('focusin', e => {
+    sync();
+    if(SETS[e.target.id]) setTimeout(() => { try{ e.target.scrollIntoView({block:'center', behavior:'smooth'}); }catch(_){} }, 350);
+  });
+  document.addEventListener('focusout', () => setTimeout(sync, 80));
+  if(vv){ vv.addEventListener('resize', () => { place(); sync(); }); vv.addEventListener('scroll', place); }
+  setInterval(sync, 500);   // the guess area gets hidden after a right answer — drop the bar with it
+})();
 </script>
 </body>
 </html>
