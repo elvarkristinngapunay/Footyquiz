@@ -1412,7 +1412,7 @@ body::before{display:none;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
 .t10-shake{animation:t10shake 0.35s ease-out;}
 </style>
-<link rel="stylesheet" href="mowpop.css?v=13">
+<link rel="stylesheet" href="mowpop.css?v=15">
 </head>
 <body>
 
@@ -6654,11 +6654,15 @@ document.addEventListener('load', function(e){
         });
       }
       place(); bar.classList.add('on'); document.body.classList.add('kb-open');
-    } else { bar.classList.remove('on'); document.body.classList.remove('kb-open'); sig = ''; }
+      document.body.classList.toggle('kb-tight', !!vv && vv.height < 420);   // small phones: even less room above the keyboard
+    } else { bar.classList.remove('on'); document.body.classList.remove('kb-open', 'kb-tight'); sig = ''; }
   }
   document.addEventListener('focusin', e => {
     sync();
-    if(SETS[e.target.id]) setTimeout(() => { try{ e.target.scrollIntoView({block:'center', behavior:'smooth'}); }catch(_){} }, 350);
+    if(e.target.id === 'mbInput'){
+      // Moneyball: the whole card + hint + input fit above the keyboard, so pin the page to the top instead of centring the input
+      [60, 350, 700].forEach(ms => setTimeout(() => { if(document.activeElement === e.target) window.scrollTo(0, 0); }, ms));
+    } else if(SETS[e.target.id]) setTimeout(() => { try{ e.target.scrollIntoView({block:'center', behavior:'smooth'}); }catch(_){} }, 350);
   });
   document.addEventListener('focusout', () => setTimeout(sync, 80));
   if(vv){ vv.addEventListener('resize', () => { place(); sync(); }); vv.addEventListener('scroll', place); }

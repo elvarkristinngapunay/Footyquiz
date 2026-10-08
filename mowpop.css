@@ -299,3 +299,51 @@ html #auctionScreen .auc-bid-hint{font-size:0.85rem;}
 }
 #kbBar button.primary{background:var(--bl-btn-bg);color:var(--bl-btn-fg);box-shadow:3px 3px 0 rgba(0,0,0,0.5);flex:1.6;}
 body.kb-open{padding-bottom:84px;}
+
+
+/* ───────────── Moneyball with the keyboard up (phones) ─────────────
+   Top to bottom: player · clubs · year, then the higher/lower hint, then the guess box — and the GUESS bar rides on the keyboard.
+   Everything that isn't needed while typing steps aside so it all fits above the keyboard. */
+@media(max-width:640px){
+  body.kb-open .header,body.kb-open #globalBackWrap{display:none !important;}
+  body.kb-open #mbScreen{padding-top:10px !important;padding-bottom:0 !important;}
+  body.kb-open #mbScreen .mb-eyebrow,body.kb-open #mbScreen .mb-title,
+  body.kb-open #mbScreen div:has(> .mb-statbox),body.kb-open #mbPrevGuesses{display:none !important;}
+  body.kb-open #mbCard{padding:10px 14px !important;margin-bottom:8px !important;}
+  body.kb-open #mbCard #mbPlayerName{font-size:1.45rem;margin-bottom:2px;}
+  body.kb-open #mbCard #mbWindow{margin-bottom:8px;font-size:0.62rem;letter-spacing:2px;}
+  body.kb-open #mbCard > div:last-child{display:none;}                     /* "Total fee · including add-ons" */
+  body.kb-open #mbCard #mbFromBadge,body.kb-open #mbCard #mbToBadge{width:46px !important;height:46px !important;padding:5px;}
+  body.kb-open #mbCard #mbFromBadge.crest-tall,body.kb-open #mbCard #mbToBadge.crest-tall{width:36px !important;height:56px !important;padding:3px 4px;border-radius:14px;}
+  body.kb-open #mbFeedback{min-height:0 !important;margin-bottom:8px !important;}
+  body.kb-open #mbFeedback:not(:empty){padding:8px 12px;}
+  body.kb-open #mbFeedback > div{padding:6px 12px !important;gap:12px !important;margin-bottom:0 !important;}
+  body.kb-open #mbFeedback [style*="font-size:3rem"]{font-size:2rem !important;}
+  body.kb-open #mbFeedback [style*="font-size:1.9rem"]{font-size:1.5rem !important;}
+  body.kb-open #mbInputArea{margin-bottom:0 !important;}
+  body.kb-open #mbInputArea > div:last-child{display:none;}                /* the inline GUESS — the bar above the keyboard replaces it */
+  body.kb-open #mbGuessesLeft{font-size:2rem;}
+  body.kb-open #mbInput{padding:8px 12px !important;font-size:1.4rem !important;}
+  body.kb-open{padding-bottom:78px;}
+  body.kb-open #aucBidderBadge{top:6px;}
+}
+
+/* small phones / tall keyboards: squeeze a little more */
+@media(max-width:640px){
+  body.kb-tight #mbScreen{padding-top:6px !important;}
+  body.kb-tight #mbCard{padding:8px 12px !important;margin-bottom:6px !important;border-width:3px !important;}
+  body.kb-tight #mbCard #mbPlayerName{font-size:1.2rem;}
+  body.kb-tight #mbCard #mbWindow{margin-bottom:5px;}
+  body.kb-tight #mbCard #mbFromBadge,body.kb-tight #mbCard #mbToBadge{width:38px !important;height:38px !important;padding:4px;}
+  body.kb-tight #mbCard #mbFromBadge.crest-tall,body.kb-tight #mbCard #mbToBadge.crest-tall{width:30px !important;height:46px !important;}
+  body.kb-tight #mbFeedback{margin-bottom:6px !important;border-width:3px !important;}
+  body.kb-tight #mbFeedback:not(:empty){padding:5px 10px;}
+  body.kb-tight #mbFeedback [style*="font-size:3rem"]{display:none;}
+  body.kb-tight #mbFeedback [style*="font-size:1.9rem"]{font-size:1.25rem !important;}
+  body.kb-tight #mbFeedback [style*="font-size:0.95rem"]{margin-top:1px !important;font-size:0.85rem !important;}
+  body.kb-tight #mbGuessesLeft{font-size:1.6rem;}
+  body.kb-tight #mbInput{padding:5px 10px !important;font-size:1.25rem !important;}
+  body.kb-tight #kbBar{padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom));}
+  body.kb-tight #kbBar button{padding:8px;font-size:1.05rem;}
+  body.kb-tight{padding-bottom:62px;}
+}
