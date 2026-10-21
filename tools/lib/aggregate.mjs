@@ -1,7 +1,7 @@
 // Turns one player-season from API-Football (`/players?id=…&season=…` → response[0].statistics[]) into plain totals.
 //
 // Rules (so the game's numbers match what fans mean by "goals"):
-//   · friendlies are dropped — club friendlies and national-team friendlies are not part of an official record
+//   · club friendlies and pre-season tournaments are dropped; national-team friendlies count (that is how caps and international goals are quoted)
 //   · youth national teams (U17, U21, Olympic…) are dropped
 //   · everything else counts: league, cups, Europe, qualifiers, tournaments
 //   · matches for the player's national team go into `intl`, the rest into `club`
@@ -55,8 +55,12 @@ export function aggregateSeason(statistics, nationality, dropIdx = new Set()) {
   for (const [i, s] of (statistics || []).entries()) {
     if (dropIdx.has(i)) { add(out.skipped.duplicates, s); continue; }   // a copy of a line that is already counted elsewhere
     const e = { league: s.league?.name, team: s.team?.name, apps: s.games?.appearences || 0, goals: s.goals?.total || 0, assists: s.goals?.assists || 0 };
-    if (isFriendly(s.league?.name)) { add(out.skipped.friendlies, s); continue; }
+    // National-team friendlies DO count (caps and goals are always quoted that way — Transfermarkt: Messi 208 / 126, Ronaldo 143 goals for Portugal);
+    // club friendlies and pre-season tournaments do not (Transfermarkt's club tables only list competitive matches).
+    const nationalFriendly = isFriendly(s.league?.name) && isNationalTeam(s.team?.name, nationality) && !/tournoi|women/i.test(s.league?.name || '');
+    if (isFriendly(s.league?.name) && !nationalFriendly) { add(out.skipped.friendlies, s); continue; }
     if (isYouthOrOlympic(s.team?.name)) { add(out.skipped.youth, s); continue; }
+    if (nationalFriendly) { add(out.intl, s); continue; }   // not part of the quality checks (those look for repeated competition lines)
     out.entries.push(e);                      // kept only to run the quality checks; stripped before anything is published
     if (isNationalTeam(s.team?.name, nationality) || isNationalCompetition(s.league?.name)) add(out.intl, s);
     else {

@@ -4,8 +4,9 @@
 //   node tools/build-hol.mjs
 //
 // What the numbers mean (the game labels them the same way):
-//   goals / assists / appearances   the whole career from the first season the API has lines for (2002/03 at the earliest), all official competitions, club + national team
-//   intl caps / intl goals          national-team games over the same seasons (no youth teams, no friendlies)
+//   goals / appearances             the whole career from the first season the API has lines for (2002/03 at the earliest): club competitions (league, cups, Europe, club world cups) + every senior national-team game, friendlies included (that is how caps/goals are quoted)
+//                                   club friendlies and pre-season tournaments are left out (Transfermarkt's club tables leave them out too)
+//   intl caps / intl goals          national-team games over the same seasons (no youth teams)
 //   trophies                        the player's whole career: league titles, domestic cups, super cups, Europe, club world cups, national-team tournaments
 // Only players whose lines passed the quality checks (or were repaired, see tools/lib/aggregate.mjs) AND the league-line cross-check (tools/crosscheck.mjs — run it first) are included.
 // A player is in the deck only when every season from his 16th birthday (or 2002) was requested, so "career" is not a half-pulled career.

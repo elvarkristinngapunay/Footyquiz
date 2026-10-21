@@ -3093,7 +3093,7 @@ function runSlotMachine(){
   _slotRunning=true;
   document.getElementById('slotChosenName').textContent='';
   document.getElementById('slotResultBtns').style.display='none';
-  const cats=_slotType==='hol'?HOL_SLOT_CATS:EG_SLOT_CATS;
+  const cats=_slotType==='hol'?HOL_SLOT_CATS.filter(c=>!(holIsModern()&&c.key==='assists')):EG_SLOT_CATS;
   const targetIdx=Math.floor(Math.random()*cats.length);
   _slotChosen=cats[targetIdx];
   ['slotReel1','slotReel2','slotReel3'].forEach(id=>document.getElementById(id).classList.remove('stopped'));
@@ -3701,11 +3701,13 @@ function holRenderMode(){
   box.style.display = ready ? 'flex' : 'none'; note.style.display = ready ? 'block' : 'none';
   box.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.mode === (holIsModern() ? 'modern' : 'legends')));
   if(ready) note.textContent = holIsModern()
-    ? PLAYERS_MODERN.length + ' stars · career totals, official matches only · updated weekly (API-Football)'
+    ? PLAYERS_MODERN.length + ' stars · career totals: club competitions + all national-team games · updated weekly (API-Football)'
     : PLAYERS.length + ' legends · full career totals';
   document.querySelectorAll('#menuScreen .card').forEach(card => {
     const m = (card.getAttribute('onclick') || '').match(/startGame\('([a-z_]+)'\)/); const lbl = card.querySelector('.card-label');
     if(m && lbl) lbl.textContent = holLabel(m[1]);
+    // API-Football has no usable assist data before 2024 (50–90% of the lines are empty), so career assists would be far too low — left out of Modern Stars until that is fixed
+    if(m) card.style.display = (holIsModern() && m[1] === 'assists') ? 'none' : '';
   });
   renderCatBests();
 }
@@ -5515,7 +5517,7 @@ function updateFriendsNav(){
 <script src="data/transfer-fees.js?v=5"></script>
 <script src="data/eg-datasets.js?v=24"></script>
 <script src="data/players.js"></script>
-<script src="data/players-modern.js?v=4"></script>
+<script src="data/players-modern.js?v=5"></script>
 <script src="data/kits.js"></script>
 <script src="data/club-logos.js?v=4"></script>
 <script src="data/ttt-grids.js?v=1"></script>
@@ -5525,7 +5527,7 @@ function updateFriendsNav(){
 <script src="data/trophies.js"></script>
 <script src="data/moneyball-transfers.js?v=5"></script>
 <script src="data/top10.js?v=12"></script>
-<script src="data/top10-api.js?v=4"></script>
+<script src="data/top10-api.js?v=5"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════════════
 //  MONEYBALL GAME
