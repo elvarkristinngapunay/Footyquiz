@@ -1412,7 +1412,7 @@ body::before{display:none;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
 .t10-shake{animation:t10shake 0.35s ease-out;}
 </style>
-<link rel="stylesheet" href="mowpop.css?v=18">
+<link rel="stylesheet" href="mowpop.css?v=19">
 </head>
 <body>
 
@@ -1848,6 +1848,30 @@ body::before{display:none;}
     <div class="mp-title" style="font-family:'Anton',sans-serif;font-size:clamp(2.4rem,10vw,4rem);color:#e8b923;letter-spacing:2px;line-height:1;text-align:center;margin-bottom:8px;">TOP 10</div>
     <div class="mp-sub" style="color:#555;font-size:0.8rem;text-align:center;margin-bottom:28px;">Choose a competition</div>
     <div style="display:flex;flex-direction:column;gap:12px;width:100%;">
+      <div class="t10-league-card" data-t10="now" style="display:none;" onclick="t10PickLeague('now')">
+        <div class="t10-badge" style="background:rgba(255,225,77,0.14);border:1px solid #ffe14d;color:#ffe14d;">NOW</div>
+        <div style="flex:1;">
+          <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">This Season</div>
+          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Live leaders · updated weekly</div>
+        </div>
+        <div style="color:#333;font-size:1.4rem;">›</div>
+      </div>
+      <div class="t10-league-card" data-t10="last3" style="display:none;" onclick="t10PickLeague('last3')">
+        <div class="t10-badge" style="background:rgba(255,225,77,0.14);border:1px solid #ffe14d;color:#ffe14d;">3Y</div>
+        <div style="flex:1;">
+          <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">Last 3 Seasons</div>
+          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Goals · Assists · Contributions</div>
+        </div>
+        <div style="color:#333;font-size:1.4rem;">›</div>
+      </div>
+      <div class="t10-league-card" data-t10="records" style="display:none;" onclick="t10PickLeague('records')">
+        <div class="t10-badge" style="background:rgba(255,225,77,0.14);border:1px solid #ffe14d;color:#ffe14d;">REC</div>
+        <div style="flex:1;">
+          <div style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:0.5px;">Records Since 2010</div>
+          <div style="font-size:0.75rem;color:#555;margin-top:2px;">Golden Boots · Titles · Trophies</div>
+        </div>
+        <div style="color:#333;font-size:1.4rem;">›</div>
+      </div>
       <div class="t10-league-card" onclick="t10PickLeague('champions-league')">
         <div class="t10-badge" style="background:rgba(0,40,120,0.25);border:1px solid #1a3a8f;color:#7aa5ff;">UCL</div>
         <div style="flex:1;">
@@ -2082,6 +2106,11 @@ body::before{display:none;}
   <div id="menuStreak" style="display:none;"></div>
   <div style="display:none;" id="menuBestNum"></div>
   <div style="display:none;" id="menuRecordEl"></div>
+  <div class="hol-mode" id="holMode" style="display:none;">
+    <button type="button" data-mode="legends" onclick="holSetMode('legends')">Legends</button>
+    <button type="button" data-mode="modern" onclick="holSetMode('modern')">Modern Stars</button>
+  </div>
+  <div class="hol-mode-note" id="holModeNote" style="display:none;"></div>
   <div class="section-label">Choose your category</div>
   <div class="grid">
     <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('career_goals')" style="border-color:#2a2a2a;background:#080808;">
@@ -2639,7 +2668,7 @@ body::before{display:none;}
   </div>
 </div>
 
-<div class="footer">Football Royal · Stats sourced from Transfermarkt & Wikipedia</div>
+<div class="footer">Football Royal · Stats from API-Football, Transfermarkt & Wikipedia</div>
 
 <script>
 // ── NAVIGATION ────────────────────────────────────────────────────────────────
@@ -2760,6 +2789,7 @@ function showSxi(){
   setBackBtn('← Back Home', showLanding);
 }
 function showHigherOrLower(){
+  holRenderMode();
   document.getElementById('landingScreen').style.display='none';
   document.getElementById('higherOrLowerSection').style.display='block';
   document.getElementById('elGrandeMenu').style.display='none';
@@ -3654,6 +3684,31 @@ function trophyIcon(t){
 }
 
 // ── GAME STATE ────────────────────────────────────────────────────────────────
+// ── Higher or Lower: Legends (hand-made careers) vs Modern Stars (API-Football, whole career from the first season the API has) ──
+let holMode = 'legends';
+try{ if(localStorage.getItem('fr_holMode') === 'modern') holMode = 'modern'; }catch(e){}
+const HOL_LABELS_MODERN = {career_goals:'Career Goals', career_appearances:'Career Appearances', assists:'Career Assists', intl_caps:'Intl Caps', intl_goals:'Intl Goals', trophies:'Trophies'};
+const holModernReady = () => typeof PLAYERS_MODERN !== 'undefined' && PLAYERS_MODERN.length >= 20;
+const holIsModern = () => holMode === 'modern' && holModernReady();
+const holPool  = () => holIsModern() ? PLAYERS_MODERN : PLAYERS;
+const holLabel = cat => holIsModern() ? HOL_LABELS_MODERN[cat] : catLabels[cat];
+const holKey   = cat => holIsModern() ? 'm_' + cat : cat;     // modern mode keeps its own best scores
+function holSetMode(m){ holMode = m; try{ localStorage.setItem('fr_holMode', m); }catch(e){} holRenderMode(); }
+function holRenderMode(){
+  const box = document.getElementById('holMode'), note = document.getElementById('holModeNote');
+  if(!box) return;
+  const ready = holModernReady();
+  box.style.display = ready ? 'flex' : 'none'; note.style.display = ready ? 'block' : 'none';
+  box.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.mode === (holIsModern() ? 'modern' : 'legends')));
+  if(ready) note.textContent = holIsModern()
+    ? PLAYERS_MODERN.length + ' stars · career totals, official matches only · updated weekly (API-Football)'
+    : PLAYERS.length + ' legends · full career totals';
+  document.querySelectorAll('#menuScreen .card').forEach(card => {
+    const m = (card.getAttribute('onclick') || '').match(/startGame\('([a-z_]+)'\)/); const lbl = card.querySelector('.card-label');
+    if(m && lbl) lbl.textContent = holLabel(m[1]);
+  });
+  renderCatBests();
+}
 const catBests=JSON.parse(localStorage.getItem('fq_catBests')||'{}');
 
 function saveCatBest(cat,s){
@@ -3669,7 +3724,8 @@ function renderCatBests(){
   const labels={career_goals:'Career Goals',career_appearances:'Appearances',assists:'Assists',intl_caps:'Intl Caps',intl_goals:'Intl Goals',trophies:'Major Trophies'};
   for(const cat of Object.keys(labels)){
     const el=document.getElementById('best-'+cat);
-    if(el) el.innerHTML=catBests[cat]?'🏆 BEST: '+catBests[cat]:'';
+    const b=catBests[holKey(cat)];
+    if(el) el.innerHTML=b?'🏆 BEST: '+b:'';
   }
 }
 
@@ -3729,9 +3785,9 @@ function startGame(cat){
   category=cat;score=0;lives=1;
   document.getElementById("scoreEl").textContent=0;
   document.getElementById("bestEl").textContent=best;
-  document.getElementById("modeEl").textContent=catLabels[cat];
+  document.getElementById("modeEl").textContent=holLabel(cat);
   renderLives();
-  deck=shuffle([...PLAYERS]);deckIdx=0;
+  deck=shuffle(holPool().filter(p=>catValue(p,cat)>0));deckIdx=0;
   leftPlayer=nextFromDeck();
   rightPlayer=nextFromDeck();
   document.getElementById("menuScreen").style.display="none";
@@ -3749,7 +3805,7 @@ function shuffle(a){
   return a;
 }
 function nextFromDeck(){
-  if(deckIdx>=deck.length){deck=shuffle([...PLAYERS]);deckIdx=0;}
+  if(deckIdx>=deck.length){deck=shuffle(holPool().filter(p=>catValue(p,category)>0));deckIdx=0;}
   return deck[deckIdx++];
 }
 
@@ -3821,7 +3877,7 @@ function makeCard(p,val,isLeft){
         ?`<div class="stat-num" id="${isLeft?"leftNum":"rightNum"}">${val.toLocaleString()}</div>`
         :`<div class="stat-num hidden-num" id="rightNum">?</div>`
       }
-      <div class="stat-lbl">${catLabels[category]}</div>
+      <div class="stat-lbl">${holLabel(category)}</div>
     </div>
     ${clubBreakdown}
     ${!isLeft?`
@@ -3862,7 +3918,7 @@ function guess(dir){
     rightNumEl.classList.add("correct-num");
     score++;
     if(score>best){best=score;localStorage.setItem('footballroyal_best',best);}
-    saveCatBest(category,score);
+    saveCatBest(holKey(category),score);
     document.getElementById("scoreEl").textContent=score;
     document.getElementById("bestEl").textContent=best;
   } else {
@@ -5459,6 +5515,7 @@ function updateFriendsNav(){
 <script src="data/transfer-fees.js?v=5"></script>
 <script src="data/eg-datasets.js?v=24"></script>
 <script src="data/players.js"></script>
+<script src="data/players-modern.js?v=4"></script>
 <script src="data/kits.js"></script>
 <script src="data/club-logos.js?v=4"></script>
 <script src="data/ttt-grids.js?v=1"></script>
@@ -5468,6 +5525,7 @@ function updateFriendsNav(){
 <script src="data/trophies.js"></script>
 <script src="data/moneyball-transfers.js?v=5"></script>
 <script src="data/top10.js?v=12"></script>
+<script src="data/top10-api.js?v=4"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════════════
 //  MONEYBALL GAME
@@ -5693,15 +5751,23 @@ function t10FindTrap(norm){
 function t10Norm(s){
   return s.toLowerCase()
     .normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/ø/g,'o').replace(/æ/g,'ae').replace(/ß/g,'ss').replace(/ð/g,'d').replace(/þ/g,'th').replace(/ł/g,'l').replace(/đ/g,'d')
     .replace(/[^a-z0-9 ]/g,'').trim();
 }
 
 const T10_STAT_META = {
   goals:    { label:'GOALS',    icon:'⚽' },
   assists:  { label:'ASSISTS',  icon:'🎯' },
+  contrib:  { label:'GOALS + ASSISTS', icon:'⚡' },
+  boots:    { label:'GOLDEN BOOTS',    icon:'👟' },
   titles:   { label:'TITLES',   icon:'🏆' },
+  trophies: { label:'TROPHIES', icon:'🏅' },
+  cards:    { label:'YELLOW CARDS',    icon:'🟨' },
   signings: { label:'SIGNINGS', icon:'💰' }
 };
+
+// the API-built categories (data/top10-api.js) only show up when their data is present
+(function(){ ['now','last3','records'].forEach(id => { const el = document.querySelector('[data-t10="'+id+'"]'); if(el && typeof TOP10_DATA !== 'undefined' && TOP10_DATA[id]) el.style.display = 'flex'; }); })();
 
 function t10PickLeague(id){
   t10League = id;

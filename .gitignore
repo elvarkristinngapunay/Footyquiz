@@ -1,0 +1,4 @@
+# secrets and raw downloads — never commit these
+.env
+.env.*
+data/raw/
