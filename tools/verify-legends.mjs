@@ -26,6 +26,15 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const ctx = {}; vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'data/players.js'), 'utf8') + ';this.P=PLAYERS', ctx);
 const LEGENDS = ctx.P;
+// Retired players the API pipeline found (tools/build-hol.mjs → data/generated/legends-candidates.json). They only become Legends when Wikipedia confirms their numbers.
+const CAND_FILE = path.join(ROOT, 'data/generated/legends-candidates.json');
+const SAME_PERSON = { 'Marcelo Vieira': 'Marcelo' };     // candidate name → the name he already has in players.js
+const candidates = (fs.existsSync(CAND_FILE) ? JSON.parse(fs.readFileSync(CAND_FILE, 'utf8')) : []).filter(c => !(SAME_PERSON[c.name] && LEGENDS.some(l => l.name === SAME_PERSON[c.name])));
+const EXTRA = new Set(candidates.map(c => c.name));
+const ALL = LEGENDS.concat(candidates.filter(c => !LEGENDS.some(l => l.name === c.name)));
+const roster = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'tools/roster-candidates.json'), 'utf8')); } catch { return []; } })();
+const TITLE_FILE = path.join(ROOT, 'data/raw/wikipedia/titles.json');
+const wikiTitles = (() => { try { return JSON.parse(fs.readFileSync(TITLE_FILE, 'utf8')); } catch { return {}; } })();
 
 // article titles that differ from the player's name
 const TITLES = { 'Ronaldo Nazário': 'Ronaldo_(Brazilian_footballer)', 'Marcelo': 'Marcelo_(footballer,_born_1988)', 'Xavi': 'Xavi_Hernández' };
@@ -47,16 +56,26 @@ const canonical = name => { const n = norm(parentClub(name)); return CLUB_ALIAS[
 const parentClub = n => n.replace(/\((loan|youth|reserves?)[^)]*\)/gi, '').replace(/\s+(B|II|III|Juvenil|Castilla|Reserves|U\d\d)$/i, '').trim();
 
 if (args.fetch) {
-  for (const p of LEGENDS) {
+  // enwiki titles of the candidates, 50 Wikidata ids per request
+  const need = candidates.map(c => ({ c, q: roster.find(r => r.name === c.name && r.born === c.born)?.qid })).filter(x => x.q && !wikiTitles[x.c.name]);
+  for (let i = 0; i < need.length; i += 50) {
+    const chunk = need.slice(i, i + 50);
+    const r = await fetch(`https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${chunk.map(x => x.q).join('|')}&props=sitelinks&sitefilter=enwiki&format=json`, { headers: { 'User-Agent': 'FootballRoyalQuiz/1.0 (personal quiz project; low-volume)' } });
+    const j = await r.json();
+    for (const x of chunk) { const t = j.entities?.[x.q]?.sitelinks?.enwiki?.title; if (t) wikiTitles[x.c.name] = t.replace(/ /g, '_'); }
+    await sleep(1500);
+  }
+  fs.mkdirSync(path.dirname(TITLE_FILE), { recursive: true }); fs.writeFileSync(TITLE_FILE, JSON.stringify(wikiTitles, null, 1));
+  for (const p of ALL) {
     if (fs.existsSync(fileFor(p.name)) && fs.statSync(fileFor(p.name)).size > 50000) continue;
-    try { fs.writeFileSync(fileFor(p.name), await fetchArticle(TITLES[p.name] || p.name.replace(/ /g, '_'))); console.log('downloaded', p.name); }
+    try { fs.writeFileSync(fileFor(p.name), await fetchArticle(TITLES[p.name] || wikiTitles[p.name] || p.name.replace(/ /g, '_'))); console.log('downloaded', p.name); }
     catch (e) { console.log('could not download', p.name, '—', e.message); }
     await sleep(3000);
   }
 }
 
-const report = [], verified = {};
-for (const p of LEGENDS) {
+const report = [], verified = {}, extras = [];
+for (const p of ALL) {
   const row = { name: p.name, status: 'manual', problems: [], hand: { career_goals: p.career_goals, career_appearances: p.career_appearances, intl_caps: p.intl_caps, intl_goals: p.intl_goals, clubSum: p.club_goals.reduce((a, c) => a + c.n, 0) } };
   report.push(row);
   const f = fileFor(p.name);
@@ -98,7 +117,7 @@ for (const p of LEGENDS) {
   const totalGoals = sumGoals + wp.intl.goals, totalApps = wp.career.apps + wp.intl.apps;     // goals = the club rows (so the panel adds up), apps = the table's career row
   row.status = 'verified';
   row.proposed = { career_goals: totalGoals, career_appearances: totalApps, intl_caps: wp.intl.apps, intl_goals: wp.intl.goals };
-  verified[p.name] = {
+  const entry = {
     career_goals: totalGoals, career_appearances: totalApps, intl_caps: wp.intl.apps, intl_goals: wp.intl.goals,
     club_goals: clubs.filter(c => c.goals > 0).sort((a, b) => b.goals - a.goals).map(c => {
       const mine = p.club_goals.find(x => same(x.c, c.club));
@@ -106,6 +125,8 @@ for (const p of LEGENDS) {
     }),
     source: 'Wikipedia career statistics, checked ' + new Date().toISOString().slice(0, 10)
   };
+  if (EXTRA.has(p.name)) extras.push({ ...p, trophies: null, trophies_list: [], career_goals: entry.career_goals, career_appearances: entry.career_appearances, intl_caps: entry.intl_caps, intl_goals: entry.intl_goals, club_goals: entry.club_goals, intl_breakdown: { ...(p.intl_breakdown || {}), n: entry.intl_goals }, verified: entry.source });
+  else verified[p.name] = entry;
 }
 
 fs.mkdirSync(path.join(ROOT, 'data/generated'), { recursive: true });
@@ -124,9 +145,19 @@ const LEGENDS_VERIFIED = ${JSON.stringify(verified)};
 })();
 `;
 fs.writeFileSync(path.join(ROOT, 'data/legends-verified.js'), js);
+const extraJs = `// GENERATED by tools/verify-legends.mjs — retired players added to the Legends deck. Every number was checked against Wikipedia's career statistics tables
+// (players whose tables did not pass the checks are not here). career_goals / career_appearances = everything: all club competitions + every senior national-team game.
+// Assists and trophies are null: the API has no usable assist data before 2024/25 and its trophy list is not double-checked, so these players are left out of those two categories.
+const LEGENDS_EXTRA = ${JSON.stringify(extras.sort((a, b) => b.career_goals - a.career_goals))};
+(function(){
+  if (typeof PLAYERS === 'undefined') return;
+  LEGENDS_EXTRA.forEach(p => { if (!PLAYERS.some(x => x.name === p.name)) PLAYERS.push(p); });
+})();
+`;
+fs.writeFileSync(path.join(ROOT, 'data/legends-extra.js'), extraJs);
 
 const ok = report.filter(r => r.status === 'verified'), manual = report.filter(r => r.status !== 'verified');
-console.log(`${report.length} legends · ${ok.length} verified against Wikipedia · ${manual.length} need a manual look\n`);
+console.log(`${report.length} legends (incl. ${candidates.length} retired candidates) · ${ok.length} verified against Wikipedia · ${manual.length} need a manual look · ${extras.length} new Legends written to data/legends-extra.js\n`);
 for (const r of ok) console.log(`✓ ${r.name.padEnd(22)} goals ${String(r.hand.career_goals).padStart(4)} → ${String(r.proposed.career_goals).padStart(4)} · games ${String(r.hand.career_appearances).padStart(4)} → ${String(r.proposed.career_appearances).padStart(4)} · ${r.diffs.length} club/intl differences`);
 console.log('');
 for (const r of manual) console.log(`? ${r.name.padEnd(22)} ${r.problems.join(' | ')}`);

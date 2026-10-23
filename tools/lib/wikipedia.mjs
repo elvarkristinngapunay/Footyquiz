@@ -11,14 +11,14 @@ const rowsOf = tableHtml => [...tableHtml.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)
 
 // Downloads the rendered article. Wikipedia throttles bursts ("You are making too many requests"), so: one page every few seconds, retry with back-off.
 export async function fetchArticle(title) {
+  // the REST endpoint serves the cached rendering (about 1 s per page); redirects are followed
   for (let attempt = 0; attempt < 5; attempt++) {
     try {
-      const r = await fetch(`https://en.wikipedia.org/w/api.php?action=parse&page=${encodeURIComponent(title)}&prop=text&format=json&formatversion=2&redirects=1`, { headers: { 'User-Agent': UA } });
-      const j = JSON.parse(await r.text());
-      if (j.parse) return j.parse.text;
-      if (j.error) throw Object.assign(new Error(j.error.info || 'no page'), { fatal: true });
+      const r = await fetch(`https://en.wikipedia.org/api/rest_v1/page/html/${encodeURIComponent(title)}`, { headers: { 'User-Agent': UA }, redirect: 'follow' });
+      if (r.status === 404) throw Object.assign(new Error('no page'), { fatal: true });
+      if (r.status === 200) { const html = await r.text(); if (html.length > 20000) return html; }
     } catch (e) { if (e.fatal) throw e; }
-    await sleep(8000 * (attempt + 1));
+    await sleep(6000 * (attempt + 1));          // throttled or a network blip → wait longer each time
   }
   throw new Error('Wikipedia kept throttling');
 }
@@ -28,7 +28,13 @@ export function parseArticle(html) {
   const head = (t, n = 9000) => strip(t.slice(0, n));
   const clubT = tables.find(t => /Club/.test(head(t)) && /Season/.test(head(t)) && /Apps/.test(head(t)) && /Total/.test(head(t)));
   const natT = tables.find(t => /(National team|Team)/.test(head(t, 900)) && /Year/.test(head(t, 900)) && /Apps/.test(head(t, 3000)) && !/Season/.test(head(t, 900)));
-  const res = { clubs: [], career: null, intl: null };
+  const res = { clubs: [], career: null, intl: null, leagueRows: [], seasonRows: [] };   // seasonRows: every club-season with its TOTAL apps/goals (all competitions)
+  // league columns of a season row: [season, division, league apps, league goals, …]; `at` is the index of the season cell
+  const leagueRow = (club, cells, at) => {
+    const division = cells[at + 1]?.text; if (!division || SEASON.test(division)) return;
+    const a = num(cells[at + 2]?.text), g = num(cells[at + 3]?.text);
+    res.leagueRows.push({ club, season: cells[at].text, division, apps: a ?? 0, goals: g ?? 0 });
+  };
   if (clubT) {
     let cur = null, seasons = [];
     const flush = () => {
@@ -71,8 +77,8 @@ export function parseArticle(html) {
         }
         continue;
       }
-      if (SEASON.test(first.text)) { if (nums.length >= 2) seasons.push({ apps: nums.at(-2), goals: nums.at(-1) }); continue; }
-      if (first.text) { flush(); cur = { club: first.text }; const sc = cells[1]; if (sc && SEASON.test(sc.text) && nums.length >= 2) seasons.push({ apps: nums.at(-2), goals: nums.at(-1) }); }
+      if (SEASON.test(first.text)) { if (nums.length >= 2) { seasons.push({ apps: nums.at(-2), goals: nums.at(-1) }); res.seasonRows.push({ club: cur?.club, season: first.text, apps: nums.at(-2), goals: nums.at(-1) }); } leagueRow(cur?.club, cells, 0); continue; }
+      if (first.text) { flush(); cur = { club: first.text }; const sc = cells[1]; if (sc && SEASON.test(sc.text) && nums.length >= 2) { seasons.push({ apps: nums.at(-2), goals: nums.at(-1) }); res.seasonRows.push({ club: cur.club, season: sc.text, apps: nums.at(-2), goals: nums.at(-1) }); } if (sc && SEASON.test(sc.text)) leagueRow(cur.club, cells, 1); }
     }
     flush();
   }
@@ -82,4 +88,12 @@ export function parseArticle(html) {
     }
   }
   return res;
+}
+
+// Goals/apps in the five big leagues from the season rows ("Division" column). Exact division names only, so the Russian/Brazilian/Ukrainian "Premier League" / "Serie A" never count.
+const BIG5 = { 'Premier League': 'pl', 'La Liga': 'll', 'Serie A': 'sa', 'Bundesliga': 'bl', 'Ligue 1': 'l1' };
+export function leagueTotals(leagueRows) {
+  const t = {};
+  for (const r of leagueRows || []) { const k = BIG5[r.division]; if (!k) continue; t[k] ||= { a: 0, g: 0 }; t[k].a += r.apps; t[k].g += r.goals; }
+  return t;
 }

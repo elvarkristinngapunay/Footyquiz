@@ -17,6 +17,8 @@ import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 import { isMajorTrophy, trophyLabel, hasWomensTrophy } from './lib/trophies.mjs';
 import { kitFor } from './lib/kits.mjs';
+import { parseArticle } from './lib/wikipedia.mjs';
+import { verifyCurrent, apiClubSeasons, startYear } from './lib/verify-current.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = (f, d) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return d; } };
@@ -44,7 +46,7 @@ const hash = s => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
 const FIRST_SEASON = 2002;   // the earliest season the API has player lines for (Cristiano Ronaldo, Sporting 2002/03); nobody born from 1985 on started earlier
 
 // goals per club: the same club under two spellings or its reserve side ("Monaco" / "AS Monaco", "Real Madrid II") is one row; top 8 by goals
-const parent = t => String(t || '').replace(/\s+(B|II|III|Castilla|U\d\d)$/i, '').replace(/^Jong\s+/i, '').trim();
+const parent = t => String(t || '').replace(/\s*\(.*?\)\s*/g, ' ').replace(/\s+(B|C|II|III|IV|Castilla|U\d\d)$/i, '').replace(/^Jong\s+/i, '').replace(/\s+/g, ' ').trim();
 function clubGoalsFor(p) {
   const rows = new Map();
   for (const c of p.clubGoals || []) { const key = logoKey(parent(c.team)) || parent(c.team); rows.set(key, (rows.get(key) || 0) + c.goals); }
@@ -57,7 +59,7 @@ const assistsSince = p => Object.entries(p.seasons).filter(([y]) => Number(y) >=
 
 // Display name: the roster label comes from Wikidata. Nicknames are fine ("Andy Robertson", "Phil Foden", "Danny Welbeck" — the API has the legal names), but a few labels are
 // plainly wrong (a typo, a Greek Α, an extra word). Those are corrected here, by hand, so every change is visible. Anything else the API disagrees with is only reported.
-const NAME_FIXES = { 'Andrcu Onana': 'André Onana', 'Αrda Güler': 'Arda Güler', 'Marc Hagit Cucurella': 'Marc Cucurella', 'Juan Mata Pata': 'Juan Mata' };
+const NAME_FIXES = { 'Andrcu Onana': 'André Onana', 'Αrda Güler': 'Arda Güler', 'Marc Hagit Cucurella': 'Marc Cucurella', 'Juan Mata Pata': 'Juan Mata', 'Sergio Canales Madrazo': 'Sergio Canales', 'Marcos Alonso Mendoza': 'Marcos Alonso', 'Antony dos Santos': 'Antony' };
 const tokensOf = t => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9 -]/g, ' ').split(/[\s-]+/).filter(Boolean);
 const nameNotes = [];
 function displayNameFor(p) {
@@ -68,8 +70,18 @@ function displayNameFor(p) {
 }
 // relevance: someone a fan would know — a real stretch in the big five leagues, or a regular for his country
 const relevant = p => p.since.big5.apps >= 40 || p.since.intl.apps >= 20;
+// "Legend" = a name every fan knows: a long stretch at the top (200+ big-five games) with 50+ caps or 10+ trophies, or 80+ caps, or 20+ trophies
+const legendWorthy = (p, r) => (p.since.big5.apps >= 200 && (r.intl_caps >= 50 || r.trophies >= 10)) || r.intl_caps >= 80 || r.trophies >= 20;
+// goals per club for the panel: Wikipedia's finished seasons + the API's running season, one row per club (reserve sides and spellings merged)
+function verifiedClubGoals(v) {
+  const rows = new Map();
+  const add = (team, goals) => { if (!goals) return; const key = logoKey(parent(team)) || parent(team); rows.set(key, (rows.get(key) || 0) + goals); };
+  for (const r of v.finishedRows) add(r.club, r.goals);
+  for (const [team, goals] of Object.entries(v.currentPerClub)) add(team, goals);
+  return [...rows].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([c, n]) => ({ c, n, col: '#444' }));
+}
 const SQUAD_NUMBERS = readJson(path.join(LISTS, 'squad-numbers.json'), {});   // { playerId: shirt number } from tools/fetch-squads.mjs
-const out = []; const skipped = [];
+const out = []; const skipped = []; const retiredOut = [];   // retiredOut: no longer playing → candidates for the Legends deck (verified against Wikipedia by tools/verify-legends.mjs)
 for (const p of Object.values(stats.players)) {
   // "career" is only honest if we asked for every season the player could have played: from 2002 (the API has nothing earlier), or from his 16th birthday year
   const startedBy = Math.max(FIRST_SEASON, Number(String(p.born).slice(0, 4)) + 16);
@@ -78,28 +90,28 @@ for (const p of Object.values(stats.players)) {
   if (crosscheck[p.id]?.status === 'incomplete') { skipped.push(`${p.name} (a season has no league line: ${crosscheck[p.id].problems[0].slice(0, 70)})`); continue; }
   // "Current players" = still playing: games in the running season or the one before (a long injury must not drop a star)
   const lastPlayed = Math.max(0, ...Object.entries(p.seasons).filter(([, ss]) => ss.club.apps + ss.intl.apps > 0).map(([y]) => Number(y)));
-  if (lastPlayed < stats.currentSeason - 1) { skipped.push(`${p.name} (no games since ${lastPlayed} — not a current player)`); continue; }
+  const isCurrent = lastPlayed >= stats.currentSeason - 1;
   if (!relevant(p)) { skipped.push(`${p.name} (not well known: ${p.since.big5.apps} big-five games, ${p.since.intl.apps} caps)`); continue; }
   const club = p.since.club, intl = p.since.intl;
-  const apps = club.apps + intl.apps; if (apps < 150) { skipped.push(`${p.name} (only ${apps} games)`); continue; }
+  const apps = club.apps + intl.apps; if (apps < (isCurrent ? 150 : 300)) { skipped.push(`${p.name} (only ${apps} games)`); continue; }
   const trophyBody = readJson(path.join(LISTS, `trophies-${p.id}.json`), null);
-  if (!trophyBody) { skipped.push(`${p.name} (no trophies fetched yet)`); continue; }
-  if (hasWomensTrophy(trophyBody.response)) { skipped.push(`${p.name} (women's football — not part of this deck)`); continue; }
+  if (!trophyBody && !isCurrent) { skipped.push(`${p.name} (no trophies fetched yet)`); continue; }
+  if (trophyBody && hasWomensTrophy(trophyBody.response)) { skipped.push(`${p.name} (women's football — not part of this deck)`); continue; }
   const tally = new Map();
-  for (const t of trophyBody.response || []) {
+  for (const t of trophyBody?.response || []) {
     if (!isMajorTrophy(t)) continue;
     const name = trophyLabel(t);
     tally.set(name, (tally.get(name) || 0) + 1);
   }
   const trophies_list = [...tally].sort((a, b) => b[1] - a[1]).map(([n, c]) => `${n} ×${c}`);
-  if (!trophies_list.length) { skipped.push(`${p.name} (no trophies)`); continue; }
+  if (!trophies_list.length && !isCurrent) { skipped.push(`${p.name} (no trophies)`); continue; }
   // position = the one he is listed in most often
   const posCount = {};
   for (const y of Object.keys(p.seasons)) { const b = readJson(path.join(RAW, `${p.id}-${y}.json`), null); for (const s of b?.response?.[0]?.statistics || []) if (s.games?.position) posCount[s.games.position] = (posCount[s.games.position] || 0) + (s.games.appearences || 0); }
   const pos = POS[Object.entries(posCount).sort((a, b) => b[1] - a[1])[0]?.[0]] || 'Forward';
   const shownName = displayNameFor(p);
   const [color, tc] = PALETTE[hash(shownName) % PALETTE.length];
-  out.push({
+  const record = {
     name: shownName, pos, nat: p.nationality || '',
     career_goals: club.goals + intl.goals, career_appearances: apps, assists: assistsSince(p),
     intl_caps: intl.apps, intl_goals: intl.goals, trophies: trophies_list.reduce((s, t) => s + Number(t.match(/×(\d+)/)[1]), 0),
@@ -108,11 +120,33 @@ for (const p of Object.values(stats.players)) {
     intl_breakdown: { flag: FLAGS[p.nationality] || '🌍', country: p.nationality || '', n: intl.goals },
     kit: kitFor(currentClub(p), shownName, SQUAD_NUMBERS[p.id]),
     trophies_list, apiId: p.id, quality: p.quality
-  });
+};
+  if (isCurrent) {
+    // career totals only when two sources stand behind them (see tools/lib/verify-current.mjs); trophies and assists are not released (the API lags new honours and has no assists before 2024/25)
+    const wpFile = path.join(ROOT, 'data/raw/wikipedia/legends', shownName.replace(/[^A-Za-z]/g, '_') + '.html');
+    const v = verifyCurrent(p, fs.existsSync(wpFile) ? parseArticle(fs.readFileSync(wpFile, 'utf8')) : null, stats.currentSeason, apiClubSeasons(p, RAW));
+    record.career_goals = v.ok.goals && v.ok.intl ? v.clubGoals + v.intl.goals : null;
+    record.career_appearances = v.ok.apps && v.ok.intl ? v.clubApps + v.intl.apps : null;
+    record.intl_caps = v.ok.intl ? v.intl.apps : null;
+    record.intl_goals = v.ok.intl ? v.intl.goals : null;
+    record.assists = null; record.trophies = null; record.trophies_list = [];
+    record.club_goals = v.ok.goals ? verifiedClubGoals(v) : [];
+    record.intl_breakdown = { ...record.intl_breakdown, n: v.intl ? v.intl.goals : 0 };
+    record.verified = { goals: v.ok.goals, apps: v.ok.apps, intl: v.ok.intl };
+    if (record.career_goals === null && record.intl_caps === null) { skipped.push(`${p.name} (numbers not confirmed by two sources: ${v.why || JSON.stringify(v.diag)})`); continue; }
+    out.push(record);
+  }
+  else if (legendWorthy(p, record)) retiredOut.push({ ...record, assists: null, born: p.born, lastPlayed });
+  else skipped.push(`${p.name} (retired, but not a name that fits a Legends deck: ${p.since.big5.apps} big-five games, ${intl.apps} caps, ${record.trophies} trophies)`);   // assists before 2024/25 do not exist in the API → left out of the assists category
+
 }
-out.sort((a, b) => b.career_goals - a.career_goals);
+out.sort((a, b) => (b.career_goals || 0) - (a.career_goals || 0));
 const js = `// GENERATED by tools/build-hol.mjs on ${new Date().toISOString().slice(0, 10)} from API-Football — do not edit by hand.\n// Goals, assists, appearances, caps: whole career from the first season the API has lines for (2002/03 at the earliest), official matches only (no friendlies). Trophies: whole career.\nconst PLAYERS_MODERN = ${JSON.stringify(out)};\nconst PLAYERS_MODERN_INFO = ${JSON.stringify({ generatedAt: new Date().toISOString(), since: FIRST_SEASON, assistsFrom: ASSISTS_FROM, currentSeason: stats.currentSeason, count: out.length })};\n`;
 fs.writeFileSync(path.join(ROOT, 'data/players-modern.js'), js);
+retiredOut.sort((a, b) => b.career_goals - a.career_goals);
+fs.mkdirSync(path.join(ROOT, 'data/generated'), { recursive: true });
+fs.writeFileSync(path.join(ROOT, 'data/generated/legends-candidates.json'), JSON.stringify(retiredOut));
+console.log(`legends candidates (retired, full career): ${retiredOut.length}`);
 console.log(`wrote data/players-modern.js — ${out.length} players (${(js.length / 1024).toFixed(0)} KB). skipped ${skipped.length}:`);
 console.log('  ' + skipped.slice(0, 40).join('\n  ') + (skipped.length > 40 ? `\n  … and ${skipped.length - 40} more` : ''));
 if (nameNotes.length) console.log('\nnames to look at:\n  ' + nameNotes.join('\n  '));

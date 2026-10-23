@@ -433,13 +433,10 @@ const MONEYBALL_MANAGERS = [
       { player:'Luis Díaz',             pos:'Left Winger',       from:'Liverpool',         fromLeague:'Premier League', to:'Bayern Munich', window:'Summer', year:2025, fee:76.00 },
       { player:'Victor Osimhen',        pos:'Centre-Forward',    from:'Napoli',            fromLeague:'Serie A',        to:'Galatasaray',   window:'Summer', year:2025, fee:75.00 },
       { player:'Mohammed Kudus',        pos:'Right Winger',      from:'West Ham',          fromLeague:'Premier League', to:'Tottenham',     window:'Summer', year:2025, fee:63.80 },
-      { player:'Xavi Simons',           pos:'Attacking Midfield', from:'RB Leipzig',        fromLeague:'Bundesliga',     to:'Tottenham',     window:'Summer', year:2025, fee:62.50 },
-      { player:'Mateo Retegui',         pos:'Centre-Forward',    from:'Atalanta',          fromLeague:'Serie A',        to:'Al-Qadsiah',    window:'Summer', year:2025, fee:66.50 },
       { player:'João Pedro',            pos:'Centre-Forward',    from:'Brighton',          fromLeague:'Premier League', to:'Chelsea',       window:'Summer', year:2025, fee:69.60 },
       { player:'Dean Huijsen',          pos:'Centre-Back',       from:'Bournemouth',       fromLeague:'Premier League', to:'Real Madrid',   window:'Summer', year:2025, fee:59.00 },
       { player:'Yoane Wissa',           pos:'Centre-Forward',    from:'Brentford',         fromLeague:'Premier League', to:'Newcastle',     window:'Summer', year:2025, fee:63.80 },
       { player:'Anthony Elanga',        pos:'Right Winger',      from:'Nottingham Forest', fromLeague:'Premier League', to:'Newcastle',     window:'Summer', year:2025, fee:63.80 },
-      { player:'Jamie Gittens',         pos:'Left Winger',       from:'Borussia Dortmund', fromLeague:'Bundesliga',     to:'Chelsea',       window:'Summer', year:2025, fee:64.50 },
     ]
   },
   {

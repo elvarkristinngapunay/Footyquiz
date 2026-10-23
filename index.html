@@ -712,7 +712,7 @@ body::before{display:none;}
 .hol-rand-sub{font-size:0.72rem;color:#555;display:block;margin-top:1px;}
 
 /* ── MODE CHOICE OVERLAY ── */
-#egModeChoice,#sxiModeChoice,#sxiTypeChoice,#holChoose{position:fixed;inset:0;z-index:450;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;}
+#egModeChoice,#sxiModeChoice,#sxiTypeChoice,#holChoose,#gcPick{position:fixed;inset:0;z-index:450;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;}
 .sxi-timer-bar{width:100%;max-width:340px;height:6px;background:#1a1a1a;border-radius:3px;margin:10px 0 4px;overflow:hidden;}
 .sxi-timer-fill{height:100%;background:#4ade80;border-radius:3px;transition:width 1s linear,background 0.3s;}
 .sxi-timer-fill.danger{background:#ef4444;}
@@ -1335,7 +1335,7 @@ body::before{display:none;}
   .sxi-hud{margin-bottom:6px;}
 
   /* ── Mode choice overlays ── */
-  #egModeChoice,#sxiModeChoice,#sxiTypeChoice,#holChoose{padding:20px 16px;}
+  #egModeChoice,#sxiModeChoice,#sxiTypeChoice,#holChoose,#gcPick{padding:20px 16px;}
   .eg-mc-btns{flex-direction:column;max-width:100%;}
   .eg-mc-btn{padding:18px 12px;}
   .eg-mc-title{font-size:clamp(1.3rem,6vw,1.8rem);margin-bottom:20px;}
@@ -1412,7 +1412,7 @@ body::before{display:none;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
 .t10-shake{animation:t10shake 0.35s ease-out;}
 </style>
-<link rel="stylesheet" href="mowpop.css?v=20">
+<link rel="stylesheet" href="mowpop.css?v=22">
 </head>
 <body>
 
@@ -2490,6 +2490,13 @@ body::before{display:none;}
   <button class="slot-back-btn" onclick="closeSlotMachine()">← Back</button>
 </div>
 
+<!-- CATEGORY PICKER (The Auction, Closest Wins) -->
+<div id="gcPick">
+  <div class="eg-mc-title" id="gcHeading"></div>
+  <div class="gc-list" id="gcList"></div>
+  <button class="slot-back-btn" onclick="gcClose()" style="margin-top:18px;">← Back</button>
+</div>
+
 <!-- HIGHER OR LOWER: LEGENDS OR CURRENT PLAYERS -->
 <div id="holChoose">
   <div class="eg-mc-icon">⚽</div>
@@ -2698,7 +2705,7 @@ function setBg(hol, fade){
   }
 }
 function closeAllOverlays(){
-  ['gameWelcomeOverlay','slotMachineOverlay','holChoose','egModeChoice','egNameEntry','egCountdownOverlay','sxiModeChoice','sxiTypeChoice'].forEach(id=>{
+  ['gameWelcomeOverlay','slotMachineOverlay','holChoose','gcPick','egModeChoice','egNameEntry','egCountdownOverlay','sxiModeChoice','sxiTypeChoice'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   if(typeof aucClearAnnounce==='function') aucClearAnnounce();
@@ -3719,7 +3726,7 @@ function holChoose(cat){
   if(holModernReady()) current = PLAYERS_MODERN.filter(p => catValue(p, cat) > 0).length;
   const ok = holModernReady() && current >= 10;
   mBtn.disabled = !ok; mBtn.style.opacity = ok ? '' : '0.45'; mBtn.style.cursor = ok ? '' : 'not-allowed';
-  mSub.textContent = !holModernReady() ? 'Not loaded' : current + ' players · ' + (cat === 'assists' ? 'since 2024/25 · ' : '') + 'updated ' + holUpdated() + (catBests['m_' + cat] ? ' · best ' + catBests['m_' + cat] : '');
+  mSub.textContent = !holModernReady() ? 'Not loaded' : !ok ? 'Coming soon — numbers are being double-checked' : current + ' players · updated ' + holUpdated() + (catBests['m_' + cat] ? ' · best ' + catBests['m_' + cat] : '');
   document.getElementById('holChoose').style.display = 'flex';
 }
 function holChooseClose(){ document.getElementById('holChoose').style.display = 'none'; }
@@ -5533,8 +5540,10 @@ function updateFriendsNav(){
 <script src="data/transfer-fees.js?v=5"></script>
 <script src="data/eg-datasets.js?v=24"></script>
 <script src="data/players.js"></script>
-<script src="data/legends-verified.js?v=1"></script>
-<script src="data/players-modern.js?v=10"></script>
+<script src="data/legends-extra.js?v=2"></script>
+<script src="data/legends-verified.js?v=2"></script>
+<script src="data/players-modern.js?v=12"></script>
+<script src="data/competitions.js?v=4"></script>
 <script src="data/kits.js?v=2"></script>
 <script src="data/club-logos.js?v=5"></script>
 <script src="data/ttt-grids.js?v=1"></script>
@@ -5542,7 +5551,7 @@ function updateFriendsNav(){
 <script src="data/sxi-teams.js"></script>
 <script src="data/sxi-pl-winners.js"></script>
 <script src="data/trophies.js"></script>
-<script src="data/moneyball-transfers.js?v=7"></script>
+<script src="data/moneyball-transfers.js?v=8"></script>
 <script src="data/top10.js?v=12"></script>
 <script src="data/top10-api.js?v=6"></script>
 <script>
@@ -6024,6 +6033,56 @@ function t10BackToHome(){
 
 <script>
 // ====================== CLOSEST WINS (local pass-and-play) ======================
+// ── Categories shared by The Auction and Closest Wins: people see WHAT they are playing for before the first player appears ──
+// pool = who can show up, value = the number that counts. League numbers come from data/competitions.js (Wikipedia tables; Champions League from API-Football).
+function gcAllPlayers(){
+  const m = new Map();
+  PLAYERS.forEach(p => m.set(p.name, p));
+  if(typeof PLAYERS_MODERN !== 'undefined') PLAYERS_MODERN.forEach(p => m.set(p.name, p));   // the current record wins when a player is in both decks
+  return [...m.values()];
+}
+const gcPos = p => /forward|striker|attacker|wing/i.test(p.pos||'') ? 'F' : /goalkeeper/i.test(p.pos||'') ? 'G' : /defend|back/i.test(p.pos||'') ? 'D' : 'M';   // "Attacking Mid" / "Midfield" count as midfielders
+const gcComp = (p, k, f) => (typeof COMP_STATS !== 'undefined' && COMP_STATS[p.name] && COMP_STATS[p.name][k]) ? COMP_STATS[p.name][k][f] : undefined;
+const gcCurrent = () => (typeof PLAYERS_MODERN !== 'undefined' ? PLAYERS_MODERN : []);
+const GAME_CATS = [
+  {id:'pl_f', group:'League goals', icon:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', title:'Premier League forwards', stat:'Premier League goals', desc:'Goals in the Premier League, forwards only',  pool:()=>gcAllPlayers().filter(p=>gcPos(p)==='F'), value:p=>gcComp(p,'pl','g'), min:20},
+  {id:'pl_m', group:'League goals', icon:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', title:'Premier League midfielders', stat:'Premier League goals', desc:'Goals in the Premier League, midfielders only', pool:()=>gcAllPlayers().filter(p=>gcPos(p)==='M'), value:p=>gcComp(p,'pl','g'), min:10},
+  {id:'pl_d', group:'League goals', icon:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', title:'Premier League defenders', stat:'Premier League goals', desc:'Goals in the Premier League, defenders only', pool:()=>gcAllPlayers().filter(p=>gcPos(p)==='D'), value:p=>gcComp(p,'pl','g'), min:4},
+  {id:'ucl',  group:'League goals', icon:'⭐', title:'Champions League goalscorers', label:'Champions League goals', stat:'Champions League goals', desc:'Champions League goals since 2002/03, every position', pool:()=>gcAllPlayers(), value:p=>gcComp(p,'ucl','g'), min:10},
+  {id:'ll_f', group:'League goals', icon:'🇪🇸', title:'La Liga forwards', stat:'La Liga goals', desc:'Goals in La Liga, forwards only', pool:()=>gcAllPlayers().filter(p=>gcPos(p)==='F'), value:p=>gcComp(p,'ll','g'), min:20},
+  {id:'sa_f', group:'League goals', icon:'🇮🇹', title:'Serie A forwards', stat:'Serie A goals', desc:'Goals in Serie A, forwards only', pool:()=>gcAllPlayers().filter(p=>gcPos(p)==='F'), value:p=>gcComp(p,'sa','g'), min:20},
+  {id:'bl_f', group:'League goals', icon:'🇩🇪', title:'Bundesliga forwards', stat:'Bundesliga goals', desc:'Goals in the Bundesliga, forwards only', pool:()=>gcAllPlayers().filter(p=>gcPos(p)==='F'), value:p=>gcComp(p,'bl','g'), min:20},
+  {id:'cg_leg', group:'Whole career', icon:'🏆', title:'Legends', stat:'career goals', desc:'Goals over the whole career — club and country', pool:()=>PLAYERS, value:p=>p.career_goals, min:1},
+  {id:'cg_cur', group:'Whole career', icon:'⚡', title:'Current players', stat:'career goals', desc:'Goals over the whole career — club and country', pool:()=>gcCurrent(), value:p=>p.career_goals, min:1},
+  {id:'tr_leg', group:'Whole career', icon:'🏆', title:'Legends', stat:'major trophies', desc:'Major trophies won', pool:()=>PLAYERS, value:p=>p.trophies, min:1},
+  {id:'tr_cur', group:'Whole career', icon:'⚡', title:'Current players', stat:'major trophies', desc:'Major trophies won', pool:()=>gcCurrent(), value:p=>p.trophies, min:1},
+  {id:'ic_all', group:'Whole career', icon:'🌍', title:'Everyone', stat:'international caps', desc:'Appearances for their country', pool:()=>gcAllPlayers(), value:p=>p.intl_caps, min:1},
+  {id:'ig_all', group:'Whole career', icon:'🥅', title:'Everyone', stat:'international goals', desc:'Goals for their country', pool:()=>gcAllPlayers(), value:p=>p.intl_goals, min:1}
+];
+// players that can appear in a category (has the number, and enough of it to be worth bidding on)
+function gcPoolOf(def){ return def.pool().filter(p => { const v = def.value(p); return typeof v === 'number' && !isNaN(v) && v >= def.min; }); }
+const gcLabel = def => (def.label || (def.group === 'Whole career' ? def.title + ' · ' + def.stat : def.title + ' · goals')).toUpperCase();
+let _gcOnPick = null;
+function gcOpen(onPick, heading){
+  _gcOnPick = onPick;
+  document.getElementById('gcHeading').textContent = heading || 'What are we playing for?';
+  let html = '', lastGroup = '';
+  GAME_CATS.forEach(def => {
+    const n = gcPoolOf(def).length; if(n < 12) return;          // too few players for a fair game
+    if(def.group !== lastGroup){ html += '<div class="gc-group">' + def.group + '</div>'; lastGroup = def.group; }
+    html += '<button class="gc-btn" onclick="gcPick(\'' + def.id + '\')"><span class="gc-ic">' + def.icon + '</span><span class="gc-tx"><b>' + def.title + '</b><small>' + def.stat + ' · ' + n + ' players</small></span></button>';
+  });
+  document.getElementById('gcList').innerHTML = html + '<button class="gc-btn gc-rand" onclick="gcPick(\'random\')"><span class="gc-ic">🎲</span><span class="gc-tx"><b>Surprise me</b><small>a random category</small></span></button>';
+  document.getElementById('gcPick').style.display = 'flex';
+}
+function gcPick(id){
+  let def = GAME_CATS.find(d => d.id === id);
+  if(!def){ const ok = GAME_CATS.filter(d => gcPoolOf(d).length >= 12); def = ok[Math.floor(Math.random()*ok.length)]; }
+  document.getElementById('gcPick').style.display = 'none';
+  if(_gcOnPick) _gcOnPick(def);
+}
+function gcClose(){ document.getElementById('gcPick').style.display = 'none'; }
+
 const CW_TIME = 12;
 const CW_TARGET = 3;
 const CW_MAX_ROUNDS = 5;
@@ -6064,33 +6123,20 @@ function showClosestWins(){
   setTimeout(()=>document.getElementById('cwNameInput1').focus(), 100);
 }
 
+let cwDef = null;                                    // chosen category (GAME_CATS)
 function cwDrawQuestions(n){
-  const cats = Object.keys(catLabels);
-  const used = new Set(cwUsedKeys);
-  const qs = [];
-  let attempts = 0;
-  while(qs.length < n && attempts < 400){
-    attempts++;
-    const p = PLAYERS[Math.floor(Math.random()*PLAYERS.length)];
-    const cat = cats[Math.floor(Math.random()*cats.length)];
-    const key = p.name+'|'+cat;
-    if(used.has(key)) continue;
-    const val = catValue(p, cat);
-    if(val===undefined || val===null || isNaN(val)) continue;
-    used.add(key);
-    cwUsedKeys.add(key);
-    qs.push({playerName:p.name, category:cat, label:catLabels[cat], answer:val});
-  }
-  return qs;
+  const pool = shuffle(gcPoolOf(cwDef).slice());
+  return pool.slice(0, n).map(p => ({playerName:p.name, category:cwDef.id, label:cwDef.stat, answer:cwDef.value(p)}));
 }
 
 function cwConfirmNames(){
   cwP1Name = (document.getElementById('cwNameInput1').value||'').trim() || 'Player 1';
   cwP2Name = (document.getElementById('cwNameInput2').value||'').trim() || 'Player 2';
-  cwStartMatch();
+  gcOpen(def => cwStartMatch(def), 'What are you guessing?');
 }
 
-function cwStartMatch(){
+function cwStartMatch(def){
+  if(def) cwDef = def;
   cwUsedKeys = new Set();
   cwQuestions = cwDrawQuestions(CW_MAX_ROUNDS);
   cwRoundIdx = 0;
@@ -6107,7 +6153,7 @@ function cwStartRound(){
   document.getElementById('cwScoreP2Name').textContent = cwP2Name;
   document.getElementById('cwScoreP1Num').textContent = cwPoints.p1;
   document.getElementById('cwScoreP2Num').textContent = cwPoints.p2;
-  document.getElementById('cwRoundTag').textContent = 'ROUND '+(cwRoundIdx+1)+' · FIRST TO '+CW_TARGET;
+  document.getElementById('cwRoundTag').textContent = 'ROUND '+(cwRoundIdx+1)+' · FIRST TO '+CW_TARGET+' · '+gcLabel(cwDef);
   const q = cwQuestions[cwRoundIdx];
   document.getElementById('cwQuestionPlayer').textContent = q.playerName;
   document.getElementById('cwQuestionStat').textContent = 'HOW MANY ' + q.label.toUpperCase() + '?';
@@ -6292,7 +6338,7 @@ function cwEndMatch(){
 }
 
 function cwPlayAgain(){
-  cwStartMatch();
+  gcOpen(def => cwStartMatch(def), 'What are you guessing?');
 }
 
 // ====================== THE AUCTION (local pass-and-play) ======================
@@ -6308,10 +6354,9 @@ const AUC_CATEGORY_INFO = {
   intl_goals:         {icon:'🥅', desc:'Goals scored for their country'},
   trophies:           {icon:'🏆', desc:'Major trophies won'}
 };
-function aucCatInfo(){
-  const info = AUC_CATEGORY_INFO[aucCategory] || {icon:'⭐', desc:''};
-  return {icon:info.icon, desc:info.desc, name:catLabels[aucCategory].toUpperCase()};
-}
+let aucDef = null;                                   // the category everybody sees before the first player: { title, stat, value(p), pool() … } from GAME_CATS
+const aucVal = p => aucDef.value(p);
+function aucCatInfo(){ return {icon:aucDef.icon, desc:aucDef.desc, name:gcLabel(aucDef)}; }
 
 let aucP1Name = '', aucP2Name = '';
 let aucCategory = '';
@@ -6360,12 +6405,11 @@ function aucAvatarHTML(p){
 function aucConfirmNames(){
   aucP1Name = (document.getElementById('aucNameInput1').value||'').trim() || 'Player 1';
   aucP2Name = (document.getElementById('aucNameInput2').value||'').trim() || 'Player 2';
-  aucStartMatch();
+  gcOpen(def => aucStartMatch(def), 'What are we bidding on?');
 }
 
-function aucStartMatch(){
-  const cats = Object.keys(catLabels);
-  aucCategory = cats[Math.floor(Math.random()*cats.length)];
+function aucStartMatch(def){
+  aucDef = def;
   aucUsedNames = new Set();
   aucCoins = {p1:AUC_START_COINS, p2:AUC_START_COINS};
   aucSquads = {p1:[], p2:[]};
@@ -6453,7 +6497,7 @@ function aucFinishAnnouncement(){
 
 // Draws a random not-yet-used player with a valid value for aucCategory
 function aucDrawPlayer(){
-  const candidates = PLAYERS.filter(p => !aucUsedNames.has(p.name) && !isNaN(catValue(p, aucCategory)) && catValue(p, aucCategory) != null);
+  const candidates = gcPoolOf(aucDef).filter(p => !aucUsedNames.has(p.name));
   if(!candidates.length) return null;
   const p = candidates[Math.floor(Math.random()*candidates.length)];
   aucUsedNames.add(p.name);
@@ -6651,7 +6695,7 @@ function aucTurnContinue(){
 
 function aucShowRevealStat(p){
   const ci = aucCatInfo();
-  document.getElementById('aucRevealStat').textContent = ci.icon + ' ' + p.name + ': ' + catValue(p, aucCategory) + ' ' + ci.name;
+  document.getElementById('aucRevealStat').textContent = ci.icon + ' ' + p.name + ': ' + aucVal(p) + ' ' + aucDef.stat;
 }
 
 function aucResolveAuction(){
@@ -6726,20 +6770,20 @@ function aucNextPlayer(){
 
 function aucSquadListHTML(squad){
   if(!squad.length) return '<div class="auc-squad-player-row" style="color:#444;">No players won</div>';
-  return squad.map(p => `<div class="auc-squad-player-row"><span>${p.name}</span><span>${catValue(p, aucCategory)}</span></div>`).join('');
+  return squad.map(p => `<div class="auc-squad-player-row"><span>${p.name}</span><span>${aucVal(p)}</span></div>`).join('');
 }
 
 function aucEndMatch(){
   clearInterval(aucTimer);
   document.getElementById('aucRevealView').style.display='none';
 
-  const total1 = aucSquads.p1.reduce((s,p)=>s+catValue(p,aucCategory), 0);
-  const total2 = aucSquads.p2.reduce((s,p)=>s+catValue(p,aucCategory), 0);
+  const total1 = aucSquads.p1.reduce((s,p)=>s+aucVal(p), 0);
+  const total2 = aucSquads.p2.reduce((s,p)=>s+aucVal(p), 0);
   const isDraw = total1 === total2;
   const p1Won = total1 > total2;
 
   document.getElementById('aucEndTitle').textContent = isDraw ? '🤝 Draw!' : ('🏆 ' + (p1Won?aucP1Name:aucP2Name) + ' Wins!');
-  document.getElementById('aucEndSub').textContent = catLabels[aucCategory] + ': ' + aucP1Name + ' ' + total1 + ' – ' + total2 + ' ' + aucP2Name;
+  document.getElementById('aucEndSub').textContent = aucDef.title + ' · ' + aucDef.stat + ': ' + aucP1Name + ' ' + total1 + ' – ' + total2 + ' ' + aucP2Name;
 
   document.getElementById('aucFinalNameP1').textContent = aucP1Name;
   document.getElementById('aucFinalNameP2').textContent = aucP2Name;
@@ -6766,7 +6810,7 @@ function aucEndMatch(){
 }
 
 function aucPlayAgain(){
-  aucStartMatch();
+  gcOpen(def => aucStartMatch(def), 'What are we bidding on?');
 }
 </script>
 <script>
