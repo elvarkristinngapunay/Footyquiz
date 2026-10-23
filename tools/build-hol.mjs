@@ -16,6 +16,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 import { isMajorTrophy, trophyLabel, hasWomensTrophy } from './lib/trophies.mjs';
+import { kitFor } from './lib/kits.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = (f, d) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return d; } };
@@ -41,6 +42,33 @@ const PALETTE = [['#1a3a6b', '#5a8fd4'], ['#6b1a1a', '#e07070'], ['#1a5a3a', '#6
 const hash = s => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
 
 const FIRST_SEASON = 2002;   // the earliest season the API has player lines for (Cristiano Ronaldo, Sporting 2002/03); nobody born from 1985 on started earlier
+
+// goals per club: the same club under two spellings or its reserve side ("Monaco" / "AS Monaco", "Real Madrid II") is one row; top 8 by goals
+const parent = t => String(t || '').replace(/\s+(B|II|III|Castilla|U\d\d)$/i, '').replace(/^Jong\s+/i, '').trim();
+function clubGoalsFor(p) {
+  const rows = new Map();
+  for (const c of p.clubGoals || []) { const key = logoKey(parent(c.team)) || parent(c.team); rows.set(key, (rows.get(key) || 0) + c.goals); }
+  return [...rows].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([c, n]) => ({ c, n, col: '#444' }));
+}
+const currentClub = p => { const ys = Object.keys(p.seasons).filter(y => p.seasons[y].club.apps > 0).sort(); const last = p.seasons[ys.at(-1)]; return (last?.clubs || []).slice(-1)[0] || ''; };
+// API-Football only has assist data from the 2024/25 season on (before that 50–90% of the lines are empty), so for current players "assists" means assists since then
+const ASSISTS_FROM = 2024;
+const assistsSince = p => Object.entries(p.seasons).filter(([y]) => Number(y) >= ASSISTS_FROM).reduce((a, [, ss]) => a + ss.club.assists + ss.intl.assists, 0);
+
+// Display name: the roster label comes from Wikidata. Nicknames are fine ("Andy Robertson", "Phil Foden", "Danny Welbeck" — the API has the legal names), but a few labels are
+// plainly wrong (a typo, a Greek Α, an extra word). Those are corrected here, by hand, so every change is visible. Anything else the API disagrees with is only reported.
+const NAME_FIXES = { 'Andrcu Onana': 'André Onana', 'Αrda Güler': 'Arda Güler', 'Marc Hagit Cucurella': 'Marc Cucurella', 'Juan Mata Pata': 'Juan Mata' };
+const tokensOf = t => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9 -]/g, ' ').split(/[\s-]+/).filter(Boolean);
+const nameNotes = [];
+function displayNameFor(p) {
+  if (NAME_FIXES[p.name]) return NAME_FIXES[p.name];
+  const homoglyph = /[\u0370-\u03ff\u0400-\u04ff]/.test(p.name);                         // Greek / Cyrillic letters inside a Latin name
+  if (homoglyph) nameNotes.push(`${p.name}: contains non-Latin letters — add it to NAME_FIXES`);
+  return p.name;
+}
+// relevance: someone a fan would know — a real stretch in the big five leagues, or a regular for his country
+const relevant = p => p.since.big5.apps >= 40 || p.since.intl.apps >= 20;
+const SQUAD_NUMBERS = readJson(path.join(LISTS, 'squad-numbers.json'), {});   // { playerId: shirt number } from tools/fetch-squads.mjs
 const out = []; const skipped = [];
 for (const p of Object.values(stats.players)) {
   // "career" is only honest if we asked for every season the player could have played: from 2002 (the API has nothing earlier), or from his 16th birthday year
@@ -48,6 +76,10 @@ for (const p of Object.values(stats.players)) {
   const askedForAll = p.fetchFrom !== undefined && p.fetchFrom <= startedBy;
   if (!['ok', 'repaired'].includes(p.quality) || !p.since || !askedForAll) { skipped.push(`${p.name} (${p.quality}${askedForAll ? '' : `, seasons before ${p.fetchFrom} were not pulled`})`); continue; }
   if (crosscheck[p.id]?.status === 'incomplete') { skipped.push(`${p.name} (a season has no league line: ${crosscheck[p.id].problems[0].slice(0, 70)})`); continue; }
+  // "Current players" = still playing: games in the running season or the one before (a long injury must not drop a star)
+  const lastPlayed = Math.max(0, ...Object.entries(p.seasons).filter(([, ss]) => ss.club.apps + ss.intl.apps > 0).map(([y]) => Number(y)));
+  if (lastPlayed < stats.currentSeason - 1) { skipped.push(`${p.name} (no games since ${lastPlayed} — not a current player)`); continue; }
+  if (!relevant(p)) { skipped.push(`${p.name} (not well known: ${p.since.big5.apps} big-five games, ${p.since.intl.apps} caps)`); continue; }
   const club = p.since.club, intl = p.since.intl;
   const apps = club.apps + intl.apps; if (apps < 150) { skipped.push(`${p.name} (only ${apps} games)`); continue; }
   const trophyBody = readJson(path.join(LISTS, `trophies-${p.id}.json`), null);
@@ -65,20 +97,23 @@ for (const p of Object.values(stats.players)) {
   const posCount = {};
   for (const y of Object.keys(p.seasons)) { const b = readJson(path.join(RAW, `${p.id}-${y}.json`), null); for (const s of b?.response?.[0]?.statistics || []) if (s.games?.position) posCount[s.games.position] = (posCount[s.games.position] || 0) + (s.games.appearences || 0); }
   const pos = POS[Object.entries(posCount).sort((a, b) => b[1] - a[1])[0]?.[0]] || 'Forward';
-  const [color, tc] = PALETTE[hash(p.name) % PALETTE.length];
+  const shownName = displayNameFor(p);
+  const [color, tc] = PALETTE[hash(shownName) % PALETTE.length];
   out.push({
-    name: p.name, pos, nat: p.nationality || '',
-    career_goals: club.goals + intl.goals, career_appearances: apps, assists: club.assists + intl.assists,
+    name: shownName, pos, nat: p.nationality || '',
+    career_goals: club.goals + intl.goals, career_appearances: apps, assists: assistsSince(p),
     intl_caps: intl.apps, intl_goals: intl.goals, trophies: trophies_list.reduce((s, t) => s + Number(t.match(/×(\d+)/)[1]), 0),
-    color, tc, initials: p.name.split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase(),
-    club_goals: (p.clubGoals || []).slice(0, 8).map(c => ({ c: logoKey(c.team) || c.team, n: c.goals, col: '#444' })),
+    color, tc, initials: shownName.split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase(),
+    club_goals: clubGoalsFor(p),
     intl_breakdown: { flag: FLAGS[p.nationality] || '🌍', country: p.nationality || '', n: intl.goals },
+    kit: kitFor(currentClub(p), shownName, SQUAD_NUMBERS[p.id]),
     trophies_list, apiId: p.id, quality: p.quality
   });
 }
 out.sort((a, b) => b.career_goals - a.career_goals);
-const js = `// GENERATED by tools/build-hol.mjs on ${new Date().toISOString().slice(0, 10)} from API-Football — do not edit by hand.\n// Goals, assists, appearances, caps: whole career from the first season the API has lines for (2002/03 at the earliest), official matches only (no friendlies). Trophies: whole career.\nconst PLAYERS_MODERN = ${JSON.stringify(out)};\nconst PLAYERS_MODERN_INFO = ${JSON.stringify({ generatedAt: new Date().toISOString(), since: FIRST_SEASON, currentSeason: stats.currentSeason, count: out.length })};\n`;
+const js = `// GENERATED by tools/build-hol.mjs on ${new Date().toISOString().slice(0, 10)} from API-Football — do not edit by hand.\n// Goals, assists, appearances, caps: whole career from the first season the API has lines for (2002/03 at the earliest), official matches only (no friendlies). Trophies: whole career.\nconst PLAYERS_MODERN = ${JSON.stringify(out)};\nconst PLAYERS_MODERN_INFO = ${JSON.stringify({ generatedAt: new Date().toISOString(), since: FIRST_SEASON, assistsFrom: ASSISTS_FROM, currentSeason: stats.currentSeason, count: out.length })};\n`;
 fs.writeFileSync(path.join(ROOT, 'data/players-modern.js'), js);
 console.log(`wrote data/players-modern.js — ${out.length} players (${(js.length / 1024).toFixed(0)} KB). skipped ${skipped.length}:`);
 console.log('  ' + skipped.slice(0, 40).join('\n  ') + (skipped.length > 40 ? `\n  … and ${skipped.length - 40} more` : ''));
+if (nameNotes.length) console.log('\nnames to look at:\n  ' + nameNotes.join('\n  '));
 console.log('\ntop 12 by career goals:\n  ' + out.slice(0, 12).map(p => `${p.name} ${p.career_goals}g ${p.assists}a ${p.career_appearances} games, ${p.trophies} trophies [${p.quality}]`).join('\n  '));

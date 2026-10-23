@@ -43,8 +43,8 @@ const KIT_DATA = {
   "Marcelo":              { body:"#f5f5f5", accent:"#d4a017", stripe:null,      num:12, label:"MARCELO" },
 };
 
-function generateKitSVG(playerName) {
-  const k = KIT_DATA[playerName];
+function generateKitSVG(playerName, kitOverride) {
+  const k = kitOverride || KIT_DATA[playerName];     // current players bring their own kit (built from their club's colours by tools/build-hol.mjs)
   if (!k) return null;
 
   const W = 340, H = 380;
@@ -97,6 +97,6 @@ function generateKitSVG(playerName) {
     <path d="M 140 68 Q 170 84 200 68 L 197 58 Q 170 72 143 58 Z" fill="${k.accent}" stroke="${k.accent === "#ffffff" ? "#cccccc" : k.accent}" stroke-width="1"/>
   </g>
   <text x="170" y="148" font-family="Arial Black,Arial,sans-serif" font-size="24" font-weight="900" fill="${nameColor}" text-anchor="middle" letter-spacing="1.5">${k.label}</text>
-  <text x="170" y="278" font-family="Arial Black,Arial,sans-serif" font-size="125" font-weight="900" fill="${numColor}" text-anchor="middle">${k.num}</text>
+  ${k.num != null ? `<text x="170" y="278" font-family="Arial Black,Arial,sans-serif" font-size="125" font-weight="900" fill="${numColor}" text-anchor="middle">${k.num}</text>` : ''}
 </svg>`;
 }

@@ -4,7 +4,7 @@
 //   topscorers / topassists per season                       (Golden Boots since 2010, this season's leaders)
 //   topyellowcards / topredcards for the current season      (this season's card leaders)
 //   teams                                                    (each club's stadium + capacity)
-//   trophies for every player in data/generated/player-stats.json
+//   trophies for every player in data/generated/player-stats.json and career-pilot.json
 //
 //   node --env-file=.env tools/fetch-lists.mjs [--refresh] [--reserve=300] [--no-trophies]
 // Everything is cached under data/raw/lists/ (git-ignored), so a rerun only pays for what is new — the weekly refresh passes --refresh-current.
@@ -30,10 +30,13 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 let remaining = null, fetched = 0, cached = 0;
 
 async function call(p, attempt = 0) {
-  const res = await fetch(BASE + p, { headers: { 'x-apisports-key': KEY } });
+  let res;
+  try { res = await fetch(BASE + p, { headers: { 'x-apisports-key': KEY } }); }
+  catch (e) { if (attempt < 6) { await sleep(5000 * (attempt + 1)); return call(p, attempt + 1); } throw e; }   // network blip (ECONNRESET, DNS) → wait and retry
   const left = res.headers.get('x-ratelimit-requests-remaining'); if (left !== null) remaining = Number(left);
   if (res.status === 429 && attempt < 3) { await sleep(20000 * (attempt + 1)); return call(p, attempt + 1); }
-  const body = await res.json();
+  let body;
+  try { body = await res.json(); } catch { if (attempt < 6) { await sleep(5000 * (attempt + 1)); return call(p, attempt + 1); } throw new Error(`${p}: answer was not JSON`); }   // cut-off answer → try again
   // Pro allows 300 requests/minute. Going over is answered with HTTP 200 + an "errors.rateLimit" text — wait and retry instead of failing.
   if (body.errors && body.errors.rateLimit && attempt < 8) { await sleep(12000 + attempt * 4000); return call(p, attempt + 1); }
   const errs = body.errors && (Array.isArray(body.errors) ? body.errors : Object.values(body.errors));
@@ -67,7 +70,8 @@ try {
   console.log('Champions League top scorers: done');
 
   if (!args['no-trophies']) {
-    const stats = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/generated/player-stats.json'), 'utf8'));
+    const rj = f => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, f), 'utf8')); } catch { return { players: {} }; } };
+    const stats = { players: { ...rj('data/generated/player-stats.json').players, ...rj('data/generated/career-pilot.json').players } };   // both selections
     let n = 0;
     for (const p of Object.values(stats.players)) { await get(`trophies-${p.id}`, `/trophies?player=${p.id}`); if (++n % 50 === 0) console.log(`trophies: ${n}/${Object.keys(stats.players).length} (left ≈ ${remaining})`); }
     console.log('trophies: done');

@@ -246,21 +246,9 @@
   "listed": 8
  },
  {
-  "name": "Jack Grealish",
-  "born": "1995-09-10",
-  "id": 19187,
-  "listed": 8
- },
- {
   "name": "Matthieu Udol",
   "born": "1996-03-20",
   "id": 20525,
-  "listed": 8
- },
- {
-  "name": "Vitinha",
-  "born": "2000-02-13",
-  "id": 128384,
   "listed": 8
  },
  {
@@ -330,12 +318,6 @@
   "listed": 6
  },
  {
-  "name": "Niclas Füllkrug",
-  "born": "1993-02-09",
-  "id": 25391,
-  "listed": 6
- },
- {
   "name": "Younes Ebnoutalib",
   "born": "2003-09-13",
   "id": 409190,
@@ -354,12 +336,6 @@
   "listed": 6
  },
  {
-  "name": "Lucas Digne",
-  "born": "1993-07-20",
-  "id": 2724,
-  "listed": 6
- },
- {
   "name": "Kamory Doumbia",
   "born": "2003-02-18",
   "id": 326068,
@@ -375,12 +351,6 @@
   "name": "Phillip Tietz",
   "born": "1997-07-09",
   "id": 26171,
-  "listed": 5
- },
- {
-  "name": "Christopher Nkunku",
-  "born": "1997-11-14",
-  "id": 269,
   "listed": 5
  },
  {
@@ -405,12 +375,6 @@
   "name": "Javier Hernandez",
   "born": "2004-01-30",
   "id": 388495,
-  "listed": 5
- },
- {
-  "name": "Anthony Gordon",
-  "born": "2001-02-24",
-  "id": 138787,
   "listed": 5
  },
  {
@@ -492,18 +456,6 @@
   "listed": 4
  },
  {
-  "name": "Joško Gvardiol",
-  "born": "2002-01-23",
-  "id": 129033,
-  "listed": 4
- },
- {
-  "name": "Daichi Kamada",
-  "born": "1996-08-05",
-  "id": 2601,
-  "listed": 4
- },
- {
   "name": "Maxim De Cuyper",
   "born": "2000-12-22",
   "id": 162007,
@@ -582,12 +534,6 @@
   "listed": 4
  },
  {
-  "name": "Carlos Soler",
-  "born": "1997-01-02",
-  "id": 930,
-  "listed": 4
- },
- {
   "name": "Kevin Schade",
   "born": "2001-11-27",
   "id": 178077,
@@ -603,12 +549,6 @@
   "name": "Jack Hinshelwood",
   "born": "2005-04-11",
   "id": 305730,
-  "listed": 3
- },
- {
-  "name": "Marquinhos",
-  "born": "1994-05-14",
-  "id": 257,
   "listed": 3
  },
  {
@@ -696,12 +636,6 @@
   "listed": 3
  },
  {
-  "name": "Aleksandr Golovin",
-  "born": "1996-05-30",
-  "id": 109,
-  "listed": 3
- },
- {
   "name": "Panos Katseris",
   "born": "2001-07-05",
   "id": 384112,
@@ -717,12 +651,6 @@
   "name": "Romain Faivre",
   "born": "1998-07-14",
   "id": 84082,
-  "listed": 3
- },
- {
-  "name": "Matthias Ginter",
-  "born": "1994-01-19",
-  "id": 2915,
   "listed": 3
  },
  {
@@ -747,12 +675,6 @@
   "name": "Ricardo Mangas",
   "born": "1998-03-19",
   "id": 41324,
-  "listed": 3
- },
- {
-  "name": "Piotr Zieliński",
-  "born": "1994-05-20",
-  "id": 329,
   "listed": 3
  },
  {
@@ -900,12 +822,6 @@
   "listed": 0
  },
  {
-  "name": "Ronald Araújo",
-  "born": "1999-03-07",
-  "id": 101814,
-  "listed": 0
- },
- {
   "name": "Flávio Nazinho",
   "born": "2003-07-20",
   "id": 294722,
@@ -933,12 +849,6 @@
   "name": "Timothy Weah",
   "born": "2000-02-22",
   "id": 1138,
-  "listed": 0
- },
- {
-  "name": "Djibril Sidibé",
-  "born": "1992-07-29",
-  "id": 102,
   "listed": 0
  },
  {
@@ -975,12 +885,6 @@
   "name": "Antoine Mille",
   "born": "1997-08-14",
   "id": 174806,
-  "listed": 0
- },
- {
-  "name": "Denis Zakaria",
-  "born": "1996-11-20",
-  "id": 2810,
   "listed": 0
  },
  {
@@ -1059,12 +963,6 @@
   "name": "Jobe Bellingham",
   "born": "2005-09-23",
   "id": 326757,
-  "listed": 0
- },
- {
-  "name": "Dayotchanculle Upamecano",
-  "born": "1998-10-27",
-  "id": 1149,
   "listed": 0
  },
  {
@@ -1209,12 +1107,6 @@
   "name": "Johan Mojica",
   "born": "1992-08-21",
   "id": 64268,
-  "listed": 0
- },
- {
-  "name": "Ibrahima Konaté",
-  "born": "1999-05-25",
-  "id": 1145,
   "listed": 0
  },
  {

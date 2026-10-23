@@ -19,6 +19,7 @@ const LISTS = path.join(ROOT, 'data/raw/lists');
 const readJson = (f, d) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return d; } };
 const stats = readJson(path.join(ROOT, 'data/generated/player-stats.json'), null);
 if (!stats) { console.error('data/generated/player-stats.json is missing — run tools/fetch-players.mjs first'); process.exit(1); }
+Object.assign(stats.players, readJson(path.join(ROOT, 'data/generated/career-pilot.json'), { players: {} }).players);   // the career pulls replace the 2010-only records
 const CURRENT = stats.currentSeason;
 const LEAGUES = { 39: 'Premier League', 140: 'La Liga', 135: 'Serie A', 78: 'Bundesliga', 61: 'Ligue 1' };
 const seasonLabel = y => `${y}/${String(y + 1).slice(2)}`;

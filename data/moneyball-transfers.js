@@ -383,7 +383,7 @@ const MONEYBALL_MANAGERS = [
       { player:'Bruno Guimarães',       pos:'Central Midfield',   from:'Newcastle',          fromLeague:'Premier League', to:'Arsenal',        window:'Summer',  year:2026, fee:87.00  },
 
       // ── Barcelona ──────────────────────────────────────────────────────────
-      { player:'Anthony Gordon',        pos:'Left Winger',        from:'Newcastle',          fromLeague:'Premier League', to:'Barcelona',      window:'Summer',  year:2026, fee:90.00  },
+      { player:'Anthony Gordon',        pos:'Left Winger',        from:'Newcastle',          fromLeague:'Premier League', to:'Barcelona',      window:'Summer',  year:2026, fee:80.00  },
       { player:'Rodri',                 pos:'Defensive Midfield', from:'Man City',           fromLeague:'Premier League', to:'Barcelona',      window:'Summer',  year:2026, fee:76.50  },
 
       // ── AC Milan ───────────────────────────────────────────────────────────
@@ -402,6 +402,56 @@ const MONEYBALL_MANAGERS = [
       // ── Inter Milan ────────────────────────────────────────────────────────
       { player:'Djed Spence',           pos:'Right-Back',         from:'Tottenham',          fromLeague:'Premier League', to:'Inter Milan',    window:'Summer',  year:2026, fee:35.00  },
       { player:'Curtis Jones',          pos:'Central Midfield',   from:'Liverpool',          fromLeague:'Premier League', to:'Inter Milan',    window:'Summer',  year:2026, fee:35.00  },
+
+      // ── Added Oct 2026 — each fee confirmed by two outlets (Football365 + The National / a Transfermarkt-based list); headline total incl. add-ons, £ converted at 1.17 ──
+      { player:'Ayyoub Bouaddi',        pos:'Defensive Midfield', from:'Lille',             fromLeague:'Ligue 1',        to:'Man City',      window:'Summer', year:2026, fee:100.00},
+      { player:'Savinho',               pos:'Right Winger',      from:'Man City',          fromLeague:'Premier League', to:'Tottenham',     window:'Summer', year:2026, fee:99.50 },
+      { player:'Carlos Baleba',         pos:'Central Midfield',  from:'Brighton',          fromLeague:'Premier League', to:'Man United',    window:'Summer', year:2026, fee:82.00 },
+      { player:'Gabriel Martinelli',    pos:'Left Winger',       from:'Arsenal',           fromLeague:'Premier League', to:'Al-Hilal',      window:'Summer', year:2026, fee:70.00 },
+      { player:'Crysencio Summerville', pos:'Left Winger',       from:'West Ham',          fromLeague:'Premier League', to:'Al-Hilal',      window:'Summer', year:2026, fee:70.00 },
+      { player:'Tijjani Reijnders',     pos:'Central Midfield',  from:'Man City',          fromLeague:'Premier League', to:'Al-Qadsiah',    window:'Summer', year:2026, fee:61.00 },
+      // second batch (Oct 2026), two outlets each: Football365 / The National / ESPN / Sky / AP
+      { player:'Jérémy Jacquet',        pos:'Centre-Back',       from:'Rennes',            fromLeague:'Ligue 1',        to:'Liverpool',     window:'Summer', year:2026, fee:69.00 },
+      { player:'Jan Paul van Hecke',    pos:'Centre-Back',       from:'Brighton',          fromLeague:'Premier League', to:'Tottenham',     window:'Summer', year:2026, fee:60.50 },
+      { player:'Maxence Lacroix',       pos:'Centre-Back',       from:'Crystal Palace',    fromLeague:'Premier League', to:'Chelsea',       window:'Summer', year:2026, fee:61.00 },
+      { player:'Nicolas Jackson',       pos:'Centre-Forward',    from:'Chelsea',           fromLeague:'Premier League', to:'Aston Villa',   window:'Summer', year:2026, fee:76.00 },
+    ]
+  },
+
+  // ── Summer 2025 / January 2026 — fee = headline total incl. announced add-ons, € millions (£ converted at 1.16). Each deal confirmed by at least two outlets. ──
+  {
+    id: 'summer2025',
+    manager: 'Summer 2025',
+    transfers: [
+      { player:'Alexander Isak',        pos:'Centre-Forward',    from:'Newcastle',         fromLeague:'Premier League', to:'Liverpool',     window:'Summer', year:2025, fee:145.00},
+      { player:'Florian Wirtz',         pos:'Attacking Midfield', from:'Bayer Leverkusen',  fromLeague:'Bundesliga',     to:'Liverpool',     window:'Summer', year:2025, fee:135.00},
+      { player:'Hugo Ekitiké',          pos:'Centre-Forward',    from:'Frankfurt',         fromLeague:'Bundesliga',     to:'Liverpool',     window:'Summer', year:2025, fee:91.50 },
+      { player:'Benjamin Šeško',        pos:'Centre-Forward',    from:'RB Leipzig',        fromLeague:'Bundesliga',     to:'Man United',    window:'Summer', year:2025, fee:85.00 },
+      { player:'Bryan Mbeumo',          pos:'Right Winger',      from:'Brentford',         fromLeague:'Premier League', to:'Man United',    window:'Summer', year:2025, fee:82.50 },
+      { player:'Matheus Cunha',         pos:'Second Striker',    from:'Wolverhampton',     fromLeague:'Premier League', to:'Man United',    window:'Summer', year:2025, fee:74.00 },
+      { player:'Nick Woltemade',        pos:'Centre-Forward',    from:'Stuttgart',         fromLeague:'Bundesliga',     to:'Newcastle',     window:'Summer', year:2025, fee:80.00 },
+      { player:'Luis Díaz',             pos:'Left Winger',       from:'Liverpool',         fromLeague:'Premier League', to:'Bayern Munich', window:'Summer', year:2025, fee:76.00 },
+      { player:'Victor Osimhen',        pos:'Centre-Forward',    from:'Napoli',            fromLeague:'Serie A',        to:'Galatasaray',   window:'Summer', year:2025, fee:75.00 },
+      { player:'Mohammed Kudus',        pos:'Right Winger',      from:'West Ham',          fromLeague:'Premier League', to:'Tottenham',     window:'Summer', year:2025, fee:63.80 },
+      { player:'Xavi Simons',           pos:'Attacking Midfield', from:'RB Leipzig',        fromLeague:'Bundesliga',     to:'Tottenham',     window:'Summer', year:2025, fee:62.50 },
+      { player:'Mateo Retegui',         pos:'Centre-Forward',    from:'Atalanta',          fromLeague:'Serie A',        to:'Al-Qadsiah',    window:'Summer', year:2025, fee:66.50 },
+      { player:'João Pedro',            pos:'Centre-Forward',    from:'Brighton',          fromLeague:'Premier League', to:'Chelsea',       window:'Summer', year:2025, fee:69.60 },
+      { player:'Dean Huijsen',          pos:'Centre-Back',       from:'Bournemouth',       fromLeague:'Premier League', to:'Real Madrid',   window:'Summer', year:2025, fee:59.00 },
+      { player:'Yoane Wissa',           pos:'Centre-Forward',    from:'Brentford',         fromLeague:'Premier League', to:'Newcastle',     window:'Summer', year:2025, fee:63.80 },
+      { player:'Anthony Elanga',        pos:'Right Winger',      from:'Nottingham Forest', fromLeague:'Premier League', to:'Newcastle',     window:'Summer', year:2025, fee:63.80 },
+      { player:'Jamie Gittens',         pos:'Left Winger',       from:'Borussia Dortmund', fromLeague:'Bundesliga',     to:'Chelsea',       window:'Summer', year:2025, fee:64.50 },
+    ]
+  },
+  {
+    id: 'january2026',
+    manager: 'January 2026',
+    transfers: [
+      { player:'Brennan Johnson',       pos:'Right Winger',      from:'Tottenham',         fromLeague:'Premier League', to:'Crystal Palace', window:'January', year:2026, fee:40.50 },
+      { player:'Lucas Paquetá',         pos:'Attacking Midfield', from:'West Ham',          fromLeague:'Premier League', to:'Flamengo',      window:'January', year:2026, fee:41.50 },
+      { player:'Conor Gallagher',       pos:'Central Midfield',  from:'Atlético Madrid',   fromLeague:'LaLiga',         to:'Tottenham',     window:'January', year:2026, fee:40.00 },
+      { player:'Jørgen Strand Larsen',  pos:'Centre-Forward',    from:'Wolverhampton',     fromLeague:'Premier League', to:'Crystal Palace', window:'January', year:2026, fee:55.50 },
+      { player:'Marc Guéhi',            pos:'Centre-Back',       from:'Crystal Palace',    fromLeague:'Premier League', to:'Man City',      window:'January', year:2026, fee:23.00 },
+      { player:'Ademola Lookman',       pos:'Left Winger',       from:'Atalanta',          fromLeague:'Serie A',        to:'Atlético Madrid', window:'January', year:2026, fee:40.00 },
     ]
   }
 

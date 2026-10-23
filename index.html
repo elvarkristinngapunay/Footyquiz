@@ -712,7 +712,7 @@ body::before{display:none;}
 .hol-rand-sub{font-size:0.72rem;color:#555;display:block;margin-top:1px;}
 
 /* ── MODE CHOICE OVERLAY ── */
-#egModeChoice,#sxiModeChoice,#sxiTypeChoice{position:fixed;inset:0;z-index:450;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;}
+#egModeChoice,#sxiModeChoice,#sxiTypeChoice,#holChoose{position:fixed;inset:0;z-index:450;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;}
 .sxi-timer-bar{width:100%;max-width:340px;height:6px;background:#1a1a1a;border-radius:3px;margin:10px 0 4px;overflow:hidden;}
 .sxi-timer-fill{height:100%;background:#4ade80;border-radius:3px;transition:width 1s linear,background 0.3s;}
 .sxi-timer-fill.danger{background:#ef4444;}
@@ -1335,7 +1335,7 @@ body::before{display:none;}
   .sxi-hud{margin-bottom:6px;}
 
   /* ── Mode choice overlays ── */
-  #egModeChoice,#sxiModeChoice,#sxiTypeChoice{padding:20px 16px;}
+  #egModeChoice,#sxiModeChoice,#sxiTypeChoice,#holChoose{padding:20px 16px;}
   .eg-mc-btns{flex-direction:column;max-width:100%;}
   .eg-mc-btn{padding:18px 12px;}
   .eg-mc-title{font-size:clamp(1.3rem,6vw,1.8rem);margin-bottom:20px;}
@@ -1412,7 +1412,7 @@ body::before{display:none;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
 .t10-shake{animation:t10shake 0.35s ease-out;}
 </style>
-<link rel="stylesheet" href="mowpop.css?v=19">
+<link rel="stylesheet" href="mowpop.css?v=20">
 </head>
 <body>
 
@@ -2106,14 +2106,9 @@ body::before{display:none;}
   <div id="menuStreak" style="display:none;"></div>
   <div style="display:none;" id="menuBestNum"></div>
   <div style="display:none;" id="menuRecordEl"></div>
-  <div class="hol-mode" id="holMode" style="display:none;">
-    <button type="button" data-mode="legends" onclick="holSetMode('legends')">Legends</button>
-    <button type="button" data-mode="modern" onclick="holSetMode('modern')">Modern Stars</button>
-  </div>
-  <div class="hol-mode-note" id="holModeNote" style="display:none;"></div>
   <div class="section-label">Choose your category</div>
   <div class="grid">
-    <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('career_goals')" style="border-color:#2a2a2a;background:#080808;">
+    <div class="card card-full-photo" onmouseenter="playTick()" onclick="holChoose('career_goals')" style="border-color:#2a2a2a;background:#080808;">
       <img class="card-photo" src="career goals image.png" alt="" style="width:100%;opacity:1;object-position:center center;">
       <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.2) 55%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none;"></div>
       <div class="card-content">
@@ -2126,7 +2121,7 @@ body::before{display:none;}
         </div>
       </div>
     </div>
-    <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('assists')" style="border-color:#2a2a2a;background:#080808;">
+    <div class="card card-full-photo" onmouseenter="playTick()" onclick="holChoose('assists')" style="border-color:#2a2a2a;background:#080808;">
       <img class="card-photo" src="assists category image.png" alt="" style="width:100%;opacity:1;">
       <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.2) 55%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none;"></div>
       <div class="card-content">
@@ -2139,7 +2134,7 @@ body::before{display:none;}
         </div>
       </div>
     </div>
-    <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('trophies')" style="border-color:#2a2a2a;background:#080808;">
+    <div class="card card-full-photo" onmouseenter="playTick()" onclick="holChoose('trophies')" style="border-color:#2a2a2a;background:#080808;">
       <img class="card-photo" src="Major trophies category image.png" alt="" style="width:100%;opacity:1;">
       <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.2) 55%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none;"></div>
       <div class="card-content">
@@ -2152,7 +2147,7 @@ body::before{display:none;}
         </div>
       </div>
     </div>
-    <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('career_appearances')" style="border-color:#2a2a2a;background:#080808;">
+    <div class="card card-full-photo" onmouseenter="playTick()" onclick="holChoose('career_appearances')" style="border-color:#2a2a2a;background:#080808;">
       <img class="card-photo" src="Appearences category image.png" alt="" style="width:100%;opacity:1;">
       <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.2) 55%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none;"></div>
       <div class="card-content">
@@ -2165,7 +2160,7 @@ body::before{display:none;}
         </div>
       </div>
     </div>
-    <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('intl_goals')" style="border-color:#2a2a2a;background:#080808;">
+    <div class="card card-full-photo" onmouseenter="playTick()" onclick="holChoose('intl_goals')" style="border-color:#2a2a2a;background:#080808;">
       <img class="card-photo" src="International goals image.png" alt="" style="width:100%;opacity:1;">
       <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.2) 55%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none;"></div>
       <div class="card-content">
@@ -2178,7 +2173,7 @@ body::before{display:none;}
         </div>
       </div>
     </div>
-    <div class="card card-full-photo" onmouseenter="playTick()" onclick="startGame('intl_caps')" style="border-color:#2a2a2a;background:#080808;">
+    <div class="card card-full-photo" onmouseenter="playTick()" onclick="holChoose('intl_caps')" style="border-color:#2a2a2a;background:#080808;">
       <img class="card-photo" src="International caps image.png" alt="" style="width:100%;opacity:1;">
       <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.2) 55%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none;"></div>
       <div class="card-content">
@@ -2495,6 +2490,26 @@ body::before{display:none;}
   <button class="slot-back-btn" onclick="closeSlotMachine()">← Back</button>
 </div>
 
+<!-- HIGHER OR LOWER: LEGENDS OR CURRENT PLAYERS -->
+<div id="holChoose">
+  <div class="eg-mc-icon">⚽</div>
+  <div class="eg-mc-title" id="holChTitle"></div>
+  <div class="eg-mc-how">WHO DO YOU WANT TO PLAY WITH?</div>
+  <div class="eg-mc-btns">
+    <button class="eg-mc-btn" id="holChLegends" onclick="holChoosePick('legends')">
+      <div class="eg-mc-bi">🏆</div>
+      <div class="eg-mc-bl">Legends</div>
+      <div class="eg-mc-bs" id="holChLegendsSub"></div>
+    </button>
+    <button class="eg-mc-btn" id="holChModern" onclick="holChoosePick('modern')">
+      <div class="eg-mc-bi">⚡</div>
+      <div class="eg-mc-bl">Current players</div>
+      <div class="eg-mc-bs" id="holChModernSub"></div>
+    </button>
+  </div>
+  <button class="slot-back-btn" onclick="holChooseClose()" style="margin-top:22px;">← Back</button>
+</div>
+
 <!-- EL GRANDE MODE CHOICE -->
 <div id="egModeChoice">
   <div class="eg-mc-icon" id="egMcIcon"></div>
@@ -2683,7 +2698,7 @@ function setBg(hol, fade){
   }
 }
 function closeAllOverlays(){
-  ['gameWelcomeOverlay','slotMachineOverlay','egModeChoice','egNameEntry','egCountdownOverlay','sxiModeChoice','sxiTypeChoice'].forEach(id=>{
+  ['gameWelcomeOverlay','slotMachineOverlay','holChoose','egModeChoice','egNameEntry','egCountdownOverlay','sxiModeChoice','sxiTypeChoice'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   if(typeof aucClearAnnounce==='function') aucClearAnnounce();
@@ -2789,7 +2804,7 @@ function showSxi(){
   setBackBtn('← Back Home', showLanding);
 }
 function showHigherOrLower(){
-  holRenderMode();
+  if(typeof renderCatBests==='function') renderCatBests();
   document.getElementById('landingScreen').style.display='none';
   document.getElementById('higherOrLowerSection').style.display='block';
   document.getElementById('elGrandeMenu').style.display='none';
@@ -3140,7 +3155,7 @@ function spinReel(el, cats, targetIdx, dur, onDone){
 function slotPlayCategory(){
   if(!_slotChosen) return;
   document.getElementById('slotMachineOverlay').style.display='none';
-  if(_slotType==='hol'){ startGame(_slotChosen.key); }
+  if(_slotType==='hol'){ holChoose(_slotChosen.key); }
   else { startElGrande(_slotChosen.key); }
 }
 function slotSpinAgain(){
@@ -3684,32 +3699,33 @@ function trophyIcon(t){
 }
 
 // ── GAME STATE ────────────────────────────────────────────────────────────────
-// ── Higher or Lower: Legends (hand-made careers) vs Modern Stars (API-Football, whole career from the first season the API has) ──
+// ── Higher or Lower: two decks — Legends (retired, hand-made) and Current players (API-Football, refreshed weekly). The choice comes after the category. ──
 let holMode = 'legends';
-try{ if(localStorage.getItem('fr_holMode') === 'modern') holMode = 'modern'; }catch(e){}
-const HOL_LABELS_MODERN = {career_goals:'Career Goals', career_appearances:'Career Appearances', assists:'Career Assists', intl_caps:'Intl Caps', intl_goals:'Intl Goals', trophies:'Trophies'};
 const holModernReady = () => typeof PLAYERS_MODERN !== 'undefined' && PLAYERS_MODERN.length >= 20;
 const holIsModern = () => holMode === 'modern' && holModernReady();
 const holPool  = () => holIsModern() ? PLAYERS_MODERN : PLAYERS;
-const holLabel = cat => holIsModern() ? HOL_LABELS_MODERN[cat] : catLabels[cat];
-const holKey   = cat => holIsModern() ? 'm_' + cat : cat;     // modern mode keeps its own best scores
-function holSetMode(m){ holMode = m; try{ localStorage.setItem('fr_holMode', m); }catch(e){} holRenderMode(); }
-function holRenderMode(){
-  const box = document.getElementById('holMode'), note = document.getElementById('holModeNote');
-  if(!box) return;
-  const ready = holModernReady();
-  box.style.display = ready ? 'flex' : 'none'; note.style.display = ready ? 'block' : 'none';
-  box.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.mode === (holIsModern() ? 'modern' : 'legends')));
-  if(ready) note.textContent = holIsModern()
-    ? PLAYERS_MODERN.length + ' stars · career totals: club competitions + all national-team games · updated weekly (API-Football)'
-    : PLAYERS.length + ' legends · full career totals';
-  document.querySelectorAll('#menuScreen .card').forEach(card => {
-    const m = (card.getAttribute('onclick') || '').match(/startGame\('([a-z_]+)'\)/); const lbl = card.querySelector('.card-label');
-    if(m && lbl) lbl.textContent = holLabel(m[1]);
-    // API-Football has no usable assist data before 2024 (50–90% of the lines are empty), so career assists would be far too low — left out of Modern Stars until that is fixed
-    if(m) card.style.display = (holIsModern() && m[1] === 'assists') ? 'none' : '';
-  });
-  renderCatBests();
+const holLabel = cat => catLabels[cat];                           // both decks use the same names
+const holKey   = cat => holIsModern() ? 'm_' + cat : cat;         // current players keep their own best scores
+function holSetMode(m){ holMode = m; }
+function holUpdated(){ try{ return new Date(PLAYERS_MODERN_INFO.generatedAt).toLocaleDateString('en-GB',{day:'numeric',month:'short'}); }catch(e){ return 'weekly'; } }
+let _holChooseCat = null;
+function holChoose(cat){
+  _holChooseCat = cat;
+  document.getElementById('holChTitle').textContent = catLabels[cat] || cat;
+  const legends = PLAYERS.filter(p => catValue(p, cat) > 0).length;
+  document.getElementById('holChLegendsSub').textContent = legends + ' players' + (catBests[cat] ? ' · best ' + catBests[cat] : '');
+  const mBtn = document.getElementById('holChModern'), mSub = document.getElementById('holChModernSub');
+  let current = 0;
+  if(holModernReady()) current = PLAYERS_MODERN.filter(p => catValue(p, cat) > 0).length;
+  const ok = holModernReady() && current >= 10;
+  mBtn.disabled = !ok; mBtn.style.opacity = ok ? '' : '0.45'; mBtn.style.cursor = ok ? '' : 'not-allowed';
+  mSub.textContent = !holModernReady() ? 'Not loaded' : current + ' players · ' + (cat === 'assists' ? 'since 2024/25 · ' : '') + 'updated ' + holUpdated() + (catBests['m_' + cat] ? ' · best ' + catBests['m_' + cat] : '');
+  document.getElementById('holChoose').style.display = 'flex';
+}
+function holChooseClose(){ document.getElementById('holChoose').style.display = 'none'; }
+function holChoosePick(m){
+  if(m === 'modern' && document.getElementById('holChModern').disabled) return;
+  holChooseClose(); holSetMode(m); startGame(_holChooseCat);
 }
 const catBests=JSON.parse(localStorage.getItem('fq_catBests')||'{}');
 
@@ -3726,8 +3742,8 @@ function renderCatBests(){
   const labels={career_goals:'Career Goals',career_appearances:'Appearances',assists:'Assists',intl_caps:'Intl Caps',intl_goals:'Intl Goals',trophies:'Major Trophies'};
   for(const cat of Object.keys(labels)){
     const el=document.getElementById('best-'+cat);
-    const b=catBests[holKey(cat)];
-    if(el) el.innerHTML=b?'🏆 BEST: '+b:'';
+    const bl=catBests[cat], bm=catBests['m_'+cat];
+    if(el) el.innerHTML=(bl||bm)?'🏆 '+(bl||0)+' · ⚡ '+(bm||0):'';
   }
 }
 
@@ -3787,7 +3803,7 @@ function startGame(cat){
   category=cat;score=0;lives=1;
   document.getElementById("scoreEl").textContent=0;
   document.getElementById("bestEl").textContent=best;
-  document.getElementById("modeEl").textContent=holLabel(cat);
+  document.getElementById("modeEl").textContent=(holIsModern()&&cat==="assists"?"Assists since 2024/25":holLabel(cat))+(holIsModern()?" · CURRENT PLAYERS":" · LEGENDS");
   renderLives();
   deck=shuffle(holPool().filter(p=>catValue(p,cat)>0));deckIdx=0;
   leftPlayer=nextFromDeck();
@@ -3870,7 +3886,7 @@ function makeCard(p,val,isLeft){
   }
   return`
   <div class="pcard" id="${isLeft?"leftCard":"rightCard"}">
-    <div class="avatar">${generateKitSVG(p.name) || `<div style="width:76px;height:76px;border-radius:50%;background:${p.color};color:${textColor};display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;">${p.initials}</div>`}</div>
+    <div class="avatar">${generateKitSVG(p.name, p.kit) || `<div style="width:76px;height:76px;border-radius:50%;background:${p.color};color:${textColor};display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;">${p.initials}</div>`}</div>
     <div class="pname">${p.name}</div>
     <div class="ppos">${p.pos}</div>
     <div class="pnat">${p.nat}</div>
@@ -4011,7 +4027,7 @@ function showResult(correct,leftVal,rightVal){
       <div class="breakdown" style="text-align:center;">
         <div class="breakdown-title">🎯 Assists — ${p.name}</div>
         <div style="font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--gold);line-height:1;">${p.assists}</div>
-        <div class="stat-lbl">career assists</div>
+        <div class="stat-lbl">${holIsModern()?"assists since 2024/25":"career assists"}</div>
       </div>`;
   }
 
@@ -5517,17 +5533,18 @@ function updateFriendsNav(){
 <script src="data/transfer-fees.js?v=5"></script>
 <script src="data/eg-datasets.js?v=24"></script>
 <script src="data/players.js"></script>
-<script src="data/players-modern.js?v=5"></script>
-<script src="data/kits.js"></script>
-<script src="data/club-logos.js?v=4"></script>
+<script src="data/legends-verified.js?v=1"></script>
+<script src="data/players-modern.js?v=10"></script>
+<script src="data/kits.js?v=2"></script>
+<script src="data/club-logos.js?v=5"></script>
 <script src="data/ttt-grids.js?v=1"></script>
 <script src="data/career-path.js?v=3"></script>
 <script src="data/sxi-teams.js"></script>
 <script src="data/sxi-pl-winners.js"></script>
 <script src="data/trophies.js"></script>
-<script src="data/moneyball-transfers.js?v=5"></script>
+<script src="data/moneyball-transfers.js?v=7"></script>
 <script src="data/top10.js?v=12"></script>
-<script src="data/top10-api.js?v=5"></script>
+<script src="data/top10-api.js?v=6"></script>
 <script>
 // ══════════════════════════════════════════════════════════════════════════════
 //  MONEYBALL GAME
@@ -6337,7 +6354,7 @@ function showAuction(){
 }
 
 function aucAvatarHTML(p){
-  return generateKitSVG(p.name) || `<div style="width:76px;height:76px;border-radius:50%;background:${p.color};color:${p.tc||'#fff'};display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;">${p.initials}</div>`;
+  return generateKitSVG(p.name, p.kit) || `<div style="width:76px;height:76px;border-radius:50%;background:${p.color};color:${p.tc||'#fff'};display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;">${p.initials}</div>`;
 }
 
 function aucConfirmNames(){

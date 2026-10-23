@@ -413,3 +413,6 @@ html .cw-btn-secondary{background:var(--bl-ink);color:#fff;border:3px solid #fff
 .hol-mode button{font-family:'Anton',sans-serif;letter-spacing:1.5px;font-size:0.95rem;padding:8px 20px;border-radius:999px;border:3px solid #fff;background:var(--bl-ink);color:#fff;cursor:pointer;box-shadow:3px 3px 0 rgba(2,50,22,0.6);}
 .hol-mode button.on{background:var(--bl-a);color:var(--bl-ink);}
 .hol-mode-note{text-align:center;font-size:0.72rem;font-weight:800;letter-spacing:1px;color:var(--bl-loose);margin-bottom:6px;}
+
+/* Higher or Lower: Legends / Current players choice — opaque so the menu behind does not bleed through */
+#holChoose{background:rgba(3,10,6,0.99) !important;}

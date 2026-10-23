@@ -5,6 +5,7 @@
 //   node --env-file=.env tools/fetch-players.mjs --roster --top=300 --skip=40       the next 260
 //   node --env-file=.env tools/fetch-players.mjs --players=tools/test-players.json  a hand-made list [{name, born, id?}]
 //   options: --seasons=2010-2026 (default)  --reserve=300 (requests always left unused)  --refresh (ignore the local cache)  --dry (only print the plan)
+//            --refresh-current  (fetch the running season again, keep older seasons cached — what the weekly job uses)
 //            --offline  (never calls the API: re-aggregates what is already cached under data/raw/ — use it after changing tools/lib/aggregate.mjs)
 //
 // Safe by design:
@@ -42,13 +43,15 @@ let gap = 250, remaining = null, calls = 0;
 
 async function call(p, attempt = 0) {
   if (args.offline) throw new Error('--offline: no API calls allowed');
-  const res = await fetch(BASE + p, { headers: { 'x-apisports-key': KEY } });
+  let res;
+  try { res = await fetch(BASE + p, { headers: { 'x-apisports-key': KEY } }); }
+  catch (e) { if (attempt < 6) { await sleep(5000 * (attempt + 1)); return call(p, attempt + 1); } throw e; }   // network blip (ECONNRESET, DNS) → wait and retry
   calls++;
   const left = res.headers.get('x-ratelimit-requests-remaining');
   if (left !== null) remaining = Number(left);
   if (res.status === 429 && attempt < 3) { await sleep(20000 * (attempt + 1)); return call(p, attempt + 1); }
   let body;
-  try { body = await res.json(); } catch { throw new Error(`${p}: HTTP ${res.status}, not JSON`); }
+  try { body = await res.json(); } catch { if (attempt < 6) { await sleep(5000 * (attempt + 1)); return call(p, attempt + 1); } throw new Error(`${p}: HTTP ${res.status}, not JSON`); }   // cut-off answer → try again
   // Pro allows 300 requests/minute. Going over is answered with HTTP 200 + an "errors.rateLimit" text — wait and retry instead of failing.
   if (body.errors && body.errors.rateLimit && attempt < 8) { await sleep(12000 + attempt * 4000); return call(p, attempt + 1); }
   const errs = body.errors && (Array.isArray(body.errors) ? body.errors : Object.values(body.errors));
@@ -118,7 +121,9 @@ for (const w of wanted) {
   const raw = {};
   for (const season of seasonsFor(info.born)) {
     const file = path.join(RAW, `${info.id}-${season}.json`);
-    let body = !args.refresh && fs.existsSync(file) ? readJson(file, null) : null;
+    // --refresh-current (weekly job): only the running season changes — everything older stays cached
+    const stale = args.refresh || (args['refresh-current'] && season === CURRENT_SEASON && !args.offline);
+    let body = !stale && fs.existsSync(file) ? readJson(file, null) : null;
     if (body) cached++;
     else if (args.offline) continue;
     else {

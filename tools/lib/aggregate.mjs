@@ -100,7 +100,8 @@ export function qualityIssues(seasonsObj, fromSeason, toSeason) {
   // 2) impossible numbers
   for (const [season, s] of Object.entries(seasonsObj)) {
     const apps = s.club.apps + s.intl.apps, goals = s.club.goals + s.intl.goals;
-    if (apps > 85) issues.push(`${season}: ${apps} appearances`);
+    // club + national team incl. friendlies can pass 85 in a World Cup year (Julián Álvarez 2022) — only a club figure above 80 or a national-team figure above 35 is suspicious
+    if (apps > 85 && (s.club.apps > 80 || s.intl.apps > 35)) issues.push(`${season}: ${apps} appearances`);
     if (apps >= 5 && goals > apps * 2.2) issues.push(`${season}: ${goals} goals in ${apps} games`);
     if (s.club.minutes > 0 && s.club.apps > 0 && s.club.minutes / s.club.apps > 100) issues.push(`${season}: ${Math.round(s.club.minutes / s.club.apps)} min per game`);
   }
