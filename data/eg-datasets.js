@@ -49,7 +49,7 @@ const EG_GROUPS = [
     id:'ballon-dor', name:'Ballon d’Or', icon:'⭐',
     desc:'Football’s individual greats',
     quizzes:[
-      {key:'ballon_dor_winners', icon:'🥇', desc:'Every winner from 1956 to today · 47 players'},
+      {key:'ballon_dor_winners', icon:'🥇', desc:'Every winner from 1956 to today · 48 players'},
     ]
   },
 ];
@@ -644,7 +644,7 @@ const EG_DATASETS = {
   ballon_dor_winners: {
     title: 'Ballon d’Or Winners',
     missingLabel: 'winners',
-    // Every individual winner from 1956 to 2025. 2020 was not awarded.
+    // Every individual winner from 1956 to 2026. 2020 was not awarded. Harry Kane won the 70th edition (26 Oct 2026, London Palladium) — confirmed by ESPN, NPR, Yahoo Sports and Wikipedia.
     // Source: Transfermarkt / topendsports.com winners list.
     players: [
       {name:'Stanley Matthews',     aliases:['matthews','stanley matthews','sir stanley matthews']},
@@ -694,6 +694,7 @@ const EG_DATASETS = {
       {name:'Karim Benzema',        aliases:['benzema','karim benzema']},
       {name:'Rodri',                aliases:['rodri','rodrigo hernandez','rodri hernandez']},
       {name:'Ousmane Dembélé',      aliases:['dembele','dembélé','ousmane dembele','ousmane dembélé']},
+      {name:'Harry Kane',           aliases:['kane','harry kane','hurricane']},
     ]
   },
 
