@@ -50,6 +50,7 @@ const EG_GROUPS = [
     desc:'Football’s individual greats',
     quizzes:[
       {key:'ballon_dor_winners', icon:'🥇', desc:'Every winner from 1956 to today · 48 players'},
+      {key:'ballon_dor_feminin', icon:'🏆', desc:'Every woman on the Ballon d’Or Féminin podium, 2018–2026 · 17 players'},
     ]
   },
 ];
@@ -695,6 +696,38 @@ const EG_DATASETS = {
       {name:'Rodri',                aliases:['rodri','rodrigo hernandez','rodri hernandez']},
       {name:'Ousmane Dembélé',      aliases:['dembele','dembélé','ousmane dembele','ousmane dembélé']},
       {name:'Harry Kane',           aliases:['kane','harry kane','hurricane']},
+    ]
+  },
+
+  ballon_dor_feminin: {
+    title: 'Ballon d’Or Féminin — The Podium',
+    missingLabel: 'players',
+    // Every woman who finished top 3 in the Ballon d'Or Féminin, 2018 to 2026 (2020 was not awarded).
+    // Each year's top three checked against at least two sources (Wikipedia, topendsports.com, Goal, ESPN, Yahoo Sports, ballondor.com).
+    // 2018 Hegerberg · Harder · Marozsán | 2019 Rapinoe · Bronze · Morgan | 2021 Putellas · Hermoso · Kerr | 2022 Putellas · Mead · Kerr
+    // 2023 Bonmatí · Kerr · Paralluelo | 2024 Bonmatí · Graham Hansen · Paralluelo | 2025 Bonmatí · Caldentey · Russo | 2026 Putellas · Pajor · Shaw
+    players: [
+      {name:'Ada Hegerberg',          aliases:['hegerberg','ada hegerberg']},
+      {name:'Megan Rapinoe',          aliases:['rapinoe','megan rapinoe']},
+      {name:'Alexia Putellas',        aliases:['putellas','alexia putellas','alexia']},
+      {name:'Aitana Bonmatí',         aliases:['bonmati','bonmatí','aitana bonmati','aitana bonmatí','aitana']},
+      {name:'Pernille Harder',        aliases:['harder','pernille harder']},
+      {name:'Dzsenifer Marozsán',     aliases:['marozsan','marozsán','dzsenifer marozsan','dzsenifer marozsán','jenny marozsan']},
+      {name:'Lucy Bronze',            aliases:['bronze','lucy bronze']},
+      {name:'Alex Morgan',            aliases:['morgan','alex morgan']},
+      {name:'Jenni Hermoso',          aliases:['hermoso','jenni hermoso','jennifer hermoso']},
+      {name:'Sam Kerr',               aliases:['kerr','sam kerr']},
+      {name:'Beth Mead',              aliases:['mead','beth mead']},
+      {name:'Salma Paralluelo',       aliases:['paralluelo','salma paralluelo']},
+      {name:'Caroline Graham Hansen', aliases:['graham hansen','caroline graham hansen','hansen','caroline hansen']},
+      {name:'Mariona Caldentey',      aliases:['caldentey','mariona caldentey','mariona']},
+      {name:'Alessia Russo',          aliases:['russo','alessia russo']},
+      {name:'Ewa Pajor',              aliases:['pajor','ewa pajor']},
+      {name:'Khadija Shaw',           aliases:['shaw','khadija shaw','bunny shaw']},
+    ],
+    traps: [
+      {name:'Melchie Dumornay', aliases:['dumornay','melchie dumornay'], note:'🔴 Melchie Dumornay — finished <b>4th</b> in 2026, just outside the podium.'},
+      {name:'Patri Guijarro',   aliases:['guijarro','patri guijarro','patricia guijarro'], note:'🔴 Patri Guijarro — finished <b>5th</b> in 2026, outside the podium.'},
     ]
   },
 
