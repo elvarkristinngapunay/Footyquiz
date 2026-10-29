@@ -409,6 +409,14 @@ html .cw-btn-secondary{background:var(--bl-ink);color:#fff;border:3px solid #fff
 
 
 /* Higher or Lower: Legends / Modern Stars switch */
+.hol-opts{width:100%;max-width:400px;display:flex;flex-direction:column;gap:10px;text-align:left;}
+.hol-opt{display:flex;align-items:center;gap:14px;width:100%;padding:14px 16px;border-radius:14px;border:3px solid #fff;background:var(--bl-ink);color:#fff;cursor:pointer;text-align:left;font-family:inherit;box-shadow:3px 3px 0 rgba(2,50,22,0.6);}
+.hol-opt:hover:not(:disabled),.hol-opt:active:not(:disabled){background:var(--bl-a);color:var(--bl-ink);}
+.hol-opt:hover:not(:disabled) small,.hol-opt:active:not(:disabled) small,.hol-opt:hover:not(:disabled) em,.hol-opt:active:not(:disabled) em{color:var(--bl-ink);}
+.hol-opt-ic{font-size:1.9rem;width:40px;text-align:center;flex-shrink:0;}
+.hol-opt-tx b{display:block;font-family:'Anton',sans-serif;font-size:1.2rem;letter-spacing:0.5px;font-weight:400;}
+.hol-opt-tx small{display:block;font-size:0.74rem;font-weight:700;color:#9aa;margin-top:2px;}
+.hol-opt-tx em{display:block;font-style:normal;font-size:0.7rem;font-weight:700;color:var(--bl-a);margin-top:3px;}
 .hol-mode{display:flex;gap:8px;justify-content:center;margin:2px 0 6px;}
 .hol-mode button{font-family:'Anton',sans-serif;letter-spacing:1.5px;font-size:0.95rem;padding:8px 20px;border-radius:999px;border:3px solid #fff;background:var(--bl-ink);color:#fff;cursor:pointer;box-shadow:3px 3px 0 rgba(2,50,22,0.6);}
 .hol-mode button.on{background:var(--bl-a);color:var(--bl-ink);}

@@ -20,6 +20,11 @@ echo "== 1/6 players (running season only) =="
 $ENVRUN tools/fetch-players.mjs --roster --minborn=1985 --top=180 --seasons=2002-2026 --out=data/generated/career-pilot.json $FETCH_ARGS | grep -E "^(plan|ids|fetched|wrote)" || true
 $ENVRUN tools/fetch-players.mjs --roster --minborn=1985 --top=250 $FETCH_ARGS | grep -E "^(plan|ids|fetched|wrote)" || true
 $ENVRUN tools/fetch-players.mjs --roster --minborn=1990 --top=450 --seasons=2002-2026 --out=data/generated/career-pilot.json $FETCH_ARGS | grep -E "^(plan|ids|fetched|wrote)" || true
+# the second batch of current players (fame 50–58 in tools/roster-candidates.json, made 2026-10-28) — the list lives in data/generated/ (not committed); skipped when it is not there
+[ -f data/generated/current-more.json ] && { $ENVRUN tools/fetch-players.mjs --players=data/generated/current-more.json --seasons=2002-2026 --out=data/generated/career-pilot.json $FETCH_ARGS | grep -E "^(plan|ids|fetched|wrote)" || true; }
+
+echo "== 1b/6 FotMob (the second source for assists) =="
+if [ "$MODE" != "--offline" ]; then node tools/fetch-fotmob.mjs --current --refresh | tail -1; else echo "(skipped offline)"; fi
 
 echo "== 2/6 league lists =="
 if [ "$MODE" != "--offline" ]; then $ENVRUN tools/fetch-lists.mjs --refresh-current --no-trophies --reserve=600 | tail -3; else echo "(skipped offline)"; fi

@@ -15,10 +15,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
+import { execSync } from 'node:child_process';
 import { isMajorTrophy, trophyLabel, hasWomensTrophy } from './lib/trophies.mjs';
 import { kitFor } from './lib/kits.mjs';
 import { parseArticle } from './lib/wikipedia.mjs';
 import { verifyCurrent, apiClubSeasons, startYear } from './lib/verify-current.mjs';
+import { verifyAssists } from './lib/verify-assists.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = (f, d) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return d; } };
@@ -46,7 +48,7 @@ const hash = s => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
 const FIRST_SEASON = 2002;   // the earliest season the API has player lines for (Cristiano Ronaldo, Sporting 2002/03); nobody born from 1985 on started earlier
 
 // goals per club: the same club under two spellings or its reserve side ("Monaco" / "AS Monaco", "Real Madrid II") is one row; top 8 by goals
-const parent = t => String(t || '').replace(/\s*\(.*?\)\s*/g, ' ').replace(/\s+(B|C|II|III|IV|Castilla|U\d\d)$/i, '').replace(/^Jong\s+/i, '').replace(/\s+/g, ' ').trim();
+const parent = t => String(t || '').replace(/\s*\(.*?\)\s*/g, ' ').replace(/[\s-]+(B|C|II|III|IV|2|Castilla|U\d\d)$/i, '').replace(/^Jong\s+/i, '').replace(/-2(\s|$)/, '$1').replace(/\s+/g, ' ').trim();
 function clubGoalsFor(p) {
   const rows = new Map();
   for (const c of p.clubGoals || []) { const key = logoKey(parent(c.team)) || parent(c.team); rows.set(key, (rows.get(key) || 0) + c.goals); }
@@ -70,17 +72,27 @@ function displayNameFor(p) {
 }
 // relevance: someone a fan would know — a real stretch in the big five leagues, or a regular for his country
 const relevant = p => p.since.big5.apps >= 40 || p.since.intl.apps >= 20;
+// players who were not in the deck that is live (git HEAD) must be better known: 100+ big-five games or 40+ caps — so a longer candidate list does not fill the deck with names few people know
+let liveNames = new Set();
+try { const c = {}; vm.createContext(c); vm.runInContext(execSync('git show HEAD:data/players-modern.js', { cwd: ROOT, encoding: 'utf8', maxBuffer: 50e6 }) + ';this.M=PLAYERS_MODERN', c); liveNames = new Set(c.M.map(x => x.name)); } catch { /* no history: every player counts as new */ }
+const wellKnownNewcomer = p => p.since.big5.apps >= 100 || p.since.intl.apps >= 40;
 // "Legend" = a name every fan knows: a long stretch at the top (200+ big-five games) with 50+ caps or 10+ trophies, or 80+ caps, or 20+ trophies
 const legendWorthy = (p, r) => (p.since.big5.apps >= 200 && (r.intl_caps >= 50 || r.trophies >= 10)) || r.intl_caps >= 80 || r.trophies >= 20;
-// goals per club for the panel: Wikipedia's finished seasons + the API's running season, one row per club (reserve sides and spellings merged)
-function verifiedClubGoals(v) {
+// every club of the career for the panel: Wikipedia's finished seasons + the API's running season, one row per club (reserve sides and spellings merged).
+// club_goals / club_apps list ALL clubs (not just the top few), so the rows add up to the career number minus the national team.
+function verifiedClubTables(v) {
   const rows = new Map();
-  const add = (team, goals) => { if (!goals) return; const key = logoKey(parent(team)) || parent(team); rows.set(key, (rows.get(key) || 0) + goals); };
-  for (const r of v.finishedRows) add(r.club, r.goals);
-  for (const [team, goals] of Object.entries(v.currentPerClub)) add(team, goals);
-  return [...rows].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([c, n]) => ({ c, n, col: '#444' }));
+  const add = (team, goals, apps) => { const key = logoKey(parent(team)) || parent(team); const r = rows.get(key) || { g: 0, a: 0 }; r.g += goals || 0; r.a += apps || 0; rows.set(key, r); };
+  for (const r of v.finishedRows) add(r.club, r.goals, r.apps);
+  for (const [team, st] of Object.entries(v.currentPerClubStats || {})) add(team, st.goals, st.apps);
+  const list = key => [...rows].filter(([, r]) => r[key] > 0).sort((a, b) => b[1][key] - a[1][key]).map(([c, r]) => ({ c, n: r[key], col: '#444' }));
+  return { club_goals: list('g'), club_apps: list('a') };
 }
 const SQUAD_NUMBERS = readJson(path.join(LISTS, 'squad-numbers.json'), {});   // { playerId: shirt number } from tools/fetch-squads.mjs
+// FotMob (tools/fetch-fotmob.mjs) — the second source for assists
+const FOTMOB_DIR = path.join(ROOT, 'data/raw/fotmob'), fmIndex = readJson(path.join(FOTMOB_DIR, 'index.json'), {});
+const fotmobOf = name => { const e = fmIndex[name]; return e?.id ? readJson(path.join(FOTMOB_DIR, e.id + '.json'), null) : null; };
+const assistNotes = []; const assistStats = { seasons: 0, compared: 0 };
 const out = []; const skipped = []; const retiredOut = [];   // retiredOut: no longer playing → candidates for the Legends deck (verified against Wikipedia by tools/verify-legends.mjs)
 for (const p of Object.values(stats.players)) {
   // "career" is only honest if we asked for every season the player could have played: from 2002 (the API has nothing earlier), or from his 16th birthday year
@@ -91,6 +103,7 @@ for (const p of Object.values(stats.players)) {
   // "Current players" = still playing: games in the running season or the one before (a long injury must not drop a star)
   const lastPlayed = Math.max(0, ...Object.entries(p.seasons).filter(([, ss]) => ss.club.apps + ss.intl.apps > 0).map(([y]) => Number(y)));
   const isCurrent = lastPlayed >= stats.currentSeason - 1;
+  if (isCurrent && relevant(p) && !liveNames.has(displayNameFor(p)) && !wellKnownNewcomer(p)) { skipped.push(`${p.name} (new in the deck but not well known: ${p.since.big5.apps} big-five games, ${p.since.intl.apps} caps)`); continue; }
   if (!relevant(p)) { skipped.push(`${p.name} (not well known: ${p.since.big5.apps} big-five games, ${p.since.intl.apps} caps)`); continue; }
   const club = p.since.club, intl = p.since.intl;
   const apps = club.apps + intl.apps; if (apps < (isCurrent ? 150 : 300)) { skipped.push(`${p.name} (only ${apps} games)`); continue; }
@@ -124,15 +137,28 @@ for (const p of Object.values(stats.players)) {
   if (isCurrent) {
     // career totals only when two sources stand behind them (see tools/lib/verify-current.mjs); trophies and assists are not released (the API lags new honours and has no assists before 2024/25)
     const wpFile = path.join(ROOT, 'data/raw/wikipedia/legends', shownName.replace(/[^A-Za-z]/g, '_') + '.html');
-    const v = verifyCurrent(p, fs.existsSync(wpFile) ? parseArticle(fs.readFileSync(wpFile, 'utf8')) : null, stats.currentSeason, apiClubSeasons(p, RAW));
+    const wpParsed = fs.existsSync(wpFile) ? parseArticle(fs.readFileSync(wpFile, 'utf8')) : null;
+    const v = verifyCurrent(p, wpParsed, stats.currentSeason, apiClubSeasons(p, RAW), fotmobOf(shownName));
     record.career_goals = v.ok.goals && v.ok.intl ? v.clubGoals + v.intl.goals : null;
     record.career_appearances = v.ok.apps && v.ok.intl ? v.clubApps + v.intl.apps : null;
     record.intl_caps = v.ok.intl ? v.intl.apps : null;
     record.intl_goals = v.ok.intl ? v.intl.goals : null;
-    record.assists = null; record.trophies = null; record.trophies_list = [];
-    record.club_goals = v.ok.goals ? verifiedClubGoals(v) : [];
+    // assists since 2016/17: FotMob's numbers, checked season by season against Wikipedia (games) and API-Football (assists) — see tools/lib/verify-assists.mjs; trophies are not released
+    const apiTables = apiClubSeasons(p, RAW);
+    const va = verifyAssists({ apiTables, apiPlayer: p, wp: wpParsed, fm: fotmobOf(shownName) });
+    record.assists = va.ok ? va.value : null;
+    if (!va.ok) assistNotes.push(`${shownName}: ${va.why}`);
+    else { record.club_assists = va.clubs.map(c => ({ c: logoKey(parent(c.name)) || parent(c.name), n: c.n, col: '#444' })); record.intl_assists = va.intl; assistStats.seasons += va.seasons; assistStats.compared += va.comparedSeasons; }
+    record.trophies = null; record.trophies_list = [];
+    const tables = v.finishedRows ? verifiedClubTables(v) : { club_goals: [], club_apps: [] };
+    record.club_goals = v.ok.goals ? tables.club_goals : [];
+    record.club_apps = v.ok.apps ? tables.club_apps : [];
+    // the rows must add up to the career number minus the national team, otherwise the panel would show something that does not match the headline
+    const sum = l => l.reduce((a, c) => a + c.n, 0);
+    if (record.club_goals.length && sum(record.club_goals) !== v.clubGoals) { nameNotes.push(`${shownName}: club goals add up to ${sum(record.club_goals)}, headline ${v.clubGoals} — per-club goals dropped`); record.club_goals = []; }
+    if (record.club_apps.length && sum(record.club_apps) !== v.clubApps) { nameNotes.push(`${shownName}: club games add up to ${sum(record.club_apps)}, headline ${v.clubApps} — per-club games dropped`); record.club_apps = []; }
     record.intl_breakdown = { ...record.intl_breakdown, n: v.intl ? v.intl.goals : 0 };
-    record.verified = { goals: v.ok.goals, apps: v.ok.apps, intl: v.ok.intl };
+    record.verified = { goals: v.ok.goals, apps: v.ok.apps, intl: v.ok.intl, assists: va.ok };
     if (record.career_goals === null && record.intl_caps === null) { skipped.push(`${p.name} (numbers not confirmed by two sources: ${v.why || JSON.stringify(v.diag)})`); continue; }
     out.push(record);
   }
@@ -147,7 +173,10 @@ retiredOut.sort((a, b) => b.career_goals - a.career_goals);
 fs.mkdirSync(path.join(ROOT, 'data/generated'), { recursive: true });
 fs.writeFileSync(path.join(ROOT, 'data/generated/legends-candidates.json'), JSON.stringify(retiredOut));
 console.log(`legends candidates (retired, full career): ${retiredOut.length}`);
+fs.writeFileSync(path.join(ROOT, 'data/generated/hol-skipped.json'), JSON.stringify(skipped, null, 1));
 console.log(`wrote data/players-modern.js — ${out.length} players (${(js.length / 1024).toFixed(0)} KB). skipped ${skipped.length}:`);
 console.log('  ' + skipped.slice(0, 40).join('\n  ') + (skipped.length > 40 ? `\n  … and ${skipped.length - 40} more` : ''));
+console.log(`assists since 2016/17 confirmed: ${out.filter(p => p.assists > 0).length} players (${assistStats.seasons} FotMob seasons checked against Wikipedia, ${assistStats.compared} also against API-Football); not confirmed: ${assistNotes.length}`);
+if (assistNotes.length) console.log('  ' + assistNotes.slice(0, 60).join('\n  '));
 if (nameNotes.length) console.log('\nnames to look at:\n  ' + nameNotes.join('\n  '));
 console.log('\ntop 12 by career goals:\n  ' + out.slice(0, 12).map(p => `${p.name} ${p.career_goals}g ${p.assists}a ${p.career_appearances} games, ${p.trophies} trophies [${p.quality}]`).join('\n  '));

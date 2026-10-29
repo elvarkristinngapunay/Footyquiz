@@ -38,3 +38,21 @@ export function trophyLabel(t) {
   for (const [from, to] of Object.entries(COUNTRY)) name = name.replace(from, to);
   return SAME[name] || name;
 }
+
+// ── FotMob's honours list (the second source) ──────────────────────────────────────────────────────────────────────────────────────────────────
+// FotMob lists exhibition tournaments (Gamper, Audi Cup, ICC, Asia Trophy …), youth tournaments and second-tier titles too, so the same filters apply to its names.
+const FM_LOWER = /^(laliga ?2|la liga 2|ligue 2|bundesliga 2|2\. bundesliga|liga portugal 2|serie c|league one|league two|segunda división b)$/i;
+export const isMajorFotmobName = n => !(EXHIBITION.test(n) || YOUTH.test(n) || WOMEN.test(n) || QUALIFIERS.test(n) || LOWER_TIER.test(n) || FM_LOWER.test(n) || STATE_CHAMPIONSHIP.test(n));
+const FM_LABEL = { 'LaLiga': 'La Liga', 'Champions League': 'UEFA Champions League', 'Europa League': 'UEFA Europa League', 'Conference League': 'UEFA Conference League', 'EFL Cup': 'League Cup',
+  'Supercopa de España': 'Spain Super Cup', 'UEFA Nations League A': 'UEFA Nations League', 'World Cup': 'FIFA World Cup', 'Summer Olympics': 'Olympic Games', 'Copa America': 'CONMEBOL Copa America',
+  'Cup': 'Domestic Cup', 'Ligue 1': 'Ligue 1' };
+// one row per honour: { label, year (the season's first year), team }
+export function fotmobHonours(fm) {
+  const rows = [];
+  for (const t of fm?.trophies || []) {
+    if (!isMajorFotmobName(t.league)) continue;
+    for (const w of t.won) { const year = Number(String(w).slice(0, 4)); if (year) rows.push({ label: FM_LABEL[t.league] || t.league, year, team: t.team }); }
+  }
+  return rows;
+}
+export const apiHonours = list => (list || []).filter(isMajorTrophy).map(t => ({ label: trophyLabel(t), year: Number(String(t.season).slice(0, 4)) })).filter(r => r.year);

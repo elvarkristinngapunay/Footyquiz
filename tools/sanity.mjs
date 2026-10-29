@@ -21,7 +21,8 @@ let grew = 0;
 for (const b of before) {
   const a = byName.get(b.name);
   if (!a) { problems.push(`${b.name} left the deck`); continue; }
-  for (const k of ['career_goals', 'career_appearances', 'intl_caps', 'intl_goals', 'trophies']) {
+  for (const k of ['career_goals', 'career_appearances', 'intl_caps', 'intl_goals', 'trophies', 'assists']) {
+    if (b[k] == null || a[k] == null) continue;          // a number that was released for the first time (or withheld) is not a jump
     if (a[k] < b[k]) problems.push(`${b.name}: ${k} fell from ${b[k]} to ${a[k]}`);
     if (a[k] - b[k] > (k === 'career_appearances' ? 30 : 15)) problems.push(`${b.name}: ${k} jumped from ${b[k]} to ${a[k]} in one run`);
     if (a[k] > b[k]) grew++;

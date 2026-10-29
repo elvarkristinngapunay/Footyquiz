@@ -1412,7 +1412,7 @@ body::before{display:none;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
 .t10-shake{animation:t10shake 0.35s ease-out;}
 </style>
-<link rel="stylesheet" href="mowpop.css?v=22">
+<link rel="stylesheet" href="mowpop.css?v=23">
 </head>
 <body>
 
@@ -2497,21 +2497,23 @@ body::before{display:none;}
   <button class="slot-back-btn" onclick="gcClose()" style="margin-top:18px;">← Back</button>
 </div>
 
-<!-- HIGHER OR LOWER: LEGENDS OR CURRENT PLAYERS -->
+<!-- HIGHER OR LOWER: LEGENDS, 2000s ERA OR CURRENT PLAYERS -->
 <div id="holChoose">
   <div class="eg-mc-icon">⚽</div>
   <div class="eg-mc-title" id="holChTitle"></div>
   <div class="eg-mc-how">WHO DO YOU WANT TO PLAY WITH?</div>
-  <div class="eg-mc-btns">
-    <button class="eg-mc-btn" id="holChLegends" onclick="holChoosePick('legends')">
-      <div class="eg-mc-bi">🏆</div>
-      <div class="eg-mc-bl">Legends</div>
-      <div class="eg-mc-bs" id="holChLegendsSub"></div>
+  <div class="hol-opts">
+    <button class="hol-opt" id="holChLegends" onclick="holChoosePick('legends')">
+      <span class="hol-opt-ic">🏆</span>
+      <span class="hol-opt-tx"><b>Legends</b><small>All-time greats, retired</small><em id="holChLegendsSub"></em></span>
     </button>
-    <button class="eg-mc-btn" id="holChModern" onclick="holChoosePick('modern')">
-      <div class="eg-mc-bi">⚡</div>
-      <div class="eg-mc-bl">Current players</div>
-      <div class="eg-mc-bs" id="holChModernSub"></div>
+    <button class="hol-opt" id="holChEra" onclick="holChoosePick('era')">
+      <span class="hol-opt-ic">📺</span>
+      <span class="hol-opt-tx"><b>2000s era</b><small>Retired stars from 2000 and up</small><em id="holChEraSub"></em></span>
+    </button>
+    <button class="hol-opt" id="holChModern" onclick="holChoosePick('modern')">
+      <span class="hol-opt-ic">⚡</span>
+      <span class="hol-opt-tx"><b>Current players</b><small>Still playing today, updated weekly</small><em id="holChModernSub"></em></span>
     </button>
   </div>
   <button class="slot-back-btn" onclick="holChooseClose()" style="margin-top:22px;">← Back</button>
@@ -3707,31 +3709,38 @@ function trophyIcon(t){
 
 // ── GAME STATE ────────────────────────────────────────────────────────────────
 // ── Higher or Lower: two decks — Legends (retired, hand-made) and Current players (API-Football, refreshed weekly). The choice comes after the category. ──
-let holMode = 'legends';
+let holMode = 'legends';                              // 'legends' | 'era' | 'modern'
 const holModernReady = () => typeof PLAYERS_MODERN !== 'undefined' && PLAYERS_MODERN.length >= 20;
 const holIsModern = () => holMode === 'modern' && holModernReady();
-const holPool  = () => holIsModern() ? PLAYERS_MODERN : PLAYERS;
-const holLabel = cat => catLabels[cat];                           // both decks use the same names
-const holKey   = cat => holIsModern() ? 'm_' + cat : cat;         // current players keep their own best scores
+const holIsEra    = () => holMode === 'era';
+// the three decks (data/decks.js): Legends = all-time greats, 2000s era = retired players from 2000 on (some are in both), Current = still playing
+const holDeck  = mode => mode === 'modern' ? (typeof PLAYERS_MODERN !== 'undefined' ? PLAYERS_MODERN : []) : mode === 'era' ? deckEra() : deckLegends();
+const holPool  = () => holDeck(holIsModern() ? 'modern' : holMode);
+const holLabel = cat => catLabels[cat];                           // every deck uses the same names
+const holKey   = cat => holIsModern() ? 'm_' + cat : holIsEra() ? 'e_' + cat : cat;   // every deck keeps its own best scores
+const holModeName = () => holIsModern() ? 'CURRENT PLAYERS' : holIsEra() ? '2000s ERA' : 'LEGENDS';
 function holSetMode(m){ holMode = m; }
 function holUpdated(){ try{ return new Date(PLAYERS_MODERN_INFO.generatedAt).toLocaleDateString('en-GB',{day:'numeric',month:'short'}); }catch(e){ return 'weekly'; } }
 let _holChooseCat = null;
 function holChoose(cat){
   _holChooseCat = cat;
   document.getElementById('holChTitle').textContent = catLabels[cat] || cat;
-  const legends = PLAYERS.filter(p => catValue(p, cat) > 0).length;
-  document.getElementById('holChLegendsSub').textContent = legends + ' players' + (catBests[cat] ? ' · best ' + catBests[cat] : '');
-  const mBtn = document.getElementById('holChModern'), mSub = document.getElementById('holChModernSub');
-  let current = 0;
-  if(holModernReady()) current = PLAYERS_MODERN.filter(p => catValue(p, cat) > 0).length;
-  const ok = holModernReady() && current >= 10;
-  mBtn.disabled = !ok; mBtn.style.opacity = ok ? '' : '0.45'; mBtn.style.cursor = ok ? '' : 'not-allowed';
-  mSub.textContent = !holModernReady() ? 'Not loaded' : !ok ? 'Coming soon — numbers are being double-checked' : current + ' players · updated ' + holUpdated() + (catBests['m_' + cat] ? ' · best ' + catBests['m_' + cat] : '');
+  const setOpt = (btnId, subId, mode, bestKey, soon) => {
+    const n = holDeck(mode).filter(p => catValue(p, cat) > 0).length;
+    const ok = n >= 10 && (mode !== 'modern' || holModernReady());
+    const b = document.getElementById(btnId);
+    b.disabled = !ok; b.style.opacity = ok ? '' : '0.45'; b.style.cursor = ok ? '' : 'not-allowed';
+    document.getElementById(subId).textContent = !ok ? soon : n + ' players' + (mode === 'modern' ? ' · updated ' + holUpdated() : '') + (catBests[bestKey] ? ' · best ' + catBests[bestKey] : '');
+  };
+  setOpt('holChLegends', 'holChLegendsSub', 'legends', cat, 'Coming soon');
+  setOpt('holChEra', 'holChEraSub', 'era', 'e_' + cat, 'Coming soon — numbers are being double-checked');
+  setOpt('holChModern', 'holChModernSub', 'modern', 'm_' + cat, 'Coming soon — numbers are being double-checked');
   document.getElementById('holChoose').style.display = 'flex';
 }
 function holChooseClose(){ document.getElementById('holChoose').style.display = 'none'; }
 function holChoosePick(m){
-  if(m === 'modern' && document.getElementById('holChModern').disabled) return;
+  const btn = document.getElementById(m === 'modern' ? 'holChModern' : m === 'era' ? 'holChEra' : 'holChLegends');
+  if(btn.disabled) return;
   holChooseClose(); holSetMode(m); startGame(_holChooseCat);
 }
 const catBests=JSON.parse(localStorage.getItem('fq_catBests')||'{}');
@@ -3749,8 +3758,8 @@ function renderCatBests(){
   const labels={career_goals:'Career Goals',career_appearances:'Appearances',assists:'Assists',intl_caps:'Intl Caps',intl_goals:'Intl Goals',trophies:'Major Trophies'};
   for(const cat of Object.keys(labels)){
     const el=document.getElementById('best-'+cat);
-    const bl=catBests[cat], bm=catBests['m_'+cat];
-    if(el) el.innerHTML=(bl||bm)?'🏆 '+(bl||0)+' · ⚡ '+(bm||0):'';
+    const bl=catBests[cat], be=catBests['e_'+cat], bm=catBests['m_'+cat];
+    if(el) el.innerHTML=(bl||be||bm)?'🏆 '+(bl||0)+' · 📺 '+(be||0)+' · ⚡ '+(bm||0):'';
   }
 }
 
@@ -3810,7 +3819,7 @@ function startGame(cat){
   category=cat;score=0;lives=1;
   document.getElementById("scoreEl").textContent=0;
   document.getElementById("bestEl").textContent=best;
-  document.getElementById("modeEl").textContent=(holIsModern()&&cat==="assists"?"Assists since 2024/25":holLabel(cat))+(holIsModern()?" · CURRENT PLAYERS":" · LEGENDS");
+  document.getElementById("modeEl").textContent=(holIsModern()&&cat==="assists"?"Assists since 2016/17":holLabel(cat))+" · "+holModeName();
   renderLives();
   deck=shuffle(holPool().filter(p=>catValue(p,cat)>0));deckIdx=0;
   leftPlayer=nextFromDeck();
@@ -3873,21 +3882,37 @@ function clubBadgeHTML(c){
   </div>`;
 }
 
+// ── Club by club: goals, games and assists in every club of the career (+ the national team) — shown only when the numbers were checked ──
+function clubStatList(p, cat){
+  const flag = p.intl_breakdown && p.intl_breakdown.flag, country = p.intl_breakdown && p.intl_breakdown.country;
+  const nat = n => (n > 0 && country) ? {flag, country, n} : null;
+  if(cat==='career_goals' && p.club_goals && p.club_goals.length) return {rows:p.club_goals, nat:nat(p.intl_goals), unit:'goals'};
+  if(cat==='career_appearances' && p.club_apps && p.club_apps.length) return {rows:p.club_apps, nat:nat(p.intl_caps), unit:'games'};
+  if(cat==='assists' && p.club_assists && p.club_assists.length) return {rows:p.club_assists.filter(c=>c.n>0), nat:nat(p.intl_assists), unit:'assists'};
+  return null;
+}
+function natBadgeHTML(flag){
+  return `<div style="width:40px;height:40px;border-radius:8px;background:#161616;border:1px solid #2a2a2a;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-sizing:border-box;">${flag||'🌍'}</div>`;
+}
+function clubItemsHTML(list, small){
+  const num = small ? 'font-size:0.88rem;font-weight:900;color:#fff;line-height:1;' : '';
+  const nm  = small ? 'font-size:0.42rem;color:#aaa;text-align:center;max-width:44px;line-height:1.2;word-break:break-word;' : '';
+  const item = (badge, n, name) => small
+    ? `<div style="display:flex;flex-direction:column;align-items:center;gap:2px;">${badge}<div style="${num}">${n}</div><div style="${nm}">${name}</div></div>`
+    : `<div class="club-item">${badge}<div class="club-num">${n}</div><div class="club-name">${name}</div></div>`;
+  return list.rows.map(c => item(clubBadgeHTML(c), c.n, c.c)).join('') + (list.nat ? item(natBadgeHTML(list.nat.flag), list.nat.n, list.nat.country) : '');
+}
+
 function makeCard(p,val,isLeft){
   const textColor=p.tc||"#fff";
   let clubBreakdown='';
-  if(isLeft && category==='career_goals' && p.club_goals && p.club_goals.length){
-    const clubsHTML=p.club_goals.map(c=>`
-      <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-        ${clubBadgeHTML(c)}
-        <div style="font-size:0.88rem;font-weight:900;color:#fff;line-height:1;">${c.n}</div>
-        <div style="font-size:0.42rem;color:#aaa;text-align:center;max-width:44px;line-height:1.2;word-break:break-word;">${c.c}</div>
-      </div>`).join('');
+  const cl = isLeft ? clubStatList(p, category) : null;
+  if(cl){
     clubBreakdown=`
     <div style="margin-top:10px;border-top:1px solid #222;padding-top:8px;text-align:center;">
       <button onclick="this.style.display='none';this.nextElementSibling.style.display='flex';" style="background:none;border:1px solid #333;color:#888;font-size:0.65rem;padding:4px 12px;border-radius:20px;cursor:pointer;font-family:inherit;letter-spacing:1px;text-transform:uppercase;">See more</button>
       <div style="display:none;flex-wrap:wrap;gap:6px;justify-content:center;">
-        ${clubsHTML}
+        ${clubItemsHTML(cl, true)}
       </div>
     </div>`;
   }
@@ -3968,18 +3993,13 @@ function showResult(correct,leftVal,rightVal){
   const head=gameOver?"GAME OVER":correct?"CORRECT!":"WRONG!";
 
   let breakdownHTML="";
+  const clp = clubStatList(p, category);
+  const clubsBlock = clp ? `<div class="clubs-wrap" style="margin-top:12px;">${clubItemsHTML(clp, false)}</div>` : "";
   if(category==="career_goals"){
     breakdownHTML=`
       <div class="breakdown">
         <div class="breakdown-title">⚽ Goals by Club — ${p.name}</div>
-        <div class="clubs-wrap">
-          ${p.club_goals.map(c=>`
-            <div class="club-item">
-              ${clubBadgeHTML(c)}
-              <div class="club-num">${c.n}</div>
-              <div class="club-name">${c.c}</div>
-            </div>`).join("")}
-        </div>
+        ${clubsBlock || '<div class="stat-lbl" style="text-align:center;">club by club numbers are being double-checked</div>'}
       </div>`;
   } else if(category==="intl_goals"||category==="intl_caps"){
     const val=category==="intl_goals"?p.intl_breakdown.n:p.intl_caps;
@@ -4027,14 +4047,16 @@ function showResult(correct,leftVal,rightVal){
       <div class="breakdown" style="text-align:center;">
         <div class="breakdown-title">👟 Appearances — ${p.name}</div>
         <div style="font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--gold);line-height:1;">${p.career_appearances}</div>
-        <div class="stat-lbl">competitive games</div>
+        <div class="stat-lbl">competitive games · club and country</div>
+        ${clubsBlock}
       </div>`;
   } else if(category==="assists"){
     breakdownHTML=`
       <div class="breakdown" style="text-align:center;">
         <div class="breakdown-title">🎯 Assists — ${p.name}</div>
         <div style="font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--gold);line-height:1;">${p.assists}</div>
-        <div class="stat-lbl">${holIsModern()?"assists since 2024/25":"career assists"}</div>
+        <div class="stat-lbl">${holIsModern()?"assists since 2016/17":"career assists"}</div>
+        ${clubsBlock}
       </div>`;
   }
 
@@ -5540,10 +5562,12 @@ function updateFriendsNav(){
 <script src="data/transfer-fees.js?v=5"></script>
 <script src="data/eg-datasets.js?v=26"></script>
 <script src="data/players.js"></script>
-<script src="data/legends-extra.js?v=2"></script>
-<script src="data/legends-verified.js?v=2"></script>
-<script src="data/players-modern.js?v=12"></script>
-<script src="data/competitions.js?v=4"></script>
+<script src="data/legends-extra.js?v=5"></script>
+<script src="data/legends-verified.js?v=5"></script>
+<script src="data/players-modern.js?v=16"></script>
+<script src="data/players-era.js?v=3"></script>
+<script src="data/decks.js?v=3"></script>
+<script src="data/competitions.js?v=6"></script>
 <script src="data/kits.js?v=2"></script>
 <script src="data/club-logos.js?v=5"></script>
 <script src="data/ttt-grids.js?v=1"></script>
@@ -6037,13 +6061,13 @@ function t10BackToHome(){
 // pool = who can show up, value = the number that counts. League numbers come from data/competitions.js (Wikipedia tables; Champions League from API-Football).
 function gcAllPlayers(){
   const m = new Map();
-  PLAYERS.forEach(p => m.set(p.name, p));
-  if(typeof PLAYERS_MODERN !== 'undefined') PLAYERS_MODERN.forEach(p => m.set(p.name, p));   // the current record wins when a player is in both decks
+  deckRetired().forEach(p => m.set(p.name, p));
+  deckCurrent().forEach(p => m.set(p.name, p));   // a player who is still playing is only in the current deck
   return [...m.values()];
 }
 const gcPos = p => /forward|striker|attacker|wing/i.test(p.pos||'') ? 'F' : /goalkeeper/i.test(p.pos||'') ? 'G' : /defend|back/i.test(p.pos||'') ? 'D' : 'M';   // "Attacking Mid" / "Midfield" count as midfielders
 const gcComp = (p, k, f) => (typeof COMP_STATS !== 'undefined' && COMP_STATS[p.name] && COMP_STATS[p.name][k]) ? COMP_STATS[p.name][k][f] : undefined;
-const gcCurrent = () => (typeof PLAYERS_MODERN !== 'undefined' ? PLAYERS_MODERN : []);
+const gcCurrent = () => deckCurrent();
 const GAME_CATS = [
   {id:'pl_f', group:'League goals', icon:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', title:'Premier League forwards', stat:'Premier League goals', desc:'Goals in the Premier League, forwards only',  pool:()=>gcAllPlayers().filter(p=>gcPos(p)==='F'), value:p=>gcComp(p,'pl','g'), min:20},
   {id:'pl_m', group:'League goals', icon:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', title:'Premier League midfielders', stat:'Premier League goals', desc:'Goals in the Premier League, midfielders only', pool:()=>gcAllPlayers().filter(p=>gcPos(p)==='M'), value:p=>gcComp(p,'pl','g'), min:10},
@@ -6052,9 +6076,11 @@ const GAME_CATS = [
   {id:'ll_f', group:'League goals', icon:'🇪🇸', title:'La Liga forwards', stat:'La Liga goals', desc:'Goals in La Liga, forwards only', pool:()=>gcAllPlayers().filter(p=>gcPos(p)==='F'), value:p=>gcComp(p,'ll','g'), min:20},
   {id:'sa_f', group:'League goals', icon:'🇮🇹', title:'Serie A forwards', stat:'Serie A goals', desc:'Goals in Serie A, forwards only', pool:()=>gcAllPlayers().filter(p=>gcPos(p)==='F'), value:p=>gcComp(p,'sa','g'), min:20},
   {id:'bl_f', group:'League goals', icon:'🇩🇪', title:'Bundesliga forwards', stat:'Bundesliga goals', desc:'Goals in the Bundesliga, forwards only', pool:()=>gcAllPlayers().filter(p=>gcPos(p)==='F'), value:p=>gcComp(p,'bl','g'), min:20},
-  {id:'cg_leg', group:'Whole career', icon:'🏆', title:'Legends', stat:'career goals', desc:'Goals over the whole career — club and country', pool:()=>PLAYERS, value:p=>p.career_goals, min:1},
+  {id:'cg_leg', group:'Whole career', icon:'🏆', title:'Legends', stat:'career goals', desc:'Goals over the whole career — club and country', pool:()=>deckLegends(), value:p=>p.career_goals, min:1},
+  {id:'cg_era', group:'Whole career', icon:'📺', title:'2000s era', stat:'career goals', desc:'Goals over the whole career — club and country', pool:()=>deckEra(), value:p=>p.career_goals, min:1},
   {id:'cg_cur', group:'Whole career', icon:'⚡', title:'Current players', stat:'career goals', desc:'Goals over the whole career — club and country', pool:()=>gcCurrent(), value:p=>p.career_goals, min:1},
-  {id:'tr_leg', group:'Whole career', icon:'🏆', title:'Legends', stat:'major trophies', desc:'Major trophies won', pool:()=>PLAYERS, value:p=>p.trophies, min:1},
+  {id:'tr_leg', group:'Whole career', icon:'🏆', title:'Legends', stat:'major trophies', desc:'Major trophies won', pool:()=>deckLegends(), value:p=>p.trophies, min:1},
+  {id:'tr_era', group:'Whole career', icon:'📺', title:'2000s era', stat:'major trophies', desc:'Major trophies won', pool:()=>deckEra(), value:p=>p.trophies, min:1},
   {id:'tr_cur', group:'Whole career', icon:'⚡', title:'Current players', stat:'major trophies', desc:'Major trophies won', pool:()=>gcCurrent(), value:p=>p.trophies, min:1},
   {id:'ic_all', group:'Whole career', icon:'🌍', title:'Everyone', stat:'international caps', desc:'Appearances for their country', pool:()=>gcAllPlayers(), value:p=>p.intl_caps, min:1},
   {id:'ig_all', group:'Whole career', icon:'🥅', title:'Everyone', stat:'international goals', desc:'Goals for their country', pool:()=>gcAllPlayers(), value:p=>p.intl_goals, min:1}

@@ -74,10 +74,11 @@ if (args.roster) {
 } else if (args.extra) wanted = readJson(path.join(ROOT, 'tools/extra-players.json'), []).slice(Number(args.skip ?? 0), Number(args.top ?? 100000));   // players the top lists mention: [{name, born, id}] — ids come straight from the API
 else wanted = readJson(path.resolve(ROOT, args.players || 'tools/test-players.json'), []);
 const ids = readJson(IDS_FILE, {});
-const seasonsFor = born => { const from = Math.max(S1, Number(String(born).slice(0, 4)) + 16); return Array.from({ length: Math.max(0, S2 - from + 1) }, (_, i) => from + i); };
+// `to` (optional, per player in --players files): the last season to ask for — retired players do not need the empty seasons after their last game
+const seasonsFor = (born, to) => { const from = Math.max(S1, Number(String(born).slice(0, 4)) + 16), last = Math.min(S2, to ?? S2); return Array.from({ length: Math.max(0, last - from + 1) }, (_, i) => from + i); };
 
 if (args.dry) {
-  const reqs = wanted.reduce((n, w) => n + seasonsFor(w.born).length + (ids[w.name]?.id ? 0 : 2), 0);
+  const reqs = wanted.reduce((n, w) => n + seasonsFor(w.born, w.to).length + (ids[w.name]?.id ? 0 : 2), 0);
   console.log(`${wanted.length} players · up to ~${reqs} requests (cached ones are free) · seasons ${S1}–${S2}`); process.exit(0);
 }
 
@@ -117,9 +118,9 @@ const players = {}; let fetched = 0, cached = 0; const planBlocked = [];
 const window3 = [CURRENT_SEASON - 2, CURRENT_SEASON - 1, CURRENT_SEASON];
 for (const w of wanted) {
   const info = ids[w.name]; if (!info) continue;
-  const rec = { name: w.name, id: info.id, born: info.born, nationality: null, seasons: {}, fetchFrom: seasonsFor(info.born)[0] };   // first season we asked for (not the first with data)
+  const rec = { name: w.name, id: info.id, born: info.born, nationality: null, seasons: {}, fetchFrom: seasonsFor(info.born, w.to)[0] };   // first season we asked for (not the first with data)
   const raw = {};
-  for (const season of seasonsFor(info.born)) {
+  for (const season of seasonsFor(info.born, w.to)) {
     const file = path.join(RAW, `${info.id}-${season}.json`);
     // --refresh-current (weekly job): only the running season changes — everything older stays cached
     const stale = args.refresh || (args['refresh-current'] && season === CURRENT_SEASON && !args.offline);
@@ -156,7 +157,7 @@ for (const w of wanted) {
   rec.last3 = { seasons: window3, ...last3 };
   rec.friendliesDropped = friendliesDropped;
   rec.clubGoals = Object.entries(perClub).filter(([, g]) => g > 0).sort((a, b) => b[1] - a[1]).map(([team, goals]) => ({ team, goals }));
-  rec.issues = qualityIssues(rec.seasons, S1, S2);
+  rec.issues = qualityIssues(rec.seasons, S1, Math.min(S2, w.to ?? S2));
   rec.notes = rec.issues.notes || [];
   rec.quality = rec.issues.length ? 'review' : (rec.repairs.length ? 'repaired' : 'ok');
   for (const s of Object.values(rec.seasons)) delete s.entries;     // quality checks are done — keep the file small

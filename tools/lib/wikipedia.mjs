@@ -25,10 +25,11 @@ export async function fetchArticle(title) {
 
 export function parseArticle(html) {
   const tables = [...html.matchAll(/<table[^>]*class="[^"]*wikitable[^"]*"[^>]*>([\s\S]*?)<\/table>/g)].map(m => m[1]);
-  const head = (t, n = 9000) => strip(t.slice(0, n));
+  const head = (t, n = 9000) => strip(t).slice(0, n);           // strip first: the citation markup in a caption would otherwise eat the whole budget
   const clubT = tables.find(t => /Club/.test(head(t)) && /Season/.test(head(t)) && /Apps/.test(head(t)) && /Total/.test(head(t)));
-  const natT = tables.find(t => /(National team|Team)/.test(head(t, 900)) && /Year/.test(head(t, 900)) && /Apps/.test(head(t, 3000)) && !/Season/.test(head(t, 900)));
-  const res = { clubs: [], career: null, intl: null, leagueRows: [], seasonRows: [] };   // seasonRows: every club-season with its TOTAL apps/goals (all competitions)
+  // the national-team table is headed "National team | Year | Apps | Goals" — or "… | Season | …" on some pages; the club table always has "Club" and "League" in its header
+  const natT = tables.find(t => /(National team|Team)/.test(head(t, 900)) && /(Year|Season)/.test(head(t, 900)) && /Apps/.test(head(t, 3000)) && !/Club/.test(head(t, 400)) && !/League/.test(head(t, 400)));
+  const res = { clubs: [], career: null, intl: null, leagueRows: [], seasonRows: [], intlRows: [] };   // intlRows: the national team year by year { year, apps, goals }   // seasonRows: every club-season with its TOTAL apps/goals (all competitions)
   // league columns of a season row: [season, division, league apps, league goals, …]; `at` is the index of the season cell
   const leagueRow = (club, cells, at) => {
     const division = cells[at + 1]?.text; if (!division || SEASON.test(division)) return;
@@ -83,8 +84,11 @@ export function parseArticle(html) {
     flush();
   }
   if (natT) {
-    for (const cells of rowsOf(natT)) {                      // the senior "Total" row (the "Career total" row also counts youth teams — not used)
-      if (cells.length && /^Total$/i.test(cells[0].text)) { const nums = cells.map(c => num(c.text)).filter(n => n !== null); if (nums.length >= 2) res.intl = { apps: nums.at(-2), goals: nums.at(-1) }; }
+    // (some pages put an empty cell in front of "Total", so the first two cells are looked at)
+    for (const cells of rowsOf(natT)) {                      // the senior "Total" row
+      const yr = cells.slice(0, 2).find(c => /^\d{4}([–-]\d{2,4})?$/.test(c.text)); const nn = cells.map(c => num(c.text)).filter(n => n !== null);
+      if (yr && nn.length >= 3) res.intlRows.push({ year: Number(yr.text.slice(0, 4)), apps: nn.at(-2), goals: nn.at(-1) });
+      if (cells.length && cells.slice(0, 2).some(c => /^Total$/i.test(c.text))) { const nums = cells.map(c => num(c.text)).filter(n => n !== null); if (nums.length >= 2) res.intl = { apps: nums.at(-2), goals: nums.at(-1) }; }
     }
   }
   return res;
@@ -96,4 +100,30 @@ export function leagueTotals(leagueRows) {
   const t = {};
   for (const r of leagueRows || []) { const k = BIG5[r.division]; if (!k) continue; t[k] ||= { a: 0, g: 0 }; t[k].a += r.apps; t[k].g += r.goals; }
   return t;
+}
+
+// The infobox: birth date, position, the years of the senior career and the senior national team's name ("England", not "England U21").
+export function parseInfobox(html) {
+  const start = html.search(/<table[^>]*class="[^"]*infobox[^"]*"/);
+  const out = { born: null, position: null, careerFrom: null, careerTo: null, nationalTeam: null, retiredLabel: false };
+  if (start < 0) return out;
+  const end = html.indexOf('</table>', start);
+  const box = html.slice(start, end > 0 ? end : start + 80000);
+  out.born = /class="bday"[^>]*>([^<]*)/.exec(box)?.[1] || null;
+  let section = '';
+  for (const m of box.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)) {
+    const cells = [...m[1].matchAll(/<(t[hd])[^>]*>([\s\S]*?)<\/\1>/g)].map(c => strip(c[2]));
+    if (!cells.length) continue;
+    const label = cells[0];
+    if (/^(Youth career|Senior career|International career|Managerial career|Teams managed|Personal information)/i.test(label)) { section = label.toLowerCase(); continue; }
+    if (/^Position/i.test(label) && cells[1]) out.position = cells[1];
+    if (section.startsWith('senior career') && /^\d{4}/.test(label)) {
+      const y = [...label.matchAll(/\d{4}/g)].map(x => Number(x[0]));
+      if (/^\d{4}\s*[–-]\s*(present)?\s*$/i.test(label)) out.careerTo = 9999;     // "2023–" or "2023–present" = still at the club
+      if (y.length) { out.careerFrom = out.careerFrom === null ? y[0] : Math.min(out.careerFrom, y[0]); out.careerTo = out.careerTo === 9999 ? 9999 : Math.max(out.careerTo ?? 0, y.at(-1)); }
+    }
+    // the senior team = the LAST row that is not a youth, Olympic or regional side ("Japan U-20", "Catalonia", "Basque Country" …) — the rows run from the youth teams up to the senior team
+    if (section.startsWith('international career') && /^\d{4}/.test(label) && cells[1] && !/\bU-?\d{2}\b|Olympic|\bB\b|XI|amateur|Under|Reserve|Catalonia|Basque|Galicia|Andalusia|Wales B|Scotland B|Football League/i.test(cells[1])) out.nationalTeam = cells[1].replace(/\s*\(.*?\)\s*/g, '').trim();
+  }
+  return out;
 }

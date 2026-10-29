@@ -36,6 +36,17 @@ vm.runInContext(load('data/players.js') + ';' + (fs.existsSync(path.join(ROOT, '
 const everyone = new Map();                                          // name → { name, apiId? }
 for (const p of ctx.L) everyone.set(p.name, { name: p.name, apiId: p.apiId });
 for (const p of ctx.M) everyone.set(p.name, { name: p.name, apiId: p.apiId });
+// the 2000s-era deck (tools/build-era.mjs): its Wikipedia pages are cached by Wikidata id, so they are copied under the player's name once
+if (fs.existsSync(path.join(ROOT, 'data/players-era.js'))) {
+  vm.runInContext(load('data/players-era.js') + ';this.E=PLAYERS_ERA', ctx);
+  const report = readJson(path.join(ROOT, 'data/generated/era-report.json'), []);
+  for (const p of ctx.E) {
+    if (!everyone.has(p.name)) everyone.set(p.name, { name: p.name, apiId: p.verified?.apiId });
+    const src = report.find(r => r.name === p.name && r.qid)?.qid;
+    const dst = fileFor(p.name);
+    if (src && !fs.existsSync(dst) && fs.existsSync(path.join(ROOT, 'data/raw/wikipedia/era', src + '.html'))) fs.copyFileSync(path.join(ROOT, 'data/raw/wikipedia/era', src + '.html'), dst);
+  }
+}
 
 // Wikipedia titles: the hand-made Legends keep their own spelling; everybody else comes from Wikidata (enwiki sitelink of the roster's QID)
 const stats = { ...readJson(path.join(ROOT, 'data/generated/player-stats.json'), { players: {} }).players, ...readJson(path.join(ROOT, 'data/generated/career-pilot.json'), { players: {} }).players };

@@ -30,7 +30,7 @@ const LEGENDS = ctx.P;
 const CAND_FILE = path.join(ROOT, 'data/generated/legends-candidates.json');
 const SAME_PERSON = { 'Marcelo Vieira': 'Marcelo' };     // candidate name → the name he already has in players.js
 const candidates = (fs.existsSync(CAND_FILE) ? JSON.parse(fs.readFileSync(CAND_FILE, 'utf8')) : []).filter(c => !(SAME_PERSON[c.name] && LEGENDS.some(l => l.name === SAME_PERSON[c.name])));
-const EXTRA = new Set(candidates.map(c => c.name));
+const EXTRA = new Set(candidates.filter(c => !LEGENDS.some(l => l.name === c.name)).map(c => c.name));   // a candidate with the name of a hand-made legend IS that legend (Diego Costa): his numbers go on top of players.js, not into the extras
 const ALL = LEGENDS.concat(candidates.filter(c => !LEGENDS.some(l => l.name === c.name)));
 const roster = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'tools/roster-candidates.json'), 'utf8')); } catch { return []; } })();
 const TITLE_FILE = path.join(ROOT, 'data/raw/wikipedia/titles.json');
@@ -123,9 +123,15 @@ for (const p of ALL) {
       const mine = p.club_goals.find(x => same(x.c, c.club));
       return { c: mine ? mine.c : canonical(c.club), n: c.goals, col: mine ? mine.col : '#555555' };
     }),
+    // games per club: only when the club rows add up to the table's career row (Wikipedia's own tables are sometimes off by one or two), so the panel matches the headline
+    club_apps: Math.abs(sumApps - wp.career.apps) <= 2 ? clubs.filter(c => c.apps > 0).sort((a, b) => b.apps - a.apps).map(c => {
+      const mine = p.club_goals.find(x => same(x.c, c.club));
+      return { c: mine ? mine.c : canonical(c.club), n: c.apps, col: mine ? mine.col : '#555555' };
+    }) : [],
     source: 'Wikipedia career statistics, checked ' + new Date().toISOString().slice(0, 10)
   };
-  if (EXTRA.has(p.name)) extras.push({ ...p, trophies: null, trophies_list: [], career_goals: entry.career_goals, career_appearances: entry.career_appearances, intl_caps: entry.intl_caps, intl_goals: entry.intl_goals, club_goals: entry.club_goals, intl_breakdown: { ...(p.intl_breakdown || {}), n: entry.intl_goals }, verified: entry.source });
+  if (!entry.club_apps.length) (row.notes ||= []).push(`games per club not shown: the club rows add up to ${sumApps}, the career row says ${wp.career.apps}`);
+  if (EXTRA.has(p.name)) extras.push({ ...p, trophies: null, trophies_list: [], career_goals: entry.career_goals, career_appearances: entry.career_appearances, intl_caps: entry.intl_caps, intl_goals: entry.intl_goals, club_goals: entry.club_goals, club_apps: entry.club_apps, intl_breakdown: { ...(p.intl_breakdown || {}), n: entry.intl_goals }, verified: entry.source });
   else verified[p.name] = entry;
 }
 
@@ -139,7 +145,7 @@ const LEGENDS_VERIFIED = ${JSON.stringify(verified)};
   if (typeof PLAYERS === 'undefined') return;
   PLAYERS.forEach(p => {
     const v = LEGENDS_VERIFIED[p.name]; if (!v) return;
-    Object.assign(p, { career_goals: v.career_goals, career_appearances: v.career_appearances, intl_caps: v.intl_caps, intl_goals: v.intl_goals, club_goals: v.club_goals });
+    Object.assign(p, { career_goals: v.career_goals, career_appearances: v.career_appearances, intl_caps: v.intl_caps, intl_goals: v.intl_goals, club_goals: v.club_goals, club_apps: v.club_apps });
     if (p.intl_breakdown) p.intl_breakdown.n = v.intl_goals;
   });
 })();

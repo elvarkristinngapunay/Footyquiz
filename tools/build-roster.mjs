@@ -6,6 +6,7 @@
 //   node tools/build-roster.mjs                     (born 1976–2008, fame ≥ 35 languages)
 //   node tools/build-roster.mjs --from=1976 --to=2008 --min=35
 //   node tools/build-roster.mjs --from=1990 --to=1990     (test one year)
+//   node tools/build-roster.mjs --from=1964 --to=1975 --min=30 --out=tools/roster-older.json   (retired 2000s-era players for the era deck)
 //
 // Writes tools/roster-candidates.json — plain data, safe to commit.
 
@@ -15,6 +16,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = Object.fromEntries(process.argv.slice(2).map(a => { const [k, v] = a.replace(/^--/, '').split('='); return [k, v ?? true]; }));
+const OUT = args.out ? String(args.out) : 'tools/roster-candidates.json';
 const FROM = Number(args.from ?? 1976), TO = Number(args.to ?? 2008), MIN = Number(args.min ?? 35);
 const UA = 'FootballRoyalDataFetch/1.0 (hobby quiz app; elvarkristinngapunay@gmail.com)';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -50,7 +52,7 @@ for (let y = FROM; y <= TO; y++) {
   await sleep(800);
 }
 out.sort((a, b) => b.fame - a.fame);
-fs.writeFileSync(path.join(ROOT, 'tools/roster-candidates.json'), JSON.stringify(out, null, 0));
-console.log(`\n${out.length} candidates written to tools/roster-candidates.json`);
+fs.writeFileSync(path.join(ROOT, OUT), JSON.stringify(out, null, 0));
+console.log(`\n${out.length} candidates written to ${OUT}`);
 for (const n of [100, 200, 300, 500, 800]) if (out.length >= n) console.log(`  top ${n}: needs ≥ ${out[n - 1].fame} Wikipedia languages (#${n} = ${out[n - 1].name}, b. ${out[n - 1].born.slice(0, 4)})`);
 console.log('  top 25:', out.slice(0, 25).map(r => `${r.name} (${r.born.slice(0, 4)})`).join(', '));
