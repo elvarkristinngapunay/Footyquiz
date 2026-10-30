@@ -16,7 +16,8 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
-import { isMajorTrophy, trophyLabel, hasWomensTrophy } from './lib/trophies.mjs';
+import { isMajorTrophy, trophyLabel, hasWomensTrophy, fotmobHonours } from './lib/trophies.mjs';
+import { tmTrophies } from './lib/tm-trophies.mjs';
 import { kitFor } from './lib/kits.mjs';
 import { parseArticle } from './lib/wikipedia.mjs';
 import { verifyCurrent, apiClubSeasons, startYear } from './lib/verify-current.mjs';
@@ -93,6 +94,10 @@ const SQUAD_NUMBERS = readJson(path.join(LISTS, 'squad-numbers.json'), {});   //
 const FOTMOB_DIR = path.join(ROOT, 'data/raw/fotmob'), fmIndex = readJson(path.join(FOTMOB_DIR, 'index.json'), {});
 const fotmobOf = name => { const e = fmIndex[name]; return e?.id ? readJson(path.join(FOTMOB_DIR, e.id + '.json'), null) : null; };
 const assistNotes = []; const assistStats = { seasons: 0, compared: 0 };
+// Transfermarkt (harvested in the browser, see tools/lib/tm-trophies.mjs) — the source for current players' trophies. FotMob is only compared, not used as a gate:
+// it repeats honours (Kimpembe 10 Trophées des Champions, Maignan 3 for a club that won it once, Ronaldo 3 Community Shields), so where the two differ by more than TROPHY_TOLERANCE it is listed in data/generated/trophy-disagreements.json for a look
+const TM_HARVEST = readJson(path.join(ROOT, 'data/raw/transfermarkt/tm-harvest.json'), null);
+const TROPHY_TOLERANCE = 2; const trophyNotes = []; const trophyDisagree = []; const trophyStats = { released: 0 };
 const out = []; const skipped = []; const retiredOut = [];   // retiredOut: no longer playing → candidates for the Legends deck (verified against Wikipedia by tools/verify-legends.mjs)
 for (const p of Object.values(stats.players)) {
   // "career" is only honest if we asked for every season the player could have played: from 2002 (the API has nothing earlier), or from his 16th birthday year
@@ -149,7 +154,15 @@ for (const p of Object.values(stats.players)) {
     record.assists = va.ok ? va.value : null;
     if (!va.ok) assistNotes.push(`${shownName}: ${va.why}`);
     else { record.club_assists = va.clubs.map(c => ({ c: logoKey(parent(c.name)) || parent(c.name), n: c.n, col: '#444' })); record.intl_assists = va.intl; assistStats.seasons += va.seasons; assistStats.compared += va.comparedSeasons; }
+    // trophies: Transfermarkt's team titles (a player with none on Transfermarkt stays hidden)
     record.trophies = null; record.trophies_list = [];
+    const tmHonours = TM_HARVEST?.players?.[p.id]?.honours;
+    if (tmHonours) {
+      const tt = tmTrophies(tmHonours), fmTotal = fotmobHonours(fotmobOf(shownName)).length;
+      if (tt.total) { record.trophies = tt.total; record.trophies_list = tt.list.map(x => `${x.label} ×${x.n}`); trophyStats.released++; }
+      else trophyNotes.push(`${shownName}: no team trophies on Transfermarkt`);
+      if (fmTotal && Math.abs(tt.total - fmTotal) > TROPHY_TOLERANCE) trophyDisagree.push({ name: shownName, transfermarkt: tt.total, fotmob: fmTotal });
+    }
     const tables = v.finishedRows ? verifiedClubTables(v) : { club_goals: [], club_apps: [] };
     record.club_goals = v.ok.goals ? tables.club_goals : [];
     record.club_apps = v.ok.apps ? tables.club_apps : [];
@@ -178,5 +191,8 @@ console.log(`wrote data/players-modern.js — ${out.length} players (${(js.lengt
 console.log('  ' + skipped.slice(0, 40).join('\n  ') + (skipped.length > 40 ? `\n  … and ${skipped.length - 40} more` : ''));
 console.log(`assists since 2016/17 confirmed: ${out.filter(p => p.assists > 0).length} players (${assistStats.seasons} FotMob seasons checked against Wikipedia, ${assistStats.compared} also against API-Football); not confirmed: ${assistNotes.length}`);
 if (assistNotes.length) console.log('  ' + assistNotes.slice(0, 60).join('\n  '));
+fs.writeFileSync(path.join(ROOT, 'data/generated/trophy-disagreements.json'), JSON.stringify(trophyDisagree, null, 1));
+console.log(`trophies released (Transfermarkt): ${trophyStats.released} players; no trophies listed: ${trophyNotes.length}; FotMob differs by more than ${TROPHY_TOLERANCE}: ${trophyDisagree.length} (data/generated/trophy-disagreements.json)`);
+if (trophyNotes.length) console.log('  ' + trophyNotes.slice(0, 60).join('\n  '));
 if (nameNotes.length) console.log('\nnames to look at:\n  ' + nameNotes.join('\n  '));
 console.log('\ntop 12 by career goals:\n  ' + out.slice(0, 12).map(p => `${p.name} ${p.career_goals}g ${p.assists}a ${p.career_appearances} games, ${p.trophies} trophies [${p.quality}]`).join('\n  '));
