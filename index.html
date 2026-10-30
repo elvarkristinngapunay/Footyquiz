@@ -1412,7 +1412,7 @@ body::before{display:none;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
 .t10-shake{animation:t10shake 0.35s ease-out;}
 </style>
-<link rel="stylesheet" href="mowpop.css?v=23">
+<link rel="stylesheet" href="mowpop.css?v=27">
 </head>
 <body>
 
@@ -1487,11 +1487,29 @@ body::before{display:none;}
 
 <!-- LANDING SCREEN -->
 <div id="landingScreen">
-  <div class="landing-eyebrow"><span class="dot"></span><span>Matchday · <span class="modeCount">Nine</span> modes live</span></div>
+  <div class="landing-eyebrow"><span class="dot"></span><span>Matchday · <span class="modeCount">Nine</span> games + a daily challenge</span></div>
   <div class="landing-title">Choose Your <em>Game</em></div>
-  <div class="landing-sub"><span class="modeCount">Nine</span> modes. Every era. Every league. Prove you <em>actually</em> know football.</div>
-  <div class="game-pick-grid">
-    <div class="game-pick-card" onclick="showHigherOrLower()" style="position:relative;">
+  <div class="landing-sub">Play the daily, take on a friend or go solo. Every era. Every league. Prove you <em>actually</em> know football.</div>
+  <div class="dc-hero" id="dcHero" onclick="showDaily()">
+    <div class="dc-hero-art" aria-hidden="true">🧩</div>
+    <div class="dc-hero-body">
+      <span class="dc-hero-badge">Daily Challenge</span>
+      <div class="dc-hero-title">New puzzles every day</div>
+      <div class="dc-hero-sub" id="dcHeroSub">2 new puzzles today</div>
+    </div>
+    <button class="dc-hero-btn" id="dcHeroBtn" type="button">Play today ›</button>
+  </div>
+  <div class="cat-tiles">
+    <div class="cat-tile" onclick="showCategory('v1')">
+      <div class="cat-ic">👥</div><div class="cat-t">1v1</div><div class="cat-s">Pass the phone · head to head</div><div class="cat-n" id="catN_v1">5 games ›</div>
+    </div>
+    <div class="cat-tile" onclick="showCategory('solo')">
+      <div class="cat-ic">🙋</div><div class="cat-t">1 Player</div><div class="cat-s">Just you · beat your best</div><div class="cat-n" id="catN_solo">6 games ›</div>
+    </div>
+  </div>
+  <!-- the master list of game cards: showCategory() copies the ones that belong to 1v1 / 1 Player into #catGrid -->
+  <div class="game-pick-grid" id="gameMaster" style="display:none;">
+    <div class="game-pick-card" data-game="hol" onclick="showHigherOrLower()" style="position:relative;">
       <img class="game-pick-bg" src="Higher or lower card image.png?v=3" alt="">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('hol')" title="How to play">i</div>
       <div class="game-pick-content">
@@ -1502,7 +1520,7 @@ body::before{display:none;}
         </div>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showElGrande()" style="position:relative;">
+    <div class="game-pick-card" data-game="eg" onclick="showElGrande()" style="position:relative;">
       <img class="game-pick-bg" src="Football under pressure card image.png?v=3" alt="">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('fup')" title="How to play">i</div>
       <div class="game-pick-content">
@@ -1513,7 +1531,7 @@ body::before{display:none;}
         </div>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showSxi()" style="position:relative;">
+    <div class="game-pick-card" data-game="sxi" onclick="showSxi()" style="position:relative;">
       <img class="game-pick-bg" src="Starting XI card image.png" alt="">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('sxi')" title="How to play">i</div>
       <div class="game-pick-content">
@@ -1524,7 +1542,7 @@ body::before{display:none;}
         </div>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showMoneyball()" style="position:relative;">
+    <div class="game-pick-card" data-game="mb" onclick="showMoneyball()" style="position:relative;">
       <img class="game-pick-bg" src="moneyball-transfer.jpg?v=2" alt="">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('mb')" title="How to play">i</div>
       <div class="game-pick-content">
@@ -1535,7 +1553,7 @@ body::before{display:none;}
         </div>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showTop10()" style="position:relative;">
+    <div class="game-pick-card" data-game="top10" onclick="showTop10()" style="position:relative;">
       <img class="game-pick-bg" src="top10-trophy.jpg" alt="">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('top10')" title="How to play">i</div>
       <div class="game-pick-content">
@@ -1546,7 +1564,7 @@ body::before{display:none;}
         </div>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showCareer()" style="position:relative;">
+    <div class="game-pick-card" data-game="cp" onclick="showCareer()" style="position:relative;">
       <img class="game-pick-bg" src="career-jerseys.jpg" alt="">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('cp')" title="How to play">i</div>
       <div class="game-pick-content">
@@ -1557,7 +1575,7 @@ body::before{display:none;}
         </div>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showClosestWins()" style="position:relative;background:linear-gradient(135deg,#1a1400 0%,#241d00 50%,#0d0a00 100%);">
+    <div class="game-pick-card" data-game="cw" onclick="showClosestWins()" style="position:relative;background:linear-gradient(135deg,#1a1400 0%,#241d00 50%,#0d0a00 100%);">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('cw')" title="How to play">i</div>
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(232,185,35,0.12);border:1px solid #7a5f00;color:#e8b923;">Closest Wins</div>
@@ -1568,7 +1586,7 @@ body::before{display:none;}
         </div>
       </div>
     </div>
-    <div class="game-pick-card" onclick="showAuction()" style="position:relative;background:linear-gradient(135deg,#001a14 0%,#00241d 50%,#000d0a 100%);">
+    <div class="game-pick-card" data-game="auc" onclick="showAuction()" style="position:relative;background:linear-gradient(135deg,#001a14 0%,#00241d 50%,#000d0a 100%);">
       <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('auc')" title="How to play">i</div>
       <div class="game-pick-content">
         <div class="game-pick-badge" style="background:rgba(74,222,128,0.12);border:1px solid #1a6b2d;color:#4ade80;">The Auction</div>
@@ -1576,18 +1594,6 @@ body::before{display:none;}
         <div>
           <div class="game-pick-stat"><b>1v1</b>20 coins · outbid to win</div>
           <button class="game-pick-btn" style="background:#4ade80;color:#000;">Play Now ›</button>
-        </div>
-      </div>
-    </div>
-    <div class="game-pick-card ttt-card" onclick="showTtt()" style="position:relative;background:linear-gradient(135deg,#0b1d3a 0%,#122a52 50%,#07132a 100%);">
-      <div class="game-info-btn" onclick="event.stopPropagation();openGameInfo('ttt')" title="How to play">i</div>
-      <div class="ttt-card-art" aria-hidden="true"><i>X</i><i>O</i><i>X</i><i></i><i>X</i><i>O</i><i>O</i><i></i><i>X</i></div>
-      <div class="game-pick-content">
-        <div class="game-pick-badge" style="background:rgba(96,165,250,0.12);border:1px solid #2d4a6b;color:#60a5fa;">Tic Tac Toe</div>
-        <div style="font-family:'Anton',sans-serif;font-size:2.2rem;color:#fff;line-height:1;letter-spacing:1px;">TIC TAC<br>TOE</div>
-        <div>
-          <div class="game-pick-stat"><b>1v1</b>one player, two clubs</div>
-          <button class="game-pick-btn" style="background:#60a5fa;color:#000;">Play Now ›</button>
         </div>
       </div>
     </div>
@@ -2027,56 +2033,16 @@ body::before{display:none;}
   <div id="cpFeedback" style="text-align:center;min-height:50px;width:100%;margin-top:14px;"></div>
 </div>
 
-<!-- PLAYER TIC TAC TOE -->
-<div id="tttScreen">
-  <div id="tttNameEntry" style="width:100%;display:flex;flex-direction:column;align-items:center;">
-    <div class="eg-ne-title">Tic Tac Toe</div>
-    <div class="eg-ne-sub">Pass-and-play — name a player who fits the row <b>and</b> the column. Three in a row wins.</div>
-    <div class="eg-ne-field">
-      <div class="eg-ne-label p1">Player 1 · X</div>
-      <input class="eg-ne-input p1" id="tttNameInput1" type="text" placeholder="Player 1" maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('tttNameInput2').focus()">
-    </div>
-    <div class="eg-ne-field">
-      <div class="eg-ne-label p2">Player 2 · O</div>
-      <input class="eg-ne-input p2" id="tttNameInput2" type="text" placeholder="Player 2" maxlength="16" autocomplete="off" onkeydown="if(event.key==='Enter')tttConfirmNames()">
-    </div>
-    <button class="eg-ne-go" onclick="tttConfirmNames()">Start Match →</button>
-  </div>
-
-  <div id="tttGame" style="width:100%;display:none;flex-direction:column;align-items:center;">
-    <div class="ttt-scorebar">
-      <div class="ttt-sc p1"><span class="mk">X</span><span class="nm" id="tttScName1"></span><span class="n" id="tttScNum1">0</span></div>
-      <div class="ttt-sc p2"><span class="mk">O</span><span class="nm" id="tttScName2"></span><span class="n" id="tttScNum2">0</span></div>
-    </div>
-    <div class="ttt-turn p1" id="tttTurn"><span class="mk" id="tttTurnMark">X</span><span class="who" id="tttTurnName"></span><span class="what" id="tttTurnWhat">your move</span><span class="time" id="tttTime">30</span></div>
-    <div class="ttt-timebar"><i id="tttTimeFill"></i></div>
-    <div class="ttt-board" id="tttBoard"></div>
-    <div class="ttt-msg" id="tttMsg"></div>
-    <div class="ttt-actions"><button class="ttt-link" id="tttSkipBtn" onclick="tttSkipTurn()">Skip my turn ›</button></div>
-  </div>
-
-  <div id="tttEnd" style="width:100%;display:none;flex-direction:column;align-items:center;">
-    <div class="cw-end-title" id="tttEndTitle">🏆</div>
-    <div class="cw-end-sub" id="tttEndSub"></div>
-    <div class="cw-end-btns">
-      <button class="cw-submit-btn" onclick="tttRematch()">Rematch — new grid</button>
-      <button class="cw-btn-secondary" id="tttRevealBtn" onclick="tttReveal()">Show possible answers</button>
-      <button class="cw-btn-secondary" onclick="showTtt()">New players</button>
-    </div>
-  </div>
+<!-- 1v1 / 1 PLAYER game lists -->
+<div id="catScreen">
+  <div class="landing-eyebrow"><span class="dot"></span><span id="catEyebrow"></span></div>
+  <div class="landing-title" id="catTitle"></div>
+  <div class="landing-sub" id="catSub"></div>
+  <div class="game-pick-grid" id="catGrid"></div>
 </div>
 
-<!-- guess sheet: sits at the TOP so the phone keyboard never covers it -->
-<div id="tttSheet" class="ttt-sheet" style="display:none;" onclick="if(event.target===this)tttCloseSheet()">
-  <div class="ttt-sheet-box">
-    <div class="ttt-sheet-crit"><span id="tttCritA"></span><b>×</b><span id="tttCritB"></span></div>
-    <input id="tttInput" type="text" placeholder="Type a player's name…" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="go"
-      oninput="tttOnType()" onkeydown="if(event.key==='Enter')tttPickFirst()">
-    <div id="tttSuggest" class="ttt-suggest"></div>
-    <div id="tttSheetMsg" class="ttt-sheet-msg"></div>
-    <button class="ttt-link" onclick="tttCloseSheet()">Cancel</button>
-  </div>
-</div>
+<!-- DAILY CHALLENGES (dailychallenge.js) -->
+<div id="dailyScreen"><div id="dcBody" style="width:100%;display:flex;flex-direction:column;align-items:center;"></div></div>
 
 <!-- GAME INFO MODAL -->
 <div class="game-info-modal" id="gameInfoModal" onclick="closeGameInfo()">
@@ -2711,8 +2677,46 @@ function closeAllOverlays(){
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   if(typeof aucClearAnnounce==='function') aucClearAnnounce();
-  if(typeof tttCloseSheet==='function') tttCloseSheet();
 }
+// ── 1v1 / 1 Player: the same game cards, grouped by how you want to play. Football Under Pressure, Starting XI and Top 10 can be played either way, so they are in both
+//    lists and start straight in the right mode (the "how many players?" question is already answered).
+const gamePreset = { eg: null, sxi: null, top10: null };
+const CATEGORIES = {
+  v1:   { eyebrow: 'Pass the phone', title: '1v1', sub: 'Two players, one phone. Take turns and settle it.',
+          games: [['cw'], ['auc'], ['eg', 2], ['sxi', 2], ['top10', '2p']] },
+  solo: { eyebrow: 'Just you', title: '1 Player', sub: 'Play on your own and beat your best.',
+          games: [['hol'], ['mb'], ['cp'], ['eg', 1], ['sxi', 1], ['top10', '1p']] }
+};
+const GAME_OPEN = { hol: 'showHigherOrLower', eg: 'showElGrande', sxi: 'showSxi', mb: 'showMoneyball', top10: 'showTop10', cp: 'showCareer', cw: 'showClosestWins', auc: 'showAuction' };
+function openGameFrom(id, mode){
+  gamePreset.eg = id === 'eg' ? mode : null; gamePreset.sxi = id === 'sxi' ? mode : null; gamePreset.top10 = id === 'top10' ? mode : null;
+  document.getElementById('catScreen').style.display = 'none';
+  window[GAME_OPEN[id]]();
+  if(id === 'top10' && mode) t10SetMode(mode);
+}
+function showCategory(key){
+  const cat = CATEGORIES[key]; if(!cat) return;
+  closeAllOverlays();
+  ['landingScreen','dailyScreen'].forEach(id => { const e = document.getElementById(id); if(e) e.style.display = 'none'; });
+  document.getElementById('catEyebrow').textContent = cat.eyebrow;
+  document.getElementById('catTitle').innerHTML = cat.title.replace(/^(\S+)\s*(.*)$/, (m, a, b) => b ? a + ' <em>' + b + '</em>' : '<em>' + a + '</em>');
+  document.getElementById('catSub').textContent = cat.sub;
+  const grid = document.getElementById('catGrid'); grid.innerHTML = '';
+  cat.games.forEach(([id, mode]) => {
+    const src = document.querySelector('#gameMaster .game-pick-card[data-game="' + id + '"]'); if(!src) return;
+    const card = src.cloneNode(true);
+    card.onclick = () => openGameFrom(id, mode);
+    if(mode){                                                       // a small tag on the games that live in both lists
+      const tag = document.createElement('div'); tag.className = 'cat-modetag'; tag.textContent = (mode === 1 || mode === '1p') ? '🙋 solo' : '👥 1v1';
+      card.appendChild(tag);
+    }
+    grid.appendChild(card);
+  });
+  document.getElementById('catScreen').style.display = 'flex';
+  setBackBtn('← Back Home', showLanding);
+  window.scrollTo(0, 0);
+}
+
 const GAME_INFO = {
   hol: {
     title: 'Higher or Lower',
@@ -2737,10 +2741,6 @@ const GAME_INFO = {
   cw: {
     title: 'Closest Wins',
     body: `Pass-and-play head to head. Both of you get the same question — like "How many Premier League goals did Wayne Rooney score?" — and secretly lock in a number before the 12-second clock runs out. Reveal together, closest guess wins the round, exact hits are worth double. First to 3 points wins the match. Tied round? Sudden death.`
-  },
-  ttt: {
-    title: 'Player Tic Tac Toe',
-    body: `Pass-and-play. Every row and column is a club or a nation. On your turn tap a square and name a player who fits BOTH its row and its column — say, someone who played for Chelsea and for Brazil. Get it right and the square is yours (X or O); get it wrong, or run out of time, and the turn passes. A player can only be used once. Three in a row wins. Players are checked live against Wikidata, so almost any footballer works.`
   },
   auc: {
     title: 'The Auction',
@@ -2780,7 +2780,10 @@ function showLanding(){
   document.getElementById('careerScreen').style.display='none';
   document.getElementById('closestWinsScreen').style.display='none';
   document.getElementById('auctionScreen').style.display='none';
-  document.getElementById('tttScreen').style.display='none';
+  document.getElementById('dailyScreen').style.display='none';
+  document.getElementById('catScreen').style.display='none';
+  if(typeof dcHideScreen==='function') dcHideScreen();
+  if(typeof dcUpdateHero==='function') dcUpdateHero();
   setBackBtn(null);
 }
 function showTop10(){
@@ -3184,6 +3187,7 @@ function startElGrande(key){
   document.getElementById('elGrandeGame').style.display='none';
   document.getElementById('egMcIcon').textContent = EG_CAT_ICONS[key]||'⚽';
   document.getElementById('egMcTitle').textContent = egDataset.title;
+  if(gamePreset.eg){ egChooseMode(gamePreset.eg); return; }          // opened from 1v1 or 1 Player: the number of players is already chosen
   document.getElementById('egModeChoice').style.display='flex';
   setBackBtn('← Back', egModeBack);
 }
@@ -4294,6 +4298,7 @@ function sxiPickTeam(id){
   // Show mode choice overlay (same as FUP flow)
   document.getElementById('sxiMcIcon').textContent=sxiTeam.flag||'🏆';
   document.getElementById('sxiMcTitle').textContent=`${sxiTeam.name} ${sxiTeam.season||sxiTeam.year}`;
+  if(gamePreset.sxi){ sxiChooseMode(gamePreset.sxi); return; }        // opened from 1v1 or 1 Player
   document.getElementById('sxiModeChoice').style.display='flex';
   setBackBtn('← Back', sxiModeBack);
 }
@@ -5568,9 +5573,9 @@ function updateFriendsNav(){
 <script src="data/players-era.js?v=3"></script>
 <script src="data/decks.js?v=3"></script>
 <script src="data/competitions.js?v=6"></script>
+<script src="data/daily.js?v=2"></script>
 <script src="data/kits.js?v=2"></script>
 <script src="data/club-logos.js?v=5"></script>
-<script src="data/ttt-grids.js?v=1"></script>
 <script src="data/career-path.js?v=3"></script>
 <script src="data/sxi-teams.js"></script>
 <script src="data/sxi-pl-winners.js"></script>
@@ -6840,255 +6845,6 @@ function aucPlayAgain(){
 }
 </script>
 <script>
-// ───────────────────────── PLAYER TIC TAC TOE ─────────────────────────
-// Rows/columns come from data/ttt-grids.js (every grid is pre-checked to be solvable).
-// Players are searched and verified LIVE against Wikidata (free, no key): wbsearchentities for the name box, a SPARQL ASK for "did he play for X and Y".
-let tttNames = ['Player 1', 'Player 2'], tttScores = [0, 0], tttStarter = 1;
-let tttGrid = null, tttCells = [], tttTurn = 0, tttOver = false, tttUsed = new Set(), tttSeen = [];
-let tttTimer = null, tttLeft = 30, tttActive = -1, tttBusy = false, tttSeq = 0, tttDebounce = null, tttResults = [], tttPickWhenReady = false;
-const TTT_TIME = 30;
-const TTT_LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-const tttEl = id => document.getElementById(id);
-
-function tttCrit(spec){
-  const kind = spec[0], k = spec.slice(2);
-  return kind === 'c'
-    ? { t:'club', k, q:TTT_QIDS.clubs[k] }
-    : { t:'nat',  k, q:TTT_QIDS.nats[k].q, flag:TTT_QIDS.nats[k].flag };
-}
-
-function showTtt(){
-  setBg(false);
-  ['landingScreen','higherOrLowerSection','elGrandeMenu','elGrandeGame','gameScreen','sxiScreen','mbScreen','top10Screen','careerScreen','closestWinsScreen','auctionScreen']
-    .forEach(id => { const e = tttEl(id); if(e) e.style.display = 'none'; });
-  tttEl('tttScreen').style.display = 'flex';
-  clearInterval(tttTimer); tttCloseSheet();
-  tttEl('tttNameEntry').style.display = 'flex';
-  tttEl('tttGame').style.display = 'none';
-  tttEl('tttEnd').style.display = 'none';
-  tttEl('tttNameInput1').value = ''; tttEl('tttNameInput2').value = '';
-  setBackBtn('← Back Home', showLanding);
-  setTimeout(() => tttEl('tttNameInput1').focus(), 100);
-}
-
-function tttConfirmNames(){
-  tttNames = [tttEl('tttNameInput1').value.trim() || 'Player 1', tttEl('tttNameInput2').value.trim() || 'Player 2'];
-  tttScores = [0, 0]; tttStarter = 1;   // flipped to 0 (X) by tttNewGame
-  tttEl('tttScName1').textContent = tttNames[0]; tttEl('tttScName2').textContent = tttNames[1];
-  tttNewGame();
-}
-
-function tttNewGame(){
-  tttStarter = tttStarter === 0 ? 1 : 0;
-  if(tttSeen.length >= TTT_GRIDS.length) tttSeen = [];
-  let idx; do { idx = Math.floor(Math.random() * TTT_GRIDS.length); } while(tttSeen.indexOf(idx) !== -1);
-  tttSeen.push(idx); tttGrid = TTT_GRIDS[idx];
-  tttCells = Array.from({length:9}, () => ({ owner:null, name:'' }));
-  tttUsed = new Set(); tttOver = false; tttBusy = false; tttTurn = tttStarter;
-  tttEl('tttNameEntry').style.display = 'none';
-  tttEl('tttGame').style.display = 'flex'; tttEl('tttEnd').style.display = 'none';
-  tttEl('tttGame').classList.remove('over');
-  tttEl('tttScNum1').textContent = tttScores[0]; tttEl('tttScNum2').textContent = tttScores[1];
-  tttEl('tttMsg').textContent = '';
-  tttRenderBoard(); tttRenderTurn(); tttStartTimer();
-  setBackBtn('← Back Home', showLanding);
-}
-function tttRematch(){ tttNewGame(); }
-
-function tttHeader(spec){
-  const c = tttCrit(spec), d = document.createElement('div'); d.className = 'ttt-hd';
-  if(c.t === 'club'){
-    const url = (typeof CLUB_LOGOS !== 'undefined') ? CLUB_LOGOS[c.k] : '';
-    if(url){ const im = document.createElement('img'); im.src = url; im.alt = ''; im.onerror = () => im.remove(); d.appendChild(im); }
-  } else {
-    const f = document.createElement('span'); f.className = 'flag'; f.textContent = c.flag; d.appendChild(f);
-  }
-  const n = document.createElement('span'); n.className = 'nm'; n.textContent = c.k; d.appendChild(n);
-  return d;
-}
-
-function tttRenderBoard(){
-  const b = tttEl('tttBoard'); b.textContent = '';
-  const corner = document.createElement('div'); corner.className = 'ttt-corner'; b.appendChild(corner);
-  tttGrid.c.forEach(s => b.appendChild(tttHeader(s)));
-  for(let r = 0; r < 3; r++){
-    b.appendChild(tttHeader(tttGrid.r[r]));
-    for(let c = 0; c < 3; c++){
-      const i = r * 3 + c, cell = document.createElement('button');
-      cell.type = 'button'; cell.className = 'ttt-cell'; cell.dataset.i = i;
-      cell.addEventListener('click', () => tttTapCell(i));
-      b.appendChild(cell); tttPaintCell(i);
-    }
-  }
-}
-
-function tttPaintCell(i, hint){
-  const cell = tttEl('tttBoard').querySelector('.ttt-cell[data-i="' + i + '"]'); if(!cell) return;
-  const st = tttCells[i]; cell.textContent = '';
-  cell.className = 'ttt-cell' + (st.owner === 0 ? ' x' : st.owner === 1 ? ' o' : '') + (hint ? ' hint' : '');
-  if(st.owner !== null){
-    const m = document.createElement('span'); m.className = 'mk'; m.textContent = st.owner === 0 ? 'X' : 'O';
-    const p = document.createElement('span'); p.className = 'pl'; p.textContent = st.name;
-    cell.appendChild(m); cell.appendChild(p);
-  } else if(hint){
-    const p = document.createElement('span'); p.className = 'pl'; p.textContent = hint; cell.appendChild(p);
-  } else {
-    const m = document.createElement('span'); m.className = 'plus'; m.textContent = '+'; cell.appendChild(m);
-  }
-}
-
-function tttRenderTurn(){
-  const t = tttEl('tttTurn');
-  t.className = 'ttt-turn ' + (tttTurn === 0 ? 'p1' : 'p2');
-  tttEl('tttTurnMark').textContent = tttTurn === 0 ? 'X' : 'O';
-  tttEl('tttTurnName').textContent = tttNames[tttTurn];
-}
-
-function tttStartTimer(){
-  clearInterval(tttTimer); tttLeft = TTT_TIME; tttTick();
-  tttTimer = setInterval(() => {
-    if(tttBusy) return;                       // don't run the clock while a guess is being checked
-    tttLeft--; tttTick();
-    if(tttLeft <= 0){ clearInterval(tttTimer); tttCloseSheet(); tttMsg("⏱ Time's up — " + tttNames[tttTurn] + " loses the turn"); tttNextTurn(); }
-  }, 1000);
-}
-function tttTick(){
-  tttEl('tttTime').textContent = Math.max(0, tttLeft);
-  tttEl('tttTimeFill').style.width = (Math.max(0, tttLeft) / TTT_TIME * 100) + '%';
-  tttEl('tttTurn').classList.toggle('low', tttLeft <= 8);
-}
-function tttMsg(s){ tttEl('tttMsg').textContent = s; }
-
-function tttNextTurn(){
-  if(tttOver) return;
-  tttTurn = tttTurn === 0 ? 1 : 0; tttRenderTurn(); tttStartTimer();
-}
-function tttSkipTurn(){ if(tttOver || tttBusy) return; tttCloseSheet(); tttMsg(tttNames[tttTurn] + ' skipped'); tttNextTurn(); }
-
-// ── guess sheet ──
-function tttCritChip(el, spec){
-  const c = tttCrit(spec); el.textContent = '';
-  if(c.t === 'club'){
-    const url = (typeof CLUB_LOGOS !== 'undefined') ? CLUB_LOGOS[c.k] : '';
-    if(url){ const im = document.createElement('img'); im.src = url; im.alt = ''; im.onerror = () => im.remove(); el.appendChild(im); }
-  } else { const f = document.createElement('i'); f.textContent = c.flag; el.appendChild(f); }
-  el.appendChild(document.createTextNode(c.k));
-}
-function tttTapCell(i){
-  if(tttOver || tttBusy || tttCells[i].owner !== null) return;
-  tttActive = i;
-  tttCritChip(tttEl('tttCritA'), tttGrid.r[Math.floor(i / 3)]);
-  tttCritChip(tttEl('tttCritB'), tttGrid.c[i % 3]);
-  const inp = tttEl('tttInput'); inp.value = '';
-  tttEl('tttSuggest').textContent = ''; tttEl('tttSheetMsg').textContent = ''; tttResults = [];
-  tttEl('tttSheet').style.display = 'flex';
-  setTimeout(() => inp.focus(), 60);
-}
-function tttCloseSheet(){
-  const s = tttEl('tttSheet'); if(s) s.style.display = 'none';
-  clearTimeout(tttDebounce); tttSeq++; tttActive = -1; tttPickWhenReady = false;
-  const inp = tttEl('tttInput'); if(inp) inp.blur();
-}
-function tttOnType(){
-  clearTimeout(tttDebounce);
-  const q = tttEl('tttInput').value.trim();
-  if(q.length < 2){ tttEl('tttSuggest').textContent = ''; tttResults = []; tttSeq++; return; }
-  tttDebounce = setTimeout(tttSearchNow, 230);
-}
-async function tttSearchNow(){
-  const q = tttEl('tttInput').value.trim(); if(q.length < 2) return;
-  const my = ++tttSeq, box = tttEl('tttSuggest');
-  box.textContent = ''; const wait = document.createElement('div'); wait.className = 'ttt-note'; wait.textContent = 'Searching…'; box.appendChild(wait);
-  try{
-    const url = 'https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&origin=*&language=en&uselang=en&type=item&limit=20&search=' + encodeURIComponent(q);
-    const j = await (await fetch(url)).json();
-    if(my !== tttSeq) return;
-    tttResults = (j.search || []).filter(x => /footballer|football player|soccer|association football|football manager/i.test(x.description || '') && /^Q\d+$/.test(x.id))
-      .slice(0, 6).map(x => ({ id:x.id, label:x.label, desc:x.description || '' }));
-    box.textContent = '';
-    if(!tttResults.length){ const n = document.createElement('div'); n.className = 'ttt-note'; n.textContent = 'No footballer found — try the full name'; box.appendChild(n); return; }
-    tttResults.forEach(p => {
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'ttt-sug';
-      const n = document.createElement('span'); n.className = 'n'; n.textContent = p.label;
-      const d = document.createElement('span'); d.className = 'd'; d.textContent = p.desc;
-      b.appendChild(n); b.appendChild(d); b.addEventListener('click', () => tttSubmit(p)); box.appendChild(b);
-    });
-    if(tttPickWhenReady){ tttPickWhenReady = false; tttSubmit(tttResults[0]); }
-  }catch(e){
-    if(my !== tttSeq) return;
-    box.textContent = ''; const n = document.createElement('div'); n.className = 'ttt-note err'; n.textContent = "Couldn't reach Wikidata — check your connection"; box.appendChild(n);
-  }
-}
-function tttPickFirst(){
-  if(tttResults.length) tttSubmit(tttResults[0]);
-  else { tttPickWhenReady = true; clearTimeout(tttDebounce); tttSearchNow(); }
-}
-
-// ── the check: did he play for the club / represent the nation? ──
-// historical teams that count for today's nation (Beckenbauer played for West Germany, etc.)
-const TTT_NAT_ALT = { Germany:['Q713750'], Serbia:['Q36704','Q37024'], Czechia:['Q33946'] };
-function tttFragment(id, c){
-  if(c.t === 'club') return '{ wd:' + id + ' p:P54/ps:P54 wd:' + c.q + ' }';
-  const set = [c.q].concat(TTT_NAT_ALT[c.k] || []).map(q => 'wd:' + q).join(' ');
-  return '{ VALUES ?nn { ' + set + ' } { wd:' + id + ' p:P1532/ps:P1532 ?nn } UNION { FILTER NOT EXISTS { wd:' + id + ' p:P1532 ?z } wd:' + id + ' p:P27/ps:P27 ?nn } }';
-}
-async function tttVerify(id, a, b){
-  if(!/^Q\d+$/.test(id)) return false;
-  const query = 'ASK { ' + tttFragment(id, a) + ' ' + tttFragment(id, b) + ' }';
-  const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 15000);
-  try{
-    const r = await fetch('https://query.wikidata.org/sparql?format=json&origin=*&query=' + encodeURIComponent(query), { signal:ctl.signal });
-    if(!r.ok) throw new Error('http ' + r.status);
-    return (await r.json()).boolean === true;
-  } finally { clearTimeout(t); }
-}
-async function tttSubmit(p){
-  if(tttBusy || tttOver || tttActive < 0) return;
-  const sm = tttEl('tttSheetMsg');
-  if(tttUsed.has(p.id)){ sm.className = 'ttt-sheet-msg bad'; sm.textContent = p.label + ' is already on the board'; return; }
-  tttBusy = true; const cellIdx = tttActive, me = tttTurn;
-  sm.className = 'ttt-sheet-msg'; sm.textContent = 'Checking ' + p.label + '…';
-  let ok;
-  try{ ok = await tttVerify(p.id, tttCrit(tttGrid.r[Math.floor(cellIdx / 3)]), tttCrit(tttGrid.c[cellIdx % 3])); }
-  catch(e){ tttBusy = false; sm.className = 'ttt-sheet-msg bad'; sm.textContent = "Couldn't reach Wikidata — try again"; return; }
-  if(tttOver || me !== tttTurn){ tttBusy = false; return; }   // time ran out while we were checking
-  if(ok){
-    tttUsed.add(p.id); tttCells[cellIdx] = { owner:me, name:p.label };
-    tttBusy = false; tttCloseSheet(); tttPaintCell(cellIdx);
-    tttMsg('✓ ' + p.label + ' — square taken');
-    tttAfterMove();
-  } else {
-    sm.className = 'ttt-sheet-msg bad'; sm.textContent = '✗ ' + p.label + " doesn't fit — you lose the turn";
-    setTimeout(() => { tttBusy = false; if(tttOver) return; tttCloseSheet(); tttMsg('✗ ' + p.label + " didn't fit — " + tttNames[me] + ' loses the turn'); tttNextTurn(); }, 1300);
-  }
-}
-
-function tttAfterMove(){
-  for(const L of TTT_LINES){
-    const o = tttCells[L[0]].owner;
-    if(o !== null && tttCells[L[1]].owner === o && tttCells[L[2]].owner === o){ tttFinish(o, L); return; }
-  }
-  if(tttCells.every(c => c.owner !== null)){ tttFinish(-1, []); return; }
-  tttNextTurn();
-}
-function tttFinish(winner, line){
-  tttOver = true; clearInterval(tttTimer);
-  line.forEach(i => { const c = tttEl('tttBoard').querySelector('.ttt-cell[data-i="' + i + '"]'); if(c) c.classList.add('win'); });
-  if(winner >= 0) tttScores[winner]++;
-  tttEl('tttScNum1').textContent = tttScores[0]; tttEl('tttScNum2').textContent = tttScores[1];
-  tttEl('tttGame').classList.add('over');
-  tttEl('tttEndTitle').textContent = winner >= 0 ? '🏆 ' + tttNames[winner] + ' wins!' : '🤝 Draw';
-  tttEl('tttEndSub').textContent = tttNames[0] + ' ' + tttScores[0] + ' – ' + tttScores[1] + ' ' + tttNames[1];
-  tttEl('tttRevealBtn').style.display = tttCells.some(c => c.owner === null) ? '' : 'none';
-  tttEl('tttEnd').style.display = 'flex'; tttMsg('');
-  try{ playWhistle(); }catch(e){}
-}
-function tttReveal(){
-  tttCells.forEach((c, i) => { if(c.owner === null && tttGrid.x && tttGrid.x[i]) tttPaintCell(i, tttGrid.x[i]); });
-  tttEl('tttRevealBtn').style.display = 'none';
-}
-document.addEventListener('keydown', e => { if(e.key === 'Escape') tttCloseSheet(); });
-
 // "Nine modes live" follows the real number of cards
 (function(){
   const words = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen'];
@@ -7100,7 +6856,7 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') tttCloseSheet
 // Tall crests (Tottenham's cockerel is roughly 1:2) shrink to a sliver inside a round disc — give them a taller rounded tile instead
 document.addEventListener('load', function(e){
   const t = e.target;
-  if(t && t.tagName === 'IMG' && t.naturalWidth && t.matches('#mbFromBadge,#mbToBadge,#cpClubs img,.t10-slot-badge,.eg-cat-badge,.ttt-hd img'))
+  if(t && t.tagName === 'IMG' && t.naturalWidth && t.matches('#mbFromBadge,#mbToBadge,#cpClubs img,.t10-slot-badge,.eg-cat-badge'))
     t.classList.toggle('crest-tall', t.naturalHeight / t.naturalWidth > 1.35);
 }, true);
 </script>
@@ -7151,5 +6907,6 @@ document.addEventListener('load', function(e){
   setInterval(sync, 500);   // the guess area gets hidden after a right answer — drop the bar with it
 })();
 </script>
+<script src="dailychallenge.js?v=2"></script>
 </body>
 </html>

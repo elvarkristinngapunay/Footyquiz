@@ -36,6 +36,9 @@ node tools/build-top10.mjs | grep -E "^wrote"
 # league goals for the Auction / Closest Wins categories: finished seasons from the cached Wikipedia pages (new players get their page), the running season from the fresh API data
 if [ "$MODE" = "--offline" ]; then node tools/build-competitions.mjs | head -1; else node tools/build-competitions.mjs --fetch | tail -2; fi
 
+# the Daily Challenges (birth dates, clubs, shirt numbers, season lines) follow the new numbers
+node tools/build-daily.mjs | head -1
+
 echo "== 4/6 sanity check =="
 node tools/sanity.mjs || { echo "Sanity check failed — the new files are written but NOT committed. Restore with: git checkout data/players-modern.js data/top10-api.js"; exit 1; }
 
@@ -44,8 +47,8 @@ bash tools/backup.sh | head -1
 
 echo "== 6/6 publish =="
 if [ "$MODE" = "--offline" ] || [ "$MODE" = "--no-push" ]; then echo "(not publishing: $MODE)"; exit 0; fi
-if git diff --quiet -- data/players-modern.js data/top10-api.js data/competitions.js; then echo "nothing changed this week"; exit 0; fi
-git add data/players-modern.js data/top10-api.js data/competitions.js
+if git diff --quiet -- data/players-modern.js data/top10-api.js data/competitions.js data/daily.js; then echo "nothing changed this week"; exit 0; fi
+git add data/players-modern.js data/top10-api.js data/competitions.js data/daily.js
 git commit -q -m "Weekly stats refresh $(date +%Y-%m-%d)"
 export PATH="$HOME/.local/bin:$PATH"
 TOK=$(gh auth token --user elvarkristinngapunay)
