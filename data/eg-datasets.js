@@ -223,6 +223,11 @@ const EG_DATASETS = {
       {name:'Indonesia', aliases:['dutch east indies']},
       // Oceania
       {name:'New Zealand', aliases:['all whites']},
+      // 2026 debutants
+      {name:'Cape Verde', aliases:['cabo verde','cape verde islands']},
+      {name:'Curaçao', aliases:['curacao']},
+      {name:'Jordan', aliases:[]},
+      {name:'Uzbekistan', aliases:[]},
     ]
   },
 

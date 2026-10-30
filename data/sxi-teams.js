@@ -1415,19 +1415,19 @@ const SXI_TEAMS = [
 
   {
     id:'spain-2026', name:'Spain', year:2026, flag:'🇪🇸',
-    tournament:'World Cup Final', opponent:'Argentina', score:'1-0 (aet)', formation:'4-3-3',
+    tournament:'World Cup Final', opponent:'Argentina', score:'1-0 (aet)', formation:'4-2-3-1',
     starters:[
       {name:'Unai Simón',      short:'Simón',     pos:'GK',  x:50, y:85, aliases:['unai simon','simon']},
       {name:'Pedro Porro',     short:'Porro',     pos:'RB',  x:78, y:70, aliases:['porro','pedro porro']},
       {name:'Pau Cubarsí',     short:'Cubarsí',   pos:'CB',  x:62, y:70, aliases:['cubarsi','pau cubarsi','pau cubarsí']},
       {name:'Aymeric Laporte', short:'Laporte',   pos:'CB',  x:38, y:70, aliases:['laporte','aymeric laporte']},
       {name:'Marc Cucurella',  short:'Cucurella', pos:'LB',  x:22, y:70, aliases:['cucurella','marc cucurella']},
-      {name:'Rodri',           short:'Rodri',     pos:'CDM', x:50, y:60, aliases:['rodri']},
-      {name:'Fabián Ruiz',     short:'Fabián',    pos:'CM',  x:65, y:48, aliases:['fabian ruiz','fabian','ruiz']},
-      {name:'Dani Olmo',       short:'Olmo',      pos:'CM',  x:35, y:48, aliases:['olmo','dani olmo']},
-      {name:'Lamine Yamal',    short:'Yamal',     pos:'RW',  x:75, y:25, aliases:['yamal','lamine yamal','lamine']},
+      {name:'Rodri',           short:'Rodri',     pos:'CDM', x:62, y:57, aliases:['rodri']},
+      {name:'Fabián Ruiz',     short:'Fabián',    pos:'CDM', x:38, y:57, aliases:['fabian ruiz','fabian','ruiz']},
+      {name:'Dani Olmo',       short:'Olmo',      pos:'CAM', x:50, y:40, aliases:['olmo','dani olmo']},
+      {name:'Lamine Yamal',    short:'Yamal',     pos:'RAM', x:72, y:40, aliases:['yamal','lamine yamal','lamine']},
       {name:'Mikel Oyarzabal', short:'Oyarzabal', pos:'ST',  x:50, y:20, aliases:['oyarzabal','mikel oyarzabal']},
-      {name:'Álex Baena',      short:'Baena',     pos:'LW',  x:25, y:25, aliases:['baena','alex baena','álex baena']},
+      {name:'Álex Baena',      short:'Baena',     pos:'LAM', x:28, y:40, aliases:['baena','alex baena','álex baena']},
     ],
     subs:[
       {name:'Pedri',            aliases:['pedri']},
