@@ -79,12 +79,19 @@ export function verifyAssists({ apiTables, apiPlayer, wp, fm, tm = null, apiId =
   if (!F.size) return { ok: false, why: `no club games since ${ASSISTS_FROM} in FotMob` };
   const wpApps = {};
   for (const r of wp?.seasonRows || []) if (!isReserve(r.club || '')) wpApps[startYear(r.season)] = (wpApps[startYear(r.season)] || 0) + r.apps;
-  let compared = 0;
+  let compared = 0, windowRescued = 0;
+  // Calendar-year leagues (Argentina, Colombia, Mexico, Saudi Arabia, Japan, MLS …) are filed under a different season by FotMob than by Wikipedia/Transfermarkt, so one season can differ while the games are the same.
+  // The number shown is a total since 2016/17, so it is enough that the whole window agrees: FotMob's games 2016–2023 within 5% (min 5) of Wikipedia's OR Transfermarkt's.
+  const sumF = [...F].filter(([y]) => y < 2024).reduce((a, [, f]) => a + f.apps, 0);
+  const sumW = Object.entries(wpApps).filter(([y]) => Number(y) >= ASSISTS_FROM && Number(y) < 2024).reduce((a, [, n]) => a + n, 0);
+  const sumT = T ? [...T.club].filter(([y]) => y < 2024).reduce((a, [, e]) => a + e.apps, 0) : null;
+  const nearW = (a, b) => Math.abs(a - b) <= Math.max(5, Math.round(0.05 * Math.max(a, b)));
+  const windowAgrees = () => (hasWp && nearW(sumF, sumW)) || (sumT != null && nearW(sumF, sumT));
   for (const [y, f] of [...F].sort((a, b) => a[0] - b[0])) {
     if (y < 2024) {
       const w = wpApps[y] || 0;                                      // 1. completeness
       const near = (a, b) => Math.abs(a - b) <= Math.max(3, Math.round(0.1 * Math.max(a, b)));
-      if (!hasWp || !near(f.apps, w)) { if (T?.club.has(y) && near(f.apps, T.club.get(y).apps)) tmWitnessed++; else return { ok: false, why: `${y}: FotMob has ${f.apps} games, ${hasWp ? `Wikipedia ${w}` : 'no Wikipedia table'}${T?.club.has(y) ? `, Transfermarkt ${T.club.get(y).apps}` : ''}` }; }
+      if (!hasWp || !near(f.apps, w)) { if (T?.club.has(y) && near(f.apps, T.club.get(y).apps)) tmWitnessed++; else if (windowAgrees()) windowRescued++; else return { ok: false, why: `${y}: FotMob has ${f.apps} games, ${hasWp ? `Wikipedia ${w}` : 'no Wikipedia table'}${T?.club.has(y) ? `, Transfermarkt ${T.club.get(y).apps}` : ''}` }; }
     }
     for (const L of apiTables.lines?.[y] || []) {                    // 2. league and UEFA lines (every season: from 2024 the API has assists everywhere)
       if (L.assists == null || !L.apps || !LEAGUE_LIKE(L.league)) continue;
@@ -115,5 +122,5 @@ export function verifyAssists({ apiTables, apiPlayer, wp, fm, tm = null, apiId =
   for (const f of F.values()) for (const t of f.teams) { const hit = clubs.find(c => sameClub(c.name, t.name)); if (hit) hit.n += t.assists; else clubs.push({ name: t.name, n: t.assists }); }
   clubs.sort((a, b) => b.n - a.n);
   const total = clubs.reduce((a, c) => a + c.n, 0) + nat.assists;
-  return { ok: true, value: total, clubs, intl: nat.assists, comparedSeasons: compared, seasons: F.size, tmWitnessed, apiDisputes };
+  return { ok: true, value: total, clubs, intl: nat.assists, comparedSeasons: compared, seasons: F.size, tmWitnessed, apiDisputes, windowRescued };
 }
