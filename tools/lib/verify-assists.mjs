@@ -44,11 +44,13 @@ export const LEAGUE_LIKE = name => /champions league|europa league|conference le
 const compKey = n => String(n || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/uefa|major league soccer|\bmls\b/g, m => (m === 'uefa' ? '' : 'mls')).replace(/[^a-z0-9]+/g, '');
 export const sameComp = (a, b) => { const x = compKey(a), y = compKey(b); return !!x && x === y; };
 
+// FotMob calls Barcelona's B team "Barça Atlètic", which the shared isReserve() does not recognise
+const BARCA_B = /(bar[cç]a|barcelona)\s+atl[eè]tic/i;
 // FotMob's club seasons from 2016 on: first teams, no friendlies
 function fotmobClubSeasons(fm) {
   const by = new Map();                                              // year → { assists, apps, teams: [{ name, assists, apps }] }
   for (const s of fm?.seasons || []) {
-    const y = startYear(s.season); if (!(y >= ASSISTS_FROM) || isReserve(s.team || '')) continue;
+    const y = startYear(s.season); if (!(y >= ASSISTS_FROM) || isReserve(s.team || '') || BARCA_B.test(s.team || '')) continue;
     const played = s.tournaments.filter(t => !t.friendly);
     const apps = played.reduce((a, t) => a + (t.apps || 0), 0), assists = played.reduce((a, t) => a + (t.assists || 0), 0);
     if (!apps) continue;
@@ -69,19 +71,20 @@ function fotmobNational(fm) {
 // apiTables = apiClubSeasons(p, rawDir); wp = parsed Wikipedia article; apiPlayer = the API record (for intl assists)
 export function verifyAssists({ apiTables, apiPlayer, wp, fm, tm = null, apiId = null }) {
   if (!fm) return { ok: false, why: 'no FotMob page for this player' };
-  if (!wp?.seasonRows?.length) return { ok: false, why: 'no Wikipedia season table to check FotMob against' };
   const F = fotmobClubSeasons(fm);
   const T = tm && apiId != null && tm.players?.[apiId] ? tmSeasons(tm.players[apiId], tm.clubs, tm.comps, ASSISTS_FROM) : null;   // Transfermarkt: an independent witness, never the number shown
+  const hasWp = !!wp?.seasonRows?.length;                                                                                          // without a Wikipedia table Transfermarkt is the only games witness
+  if (!hasWp && !T) return { ok: false, why: 'no Wikipedia season table to check FotMob against' };
   let tmWitnessed = 0, apiDisputes = 0;
   if (!F.size) return { ok: false, why: `no club games since ${ASSISTS_FROM} in FotMob` };
   const wpApps = {};
-  for (const r of wp.seasonRows) if (!isReserve(r.club || '')) wpApps[startYear(r.season)] = (wpApps[startYear(r.season)] || 0) + r.apps;
+  for (const r of wp?.seasonRows || []) if (!isReserve(r.club || '')) wpApps[startYear(r.season)] = (wpApps[startYear(r.season)] || 0) + r.apps;
   let compared = 0;
   for (const [y, f] of [...F].sort((a, b) => a[0] - b[0])) {
     if (y < 2024) {
       const w = wpApps[y] || 0;                                      // 1. completeness
       const near = (a, b) => Math.abs(a - b) <= Math.max(3, Math.round(0.1 * Math.max(a, b)));
-      if (!near(f.apps, w)) { if (T?.club.has(y) && near(f.apps, T.club.get(y).apps)) tmWitnessed++; else return { ok: false, why: `${y}: FotMob has ${f.apps} games, Wikipedia ${w}${T?.club.has(y) ? `, Transfermarkt ${T.club.get(y).apps}` : ''}` }; }
+      if (!hasWp || !near(f.apps, w)) { if (T?.club.has(y) && near(f.apps, T.club.get(y).apps)) tmWitnessed++; else return { ok: false, why: `${y}: FotMob has ${f.apps} games, ${hasWp ? `Wikipedia ${w}` : 'no Wikipedia table'}${T?.club.has(y) ? `, Transfermarkt ${T.club.get(y).apps}` : ''}` }; }
     }
     for (const L of apiTables.lines?.[y] || []) {                    // 2. league and UEFA lines (every season: from 2024 the API has assists everywhere)
       if (L.assists == null || !L.apps || !LEAGUE_LIKE(L.league)) continue;
@@ -99,10 +102,10 @@ export function verifyAssists({ apiTables, apiPlayer, wp, fm, tm = null, apiId =
   }
   const nat = fotmobNational(fm);
   {                                                                  // 4. national team: year by year against Wikipedia's table
-    const W = (wp.intlRows || []).filter(r => r.year >= ASSISTS_FROM && r.year <= 2024).reduce((a, r) => a + r.apps, 0);
+    const W = (wp?.intlRows || []).filter(r => r.year >= ASSISTS_FROM && r.year <= 2024).reduce((a, r) => a + r.apps, 0);
     const Fn = senior(fm).filter(s => startYear(s.season) >= ASSISTS_FROM && startYear(s.season) <= 2024).reduce((a, s) => a + s.tournaments.reduce((b, t) => b + (t.apps || 0), 0), 0);
     const nearN = (a, b) => Math.abs(a - b) <= Math.max(6, Math.round(0.25 * Math.max(a, b)));
-    if ((W || Fn) && (!(wp.intlRows || []).length || !nearN(W, Fn))) {
+    if ((W || Fn) && (!(wp?.intlRows || []).length || !nearN(W, Fn))) {
       const Tn = T ? [...T.nat].filter(([y]) => y <= 2024).reduce((a, [, e]) => a + e.apps, 0) : null;
       if (Tn != null && nearN(Fn, Tn)) tmWitnessed++; else return { ok: false, why: `national team ${ASSISTS_FROM}–2024: FotMob ${Fn} games, Wikipedia ${W}${Tn != null ? `, Transfermarkt ${Tn}` : ''}` };
     }

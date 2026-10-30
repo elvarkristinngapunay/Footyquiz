@@ -17,7 +17,7 @@ export function tmSeasons(tmPlayer, clubs, comps, from = 2016) {
       if (!c.nt || YOUTH_TEAM.test(c.n)) continue;
       const e = nat.get(y) || { assists: 0, apps: 0 }; e.assists += assists; e.apps += apps; nat.set(y, e); continue;
     }
-    if (YOUTH_TYPES.has(comp?.ty) || isReserve(c.n)) continue;
+    if (YOUTH_TYPES.has(comp?.ty) || isReserve(c.n) || (c.main && String(c.main) !== String(clubId))) continue;   // c.main = the parent club: "Valencia Mestalla" belongs to Valencia CF, so it is a B team
     const e = club.get(y) || { assists: 0, apps: 0, teams: new Map(), lines: [] };
     e.assists += assists; e.apps += apps;
     const t = e.teams.get(c.n) || { assists: 0, apps: 0 }; t.assists += assists; t.apps += apps; e.teams.set(c.n, t);
