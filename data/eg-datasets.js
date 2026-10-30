@@ -9,7 +9,7 @@ const EG_GROUPS = [
     quizzes:[
       {key:'wc_countries',     icon:'🌍', desc:'Every nation to appear at a FIFA World Cup'},
       {key:'wc_semifinalists', icon:'🏅', desc:'Every country to reach a World Cup top 4 · 25 nations'},
-      {key:'wc_final_scorers', icon:'🥇', desc:'1930 to 2022 · Every player who scored in a final'},
+      {key:'wc_final_scorers', icon:'🥇', desc:'1930 to 2026 · Every player who scored in a final'},
       {key:'wc_golden_boot',   icon:'👟', desc:'Every top scorer at the World Cup · 27 players'},
       {key:'wc_winners',       icon:'🏆', desc:'Every nation to lift the trophy · 8 nations'},
       {key:'wc_captains',      icon:'🎖️', desc:'The men who lifted the World Cup · 22 captains'},
@@ -349,6 +349,8 @@ const EG_DATASETS = {
       // 2022 — Argentina 3-3 France AET (Mbappé already listed)
       {name:'Lionel Messi',           aliases:['messi','leo messi','la pulga','leo','goat'],         year:2022},
       {name:'Ángel Di María',         aliases:['di maria','angel di maria','el fideo','fideo','angel di maria'],year:2022},
+      // 2026 — Spain 1-0 Argentina AET (Torres 106')
+      {name:'Ferran Torres',          aliases:['torres','ferran'],                                   year:2026},
     ]
   },
 

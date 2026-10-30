@@ -1413,10 +1413,36 @@ const SXI_TEAMS = [
   ]
 },
 
+  {
+    id:'spain-2026', name:'Spain', year:2026, flag:'🇪🇸',
+    tournament:'World Cup Final', opponent:'Argentina', score:'1-0 (aet)', formation:'4-3-3',
+    starters:[
+      {name:'Unai Simón',      short:'Simón',     pos:'GK',  x:50, y:85, aliases:['unai simon','simon']},
+      {name:'Pedro Porro',     short:'Porro',     pos:'RB',  x:78, y:70, aliases:['porro','pedro porro']},
+      {name:'Pau Cubarsí',     short:'Cubarsí',   pos:'CB',  x:62, y:70, aliases:['cubarsi','pau cubarsi','pau cubarsí']},
+      {name:'Aymeric Laporte', short:'Laporte',   pos:'CB',  x:38, y:70, aliases:['laporte','aymeric laporte']},
+      {name:'Marc Cucurella',  short:'Cucurella', pos:'LB',  x:22, y:70, aliases:['cucurella','marc cucurella']},
+      {name:'Rodri',           short:'Rodri',     pos:'CDM', x:50, y:60, aliases:['rodri']},
+      {name:'Fabián Ruiz',     short:'Fabián',    pos:'CM',  x:65, y:48, aliases:['fabian ruiz','fabian','ruiz']},
+      {name:'Dani Olmo',       short:'Olmo',      pos:'CM',  x:35, y:48, aliases:['olmo','dani olmo']},
+      {name:'Lamine Yamal',    short:'Yamal',     pos:'RW',  x:75, y:25, aliases:['yamal','lamine yamal','lamine']},
+      {name:'Mikel Oyarzabal', short:'Oyarzabal', pos:'ST',  x:50, y:20, aliases:['oyarzabal','mikel oyarzabal']},
+      {name:'Álex Baena',      short:'Baena',     pos:'LW',  x:25, y:25, aliases:['baena','alex baena','álex baena']},
+    ],
+    subs:[
+      {name:'Pedri',            aliases:['pedri']},
+      {name:'Ferran Torres',    aliases:['ferran torres','torres','ferran']},
+      {name:'Mikel Merino',     aliases:['merino','mikel merino']},
+      {name:'Nico Williams',    aliases:['nico williams','williams']},
+      {name:'Martín Zubimendi', aliases:['zubimendi','martin zubimendi']},
+      {name:'Eric García',      aliases:['eric garcia','garcia','eric garcía']},
+    ]
+  },
+
   // ── FIFA WORLD CUP TEAM OF THE TOURNAMENT ─────────────────────────────────
   {
     id:'tott-1994', name:'World Cup TOTT', year:1994, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/1994_FIFA_World_Cup.svg/200px-1994_FIFA_World_Cup.svg.png',
+    logo:'badges/wc-1994.png', logoBg:'#fff',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'3-4-3',
     starters:[
       {name:"Michel Preud'homme", short:"Preud'homme", pos:'GK', x:50, y:85, aliases:["preudhomme","preud'homme","michel preudhomme"]},
@@ -1437,7 +1463,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-1998', name:'World Cup TOTT', year:1998, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/1998_FIFA_World_Cup_France_%28Wordmark%29.svg/200px-1998_FIFA_World_Cup_France_%28Wordmark%29.svg.png', logoBg:'#fff',
+    logo:'badges/wc-1998.png', logoBg:'#fff',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
     starters:[
       {name:'Fabien Barthez',   short:'Barthez',    pos:'GK', x:50, y:85, aliases:['barthez','fabien barthez']},
@@ -1458,7 +1484,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2002', name:'World Cup TOTT', year:2002, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/en/thumb/4/47/2002_FIFA_World_Cup_logo.svg/200px-2002_FIFA_World_Cup_logo.svg.png', logoBg:'#f5c842',
+    logo:'badges/wc-2002.png', logoBg:'#fff',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
     starters:[
       {name:'Oliver Kahn',      short:'Kahn',       pos:'GK', x:50, y:85, aliases:['kahn','oliver kahn']},
@@ -1479,7 +1505,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2006', name:'World Cup TOTT', year:2006, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/2006_FIFA_World_Cup.svg/200px-2006_FIFA_World_Cup.svg.png',
+    logo:'badges/wc-2006.png', logoBg:'#fff',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
     starters:[
       {name:'Gianluigi Buffon',   short:'Buffon',    pos:'GK', x:50, y:85, aliases:['buffon','gianluigi buffon','gigi']},
@@ -1500,7 +1526,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2010', name:'World Cup TOTT', year:2010, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/en/thumb/0/0d/2010_FIFA_World_Cup.svg/200px-2010_FIFA_World_Cup.svg.png', logoBg:'#fff',
+    logo:'badges/wc-2010.png', logoBg:'#fff',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-4-2',
     starters:[
       {name:'Iker Casillas',          short:'Casillas',  pos:'GK', x:50, y:85, aliases:['casillas','iker casillas']},
@@ -1521,7 +1547,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2014', name:'World Cup TOTT', year:2014, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/en/thumb/1/1d/2014_FIFA_World_Cup.svg/200px-2014_FIFA_World_Cup.svg.png',
+    logo:'badges/wc-2014.png', logoBg:'#fff',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
     starters:[
       {name:'Manuel Neuer',    short:'Neuer',    pos:'GK', x:50, y:85, aliases:['neuer','manuel neuer']},
@@ -1544,7 +1570,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2018', name:'World Cup TOTT', year:2018, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/en/thumb/6/67/2018_FIFA_World_Cup.svg/200px-2018_FIFA_World_Cup.svg.png',
+    logo:'badges/wc-2018.png', logoBg:'#fff',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
     starters:[
       {name:'Jordan Pickford',  short:'Pickford', pos:'GK', x:50, y:85, aliases:['pickford','jordan pickford']},
@@ -1565,7 +1591,7 @@ const SXI_TEAMS = [
   },
   {
     id:'tott-2022', name:'World Cup TOTT', year:2022, flag:'🌍',
-    logo:'https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/2022_FIFA_World_Cup.svg/200px-2022_FIFA_World_Cup.svg.png',
+    logo:'badges/wc-2022.png', logoBg:'#fff',
     tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
     starters:[
       {name:'Dominik Livaković', short:'Livaković',  pos:'GK', x:50, y:85, aliases:['livakovic','dominik livakovic','dominik livaković']},
@@ -1585,5 +1611,25 @@ const SXI_TEAMS = [
       {name:'Azzedine Ounahi',  aliases:['ounahi','azzedine ounahi']},
       {name:'Lionel Scaloni',   aliases:['scaloni','lionel scaloni']},
     ]
+  },
+  // FIFA's Dream XI for 2026, elected by fans on FIFA.com (no bench)
+  {
+    id:'tott-2026', name:'World Cup TOTT', year:2026, flag:'🌍',
+    logo:'badges/wc-2026.png', logoBg:'#fff',
+    tournament:'World Cup Final', opponent:'Team of the Tournament', score:'—', formation:'4-3-3',
+    starters:[
+      {name:'Vozinha',           short:'Vozinha',    pos:'GK', x:50, y:85, aliases:['vozinha']},
+      {name:'Pedro Porro',       short:'Porro',      pos:'RB', x:78, y:68, aliases:['porro','pedro porro']},
+      {name:'Dayot Upamecano',   short:'Upamecano',  pos:'CB', x:62, y:68, aliases:['upamecano','dayot upamecano']},
+      {name:'Lisandro Martínez', short:'L. Martínez',pos:'CB', x:38, y:68, aliases:['lisandro martinez','lisandro','licha','martinez']},
+      {name:'Marc Cucurella',    short:'Cucurella',  pos:'LB', x:22, y:68, aliases:['cucurella','marc cucurella']},
+      {name:'Michael Olise',     short:'Olise',      pos:'RM', x:72, y:50, aliases:['olise','michael olise']},
+      {name:'Rodri',             short:'Rodri',      pos:'CM', x:50, y:50, aliases:['rodri']},
+      {name:'Jude Bellingham',   short:'Bellingham', pos:'LM', x:28, y:50, aliases:['bellingham','jude bellingham','jude']},
+      {name:'Lionel Messi',      short:'Messi',      pos:'RW', x:78, y:20, aliases:['messi','lionel messi','leo messi']},
+      {name:'Erling Haaland',    short:'Haaland',    pos:'ST', x:50, y:16, aliases:['haaland','erling haaland','erling braut haaland']},
+      {name:'Kylian Mbappé',     short:'Mbappé',     pos:'LW', x:22, y:20, aliases:['mbappe','kylian mbappe','kylian mbappé','mbappé']},
+    ],
+    subs:[]
   }
 ];
