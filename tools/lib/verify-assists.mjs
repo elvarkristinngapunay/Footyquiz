@@ -6,13 +6,16 @@
 // What has to hold, season by season (a player failing any of it is left out of the Assists category — nothing is rounded or guessed):
 //   1. completeness   FotMob's appearances for the season equal Wikipedia's career-table row within 10% (min 3 games) — proof that FotMob covers every match he played.
 //                     Seasons 2024 on are not checked this way (Wikipedia lags); they have check 3.
-//   2. API-Football   league and UEFA-competition lines 2016–2023 in which the API HAS assists must match FotMob's line for the same club, competition and season (±15%, min 2).
-//                     Lines the API left empty — and its cup lines, which it often undercounts — are not used as evidence (FotMob is then only checked by 1).
-//   3. recent seasons from 2024 on API-Football has assists everywhere: the totals must be within 2 (6% for big totals), club and national team together.
+//   2. API-Football   league and UEFA-competition lines (every season; from 2024 the API has assists everywhere): where FotMob and the API differ, FotMob stands unless Transfermarkt ALSO
+//                     differs from FotMob and agrees with the API. Lines the API left empty — and its cup lines, which it often undercounts — are not used as evidence.
+//   (whole-season totals are not compared any more: the API's cup undercounting made them differ for reasons that have nothing to do with FotMob)
 //   4. national team  FotMob's national-team games 2016–2024 must be close to Wikipedia's year-by-year caps (±25%, min 6: the two cut seasons and calendar years differently).
-// The number shown is FotMob's. Club by club, the same FotMob rows are shown, so the rows add up to the total.
+// The number shown is FotMob's (checked by hand against the competitions' own sites: FotMob is right where API-Football and Transfermarkt differ; Transfermarkt counts more assists on the same league line,
+// API-Football undercounts cups). Transfermarkt is an independent witness for 1 and 4, and together with API-Football it can overrule FotMob only when the two AGREE against it (2 and 3).
+// Club by club, the same FotMob rows are shown, so the rows add up to the total.
 
 import { isReserve } from './verify-current.mjs';
+import { tmSeasons } from './tm-seasons.mjs';
 
 export const ASSISTS_FROM = 2016;
 export const TOLERANCE = 2;
@@ -37,9 +40,9 @@ export const sameClub = (a, b) => {
 
 // competitions the API is reliable for: leagues and the three UEFA club competitions (cups are often undercounted there)
 const CUPLIKE = /cup|copa|coppa|pokal|taça|taca|shield|super|trophy|troph[ée]e|friendl|qualif|nations|euro\b|euro |world|olympic|play-?off|relegation|promotion|international/i;
-const LEAGUE_LIKE = name => /champions league|europa league|conference league/i.test(name || '') || !CUPLIKE.test(name || '');
+export const LEAGUE_LIKE = name => /champions league|europa league|conference league/i.test(name || '') || !CUPLIKE.test(name || '');
 const compKey = n => String(n || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/uefa|major league soccer|\bmls\b/g, m => (m === 'uefa' ? '' : 'mls')).replace(/[^a-z0-9]+/g, '');
-const sameComp = (a, b) => { const x = compKey(a), y = compKey(b); return !!x && x === y; };
+export const sameComp = (a, b) => { const x = compKey(a), y = compKey(b); return !!x && x === y; };
 
 // FotMob's club seasons from 2016 on: first teams, no friendlies
 function fotmobClubSeasons(fm) {
@@ -64,41 +67,50 @@ function fotmobNational(fm) {
 }
 
 // apiTables = apiClubSeasons(p, rawDir); wp = parsed Wikipedia article; apiPlayer = the API record (for intl assists)
-export function verifyAssists({ apiTables, apiPlayer, wp, fm }) {
+export function verifyAssists({ apiTables, apiPlayer, wp, fm, tm = null, apiId = null }) {
   if (!fm) return { ok: false, why: 'no FotMob page for this player' };
   if (!wp?.seasonRows?.length) return { ok: false, why: 'no Wikipedia season table to check FotMob against' };
   const F = fotmobClubSeasons(fm);
+  const T = tm && apiId != null && tm.players?.[apiId] ? tmSeasons(tm.players[apiId], tm.clubs, tm.comps, ASSISTS_FROM) : null;   // Transfermarkt: an independent witness, never the number shown
+  let tmWitnessed = 0, apiDisputes = 0;
   if (!F.size) return { ok: false, why: `no club games since ${ASSISTS_FROM} in FotMob` };
   const wpApps = {};
   for (const r of wp.seasonRows) if (!isReserve(r.club || '')) wpApps[startYear(r.season)] = (wpApps[startYear(r.season)] || 0) + r.apps;
-  let compared = 0, recentF = 0, recentA = 0;
+  let compared = 0;
   for (const [y, f] of [...F].sort((a, b) => a[0] - b[0])) {
     if (y < 2024) {
       const w = wpApps[y] || 0;                                      // 1. completeness
-      if (Math.abs(f.apps - w) > Math.max(3, Math.round(0.1 * Math.max(f.apps, w)))) return { ok: false, why: `${y}: FotMob has ${f.apps} games, Wikipedia ${w}` };
-      for (const L of apiTables.lines?.[y] || []) {                // 2. API-Football, league and UEFA lines that carry assists
-        if (L.assists == null || !L.apps || !LEAGUE_LIKE(L.league)) continue;
-        for (const st of fm.seasons) if (startYear(st.season) === y && sameClub(st.team, L.team)) for (const t of st.tournaments) if (!t.friendly && sameComp(t.name, L.league)) {
-          compared++;
-          if (!within(t.assists || 0, L.assists, 0.15)) return { ok: false, why: `${y} ${L.league} (${L.team}): API-Football ${L.assists} assists, FotMob ${t.assists || 0}` };
+      const near = (a, b) => Math.abs(a - b) <= Math.max(3, Math.round(0.1 * Math.max(a, b)));
+      if (!near(f.apps, w)) { if (T?.club.has(y) && near(f.apps, T.club.get(y).apps)) tmWitnessed++; else return { ok: false, why: `${y}: FotMob has ${f.apps} games, Wikipedia ${w}${T?.club.has(y) ? `, Transfermarkt ${T.club.get(y).apps}` : ''}` }; }
+    }
+    for (const L of apiTables.lines?.[y] || []) {                    // 2. league and UEFA lines (every season: from 2024 the API has assists everywhere)
+      if (L.assists == null || !L.apps || !LEAGUE_LIKE(L.league)) continue;
+      for (const st of fm.seasons) if (startYear(st.season) === y && sameClub(st.team, L.team)) for (const t of st.tournaments) if (!t.friendly && sameComp(t.name, L.league)) {
+        compared++;
+        const fv = t.assists || 0;
+        if (!within(fv, L.assists, 0.15)) {
+          // FotMob (Opta) is the reference. API-Football alone does not overrule it; only API-Football AND Transfermarkt both contradicting it, and agreeing with each other, does.
+          let tmv = null; if (T) for (const tl of T.club.get(y)?.lines || []) if (sameClub(tl.team, L.team) && sameComp(tl.comp, L.league)) tmv = (tmv || 0) + tl.assists;
+          if (tmv != null && !within(fv, tmv, 0.15) && within(tmv, L.assists, 0.15)) return { ok: false, why: `${y} ${L.league} (${L.team}): FotMob ${fv} assists, API-Football ${L.assists} and Transfermarkt ${tmv}` };
+          apiDisputes++;
         }
       }
-    } else recentF += f.assists;
+    }
   }
-  for (const [y, a] of Object.entries(apiTables.bySeason || {})) if (Number(y) >= 2024) recentA += a.assists;
   const nat = fotmobNational(fm);
   {                                                                  // 4. national team: year by year against Wikipedia's table
     const W = (wp.intlRows || []).filter(r => r.year >= ASSISTS_FROM && r.year <= 2024).reduce((a, r) => a + r.apps, 0);
     const Fn = senior(fm).filter(s => startYear(s.season) >= ASSISTS_FROM && startYear(s.season) <= 2024).reduce((a, s) => a + s.tournaments.reduce((b, t) => b + (t.apps || 0), 0), 0);
-    if ((W || Fn) && (!(wp.intlRows || []).length || Math.abs(W - Fn) > Math.max(6, Math.round(0.25 * Math.max(W, Fn))))) return { ok: false, why: `national team ${ASSISTS_FROM}–2024: FotMob ${Fn} games, Wikipedia ${W}` };
+    const nearN = (a, b) => Math.abs(a - b) <= Math.max(6, Math.round(0.25 * Math.max(a, b)));
+    if ((W || Fn) && (!(wp.intlRows || []).length || !nearN(W, Fn))) {
+      const Tn = T ? [...T.nat].filter(([y]) => y <= 2024).reduce((a, [, e]) => a + e.apps, 0) : null;
+      if (Tn != null && nearN(Fn, Tn)) tmWitnessed++; else return { ok: false, why: `national team ${ASSISTS_FROM}–2024: FotMob ${Fn} games, Wikipedia ${W}${Tn != null ? `, Transfermarkt ${Tn}` : ''}` };
+    }
   }
-  const recentNatApi = Object.entries(apiPlayer?.seasons || {}).filter(([y]) => Number(y) >= 2024).reduce((a, [, ss]) => a + (ss.intl?.assists || 0), 0);
-  const recentNatF = senior(fm).filter(s => startYear(s.season) >= 2024).reduce((a, s) => a + s.tournaments.reduce((b, t) => b + (t.assists || 0), 0), 0);
-  if (!within(recentF + recentNatF, recentA + recentNatApi)) return { ok: false, why: `since 2024: API-Football ${recentA + recentNatApi}, FotMob ${recentF + recentNatF}` };   // 3.
   // the table: one row per club (spells and spellings merged), + the national team
   const clubs = [];
   for (const f of F.values()) for (const t of f.teams) { const hit = clubs.find(c => sameClub(c.name, t.name)); if (hit) hit.n += t.assists; else clubs.push({ name: t.name, n: t.assists }); }
   clubs.sort((a, b) => b.n - a.n);
   const total = clubs.reduce((a, c) => a + c.n, 0) + nat.assists;
-  return { ok: true, value: total, clubs, intl: nat.assists, comparedSeasons: compared, seasons: F.size };
+  return { ok: true, value: total, clubs, intl: nat.assists, comparedSeasons: compared, seasons: F.size, tmWitnessed, apiDisputes };
 }

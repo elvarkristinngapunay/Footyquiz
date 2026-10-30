@@ -148,9 +148,10 @@ for (const p of Object.values(stats.players)) {
     record.career_appearances = v.ok.apps && v.ok.intl ? v.clubApps + v.intl.apps : null;
     record.intl_caps = v.ok.intl ? v.intl.apps : null;
     record.intl_goals = v.ok.intl ? v.intl.goals : null;
-    // assists since 2016/17: FotMob's numbers, checked season by season against Wikipedia (games) and API-Football (assists) — see tools/lib/verify-assists.mjs; trophies are not released
+    // assists since 2016/17: checked season by season against Wikipedia (games) and API-Football (assists) — see tools/lib/verify-assists-tm.mjs (Transfermarkt) and verify-assists.mjs (FotMob)
     const apiTables = apiClubSeasons(p, RAW);
-    const va = verifyAssists({ apiTables, apiPlayer: p, wp: wpParsed, fm: fotmobOf(shownName) });
+    // FotMob's numbers (Opta); Transfermarkt (when the harvest is there) and API-Football are witnesses — see tools/lib/verify-assists.mjs
+    const va = verifyAssists({ apiTables, apiPlayer: p, wp: wpParsed, fm: fotmobOf(shownName), tm: TM_HARVEST, apiId: p.id });
     record.assists = va.ok ? va.value : null;
     if (!va.ok) assistNotes.push(`${shownName}: ${va.why}`);
     else { record.club_assists = va.clubs.map(c => ({ c: logoKey(parent(c.name)) || parent(c.name), n: c.n, col: '#444' })); record.intl_assists = va.intl; assistStats.seasons += va.seasons; assistStats.compared += va.comparedSeasons; }
@@ -189,8 +190,9 @@ console.log(`legends candidates (retired, full career): ${retiredOut.length}`);
 fs.writeFileSync(path.join(ROOT, 'data/generated/hol-skipped.json'), JSON.stringify(skipped, null, 1));
 console.log(`wrote data/players-modern.js — ${out.length} players (${(js.length / 1024).toFixed(0)} KB). skipped ${skipped.length}:`);
 console.log('  ' + skipped.slice(0, 40).join('\n  ') + (skipped.length > 40 ? `\n  … and ${skipped.length - 40} more` : ''));
-console.log(`assists since 2016/17 confirmed: ${out.filter(p => p.assists > 0).length} players (${assistStats.seasons} FotMob seasons checked against Wikipedia, ${assistStats.compared} also against API-Football); not confirmed: ${assistNotes.length}`);
-if (assistNotes.length) console.log('  ' + assistNotes.slice(0, 60).join('\n  '));
+console.log(`assists since 2016/17 confirmed: ${out.filter(p => p.assists > 0).length} players (${assistStats.seasons} FotMob seasons checked against Wikipedia/Transfermarkt, ${assistStats.compared} league/UEFA lines also against API-Football); not confirmed: ${assistNotes.length}`);
+fs.writeFileSync(path.join(ROOT, 'data/generated/assist-notes.json'), JSON.stringify(assistNotes, null, 1));
+if (assistNotes.length) console.log('  ' + assistNotes.slice(0, 60).join('\n  ') + (assistNotes.length > 60 ? `\n  … ${assistNotes.length - 60} more in data/generated/assist-notes.json` : ''));
 fs.writeFileSync(path.join(ROOT, 'data/generated/trophy-disagreements.json'), JSON.stringify(trophyDisagree, null, 1));
 console.log(`trophies released (Transfermarkt): ${trophyStats.released} players; no trophies listed: ${trophyNotes.length}; FotMob differs by more than ${TROPHY_TOLERANCE}: ${trophyDisagree.length} (data/generated/trophy-disagreements.json)`);
 if (trophyNotes.length) console.log('  ' + trophyNotes.slice(0, 60).join('\n  '));
