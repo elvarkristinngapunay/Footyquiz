@@ -3794,8 +3794,8 @@ const catLabels={
 };
 
 // Who is allowed into a category. A 400-goal striker against a full-back with 3 goals is no question, so each category can have a minimum value
-// (measured per deck in tools/ and chosen by Elvar; Career Goals: 70). A category without an entry only needs a value above 0.
-const HOL_MIN={career_goals:70};
+// (measured per deck and chosen by Elvar: goals 70, assists 30, intl goals 15, intl caps 50, trophies 5; Appearances needs none). A category without an entry only needs a value above 0.
+const HOL_MIN={career_goals:70,assists:30,intl_goals:15,intl_caps:50,trophies:5};
 const holMin=cat=>HOL_MIN[cat]||1;
 const holEligible=(p,cat)=>catValue(p,cat)>=holMin(cat);
 function catValue(p,cat){
