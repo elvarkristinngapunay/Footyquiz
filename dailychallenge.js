@@ -75,14 +75,70 @@
     for (const n of pool) { const f = fold(n); if (qs.every(t => f.includes(t))) out.push([n, f.startsWith(qs[0]) ? 0 : f.split(' ').some(w => w.startsWith(qs[0])) ? 1 : 2]); }
     return out.sort((a, b) => a[1] - b[1] || a[0].length - b[0].length).slice(0, limit).map(x => x[0]);
   }
-  function suggestBox(host, getPool, onPick, placeholder) {
+  // ── "did you mean": people misspell names (tibou courtous → Thibaut Courtois) ───────────────────────────────────────────
+  // Used when what was typed matches no name exactly. A name is scored on how it LOOKS and how it SOUNDS: the sound form folds the usual confusions
+  // (ph/f, th/t, ou/u, c/k, double letters, a silent h), the skeleton drops vowels (ou/oi, a/e). Measured on 30 typical misspellings: 28 right at the top.
+  const sound = s => fold(s).replace(/ph/g, 'f').replace(/th/g, 't').replace(/ck/g, 'k').replace(/q/g, 'k').replace(/w/g, 'v').replace(/x/g, 'ks').replace(/y/g, 'i').replace(/ou|oo|u/g, 'u').replace(/ee|ie|ei/g, 'i').replace(/c(?=[aou ]|$)/g, 'k').replace(/c/g, 's').replace(/h/g, '').replace(/(.)\1+/g, '$1');
+  const skel = s => sound(s).replace(/[aeiou]/g, '');
+  const lev = (a, b) => { const m = a.length, n = b.length; if (!m) return n; if (!n) return m; let prev = Array.from({ length: n + 1 }, (_, j) => j); for (let i = 1; i <= m; i++) { const cur = [i]; for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = cur; } return prev[n]; };
+  const sim = (a, b) => { const m = Math.max(a.length, b.length); return m ? 1 - lev(a, b) / m : 1; };
+  const tokMemo = new Map();
+  const tokensOf = n => { let t = tokMemo.get(n); if (!t) { t = fold(n).split(' ').filter(Boolean).map(w => ({ w, s: sound(w), k: skel(w) })); tokMemo.set(n, t); } return t; };
+  const pairSim = (a, b) => 0.55 * sim(a.s, b.s) + 0.45 * sim(a.k, b.k);
+  const joinTok = ts => ({ s: ts.map(t => t.s).join(''), k: ts.map(t => t.k).join('') });
+  function scoreName(query, name) {
+    const q = typeof query === 'string' ? tokensOf(query) : query, c = tokensOf(name); if (!q.length || !c.length) return 0;
+    const used = new Set(); let tot = 0, wsum = 0;
+    q.forEach((qt, qi) => { let best = 0, bi = -1; c.forEach((ct, ci) => { if (used.has(ci)) return; const v = pairSim(qt, ct); if (v > best) { best = v; bi = ci; } }); if (bi >= 0) used.add(bi); const w = qi === q.length - 1 ? 1.6 : 1; tot += best * w; wsum += w; });   // the surname counts most
+    let score = tot / wsum;
+    if (q.length > 1 && c.length === 1) score *= 0.9;
+    const qj = joinTok(q);                                              // written together or split differently: "vandijk" = "van Dijk"
+    if (qj.s.length >= 5) for (let i = 0; i < c.length; i++) for (let n = 2; n <= 3 && i + n <= c.length; n++) score = Math.max(score, 0.97 * pairSim(qj, joinTok(c.slice(i, i + n))));
+    if (q.length > 1) score = Math.max(score, 0.97 * pairSim(qj, joinTok(c)));
+    return score;
+  }
+  function fuzzy(query, names, limit) {
+    if (fold(query).length < 3 || sound(query).replace(/ /g, '').length < 3) return [];   // "zzzzzz" is not a name
+    const q = tokensOf(query), out = names.map(n => [n, scoreName(q, n)]).sort((a, b) => b[1] - a[1]), top = out[0] ? out[0][1] : 0;
+    return out.filter(x => x[1] >= Math.max(0.72, top - 0.12)).slice(0, limit || 4);
+  }
+  const SUG = () => (typeof DAILY_SUGGEST !== 'undefined' ? DAILY_SUGGEST : []);          // names only (tools/build-suggest.mjs): famous players the game has no data on
+  // A guess in a game where ANY player may be named: a name from the list as it is, anything else typed freely (a typo of the answer still counts as the answer).
+  function asGuess(n, free, answer, tried) {
+    const g = free ? (scoreName(n, answer) >= 0.85 ? answer : n.replace(/(^|[\s\-'])(\p{L})/gu, (m, a, b) => a + b.toUpperCase())) : n;
+    return tried.some(x => fold(x) === fold(g)) ? null : g;
+  }
+  // opt.free: the game accepts any name ("Guess “…” as typed"); opt.msg: what to say in a game that needs data about the player and has none for this name
+  function suggestBox(host, getPool, onPick, placeholder, opt) {
+    opt = opt || {};
     host.innerHTML = `<div class="dc-input"><input type="text" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="go" placeholder="${esc(placeholder)}"><div class="dc-sug"></div></div>`;
     const inp = host.querySelector('input'), sug = host.querySelector('.dc-sug');
-    const update = () => { const l = inp.value.trim().length >= 2 ? search(inp.value, getPool(), 6) : []; sug.innerHTML = l.map(n => `<button type="button" data-n="${esc(n)}">${esc(n)}</button>`).join(''); };
-    const pick = n => { inp.value = ''; sug.innerHTML = ''; onPick(n); };
+    const btn = (n, score) => `<button type="button" data-n="${esc(n)}"${score ? ` data-score="${score.toFixed(2)}"` : ''}>${esc(n)}</button>`;
+    const update = () => {
+      const q = inp.value.trim(); let html = '';
+      if (q.length >= 2) {
+        const pool = getPool(), l = search(q, pool, 6);
+        if (l.length) html = l.map(n => btn(n)).join('');
+        else if (q.length >= 3) {
+          const f = fuzzy(q, pool, 4);
+          if (f.length) html = `<div class="dc-did">Did you mean…</div>` + f.map(x => btn(x[0], x[1])).join('');
+          if (opt.free) html += `<button type="button" class="dc-free" data-free="1" data-n="${esc(q)}">Guess “${esc(q)}” as typed</button>`;
+          else if (!f.length) html = `<div class="dc-nolist">${esc(opt.msg || 'We do not have that player in this game')}</div>`;
+        }
+      }
+      sug.innerHTML = html;
+    };
+    const pick = (n, free) => { inp.value = ''; sug.innerHTML = ''; onPick(n, !!free); };
     inp.addEventListener('input', update);
-    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { const b = sug.querySelector('button'); if (b) { e.preventDefault(); pick(b.dataset.n); } } });
-    sug.addEventListener('click', e => { const b = e.target.closest('button'); if (b) pick(b.dataset.n); });
+    inp.addEventListener('keydown', e => {
+      if (e.key !== 'Enter') return;
+      const b = sug.querySelector('button'); if (!b) return;
+      e.preventDefault();
+      // a shaky "did you mean" (under 85%) is not taken for the player when any name is allowed: what was typed stands
+      if (b.dataset.score && +b.dataset.score < 0.85 && opt.free) { const f = sug.querySelector('.dc-free'); if (f) { pick(f.dataset.n, true); return; } }
+      pick(b.dataset.n, !!b.dataset.free);
+    });
+    sug.addEventListener('click', e => { const b = e.target.closest('button'); if (b) pick(b.dataset.n, !!b.dataset.free); });
     return inp;
   }
 
@@ -142,7 +198,7 @@
     const rows = st.g.map(n => { const g = d.curBy.get(n); return `<div class="dc-fg"><div class="dc-fg-name">${esc(n)}</div><div class="dc-fg-cells">${footleCompare(g, ans, S.date).map(c => `<div class="dc-cell ${c.s}" title="${esc(c.t)}">${c.h}</div>`).join('')}</div></div>`; }).join('');
     const won = st.g.includes(ans.n), over = won || st.g.length >= 6;
     host.innerHTML = `<div class="dc-fh"><span>NATION</span><span>POS</span><span>CLUB</span><span>LEAGUE</span><span>AGE</span><span>SHIRT #</span></div>${rows}<div id="dcIn"></div><div class="dc-msg" id="dcMsg">${over ? '' : `Guess ${st.g.length + 1} of 6`}</div><div id="dcRes"></div>`;
-    if (!over) suggestBox($('dcIn'), () => d.cur.map(p => p.n).filter(n => !st.g.includes(n)), n => { st.g.push(n); save(); const w = n === ans.n, fin = w || st.g.length >= 6; if (fin) complete('footle', w ? FOOTLE_PTS[st.g.length - 1] : 0); renderFootle(host, r); }, 'Type a current player…');
+    if (!over) suggestBox($('dcIn'), () => d.cur.map(p => p.n).filter(n => !st.g.includes(n)), n => { st.g.push(n); save(); const w = n === ans.n, fin = w || st.g.length >= 6; if (fin) complete('footle', w ? FOOTLE_PTS[st.g.length - 1] : 0); renderFootle(host, r); }, 'Type a current player…', { msg: 'Footle only has players who are playing now' });
     else {
       const sc = won ? FOOTLE_PTS[st.g.length - 1] : 0, grid = st.g.map(n => footleCompare(d.curBy.get(n), ans, S.date).map(c => SQ[c.s]).join('')).join('\n');
       r.share = `Daily Footle ${won ? st.g.length + '/6' : 'X/6'}\n${grid}`;
@@ -171,7 +227,7 @@
         <div class="dc-clues">${clues}</div></div>
       <div class="dc-guesses">${st.g.filter(n => n !== L.p).map(n => `<div class="dc-guess">✗ ${esc(n)}</div>`).join('')}</div>
       <div id="dcIn"></div><div class="dc-msg" id="dcMsg">${over ? '' : `Guess ${st.g.length + 1} of 4`}</div><div id="dcRes"></div>`;
-    if (!over) suggestBox($('dcIn'), () => d.cur.map(p => p.n).filter(n => !st.g.includes(n)), n => { st.g.push(n); save(); const w = n === L.p, fin = w || st.g.length >= 4; if (fin) complete('line', w ? LINE_PTS[st.g.length - 1] : 0); renderLine(host, r); }, 'Who was it?');
+    if (!over) suggestBox($('dcIn'), () => [...d.cur.map(p => p.n), ...SUG()].filter(n => !st.g.includes(n)), (n0, free) => { const n = asGuess(n0, free, L.p, st.g); if (n == null) { $('dcMsg').textContent = 'You already tried that one'; return; } st.g.push(n); save(); const w = n === L.p, fin = w || st.g.length >= 4; if (fin) complete('line', w ? LINE_PTS[st.g.length - 1] : 0); renderLine(host, r); }, 'Who was it?', { free: true });
     else {
       const sc = won ? LINE_PTS[st.g.length - 1] : 0;
       r.share = `Season Line ${won ? st.g.length + '/4' : 'X/4'}  ${'🟥'.repeat(Math.max(0, st.g.length - (won ? 1 : 0)))}${won ? '🟩' : ''}`;
@@ -205,7 +261,7 @@
         st.mid.push(n); save();
         if (st.mid.length >= 6 && !(g.adj.get(n).has(B))) { complete('chain', 0); }
         renderChain(host, r);
-      }, 'Name a player who shared a club with ' + last + '…');
+      }, 'Name a player who shared a club with ' + last + '…', { msg: 'We do not have that player\'s clubs, try someone else' });
       $('dcAct').innerHTML = `${st.mid.length ? '<button class="dc-btn sec" id="dcUndo">↩ Undo</button>' : ''}<button class="dc-btn sec" id="dcGive">Give up</button>`;
       const u = $('dcUndo'); if (u) u.onclick = () => { st.mid.pop(); save(); renderChain(host, r); };
       $('dcGive').onclick = () => { complete('chain', 0); r.gaveUp = true; save(); renderChain(host, r); };
@@ -290,7 +346,7 @@
     host.innerHTML = `<div class="dc-line"><div class="season">CAREER · CLUBS IN ORDER</div><div class="dc-path">${rows}</div></div>
       <div class="dc-guesses">${st.g.filter(n => n !== r.pn).map(n => `<div class="dc-guess">✗ ${esc(n)}</div>`).join('')}</div>
       <div id="dcIn"></div><div class="dc-msg" id="dcMsg">${over ? '' : `Guess ${st.g.length + 1} of ${max}`}</div><div id="dcRes"></div>`;
-    if (!over) suggestBox($('dcIn'), () => g.names.filter(n => !st.g.includes(n)), n => { st.g.push(n); save(); const w = n === r.pn, fin = w || st.g.length >= max; if (fin) complete('path', w ? PATH_PTS[st.g.length - 1] : 0); renderPath(host, r); }, 'Who is it?');
+    if (!over) suggestBox($('dcIn'), () => [...g.names, ...SUG()].filter(n => !st.g.includes(n)), (n0, free) => { const n = asGuess(n0, free, r.pn, st.g); if (n == null) { $('dcMsg').textContent = 'You already tried that one'; return; } st.g.push(n); save(); const w = n === r.pn, fin = w || st.g.length >= max; if (fin) complete('path', w ? PATH_PTS[st.g.length - 1] : 0); renderPath(host, r); }, 'Who is it?', { free: true });
     else {
       const rec = g.people.get(r.pn) || {}, sc = won ? PATH_PTS[st.g.length - 1] : 0;
       r.share = `Career Path ${won ? st.g.length + '/' + max : 'X/' + max}  ${'🟥'.repeat(Math.max(0, st.g.length - (won ? 1 : 0)))}${won ? '🟩' : ''}`;

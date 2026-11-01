@@ -434,6 +434,9 @@ html .cw-btn-secondary{background:var(--bl-ink);color:#fff;border:3px solid #fff
 .dc-sug button{display:block;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #1e3a2a;color:#fff;font-family:inherit;font-size:0.95rem;padding:10px 14px;cursor:pointer;}
 .dc-sug button:last-child{border-bottom:0;}
 .dc-sug button:hover,.dc-sug button:active{background:var(--bl-a);color:var(--bl-ink);}
+.dc-did{padding:7px 14px 3px;font-size:0.68rem;letter-spacing:1.5px;text-transform:uppercase;color:#9bb5a6;}
+.dc-sug .dc-free{font-style:italic;color:#9bb5a6;border-top:1px dashed #2d5a3f;}
+.dc-nolist{padding:11px 14px;font-size:0.85rem;color:#9bb5a6;}
 .dc-msg{min-height:1.3em;font-weight:800;font-size:0.85rem;color:var(--bl-a);text-align:center;margin:2px 0;}
 .dc-msg.bad{color:#ff9a9a;}
 .dc-result{width:100%;box-sizing:border-box;text-align:center;background:var(--bl-ink);border:3px solid #fff;border-radius:18px;box-shadow:4px 4px 0 rgba(2,50,22,0.6);padding:14px;margin:10px 0;}
