@@ -442,12 +442,22 @@
     const st = streak(), lines = S.games.map(g => `${GAMES[g].title}: ${(S.res[g] && S.res[g].score) || 0}/100`).join('\n');
     return `Daily Challenge · ${S.date}\n${lines}\nTotal ${totalScore()}/200${st.count ? ' · 🔥 ' + st.count : ''}\n${S.games.map(g => (S.res[g] && S.res[g].share) || '').filter(Boolean).join('\n')}\n${location.origin}${location.pathname}`;
   }
+  // the streak sticker: the running count and the last seven days (a day is lit when both puzzles were finished)
+  function streakCard(st) {
+    const n = st.last === S.date || st.last === yesterday() ? st.count : 0, base = dayNumber(S.date);
+    const days = [6, 5, 4, 3, 2, 1, 0].map(k => {
+      const d = new Date((base - k) * 86400000), ds = d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate());
+      const rec = k === 0 ? S : load(ds), games = rec.games || gamesOf(ds), full = games.filter(g => rec.res[g] && rec.res[g].done).length === 2;
+      return `<div class="dc-d ${full ? 'ok' : ''} ${k === 0 ? 'now' : ''}"><i>${full ? '✓' : ''}</i><b>${'SMTWTFS'[d.getUTCDay()]}</b></div>`;
+    }).join('');
+    return `<div class="dc-sk"><div class="dc-sk-top"><span class="dc-sk-flame">🔥</span><span class="dc-sk-n">${n}</span><div class="dc-sk-side"><span class="dc-sk-tag">${n ? 'DAY STREAK' : 'START A STREAK'}</span><small>Best ${st.best || 0}</small></div></div><div class="dc-wk">${days}</div></div>`;
+  }
   function renderHome() {
     clearInterval(timer);
     const st = streak(), done = doneCount() === 2;
     const cards = S.games.map((g, i) => { const r = S.res[g] || {}, G = GAMES[g]; return `<div class="dc-card ${r.done ? 'done' : ''}"><div class="dc-card-n">${i + 1}</div><div class="dc-card-t"><b>${G.title}</b><small>${G.short}</small></div>${r.done ? `<div class="dc-score">${r.score || 0}<small>/100</small></div>` : `<button class="dc-btn" onclick="dcOpen('${g}')">${r.st ? 'Continue' : 'Play'} ›</button>`}</div>`; }).join('');
     $('dcBody').innerHTML = `<div class="dc-eyebrow">DAILY CHALLENGE</div><div class="dc-title">${prettyDate(S.date)}</div><div class="dc-sub">New puzzles every day · 2 puzzles · up to 200 points</div>
-      <div class="dc-streak"><span class="dc-chip">🔥 Streak <b>${st.last === S.date || st.last === yesterday() ? st.count : 0}</b></span><span class="dc-chip">Best <b>${st.best || 0}</b></span></div>
+      ${streakCard(st)}
       ${cards}
       ${done ? `<div class="dc-total"><div class="l">Today's score</div><div class="n">${totalScore()}<span style="font-size:1.2rem;color:#9bb5a6"> / 200</span></div></div>
         <div class="dc-actions"><button class="dc-btn" id="dcShare">📋 Copy result</button></div><div class="dc-msg" id="dcShareMsg"></div>

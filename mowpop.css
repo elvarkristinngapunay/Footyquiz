@@ -406,6 +406,20 @@ html .cw-btn-secondary{background:var(--bl-ink);color:#fff;border:3px solid #fff
 .dc-chip b{color:var(--bl-a);font-weight:400;}
 .dc-card{width:100%;box-sizing:border-box;background:var(--bl-ink);border:3px solid #fff;border-radius:18px;box-shadow:4px 4px 0 rgba(2,50,22,0.6);padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;text-align:left;}
 .dc-card.done{opacity:0.92;}
+.dc-sk{width:100%;box-sizing:border-box;background:var(--bl-ink);border:5px solid #fff;border-radius:22px;box-shadow:7px 7px 0 rgba(2,50,22,0.75);padding:14px 14px 12px;margin:4px 0 16px;transform:rotate(var(--bl-tilt));}
+.dc-sk-top{display:flex;align-items:center;justify-content:center;gap:12px;}
+.dc-sk-flame{font-size:2.6rem;line-height:1;filter:drop-shadow(3px 3px 0 rgba(0,0,0,0.5));}
+.dc-sk-n{font-family:'Anton',sans-serif;font-size:3.6rem;line-height:1;color:var(--bl-a);text-shadow:4px 4px 0 #000;}
+.dc-sk-side{display:flex;flex-direction:column;align-items:flex-start;gap:4px;}
+.dc-sk-tag{font-family:'Anton',sans-serif;letter-spacing:3px;font-size:0.8rem;background:var(--bl-b);color:#fff;border:3px solid #fff;border-radius:4px;padding:2px 10px;transform:skewX(-8deg);}
+.dc-sk-side small{font-family:'Anton',sans-serif;letter-spacing:2px;font-size:0.75rem;color:#9bb5a6;}
+.dc-wk{display:flex;justify-content:center;gap:9px;margin-top:12px;}
+.dc-d{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.dc-d i{width:34px;height:34px;box-sizing:border-box;border-radius:50%;border:3px solid #4b6a58;background:#10261a;display:flex;align-items:center;justify-content:center;font-style:normal;font-family:'Anton',sans-serif;font-size:1.1rem;color:#fff;}
+.dc-d.ok i{background:#15803d;border-color:#fff;box-shadow:3px 3px 0 rgba(0,0,0,0.45);}
+.dc-d.now i{border-color:var(--bl-a);}
+.dc-d b{font-family:'Anton',sans-serif;font-weight:400;font-size:0.72rem;letter-spacing:1px;color:#9bb5a6;}
+.dc-d.now b{color:var(--bl-a);}
 .dc-card-n{font-family:'Anton',sans-serif;font-size:2rem;color:var(--bl-a);width:34px;text-align:center;flex-shrink:0;}
 .dc-card-t{flex:1;min-width:0;}
 .dc-card-t b{display:block;font-family:'Anton',sans-serif;font-size:1.25rem;letter-spacing:0.5px;font-weight:400;}
