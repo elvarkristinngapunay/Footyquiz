@@ -325,9 +325,16 @@
       host.innerHTML = dots + `<div id="dcRes">${resultBox(`${ok} of 5 right`, '', ok * 20)}</div>`; return;
     }
     const [na, nb] = rounds[i], pa = d.curBy.get(na), pb = d.curBy.get(nb), show = !!st.reveal, older = Date.parse(pa.b) < Date.parse(pb.b) ? na : nb;
-    const card = (p, key) => `<div class="dc-pc ${show ? (p.n === older ? 'right' : 'wrong') : 'pick'}" ${show ? '' : `data-k="${key}"`}>${kit(p.n) || ''}<div class="nm">${esc(p.n)}</div><div class="sb">${p.fl} ${esc(p.nat)}</div><div class="val ${show ? '' : 'hid'}" style="font-size:1.1rem">${show ? fmtBorn(p.b) : 'born ?'}</div></div>`;
-    host.innerHTML = dots + `<div class="dc-q">Round ${i + 1} of 5 — who is <b>older</b>?</div><div class="dc-vs">${card(pa, 'a')}${card(pb, 'b')}</div>` +
-      (show ? `<div class="dc-msg ${st.ans[i].ok ? '' : 'bad'}">${st.ans[i].ok ? '✓ Right' : '✗ Wrong'} — ${esc(older)} is older</div><div class="dc-actions"><button class="dc-btn" id="dcNext">${i + 1 >= rounds.length ? 'See result' : 'Next ›'}</button></div>` : '');
+    // after the pick: the card you chose is green (right) or red (wrong), the other one is dimmed; every card says OLDER / YOUNGER
+    const ans = show ? st.ans[i] : null;
+    const card = (p, key) => {
+      const mine = show && ans.pick === p.n;
+      return `<div class="dc-pc ${show ? (mine ? (ans.ok ? 'right' : 'wrong') : 'dim') : 'pick'}" ${show ? '' : `data-k="${key}"`}>${mine ? '<div class="dc-mine">YOUR PICK</div>' : ''}${kit(p.n) || ''}<div class="nm">${esc(p.n)}</div><div class="sb">${p.fl} ${esc(p.nat)}</div><div class="val ${show ? '' : 'hid'}" style="font-size:1.1rem">${show ? fmtBorn(p.b) : 'born ?'}</div>${show ? `<div class="dc-age ${p.n === older ? 'old' : 'young'}">${p.n === older ? 'OLDER' : 'YOUNGER'}</div>` : ''}</div>`;
+    };
+    host.innerHTML = dots + `<div class="dc-q">Round ${i + 1} of 5 — who is <b>older</b>?</div>` +
+      (show ? `<div class="dc-verdict ${ans.ok ? 'ok' : 'no'}">${ans.ok ? '✓ CORRECT' : '✗ WRONG'}</div>` : '') +
+      `<div class="dc-vs">${card(pa, 'a')}${card(pb, 'b')}</div>` +
+      (show ? `<div class="dc-q">${esc(older)} is older</div><div class="dc-actions"><button class="dc-btn" id="dcNext">${i + 1 >= rounds.length ? 'See result' : 'Next ›'}</button></div>` : '');
     if (!show) host.querySelectorAll('.dc-pc.pick').forEach(el => el.onclick = () => { const chosen = el.dataset.k === 'a' ? na : nb; st.ans.push({ pick: chosen, ok: chosen === older }); st.reveal = true; save(); renderYo(host, r); });
     else $('dcNext').onclick = () => { st.reveal = false; if (st.ans.length >= rounds.length) complete('yo', st.ans.filter(x => x.ok).length * 20); save(); renderYo(host, r); };
   }
