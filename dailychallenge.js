@@ -298,8 +298,9 @@
     }
     const a = st.ans[i], show = !!st.reveal;
     host.innerHTML = dots + `<div class="dc-q">Round ${i + 1} of 5 — did the right player have <b>more</b> or <b>fewer</b> ${STATS[rd.k][0]} in his season?</div>
+      ${show ? `<div class="dc-verdict ${a.ok ? 'ok' : 'no'}">${a.ok ? '✓ CORRECT' : '✗ WRONG'}</div>` : ''}
       <div class="dc-vs">${lineCard(rd.A, true, '', rd.k)}${lineCard(rd.B, show, show ? (a.ok ? 'right' : 'wrong') : '', rd.k)}</div>
-      ${show ? `<div class="dc-msg ${a.ok ? '' : 'bad'}">${a.ok ? '✓ Right' : '✗ Wrong'} — ${rd.B[rd.k]} vs ${rd.A[rd.k]}</div><div class="dc-actions"><button class="dc-btn" id="dcNext">${i + 1 >= rounds.length ? 'See result' : 'Next ›'}</button></div>` : `<div class="dc-hl"><button class="up" id="dcUp">▲ More</button><button class="down" id="dcDown">▼ Fewer</button></div>`}`;
+      ${show ? `<div class="dc-q">You said ${a.pick === 'up' ? 'more' : 'fewer'} — ${rd.B[rd.k]} vs ${rd.A[rd.k]}</div><div class="dc-actions"><button class="dc-btn" id="dcNext">${i + 1 >= rounds.length ? 'See result' : 'Next ›'}</button></div>` : `<div class="dc-hl"><button class="up" id="dcUp">▲ More</button><button class="down" id="dcDown">▼ Fewer</button></div>`}`;
     const answer = pick => { const higher = rd.B[rd.k] > rd.A[rd.k]; st.ans.push({ pick, ok: (pick === 'up') === higher }); st.reveal = true; save(); renderShl(host, r); };
     if (!show) { $('dcUp').onclick = () => answer('up'); $('dcDown').onclick = () => answer('down'); }
     else $('dcNext').onclick = () => { st.reveal = false; if (st.ans.length >= rounds.length) complete('shl', st.ans.filter(x => x.ok).length * 20); save(); renderShl(host, r); };
