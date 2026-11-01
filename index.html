@@ -2410,7 +2410,8 @@ body::before{display:none;}
   <div id="mbFeedback" style="text-align:center;min-height:78px;width:100%;margin-bottom:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;"></div>
 
   <!-- Guess input -->
-  <div id="mbInputArea" style="width:100%;margin-bottom:16px;">
+  <div id="mbInputArea" style="width:100%;margin-bottom:16px;transition:opacity .2s;">
+    <div id="mbHint" style="text-align:center;margin-bottom:12px;font-size:1rem;color:#ddd;line-height:1.4;"></div>
     <div style="display:flex;align-items:center;gap:10px;justify-content:center;">
       <div style="text-align:center;min-width:44px;">
         <div style="font-size:0.55rem;color:#555;letter-spacing:2px;">LEFT</div>
@@ -2419,13 +2420,13 @@ body::before{display:none;}
       <span style="font-family:'Anton',sans-serif;font-size:1.4rem;color:#4ade80;">€</span>
       <input id="mbInput" type="number" inputmode="decimal" enterkeyhint="go" min="0" max="300" step="0.5"
         style="width:130px;background:#111;border:2px solid #333;border-radius:12px;padding:14px 16px;font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;text-align:center;outline:none;-webkit-appearance:none;-moz-appearance:textfield;appearance:textfield;"
-        placeholder="0"
-        onkeydown="if(event.key==='Enter')mbSubmitGuess()"
-        oninput="this.style.borderColor='#555'">
-      <span style="font-family:'Anton',sans-serif;font-size:1.4rem;color:#888;">M</span>
+        placeholder="65"
+        onkeydown="if(event.key==='Enter')mbEnter()"
+        oninput="this.style.borderColor='#555';mbResetHint()">
+      <span style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#888;">million</span>
     </div>
     <div style="text-align:center;margin-top:12px;">
-      <button class="mb-guess-btn" onclick="mbSubmitGuess()" style="background:#4ade80;color:#000;border:none;padding:14px 40px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;">GUESS</button>
+      <button class="mb-guess-btn" onclick="mbSubmitGuess()" onpointerdown="event.preventDefault()" style="background:#4ade80;color:#000;border:none;padding:14px 40px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;">GUESS</button>
     </div>
   </div>
 
@@ -3730,7 +3731,7 @@ function holChoose(cat){
   _holChooseCat = cat;
   document.getElementById('holChTitle').textContent = catLabels[cat] || cat;
   const setOpt = (btnId, subId, mode, bestKey, soon) => {
-    const n = holDeck(mode).filter(p => catValue(p, cat) > 0).length;
+    const n = holDeck(mode).filter(p => holEligible(p, cat)).length;
     const ok = n >= 10 && (mode !== 'modern' || holModernReady());
     const b = document.getElementById(btnId);
     b.disabled = !ok; b.style.opacity = ok ? '' : '0.45'; b.style.cursor = ok ? '' : 'not-allowed';
@@ -3792,6 +3793,11 @@ const catLabels={
   assists:"Assists",intl_caps:"Intl Caps",intl_goals:"Intl Goals",trophies:"Major Trophies"
 };
 
+// Who is allowed into a category. A 400-goal striker against a full-back with 3 goals is no question, so each category can have a minimum value
+// (measured per deck in tools/ and chosen by Elvar; Career Goals: 70). A category without an entry only needs a value above 0.
+const HOL_MIN={career_goals:70};
+const holMin=cat=>HOL_MIN[cat]||1;
+const holEligible=(p,cat)=>catValue(p,cat)>=holMin(cat);
 function catValue(p,cat){
   if(cat==="trophies"){
     return p.trophies_list.reduce((s,t)=>{
@@ -3825,7 +3831,7 @@ function startGame(cat){
   document.getElementById("bestEl").textContent=best;
   document.getElementById("modeEl").textContent=(holIsModern()&&cat==="assists"?"Assists since 2016/17":holLabel(cat))+" · "+holModeName();
   renderLives();
-  deck=shuffle(holPool().filter(p=>catValue(p,cat)>0));deckIdx=0;
+  deck=shuffle(holPool().filter(p=>holEligible(p,cat)));deckIdx=0;
   leftPlayer=nextFromDeck();
   rightPlayer=nextFromDeck();
   document.getElementById("menuScreen").style.display="none";
@@ -3843,7 +3849,7 @@ function shuffle(a){
   return a;
 }
 function nextFromDeck(){
-  if(deckIdx>=deck.length){deck=shuffle(holPool().filter(p=>catValue(p,category)>0));deckIdx=0;}
+  if(deckIdx>=deck.length){deck=shuffle(holPool().filter(p=>holEligible(p,category)));deckIdx=0;}
   return deck[deckIdx++];
 }
 
@@ -5599,6 +5605,10 @@ let mbUsedIndices = [];
 let mbGameOver = false;
 let mbBadgeCache = []; // hold Image refs so browser keeps them cached
 let mbBadgesPreloaded = false;
+let mbAdvanceTimer = null;                                   // after a correct guess the next player comes by itself
+const MB_HINT_HTML = 'Type the fee in <b style="color:#4ade80;">MILLIONS</b> of euros &mdash; just the number.<br><span style="color:#888;font-size:0.85rem;">65 means &euro;65,000,000. No zeros needed.</span>';
+function mbResetHint(){ const h = document.getElementById('mbHint'); if(h && h.dataset.err){ h.dataset.err = ''; h.innerHTML = MB_HINT_HTML; } }
+function mbEnter(){ if(mbGameOver){ mbNextTransfer(); return; } mbSubmitGuess(); }   // Enter (the keyboard's "go") also skips the pause
 
 function mbPreloadBadges(){
   if(mbBadgesPreloaded) return;
@@ -5654,8 +5664,11 @@ function mbGetLogo(club){
 }
 
 function mbNextTransfer(){
+  clearTimeout(mbAdvanceTimer);
   mbGuesses = 4;
   mbGameOver = false;
+  mbResetHint(); document.getElementById('mbHint').innerHTML = MB_HINT_HTML;
+  document.getElementById('mbInputArea').style.opacity = '1';
   document.getElementById('mbInput').value = '';
   document.getElementById('mbInput').style.borderColor = '#333';
   document.getElementById('mbFeedback').innerHTML = '';
@@ -5693,6 +5706,7 @@ function mbNextTransfer(){
   if(toLogo){ toImg.src = toLogo; toTxt.textContent = t.to; }
   else { toImg.style.display = 'none'; toTxt.style.display = 'block'; toTxt.textContent = t.to; }
 
+  document.getElementById('mbInput').focus();                  // the keyboard is open for every new player, no tap needed
   setTimeout(()=>document.getElementById('mbInput').focus(), 100);
 }
 
@@ -5701,6 +5715,13 @@ function mbSubmitGuess(){
   const raw = parseFloat(document.getElementById('mbInput').value);
   if(isNaN(raw) || raw < 0){
     document.getElementById('mbInput').style.borderColor = '#ef4444';
+    return;
+  }
+  if(raw >= 1000){                                             // 65000000 instead of 65: explain, and do not use up a guess
+    const h = document.getElementById('mbHint'); h.dataset.err = '1';
+    h.innerHTML = '<span style="color:#ef4444;"><b>Just the millions</b> &mdash; type <b>65</b>, not 65000000</span>';
+    document.getElementById('mbInput').style.borderColor = '#ef4444';
+    document.getElementById('mbInput').value = ''; document.getElementById('mbInput').focus();
     return;
   }
 
@@ -5727,10 +5748,11 @@ function mbSubmitGuess(){
     document.getElementById('mbInput').style.borderColor = '#4ade80';
     document.getElementById('mbFeedback').innerHTML = `
       <div style="font-family:'Anton',sans-serif;font-size:2rem;color:#4ade80;">✓ CORRECT!</div>
-      <div style="color:#aaa;font-size:1rem;margin:6px 0 16px;">The fee was <strong style="color:#fff;font-size:1.3rem;">€${correct}M</strong></div>
-      <button onclick="mbNextTransfer()" style="background:#4ade80;color:#000;border:none;padding:12px 32px;border-radius:12px;font-family:'Anton',sans-serif;font-size:1.3rem;letter-spacing:2px;cursor:pointer;">NEXT TRANSFER →</button>`;
-    document.getElementById('mbInputArea').style.display = 'none';
+      <div style="color:#aaa;font-size:1rem;margin:6px 0 6px;">The fee was <strong style="color:#fff;font-size:1.3rem;">€${correct}M</strong></div>
+      <div style="color:#666;font-size:0.8rem;letter-spacing:1px;">Next player coming up…</div>`;
+    document.getElementById('mbInputArea').style.opacity = '0.35';   // still on screen and focused, so the keyboard stays open
     mbGameOver = true;
+    clearTimeout(mbAdvanceTimer); mbAdvanceTimer = setTimeout(mbNextTransfer, 1700);
 
   } else if(mbGuesses === 0){
     // OUT OF GUESSES
@@ -5745,7 +5767,7 @@ function mbSubmitGuess(){
       <div style="color:#888;font-size:0.7rem;letter-spacing:2px;margin-bottom:2px;">STREAK</div>
       <div style="font-family:'Anton',sans-serif;font-size:3.5rem;color:#fff;line-height:1;margin-bottom:14px;">${prevStreak}</div>
       <button onclick="mbNextTransfer()" style="background:#ef4444;color:#fff;border:none;padding:12px 32px;border-radius:12px;font-family:'Anton',sans-serif;font-size:0.9rem;letter-spacing:2px;cursor:pointer;">TRY AGAIN →</button>`;
-    document.getElementById('mbInputArea').style.display = 'none';
+    document.getElementById('mbInputArea').style.opacity = '0.35';
 
   } else {
     // WRONG but still have guesses — show BIG, obvious direction feedback
