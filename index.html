@@ -1412,7 +1412,7 @@ body::before{display:none;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
 .t10-shake{animation:t10shake 0.35s ease-out;}
 </style>
-<link rel="stylesheet" href="mowpop.css?v=31">
+<link rel="stylesheet" href="mowpop.css?v=32">
 </head>
 <body>
 
@@ -2426,7 +2426,7 @@ body::before{display:none;}
       <span style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#888;">million</span>
     </div>
     <div style="text-align:center;margin-top:12px;">
-      <button class="mb-guess-btn" onclick="mbSubmitGuess()" onpointerdown="event.preventDefault()" style="background:#4ade80;color:#000;border:none;padding:14px 40px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;">GUESS</button>
+      <button class="mb-guess-btn" onclick="mbSubmitGuess()" onpointerdown="event.preventDefault()" onmousedown="event.preventDefault()" style="background:#4ade80;color:#000;border:none;padding:14px 40px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;">GUESS</button>
     </div>
   </div>
 
@@ -2448,7 +2448,7 @@ body::before{display:none;}
       <div class="mbi-opt no"><div class="mbi-box"><div><i>&euro;</i><b>65000000</b></div><span>million</span></div><div class="mbi-v">&#10007; NO</div></div>
       <div class="mbi-opt yes"><div class="mbi-box"><div><i>&euro;</i><b>65</b></div><span>million</span></div><div class="mbi-v">&#10003; YES</div></div>
     </div>
-    <button class="mbi-ok" onclick="mbIntroClose()">OK</button>
+    <button class="mbi-ok" onclick="mbIntroClose()">GOT IT</button>
   </div>
 </div>
 
