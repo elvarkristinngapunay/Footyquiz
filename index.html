@@ -1412,7 +1412,7 @@ body::before{display:none;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
 .t10-shake{animation:t10shake 0.35s ease-out;}
 </style>
-<link rel="stylesheet" href="mowpop.css?v=29">
+<link rel="stylesheet" href="mowpop.css?v=31">
 </head>
 <body>
 
@@ -2420,7 +2420,7 @@ body::before{display:none;}
       <span style="font-family:'Anton',sans-serif;font-size:1.4rem;color:#4ade80;">€</span>
       <input id="mbInput" type="number" inputmode="decimal" enterkeyhint="go" min="0" max="300" step="0.5"
         style="width:130px;background:#111;border:2px solid #333;border-radius:12px;padding:14px 16px;font-family:'Anton',sans-serif;font-size:1.6rem;color:#fff;text-align:center;outline:none;-webkit-appearance:none;-moz-appearance:textfield;appearance:textfield;"
-        placeholder="65"
+        placeholder="?"
         onkeydown="if(event.key==='Enter')mbEnter()"
         oninput="this.style.borderColor='#555';mbResetHint()">
       <span style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#888;">million</span>
@@ -2433,6 +2433,23 @@ body::before{display:none;}
   <!-- Previous guesses -->
   <div id="mbPrevGuesses" style="width:100%;margin-top:8px;"></div>
 
+</div>
+
+<!-- MONEYBALL: one picture of how to type the fee, shown once per visit -->
+<div id="mbIntro">
+  <div class="mbi-card">
+    <div class="mbi-tag">TYPE ONLY THE MILLIONS</div>
+    <div class="mbi-player">
+      <div class="mbi-name" id="mbiName"></div>
+      <div class="mbi-clubs"><img id="mbiFrom" alt="" onerror="this.style.display='none'"><span>&rarr;</span><img id="mbiTo" alt="" onerror="this.style.display='none'"></div>
+      <div class="mbi-fee">He cost &euro;65,000,000</div>
+    </div>
+    <div class="mbi-pair">
+      <div class="mbi-opt no"><div class="mbi-box"><div><i>&euro;</i><b>65000000</b></div><span>million</span></div><div class="mbi-v">&#10007; NO</div></div>
+      <div class="mbi-opt yes"><div class="mbi-box"><div><i>&euro;</i><b>65</b></div><span>million</span></div><div class="mbi-v">&#10003; YES</div></div>
+    </div>
+    <button class="mbi-ok" onclick="mbIntroClose()">OK</button>
+  </div>
 </div>
 
 <!-- WELCOME OVERLAY -->
@@ -2674,7 +2691,7 @@ function setBg(hol, fade){
   }
 }
 function closeAllOverlays(){
-  ['gameWelcomeOverlay','slotMachineOverlay','holChoose','gcPick','egModeChoice','egNameEntry','egCountdownOverlay','sxiModeChoice','sxiTypeChoice'].forEach(id=>{
+  ['gameWelcomeOverlay','mbIntro','slotMachineOverlay','holChoose','gcPick','egModeChoice','egNameEntry','egCountdownOverlay','sxiModeChoice','sxiTypeChoice'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   if(typeof aucClearAnnounce==='function') aucClearAnnounce();
@@ -5607,7 +5624,20 @@ let mbGameOver = false;
 let mbBadgeCache = []; // hold Image refs so browser keeps them cached
 let mbBadgesPreloaded = false;
 let mbAdvanceTimer = null;                                   // after a correct guess the next player comes by itself
-const MB_HINT_HTML = 'Type the fee in <b style="color:#4ade80;">MILLIONS</b> of euros &mdash; just the number.<br><span style="color:#888;font-size:0.85rem;">65 means &euro;65,000,000. No zeros needed.</span>';
+const MB_HINT_HTML = '';   // the how-to is one picture at the start (mbIntro), not text above every guess
+const MB_EXAMPLE = { player: 'João Cancelo', from: 'Juventus', to: 'Man City' };   // a €65M deal; kept out of the questions
+function mbIntroShow(){
+  try { if(sessionStorage.getItem('mbIntroSeen')) return; } catch(e) { /* private window: show it every time */ }
+  document.getElementById('mbiName').textContent = MB_EXAMPLE.player;
+  [['mbiFrom', MB_EXAMPLE.from], ['mbiTo', MB_EXAMPLE.to]].forEach(([id, club]) => { const i = document.getElementById(id); i.style.display = ''; i.src = mbGetLogo(club); });
+  if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+  document.getElementById('mbIntro').style.display = 'flex';
+}
+function mbIntroClose(){
+  try { sessionStorage.setItem('mbIntroSeen', '1'); } catch(e) { /* nothing to save */ }
+  document.getElementById('mbIntro').style.display = 'none';
+  const i = document.getElementById('mbInput'); if(i) i.focus();   // the keyboard opens right away
+}
 function mbResetHint(){ const h = document.getElementById('mbHint'); if(h && h.dataset.err){ h.dataset.err = ''; h.innerHTML = MB_HINT_HTML; } }
 function mbEnter(){ if(mbGameOver){ mbNextTransfer(); return; } mbSubmitGuess(); }   // Enter (the keyboard's "go") also skips the pause
 
@@ -5640,6 +5670,7 @@ function showMoneyball(){
   document.getElementById('mbScreen').style.display = 'flex';
   setBackBtn('← Back Home', showLanding);
   mbInit();
+  mbIntroShow();
 }
 
 function mbInit(){
@@ -5653,6 +5684,7 @@ function mbInit(){
   mbStreak = 0;
   mbBest = parseInt(localStorage.getItem('mbBest') || '0');
   mbUsedIndices = [];
+  const exi = mbAllTransfers.findIndex(t => t.player === MB_EXAMPLE.player && t.to === MB_EXAMPLE.to); if(exi >= 0) mbUsedIndices.push(exi);   // the picture's own example is never asked
   mbGameOver = false;
   document.getElementById('mbStreak').textContent = mbStreak;
   document.getElementById('mbBest').textContent = mbBest;
