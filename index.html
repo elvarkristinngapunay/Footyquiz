@@ -2426,7 +2426,7 @@ body::before{display:none;}
       <span style="font-family:'Anton',sans-serif;font-size:1.1rem;color:#888;">million</span>
     </div>
     <div style="text-align:center;margin-top:12px;">
-      <button class="mb-guess-btn" onclick="mbSubmitGuess()" onpointerdown="event.preventDefault()" onmousedown="event.preventDefault()" style="background:#4ade80;color:#000;border:none;padding:14px 40px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;">GUESS</button>
+      <button class="mb-guess-btn" onclick="mbSubmitGuess()" onpointerdown="event.preventDefault()" onmousedown="event.preventDefault()" ontouchstart="event.preventDefault()" ontouchend="event.preventDefault();mbSubmitGuess()" style="background:#4ade80;color:#000;border:none;padding:14px 40px;border-radius:14px;font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;">GUESS</button>
     </div>
   </div>
 
@@ -5639,6 +5639,7 @@ function mbIntroClose(){
   const i = document.getElementById('mbInput'); if(i) i.focus();   // the keyboard opens right away
 }
 function mbResetHint(){ const h = document.getElementById('mbHint'); if(h && h.dataset.err){ h.dataset.err = ''; h.innerHTML = MB_HINT_HTML; } }
+function mbScreenVisible(){ const s = document.getElementById('mbScreen'); return !!s && s.style.display !== 'none' && document.getElementById('mbIntro').style.display !== 'flex'; }
 function mbEnter(){ if(mbGameOver){ mbNextTransfer(); return; } mbSubmitGuess(); }   // Enter (the keyboard's "go") also skips the pause
 
 function mbPreloadBadges(){
@@ -5740,7 +5741,7 @@ function mbNextTransfer(){
   else { toImg.style.display = 'none'; toTxt.style.display = 'block'; toTxt.textContent = t.to; }
 
   document.getElementById('mbInput').focus();                  // the keyboard is open for every new player, no tap needed
-  setTimeout(()=>document.getElementById('mbInput').focus(), 100);
+  [60, 200, 450].forEach(ms => setTimeout(() => { const i = document.getElementById('mbInput'); if(mbScreenVisible() && document.activeElement !== i) i.focus(); }, ms));
 }
 
 function mbSubmitGuess(){
@@ -5799,7 +5800,7 @@ function mbSubmitGuess(){
       <div style="color:#aaa;font-size:1rem;margin:6px 0 6px;">The fee was <strong style="color:#fff;font-size:1.3rem;">€${correct}M</strong></div>
       <div style="color:#888;font-size:0.7rem;letter-spacing:2px;margin-bottom:2px;">STREAK</div>
       <div style="font-family:'Anton',sans-serif;font-size:3.5rem;color:#fff;line-height:1;margin-bottom:14px;">${prevStreak}</div>
-      <button onclick="mbNextTransfer()" style="background:#ef4444;color:#fff;border:none;padding:12px 32px;border-radius:12px;font-family:'Anton',sans-serif;font-size:0.9rem;letter-spacing:2px;cursor:pointer;">TRY AGAIN →</button>`;
+      <button onclick="mbNextTransfer()" onmousedown="event.preventDefault()" ontouchstart="event.preventDefault()" ontouchend="event.preventDefault();mbNextTransfer()" style="background:#ef4444;color:#fff;border:none;padding:12px 32px;border-radius:12px;font-family:'Anton',sans-serif;font-size:0.9rem;letter-spacing:2px;cursor:pointer;">TRY AGAIN →</button>`;
     document.getElementById('mbInputArea').style.opacity = '0.35';
 
   } else {
@@ -6942,7 +6943,10 @@ document.addEventListener('load', function(e){
         items.forEach(i => {
           const b = document.createElement('button'); b.type = 'button'; b.textContent = i.label; if(i.primary) b.className = 'primary';
           b.addEventListener('pointerdown', e => e.preventDefault());   // keep the input focused so the keyboard stays up
-          b.addEventListener('click', () => { i.run(); setTimeout(sync, 60); });
+          b.addEventListener('mousedown', e => e.preventDefault());
+          b.addEventListener('touchstart', e => e.preventDefault(), { passive: false });   // iPhone: a tapped button must not take the focus (and with it the keyboard) from the box
+          b.addEventListener('touchend', e => { e.preventDefault(); i.run(); setTimeout(sync, 60); }, { passive: false });   // so the action runs here; preventDefault also stops the click that would run it twice
+          b.addEventListener('click', () => { i.run(); setTimeout(sync, 60); });   // mouse and keyboard
           bar.appendChild(b);
         });
       }
