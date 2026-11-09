@@ -442,6 +442,64 @@
     const st = streak(), lines = S.games.map(g => `${GAMES[g].title}: ${(S.res[g] && S.res[g].score) || 0}/100`).join('\n');
     return `Daily Challenge · ${S.date}\n${lines}\nTotal ${totalScore()}/200${st.count ? ' · 🔥 ' + st.count : ''}\n${S.games.map(g => (S.res[g] && S.res[g].share) || '').filter(Boolean).join('\n')}\n${location.origin}${location.pathname}`;
   }
+  // ── one share card for the whole day: a picture in the game's own look, made on the fly ──────────────────────────
+  const SQ_COL = { '🟩': '#22c55e', '🟨': '#facc15', '⬛': '#2a3b31', '🟥': '#ef4444', '⬜': '#e5e7eb' };
+  const squareRows = share => String(share || '').split('\n').map(l => [...l].filter(ch => SQ_COL[ch])).filter(r => r.length).slice(0, 6);
+  function rrect(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+  async function cardBlob() {
+    try { await document.fonts.load('64px Anton'); } catch (e) { /* falls back to Impact */ }
+    const F = "Anton, Impact, 'Arial Narrow', sans-serif", W = 1080, st = streak();
+    const rows = S.games.map(g => ({ t: GAMES[g].title.toUpperCase(), sc: (S.res[g] && S.res[g].score) || 0, sq: squareRows(S.res[g] && S.res[g].share) }));
+    const rowH = r => 120 + r.sq.length * 56 + (r.sq.length ? 14 : 0);
+    const cardTop = 330, cardH = 60 + rows.reduce((a, r) => a + rowH(r), 0) + 280, H = cardTop + cardH + (st.count ? 200 : 120) + 120;
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = H; const c = cv.getContext('2d');
+    for (let x = 0, k = 0; x < W; x += 124, k++) { c.fillStyle = k % 2 ? '#11b24f' : '#17c75c'; c.fillRect(x, 0, 124, H); }                  // striped pitch
+    c.fillStyle = 'rgba(255,255,255,0.22)'; for (let y = 30; y < H; y += 60) for (let x = 30; x < W; x += 60) { c.beginPath(); c.arc(x, y, 4, 0, 7); c.fill(); }
+    c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+    c.save(); c.translate(W / 2, 110); c.transform(1, 0, -0.14, 1, 0, 0);                                                                  // pink skewed tag
+    c.fillStyle = '#e11d74'; c.strokeStyle = '#fff'; c.lineWidth = 8; rrect(c, -230, -48, 460, 84, 8); c.fill(); c.stroke();
+    c.fillStyle = '#fff'; c.font = '44px ' + F; c.fillText('DAILY CHALLENGE', 0, 14); c.restore();
+    let fs = 118; const date = prettyDate(S.date).toUpperCase(); c.font = fs + 'px ' + F; while (c.measureText(date).width > 940 && fs > 50) { fs -= 4; c.font = fs + 'px ' + F; }
+    c.lineJoin = 'round'; c.lineWidth = 14; c.strokeStyle = '#06160d'; c.strokeText(date, W / 2 + 6, 270 + 6); c.fillStyle = '#fff'; c.fillText(date, W / 2, 270);
+    c.fillStyle = 'rgba(2,50,22,0.75)'; rrect(c, 60 + 16, cardTop + 16, W - 120, cardH, 52); c.fill();                                      // the ink card with a hard shadow
+    c.fillStyle = '#06160d'; c.strokeStyle = '#fff'; c.lineWidth = 14; rrect(c, 60, cardTop, W - 120, cardH, 52); c.fill(); c.stroke();
+    let y = cardTop + 60;
+    rows.forEach((r, i) => {
+      c.font = '84px ' + F; const sc = String(r.sc), w2 = c.measureText('/100').width, w1 = c.measureText(sc).width + w2 + 6;
+      let tf = 62; c.font = tf + 'px ' + F; while (c.measureText(r.t).width > W - 260 - w1 - 30 && tf > 34) { tf -= 2; c.font = tf + 'px ' + F; }   // a long title shrinks instead of running into the score
+      c.textAlign = 'left'; c.fillStyle = '#fff'; c.fillText(r.t, 130, y + 70);
+      c.textAlign = 'right'; c.fillStyle = '#ffe14d'; c.font = '84px ' + F; c.fillText('/100', W - 130, y + 70); c.fillText(sc, W - 130 - w2 - 6, y + 70);
+      r.sq.forEach((line, k) => line.forEach((ch, m) => { c.fillStyle = SQ_COL[ch]; rrect(c, 130 + m * 58, y + 100 + k * 56, 48, 48, 10); c.fill(); }));
+      y += rowH(r);
+      if (i < rows.length - 1) { c.strokeStyle = '#1d3a2a'; c.lineWidth = 4; c.setLineDash([14, 12]); c.beginPath(); c.moveTo(130, y - 24); c.lineTo(W - 130, y - 24); c.stroke(); c.setLineDash([]); }
+    });
+    c.textAlign = 'center'; c.fillStyle = '#9bb5a6'; c.font = '38px ' + F; c.fillText('TODAY\'S SCORE', W / 2, y + 60);
+    const tot = String(totalScore()); c.font = '170px ' + F; const nw = c.measureText(tot).width; c.font = '70px ' + F; const tw = c.measureText('/ 200').width, x0 = W / 2 - (nw + 24 + tw) / 2;
+    c.textAlign = 'left'; c.fillStyle = '#ffe14d'; c.font = '170px ' + F; c.fillText(tot, x0, y + 220); c.fillStyle = '#9bb5a6'; c.font = '70px ' + F; c.fillText('/ 200', x0 + nw + 24, y + 220);
+    c.textAlign = 'center';
+    c.textAlign = 'center'; let fy = cardTop + cardH + 60;
+    if (st.count) { c.fillStyle = '#06160d'; c.strokeStyle = '#fff'; c.lineWidth = 8; rrect(c, W / 2 - 250, fy, 500, 100, 50); c.fill(); c.stroke(); c.font = '56px ' + F; c.fillStyle = '#ffe14d'; c.fillText('\uD83D\uDD25 ' + st.count + ' DAY STREAK', W / 2, fy + 70); fy += 140; }
+    c.fillStyle = '#06160d'; c.font = '54px ' + F; c.fillText('FOOTBALL ROYAL', W / 2, fy + 50);
+    c.font = '32px Inter, Arial, sans-serif'; c.fillText(location.host + location.pathname.replace(/index\.html$/, ''), W / 2, fy + 100);
+    return new Promise(res => cv.toBlob(res, 'image/png'));
+  }
+  function wireShare() {
+    const msg = $('dcShareMsg'), text = shareText(); let blob = null;
+    const getBlob = async () => blob || (blob = await cardBlob());
+    cardBlob().then(b => { blob = b; const im = $('dcCardImg'); if (im) { im.src = URL.createObjectURL(b); im.hidden = false; } }).catch(e => console.error(e));
+    const wa = $('dcWa'); if (wa) wa.href = 'https://wa.me/?text=' + encodeURIComponent(text);
+    const copy = () => (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(() => true, () => false);
+    $('dcCopy').onclick = async () => { msg.textContent = (await copy()) ? 'Copied — paste it anywhere!' : text; };
+    $('dcShare').onclick = async () => {
+      try {
+        const file = new File([await getBlob()], 'football-royal-daily.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], text }); return; }   // phones: WhatsApp, Instagram, Messages…
+        const a = document.createElement('a'); a.href = URL.createObjectURL(file); a.download = file.name; document.body.appendChild(a); a.click(); a.remove();
+        msg.textContent = (await copy()) ? 'Card saved and text copied — paste them anywhere!' : 'Card saved.';
+      } catch (e) { if (!e || e.name !== 'AbortError') msg.textContent = 'Could not share — try Copy text.'; }
+    };
+  }
+
   // the streak sticker: the running count and the last seven days (a day is lit when both puzzles were finished)
   function streakCard(st) {
     const n = st.last === S.date || st.last === yesterday() ? st.count : 0, base = dayNumber(S.date);
@@ -460,11 +518,12 @@
       ${streakCard(st)}
       ${cards}
       ${done ? `<div class="dc-total"><div class="l">Today's score</div><div class="n">${totalScore()}<span style="font-size:1.2rem;color:#9bb5a6"> / 200</span></div></div>
-        <div class="dc-actions"><button class="dc-btn" id="dcShare">📋 Copy result</button></div><div class="dc-msg" id="dcShareMsg"></div>
+        <img id="dcCardImg" class="dc-cardimg" alt="Your result card" hidden>
+        <div class="dc-actions"><button class="dc-btn big" id="dcShare">Share card</button><a class="dc-btn sec" id="dcWa" target="_blank" rel="noopener">WhatsApp</a><button class="dc-btn sec" id="dcCopy">Copy text</button></div><div class="dc-msg" id="dcShareMsg"></div>
         <div class="dc-note">Done for today! Next challenge in <b id="dcTimer"></b>. Until then — the rest of the games are waiting.</div>`
         : `<div class="dc-note">Finish both puzzles to keep your streak. Every puzzle is worth up to 100 points.</div>`}
       <div class="dc-actions"><button class="dc-btn ${done ? 'big' : 'sec'}" onclick="showLanding()">Play the other games ›</button></div>`;
-    const sh = $('dcShare'); if (sh) sh.onclick = () => { const t = shareText(); (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { $('dcShareMsg').textContent = 'Copied — paste it anywhere!'; }, () => { $('dcShareMsg').textContent = t; }); };
+    if (done) wireShare();
     if (done) { const tick = () => { const n = new Date(), next = Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate() + 1), s = Math.max(0, Math.floor((next - n.getTime()) / 1000)); const el = $('dcTimer'); if (el) el.textContent = `${pad(Math.floor(s / 3600))}:${pad(Math.floor(s % 3600 / 60))}:${pad(s % 60)}`; }; tick(); timer = setInterval(tick, 1000); }
   }
   function yesterday() { const d = new Date(dayNumber(S.date) * 86400000 - 86400000); return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()); }
