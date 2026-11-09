@@ -423,7 +423,9 @@
   }
 
   const RENDER = { footle: renderFootle, line: renderLine, chain: renderChain, shl: renderShl, yo: renderYo, path: renderPath, fee: renderFee, stat: renderStat };
-  const resultBox = (title, sub, score) => `<div class="dc-result"><div class="rt">${esc(title)}</div><div class="sm">${sub}</div><div class="dc-score" style="margin-top:8px">+${score}<small> / 100</small></div><div class="dc-actions" style="margin-top:10px"><button class="dc-btn big" onclick="dcBackHome()">Continue ›</button></div></div>`;
+  // a full-marks puzzle gets a short burst of confetti (CSS only, switched off for people who asked for less motion)
+  const confetti = () => Array.from({ length: 26 }, (_, i) => `<i class="dc-cf" style="left:${(i * 37 + 11) % 97}%;background:${['#ffe14d', '#fff', '#2de2ff', '#e11d74', '#4ade80'][i % 5]};animation-delay:${((i * 53) % 30) / 100}s"></i>`).join('');
+  const resultBox = (title, sub, score) => `<div class="dc-result">${score >= 100 ? confetti() : ''}<div class="rt">${esc(title)}</div><div class="sm">${sub}</div><div class="dc-score" style="margin-top:8px">+${score}<small> / 100</small></div><div class="dc-actions" style="margin-top:10px"><button class="dc-btn big" onclick="dcBackHome()">Continue ›</button></div></div>`;
 
   // ── the screens ────────────────────────────────────────────────────────────────────────────────────────────────
   const SCREENS = ['landingScreen', 'higherOrLowerSection', 'elGrandeMenu', 'elGrandeGame', 'gameScreen', 'sxiScreen', 'mbScreen', 'top10Screen', 'careerScreen', 'closestWinsScreen', 'auctionScreen', 'catScreen'];
