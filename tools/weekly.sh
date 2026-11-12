@@ -30,20 +30,20 @@ echo "== 2/6 league lists =="
 if [ "$MODE" != "--offline" ]; then $ENVRUN tools/fetch-lists.mjs --refresh-current --no-trophies --reserve=600 | tail -3; else echo "(skipped offline)"; fi
 
 echo "== 3/6 cross-check + build =="
-node tools/crosscheck.mjs --json=data/generated/crosscheck.json | head -2
+node tools/crosscheck.mjs --json=data/generated/crosscheck.json | sed -n "1,2p"
 node tools/build-hol.mjs | grep -E "^wrote"
 node tools/build-top10.mjs | grep -E "^wrote"
 # league goals for the Auction / Closest Wins categories: finished seasons from the cached Wikipedia pages (new players get their page), the running season from the fresh API data
-if [ "$MODE" = "--offline" ]; then node tools/build-competitions.mjs | head -1; else node tools/build-competitions.mjs --fetch | tail -2; fi
+if [ "$MODE" = "--offline" ]; then node tools/build-competitions.mjs | sed -n "1p"; else node tools/build-competitions.mjs --fetch | tail -2; fi
 
 # the Daily Challenges (birth dates, clubs, shirt numbers, season lines) follow the new numbers
-node tools/build-daily.mjs | head -1
+node tools/build-daily.mjs | sed -n "1p"
 
 echo "== 4/6 sanity check =="
 node tools/sanity.mjs || { echo "Sanity check failed — the new files are written but NOT committed. Restore with: git checkout data/players-modern.js data/top10-api.js"; exit 1; }
 
 echo "== 5/6 backup =="
-bash tools/backup.sh | head -1
+bash tools/backup.sh | sed -n "1p"
 
 echo "== 6/6 publish =="
 if [ "$MODE" = "--offline" ] || [ "$MODE" = "--no-push" ]; then echo "(not publishing: $MODE)"; exit 0; fi
