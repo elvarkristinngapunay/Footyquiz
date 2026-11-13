@@ -1412,7 +1412,7 @@ body::before{display:none;}
 @keyframes t10shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
 .t10-shake{animation:t10shake 0.35s ease-out;}
 </style>
-<link rel="stylesheet" href="mowpop.css?v=34">
+<link rel="stylesheet" href="mowpop.css?v=35">
 </head>
 <body>
 
@@ -1498,6 +1498,15 @@ body::before{display:none;}
       <div class="dc-hero-sub" id="dcHeroSub">2 new puzzles today</div>
     </div>
     <button class="dc-hero-btn" id="dcHeroBtn" type="button">Play today ›</button>
+  </div>
+  <div class="dc-hero ice-hero" id="iceHero" onclick="showIceland()">
+    <div class="dc-hero-art" aria-hidden="true">🇮🇸</div>
+    <div class="dc-hero-body">
+      <span class="dc-hero-badge">Íslenska hornið</span>
+      <div class="dc-hero-title">Besta deildin · Hærra eða lægra</div>
+      <div class="dc-hero-sub">Markahæstu, leikjahæstu og spjaldakóngar frá 1992</div>
+    </div>
+    <button class="dc-hero-btn" type="button">Spila ›</button>
   </div>
   <div class="cat-tiles">
     <div class="cat-tile" onclick="showCategory('v1')">
@@ -2801,6 +2810,7 @@ function showLanding(){
   document.getElementById('dailyScreen').style.display='none';
   document.getElementById('catScreen').style.display='none';
   if(typeof dcHideScreen==='function') dcHideScreen();
+  if(typeof iceHideScreen==='function') iceHideScreen();
   if(typeof dcUpdateHero==='function') dcUpdateHero();
   setBackBtn(null);
 }
@@ -6967,5 +6977,7 @@ document.addEventListener('load', function(e){
 })();
 </script>
 <script src="dailychallenge.js?v=9"></script>
+<script src="data/iceland.js?v=2"></script>
+<script src="iceland.js?v=1"></script>
 </body>
 </html>
